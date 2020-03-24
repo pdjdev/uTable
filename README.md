@@ -1,4 +1,4 @@
-# P테이블 (pTable)
+# 유테이블 (uTable)
 .Net 기반 데스크탑용 시간표 프로그램
 
 ![screenshot](image.png)
