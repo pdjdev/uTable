@@ -147,10 +147,10 @@ Public Class OptionForm
 
         Select Case colormode
             Case "Dark"
-                BannerPictureBox.Image = My.Resources.pTable_banner_dark
+                BannerPictureBox.Image = My.Resources.uTable_banner_dark
                 CloseBT.Image = My.Resources.closeicon_w
             Case Else
-                BannerPictureBox.Image = My.Resources.pTable_banner
+                BannerPictureBox.Image = My.Resources.uTable_banner
                 CloseBT.Image = My.Resources.closeicon_b
         End Select
     End Sub
@@ -254,7 +254,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub ShowProfChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowProfChk.CheckedChanged
-        ApplySetting("ShowProf", ShowDayChk.Checked)
+        ApplySetting("ShowProf", ShowProfChk.Checked)
     End Sub
 
     Private Sub ShowMemoChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowMemoChk.CheckedChanged

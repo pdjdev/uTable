@@ -121,7 +121,7 @@
   <data name="bt_titleapply" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bt_titleapply.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pTable_banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="uTable_banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\uTable_banner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="minicon_b" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -130,7 +130,7 @@
   <data name="shadow1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shadow1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pTable_banner_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="uTable_banner_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\uTable_banner_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bt_titleedit" type="System.Resources.ResXFileRef, System.Windows.Forms">

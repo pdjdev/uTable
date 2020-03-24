@@ -2,7 +2,7 @@
 
 Public Class SetCourse
     Dim prevData As New List(Of String)
-    Dim daysname As String() = {"월", "화", "수", "목", "금"}
+    Dim daysname As String() = {"월", "화", "수", "목", "금", "토", "일"}
     Dim listcount As Integer = 0
     Dim colormode As String = Nothing
 

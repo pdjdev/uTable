@@ -107,7 +107,7 @@
 
                 day += 1
 
-                If day > 4 Then
+                If day > 6 Then
                     Exit For
                 End If
 

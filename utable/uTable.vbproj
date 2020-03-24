@@ -136,6 +136,7 @@
     <Compile Include="CellControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="WinModule.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EveryTimeBrowser.resx">

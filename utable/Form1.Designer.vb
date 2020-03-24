@@ -25,6 +25,8 @@ Partial Class Form1
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TimeTable = New System.Windows.Forms.TableLayoutPanel()
+        Me.SunPanel = New System.Windows.Forms.Panel()
+        Me.SatPanel = New System.Windows.Forms.Panel()
         Me.FriPanel = New System.Windows.Forms.Panel()
         Me.ThuPanel = New System.Windows.Forms.Panel()
         Me.WedPanel = New System.Windows.Forms.Panel()
@@ -39,6 +41,8 @@ Partial Class Form1
         Me.MenuBT = New System.Windows.Forms.Button()
         Me.MinBT = New System.Windows.Forms.PictureBox()
         Me.DayTable = New System.Windows.Forms.TableLayoutPanel()
+        Me.SunLabel = New System.Windows.Forms.Label()
+        Me.SatLabel = New System.Windows.Forms.Label()
         Me.FriLabel = New System.Windows.Forms.Label()
         Me.ThuLabel = New System.Windows.Forms.Label()
         Me.WedLabel = New System.Windows.Forms.Label()
@@ -72,12 +76,16 @@ Partial Class Form1
         '
         'TimeTable
         '
-        Me.TimeTable.ColumnCount = 5
-        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TimeTable.ColumnCount = 7
+        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TimeTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.TimeTable.Controls.Add(Me.SunPanel, 6, 0)
+        Me.TimeTable.Controls.Add(Me.SatPanel, 5, 0)
         Me.TimeTable.Controls.Add(Me.FriPanel, 4, 0)
         Me.TimeTable.Controls.Add(Me.ThuPanel, 3, 0)
         Me.TimeTable.Controls.Add(Me.WedPanel, 2, 0)
@@ -89,46 +97,64 @@ Partial Class Form1
         Me.TimeTable.Name = "TimeTable"
         Me.TimeTable.RowCount = 1
         Me.TimeTable.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TimeTable.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 570.0!))
         Me.TimeTable.Size = New System.Drawing.Size(814, 570)
         Me.TimeTable.TabIndex = 0
+        '
+        'SunPanel
+        '
+        Me.SunPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SunPanel.Location = New System.Drawing.Point(696, 0)
+        Me.SunPanel.Margin = New System.Windows.Forms.Padding(0)
+        Me.SunPanel.Name = "SunPanel"
+        Me.SunPanel.Size = New System.Drawing.Size(118, 570)
+        Me.SunPanel.TabIndex = 6
+        '
+        'SatPanel
+        '
+        Me.SatPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.SatPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SatPanel.Location = New System.Drawing.Point(580, 0)
+        Me.SatPanel.Margin = New System.Windows.Forms.Padding(0)
+        Me.SatPanel.Name = "SatPanel"
+        Me.SatPanel.Size = New System.Drawing.Size(116, 570)
+        Me.SatPanel.TabIndex = 5
         '
         'FriPanel
         '
         Me.FriPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FriPanel.Location = New System.Drawing.Point(648, 0)
+        Me.FriPanel.Location = New System.Drawing.Point(464, 0)
         Me.FriPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.FriPanel.Name = "FriPanel"
-        Me.FriPanel.Size = New System.Drawing.Size(166, 570)
+        Me.FriPanel.Size = New System.Drawing.Size(116, 570)
         Me.FriPanel.TabIndex = 4
         '
         'ThuPanel
         '
         Me.ThuPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
         Me.ThuPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ThuPanel.Location = New System.Drawing.Point(486, 0)
+        Me.ThuPanel.Location = New System.Drawing.Point(348, 0)
         Me.ThuPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.ThuPanel.Name = "ThuPanel"
-        Me.ThuPanel.Size = New System.Drawing.Size(162, 570)
+        Me.ThuPanel.Size = New System.Drawing.Size(116, 570)
         Me.ThuPanel.TabIndex = 3
         '
         'WedPanel
         '
         Me.WedPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WedPanel.Location = New System.Drawing.Point(324, 0)
+        Me.WedPanel.Location = New System.Drawing.Point(232, 0)
         Me.WedPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.WedPanel.Name = "WedPanel"
-        Me.WedPanel.Size = New System.Drawing.Size(162, 570)
+        Me.WedPanel.Size = New System.Drawing.Size(116, 570)
         Me.WedPanel.TabIndex = 2
         '
         'TuePanel
         '
         Me.TuePanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
         Me.TuePanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TuePanel.Location = New System.Drawing.Point(162, 0)
+        Me.TuePanel.Location = New System.Drawing.Point(116, 0)
         Me.TuePanel.Margin = New System.Windows.Forms.Padding(0)
         Me.TuePanel.Name = "TuePanel"
-        Me.TuePanel.Size = New System.Drawing.Size(162, 570)
+        Me.TuePanel.Size = New System.Drawing.Size(116, 570)
         Me.TuePanel.TabIndex = 1
         '
         'MonPanel
@@ -137,7 +163,7 @@ Partial Class Form1
         Me.MonPanel.Location = New System.Drawing.Point(0, 0)
         Me.MonPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.MonPanel.Name = "MonPanel"
-        Me.MonPanel.Size = New System.Drawing.Size(162, 570)
+        Me.MonPanel.Size = New System.Drawing.Size(116, 570)
         Me.MonPanel.TabIndex = 0
         '
         'TopPanel
@@ -253,12 +279,16 @@ Partial Class Form1
         '
         'DayTable
         '
-        Me.DayTable.ColumnCount = 5
-        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.DayTable.ColumnCount = 7
+        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.DayTable.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
+        Me.DayTable.Controls.Add(Me.SunLabel, 6, 0)
+        Me.DayTable.Controls.Add(Me.SatLabel, 5, 0)
         Me.DayTable.Controls.Add(Me.FriLabel, 4, 0)
         Me.DayTable.Controls.Add(Me.ThuLabel, 3, 0)
         Me.DayTable.Controls.Add(Me.WedLabel, 2, 0)
@@ -270,19 +300,45 @@ Partial Class Form1
         Me.DayTable.Name = "DayTable"
         Me.DayTable.RowCount = 1
         Me.DayTable.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.DayTable.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.DayTable.Size = New System.Drawing.Size(814, 30)
         Me.DayTable.TabIndex = 3
+        '
+        'SunLabel
+        '
+        Me.SunLabel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SunLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.SunLabel.ForeColor = System.Drawing.Color.Gray
+        Me.SunLabel.Location = New System.Drawing.Point(696, 0)
+        Me.SunLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.SunLabel.Name = "SunLabel"
+        Me.SunLabel.Size = New System.Drawing.Size(118, 30)
+        Me.SunLabel.TabIndex = 6
+        Me.SunLabel.Text = "일요일"
+        Me.SunLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'SatLabel
+        '
+        Me.SatLabel.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.SatLabel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SatLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.SatLabel.ForeColor = System.Drawing.Color.Gray
+        Me.SatLabel.Location = New System.Drawing.Point(580, 0)
+        Me.SatLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.SatLabel.Name = "SatLabel"
+        Me.SatLabel.Size = New System.Drawing.Size(116, 30)
+        Me.SatLabel.TabIndex = 5
+        Me.SatLabel.Text = "토요일"
+        Me.SatLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'FriLabel
         '
         Me.FriLabel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FriLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FriLabel.ForeColor = System.Drawing.Color.Gray
-        Me.FriLabel.Location = New System.Drawing.Point(648, 0)
+        Me.FriLabel.Location = New System.Drawing.Point(464, 0)
         Me.FriLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.FriLabel.Name = "FriLabel"
-        Me.FriLabel.Size = New System.Drawing.Size(166, 30)
+        Me.FriLabel.Size = New System.Drawing.Size(116, 30)
         Me.FriLabel.TabIndex = 4
         Me.FriLabel.Text = "금요일"
         Me.FriLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -293,10 +349,10 @@ Partial Class Form1
         Me.ThuLabel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ThuLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ThuLabel.ForeColor = System.Drawing.Color.Gray
-        Me.ThuLabel.Location = New System.Drawing.Point(486, 0)
+        Me.ThuLabel.Location = New System.Drawing.Point(348, 0)
         Me.ThuLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.ThuLabel.Name = "ThuLabel"
-        Me.ThuLabel.Size = New System.Drawing.Size(162, 30)
+        Me.ThuLabel.Size = New System.Drawing.Size(116, 30)
         Me.ThuLabel.TabIndex = 3
         Me.ThuLabel.Text = "목요일"
         Me.ThuLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -306,10 +362,10 @@ Partial Class Form1
         Me.WedLabel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WedLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.WedLabel.ForeColor = System.Drawing.Color.Gray
-        Me.WedLabel.Location = New System.Drawing.Point(324, 0)
+        Me.WedLabel.Location = New System.Drawing.Point(232, 0)
         Me.WedLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.WedLabel.Name = "WedLabel"
-        Me.WedLabel.Size = New System.Drawing.Size(162, 30)
+        Me.WedLabel.Size = New System.Drawing.Size(116, 30)
         Me.WedLabel.TabIndex = 2
         Me.WedLabel.Text = "수요일"
         Me.WedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -320,10 +376,10 @@ Partial Class Form1
         Me.TueLabel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TueLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TueLabel.ForeColor = System.Drawing.Color.Gray
-        Me.TueLabel.Location = New System.Drawing.Point(162, 0)
+        Me.TueLabel.Location = New System.Drawing.Point(116, 0)
         Me.TueLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.TueLabel.Name = "TueLabel"
-        Me.TueLabel.Size = New System.Drawing.Size(162, 30)
+        Me.TueLabel.Size = New System.Drawing.Size(116, 30)
         Me.TueLabel.TabIndex = 1
         Me.TueLabel.Text = "화요일"
         Me.TueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -337,7 +393,7 @@ Partial Class Form1
         Me.MonLabel.Location = New System.Drawing.Point(0, 0)
         Me.MonLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.MonLabel.Name = "MonLabel"
-        Me.MonLabel.Size = New System.Drawing.Size(162, 30)
+        Me.MonLabel.Size = New System.Drawing.Size(116, 30)
         Me.MonLabel.TabIndex = 0
         Me.MonLabel.Text = "월요일"
         Me.MonLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -385,7 +441,7 @@ Partial Class Form1
         Me.BT1MenuTitle.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BT1MenuTitle.Name = "BT1MenuTitle"
         Me.BT1MenuTitle.Size = New System.Drawing.Size(179, 24)
-        Me.BT1MenuTitle.Text = "pTable 0.1v"
+        Me.BT1MenuTitle.Text = "uTable 0.1v"
         Me.BT1MenuTitle.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal
         '
         'ToolStripSeparator4
@@ -455,14 +511,14 @@ Partial Class Form1
         Me.OptionItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.OptionItem.Name = "OptionItem"
         Me.OptionItem.Size = New System.Drawing.Size(179, 24)
-        Me.OptionItem.Text = "pTable 설정/정보"
+        Me.OptionItem.Text = "uTable 설정/정보"
         '
         'ExitItem
         '
         Me.ExitItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ExitItem.Name = "ExitItem"
         Me.ExitItem.Size = New System.Drawing.Size(179, 24)
-        Me.ExitItem.Text = "pTable 종료"
+        Me.ExitItem.Text = "uTable 종료"
         '
         'TimeCheck
         '
@@ -539,4 +595,8 @@ Partial Class Form1
     Friend WithEvents hideani As Timer
     Friend WithEvents ExitItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents SunPanel As Panel
+    Friend WithEvents SatPanel As Panel
+    Friend WithEvents SunLabel As Label
+    Friend WithEvents SatLabel As Label
 End Class

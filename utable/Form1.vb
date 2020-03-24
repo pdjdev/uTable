@@ -20,6 +20,9 @@ Public Class Form1
     Private BorderWidth As Integer = dpicalc(Me, 6)
     Private _resizeDir As ResizeDirection = ResizeDirection.None
 
+    Dim showSaturday As Boolean = False
+    Dim showSunday As Boolean = False
+
 
 #Region "Aero 그림자 효과 (Vista이상)"
 
@@ -158,7 +161,7 @@ Public Class Form1
 
     Private Sub MoveArea_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles TopPanel.MouseDown,
         MonPanel.MouseDown, TuePanel.MouseDown, WedPanel.MouseDown, ThuPanel.MouseDown, FriPanel.MouseDown,
-        MonLabel.MouseDown, TueLabel.MouseDown, WedLabel.MouseDown, ThuLabel.MouseDown, FriLabel.MouseDown
+        MonLabel.MouseDown, TueLabel.MouseDown, WedLabel.MouseDown, ThuLabel.MouseDown, FriLabel.MouseDown, TableTitleLabel.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left And Me.WindowState <> FormWindowState.Maximized Then
             If Not GetINI("SETTING", "WindowLocked", "", ININamePath) = "1" Then MoveForm()
         End If
@@ -250,18 +253,24 @@ Public Class Form1
         WedLabel.BackColor = tableColor_1(colorMode)
         ThuLabel.BackColor = tableColor_2(colorMode)
         FriLabel.BackColor = tableColor_1(colorMode)
+        SatLabel.BackColor = tableColor_2(colorMode)
+        SunLabel.BackColor = tableColor_1(colorMode)
 
         MonLabel.ForeColor = lightTextColor(colorMode)
         TueLabel.ForeColor = lightTextColor(colorMode)
         WedLabel.ForeColor = lightTextColor(colorMode)
         ThuLabel.ForeColor = lightTextColor(colorMode)
         FriLabel.ForeColor = lightTextColor(colorMode)
+        SatLabel.ForeColor = lightTextColor(colorMode)
+        SunLabel.ForeColor = lightTextColor(colorMode)
 
         MonPanel.BackColor = tableColor_1(colorMode)
         TuePanel.BackColor = tableColor_2(colorMode)
         WedPanel.BackColor = tableColor_1(colorMode)
         ThuPanel.BackColor = tableColor_2(colorMode)
         FriPanel.BackColor = tableColor_1(colorMode)
+        SatPanel.BackColor = tableColor_2(colorMode)
+        SunPanel.BackColor = tableColor_1(colorMode)
 
         RefreshBT.FlatAppearance.BorderColor = BorderColor(colorMode)
         AddCourseBT.FlatAppearance.BorderColor = BorderColor(colorMode)
@@ -357,6 +366,8 @@ Public Class Form1
 
     Public Sub updateCell()
         TimeTable.Visible = False
+        showSaturday = False
+        showSunday = False
 
         '구성요소 초기화
         MonPanel.Controls.Clear()
@@ -364,6 +375,8 @@ Public Class Form1
         WedPanel.Controls.Clear()
         ThuPanel.Controls.Clear()
         FriPanel.Controls.Clear()
+        SatPanel.Controls.Clear()
+        SunPanel.Controls.Clear()
         updated = False
 
         Dim data As String = readTable()
@@ -400,6 +413,13 @@ Public Class Form1
                         getData(s, "memo"),
                         ColorTranslator.FromHtml(getData(s, "color")),
                         Convert.ToInt16(getData(s, "day")))
+
+
+                If Convert.ToInt16(getData(s, "day")) = 5 Then '토요일 추가시
+                    showSaturday = True
+                ElseIf Convert.ToInt16(getData(s, "day")) = 6 Then '일요일 추가시
+                    showSunday = True
+                End If
             Next
 
             updated = True
@@ -408,6 +428,33 @@ Public Class Form1
         End If
 
         DayTable.Visible = Not (GetINI("SETTING", "ShowDay", "", ININamePath) = "0")
+
+        If showSaturday Then '토요일 표시
+            For i = 0 To 5
+                DayTable.ColumnStyles(i).Width = 16.67
+                TimeTable.ColumnStyles(i).Width = 16.67
+            Next
+            DayTable.ColumnStyles(6).Width = 0
+            TimeTable.ColumnStyles(6).Width = 0
+        ElseIf showSunday Then '토+일요일 표시
+            For i = 0 To 6
+                DayTable.ColumnStyles(i).Width = 14.28
+                TimeTable.ColumnStyles(i).Width = 14.28
+            Next
+        Else '둘다 안표시
+            For i = 0 To 4
+                DayTable.ColumnStyles(i).Width = 20
+                TimeTable.ColumnStyles(i).Width = 20
+            Next
+            DayTable.ColumnStyles(5).Width = 0
+            DayTable.ColumnStyles(6).Width = 0
+            TimeTable.ColumnStyles(5).Width = 0
+            TimeTable.ColumnStyles(6).Width = 0
+        End If
+
+        For Each s As String In courseData
+            resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")), getData(s, "day") + "-" + getData(s, "name"))
+        Next
 
         TimeTable.Visible = True
     End Sub
@@ -432,6 +479,10 @@ Public Class Form1
                 ThuPanel.Controls.Add(cell)
             Case 4
                 FriPanel.Controls.Add(cell)
+            Case 5
+                SatPanel.Controls.Add(cell)
+            Case 6
+                SunPanel.Controls.Add(cell)
         End Select
 
         cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
@@ -589,7 +640,7 @@ Public Class Form1
     Private Sub BT1_menu_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles BT1_menu.Opening
 
         Dim ver = My.Application.Info.Version.ToString.Split(".")
-        BT1MenuTitle.Text = "pTable " + ver(0) + "." + ver(1) + "v"
+        BT1MenuTitle.Text = "uTable " + ver(0) + "." + ver(1) + "v"
 
         BT1_menu.BackColor = mainColor(colorMode)
         BT1_menu.ForeColor = textColor(colorMode)
@@ -664,12 +715,16 @@ Public Class Form1
         WedLabel.BackColor = tableColor_1(colorMode)
         ThuLabel.BackColor = tableColor_2(colorMode)
         FriLabel.BackColor = tableColor_1(colorMode)
+        SatLabel.BackColor = tableColor_2(colorMode)
+        SunLabel.BackColor = tableColor_1(colorMode)
 
         MonLabel.ForeColor = lightTextColor(colorMode)
         TueLabel.ForeColor = lightTextColor(colorMode)
         WedLabel.ForeColor = lightTextColor(colorMode)
         ThuLabel.ForeColor = lightTextColor(colorMode)
         FriLabel.ForeColor = lightTextColor(colorMode)
+        SatLabel.ForeColor = lightTextColor(colorMode)
+        SunLabel.ForeColor = lightTextColor(colorMode)
 
         '
         Select Case Now.DayOfWeek
@@ -688,6 +743,12 @@ Public Class Form1
             Case DayOfWeek.Friday
                 FriLabel.BackColor = activeDayColor(colorMode)
                 FriLabel.ForeColor = activeDayTextColor(colorMode)
+            Case DayOfWeek.Saturday
+                SatLabel.BackColor = activeDayColor(colorMode)
+                SatLabel.ForeColor = activeDayTextColor(colorMode)
+            Case DayOfWeek.Sunday
+                SunLabel.BackColor = activeDayColor(colorMode)
+                SunLabel.ForeColor = activeDayTextColor(colorMode)
         End Select
 
         Dim fdw As DateTime = DateTime.Today.AddDays(-Weekday(DateTime.Today, FirstDayOfWeek.System) + 2)
@@ -696,6 +757,8 @@ Public Class Form1
         WedLabel.Text = fdw.AddDays(2).ToString("dd") + " 수요일"
         ThuLabel.Text = fdw.AddDays(3).ToString("dd") + " 목요일"
         FriLabel.Text = fdw.AddDays(4).ToString("dd") + " 금요일"
+        SatLabel.Text = fdw.AddDays(5).ToString("dd") + " 토요일"
+        SunLabel.Text = fdw.AddDays(6).ToString("dd") + " 일요일"
     End Sub
 
     Private Sub Menu_4_Click(sender As Object, e As EventArgs) Handles GetFromETItem.Click
@@ -706,10 +769,6 @@ Public Class Form1
             EveryTimeBrowser.ShowDialog(Me)
         End If
 
-    End Sub
-
-    Private Sub TableTitleLabel_Click(sender As Object, e As EventArgs) Handles TableTitleLabel.Click
-        MsgBox(0.1 * 0.1)
     End Sub
 
     Private Sub Menu_5_Click(sender As Object, e As EventArgs) Handles OptionItem.Click
@@ -728,11 +787,6 @@ Public Class Form1
 
             TimeTable.Visible = True
         End If
-    End Sub
-
-    Private Sub Form1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
-
-
     End Sub
 
     Private Sub hideani_Tick(sender As Object, e As EventArgs) Handles hideani.Tick

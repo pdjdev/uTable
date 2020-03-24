@@ -43,10 +43,10 @@ Partial Class SetCourse
         Me.EndTimePicker = New System.Windows.Forms.DateTimePicker()
         Me.DeleteBT = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.CloseBT = New System.Windows.Forms.PictureBox()
-        Me.TitleLabel = New System.Windows.Forms.Label()
-        Me.ColorCopyBT = New System.Windows.Forms.Button()
         Me.ColorPasteBT = New System.Windows.Forms.Button()
+        Me.ColorCopyBT = New System.Windows.Forms.Button()
+        Me.TitleLabel = New System.Windows.Forms.Label()
+        Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.Panel1.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -115,7 +115,7 @@ Partial Class SetCourse
         Me.DayCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.DayCombo.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.DayCombo.FormattingEnabled = True
-        Me.DayCombo.Items.AddRange(New Object() {"월요일", "화요일", "수요일", "목요일", "금요일"})
+        Me.DayCombo.Items.AddRange(New Object() {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"})
         Me.DayCombo.Location = New System.Drawing.Point(18, 131)
         Me.DayCombo.Name = "DayCombo"
         Me.DayCombo.Size = New System.Drawing.Size(121, 29)
@@ -279,25 +279,16 @@ Partial Class SetCourse
         Me.Panel1.Size = New System.Drawing.Size(414, 349)
         Me.Panel1.TabIndex = 26
         '
-        'CloseBT
+        'ColorPasteBT
         '
-        Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
-        Me.CloseBT.Location = New System.Drawing.Point(364, 18)
-        Me.CloseBT.Name = "CloseBT"
-        Me.CloseBT.Size = New System.Drawing.Size(32, 32)
-        Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.CloseBT.TabIndex = 27
-        Me.CloseBT.TabStop = False
-        '
-        'TitleLabel
-        '
-        Me.TitleLabel.AutoSize = True
-        Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕 Semilight", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.TitleLabel.Location = New System.Drawing.Point(18, 15)
-        Me.TitleLabel.Name = "TitleLabel"
-        Me.TitleLabel.Size = New System.Drawing.Size(153, 30)
-        Me.TitleLabel.TabIndex = 26
-        Me.TitleLabel.Text = "수업 추가/수정"
+        Me.ColorPasteBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ColorPasteBT.Font = New System.Drawing.Font("맑은 고딕", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ColorPasteBT.Location = New System.Drawing.Point(203, 264)
+        Me.ColorPasteBT.Name = "ColorPasteBT"
+        Me.ColorPasteBT.Size = New System.Drawing.Size(38, 20)
+        Me.ColorPasteBT.TabIndex = 29
+        Me.ColorPasteBT.Text = "적용"
+        Me.ColorPasteBT.UseVisualStyleBackColor = True
         '
         'ColorCopyBT
         '
@@ -310,16 +301,25 @@ Partial Class SetCourse
         Me.ColorCopyBT.Text = "복사"
         Me.ColorCopyBT.UseVisualStyleBackColor = True
         '
-        'ColorPasteBT
+        'TitleLabel
         '
-        Me.ColorPasteBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ColorPasteBT.Font = New System.Drawing.Font("맑은 고딕", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.ColorPasteBT.Location = New System.Drawing.Point(203, 264)
-        Me.ColorPasteBT.Name = "ColorPasteBT"
-        Me.ColorPasteBT.Size = New System.Drawing.Size(38, 20)
-        Me.ColorPasteBT.TabIndex = 29
-        Me.ColorPasteBT.Text = "적용"
-        Me.ColorPasteBT.UseVisualStyleBackColor = True
+        Me.TitleLabel.AutoSize = True
+        Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕 Semilight", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TitleLabel.Location = New System.Drawing.Point(18, 15)
+        Me.TitleLabel.Name = "TitleLabel"
+        Me.TitleLabel.Size = New System.Drawing.Size(153, 30)
+        Me.TitleLabel.TabIndex = 26
+        Me.TitleLabel.Text = "수업 추가/수정"
+        '
+        'CloseBT
+        '
+        Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
+        Me.CloseBT.Location = New System.Drawing.Point(364, 18)
+        Me.CloseBT.Name = "CloseBT"
+        Me.CloseBT.Size = New System.Drawing.Size(32, 32)
+        Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.CloseBT.TabIndex = 27
+        Me.CloseBT.TabStop = False
         '
         'SetCourse
         '
