@@ -81,25 +81,25 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModule.vb" />
-    <Compile Include="EveryTimeBrowser.Designer.vb">
+    <Compile Include="Modules\DataModule.vb" />
+    <Compile Include="Forms\EveryTimeBrowser.Designer.vb">
       <DependentUpon>EveryTimeBrowser.vb</DependentUpon>
     </Compile>
-    <Compile Include="EveryTimeBrowser.vb">
+    <Compile Include="Forms\EveryTimeBrowser.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.vb">
+    <Compile Include="Forms\Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
+    <Compile Include="Forms\Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUIModule.vb" />
-    <Compile Include="LoadingSplash.Designer.vb">
+    <Compile Include="Modules\GUIModule.vb" />
+    <Compile Include="UserControls\LoadingSplash.Designer.vb">
       <DependentUpon>LoadingSplash.vb</DependentUpon>
     </Compile>
-    <Compile Include="LoadingSplash.vb">
+    <Compile Include="UserControls\LoadingSplash.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
@@ -107,13 +107,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="OptionForm.Designer.vb">
+    <Compile Include="Forms\OptionForm.Designer.vb">
       <DependentUpon>OptionForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="OptionForm.vb">
+    <Compile Include="Forms\OptionForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="INIModule.vb" />
+    <Compile Include="Modules\INIModule.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -124,31 +124,31 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SetCourse.Designer.vb">
+    <Compile Include="Forms\SetCourse.Designer.vb">
       <DependentUpon>SetCourse.vb</DependentUpon>
     </Compile>
-    <Compile Include="SetCourse.vb">
+    <Compile Include="Forms\SetCourse.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CellControl.Designer.vb">
+    <Compile Include="UserControls\CellControl.Designer.vb">
       <DependentUpon>CellControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="CellControl.vb">
+    <Compile Include="UserControls\CellControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WinModule.vb" />
+    <Compile Include="Modules\WinModule.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EveryTimeBrowser.resx">
+    <EmbeddedResource Include="Forms\EveryTimeBrowser.resx">
       <DependentUpon>EveryTimeBrowser.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoadingSplash.resx">
+    <EmbeddedResource Include="UserControls\LoadingSplash.resx">
       <DependentUpon>LoadingSplash.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OptionForm.resx">
+    <EmbeddedResource Include="Forms\OptionForm.resx">
       <DependentUpon>OptionForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -158,10 +158,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SetCourse.resx">
+    <EmbeddedResource Include="Forms\SetCourse.resx">
       <DependentUpon>SetCourse.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CellControl.resx">
+    <EmbeddedResource Include="UserControls\CellControl.resx">
       <DependentUpon>CellControl.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
