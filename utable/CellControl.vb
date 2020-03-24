@@ -1,7 +1,10 @@
 ﻿Public Class CellControl
     Public defHeight As Integer = 0
+    Public defLoc As Integer = 0
     Dim alwaysExpand As Boolean = False
     Dim doExpand As Boolean = True
+
+    Dim hovered As Boolean = False
 
     Private Sub UserControl1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         TitleLabel.MaximumSize() = New Size(Width, 0)
@@ -37,21 +40,15 @@
     End Sub
 
     Private Sub TopTimeLabel_MouseEnter(sender As Object, e As EventArgs) Handles TopTimeLabel.MouseEnter,
-        TitleLabel.MouseEnter, ProfLabel.MouseEnter, Panel1.MouseEnter, MemoLabel.MouseEnter
+        TitleLabel.MouseEnter, ProfLabel.MouseEnter, Panel1.MouseEnter, MemoLabel.MouseEnter, BottomTimeLabel.MouseEnter
 
-        If doExpand Then
-            If defHeight < TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height Then
-                Height = TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height
-            End If
-        End If
-
+        hovered = True
     End Sub
 
     Private Sub CellControl_MouseLeave(sender As Object, e As EventArgs) Handles TopTimeLabel.MouseLeave,
-        TitleLabel.MouseLeave, ProfLabel.MouseLeave, Panel1.MouseLeave, MemoLabel.MouseLeave
-        If doExpand And Not alwaysExpand Then
-            Height = defHeight
-        End If
+        TitleLabel.MouseLeave, ProfLabel.MouseLeave, Panel1.MouseLeave, MemoLabel.MouseLeave, BottomTimeLabel.MouseLeave
+
+        hovered = False
     End Sub
 
     Private Sub TitleLabel_MouseEnter(sender As Object, e As EventArgs) Handles TitleLabel.MouseEnter
@@ -106,5 +103,34 @@
     Private Sub TopNotchPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopNotchPanel.Paint
 
         TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
+    End Sub
+
+    Private Sub MemoLabel_Click(sender As Object, e As EventArgs) Handles MemoLabel.Click
+
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If hovered Then
+            Dim fullheight As Integer = TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height
+            BringToFront()
+
+            If doExpand Then
+                '확장을 하려는데 아래공간이 모자랄때
+                If Location.Y + fullheight > Form1.TimeTable.Height Then
+                    Height = fullheight
+                    Location() = New Point(0, Form1.TimeTable.Height - fullheight)
+                ElseIf defHeight < fullheight Then
+                    Height = fullheight
+                End If
+            End If
+
+        Else
+            If doExpand And Not alwaysExpand Then
+                Height = defHeight
+            End If
+
+            Location() = New Point(0, defLoc)
+
+        End If
     End Sub
 End Class

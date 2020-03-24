@@ -323,6 +323,15 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        For Each scrn In Screen.AllScreens
+            If scrn.DeviceName = GetINI("SETTING", "WindowDisplay", "", ININamePath) Then
+                Me.Location = scrn.Bounds.Location
+                Exit For
+            End If
+        Next
+
+        If Not IsOnScreen(Me) Then Location = New Point(100, 100) '디스플레이 범위 밖일시 걍 초기화
+
         'For Each scrn In Screen.AllScreens
         ' If scrn.DeviceName = GetINI("SETTING", "WindowDisplay", "", ININamePath) Then
         ' Me.Location = scrn.Bounds.Location
@@ -523,6 +532,7 @@ Public Class Form1
         Dim cell As CellControl = TimeTable.Controls.Find(name, True).First
 
         cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
+        cell.defLoc = ((startt - starttime) / timelength) * MonPanel.Height
         'MsgBox(((startt - starttime) / timelength) * Panel1.Height)
         cell.Width = MonPanel.Width
         cell.Height = part * MonPanel.Height
@@ -807,5 +817,39 @@ Public Class Form1
 
     Private Sub ExitItem_Click(sender As Object, e As EventArgs) Handles ExitItem.Click
         Application.Exit()
+    End Sub
+
+    Private Sub AllColorSetItem_Click(sender As Object, e As EventArgs) Handles AllColorSetItem.Click
+        If ColorDialog1.ShowDialog() = DialogResult.OK Then
+            Dim tmp As String = ""
+            For Each s As String In courseData
+                s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ColorDialog1.Color))
+                tmp += "<course>" + s + "</course>" + vbCrLf
+            Next
+            writeTable(tmp)
+            updateCell()
+        End If
+    End Sub
+
+    Private Sub AllDarkerItem_Click(sender As Object, e As EventArgs) Handles AllDarkerItem.Click
+        Dim tmp As String = ""
+        For Each s As String In courseData
+            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
+            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
+            tmp += "<course>" + s + "</course>" + vbCrLf
+        Next
+        writeTable(tmp)
+        updateCell()
+    End Sub
+
+    Private Sub AllBrighterItem_Click(sender As Object, e As EventArgs) Handles AllBrighterItem.Click
+        Dim tmp As String = ""
+        For Each s As String In courseData
+            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
+            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
+            tmp += "<course>" + s + "</course>" + vbCrLf
+        Next
+        writeTable(tmp)
+        updateCell()
     End Sub
 End Class

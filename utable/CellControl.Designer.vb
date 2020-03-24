@@ -22,6 +22,7 @@ Partial Class CellControl
     '코드 편집기에서는 수정하지 마세요.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TopTimeLabel = New System.Windows.Forms.Label()
         Me.BottomTimeLabel = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -29,6 +30,7 @@ Partial Class CellControl
         Me.ProfLabel = New System.Windows.Forms.Label()
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.TopNotchPanel = New System.Windows.Forms.Panel()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -111,6 +113,10 @@ Partial Class CellControl
         Me.TopNotchPanel.Size = New System.Drawing.Size(144, 2)
         Me.TopNotchPanel.TabIndex = 3
         '
+        'Timer1
+        '
+        Me.Timer1.Enabled = True
+        '
         'CellControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -138,4 +144,5 @@ Partial Class CellControl
     Friend WithEvents ProfLabel As Label
     Friend WithEvents TitleLabel As Label
     Friend WithEvents TopNotchPanel As Panel
+    Friend WithEvents Timer1 As Timer
 End Class
