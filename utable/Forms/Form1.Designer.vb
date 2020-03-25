@@ -61,6 +61,7 @@ Partial Class Form1
         Me.AllColorSetItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AllDarkerItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AllBrighterItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MessageItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpacitySelectItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
         Me.GetFromETItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -70,7 +71,6 @@ Partial Class Form1
         Me.TimeCheck = New System.Windows.Forms.Timer(Me.components)
         Me.hideani = New System.Windows.Forms.Timer(Me.components)
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
-        Me.MessageItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TimeTable.SuspendLayout()
         Me.TopPanel.SuspendLayout()
         CType(Me.TitleEditBT, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -438,57 +438,58 @@ Partial Class Form1
         Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ChangeThemeItem, Me.SnapToEdgeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
         Me.BT1_menu.Name = "BT1_menu"
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
-        Me.BT1_menu.Size = New System.Drawing.Size(179, 208)
+        Me.BT1_menu.Size = New System.Drawing.Size(180, 230)
         '
         'BT1MenuTitle
         '
         Me.BT1MenuTitle.Enabled = False
         Me.BT1MenuTitle.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BT1MenuTitle.Name = "BT1MenuTitle"
-        Me.BT1MenuTitle.Size = New System.Drawing.Size(178, 24)
+        Me.BT1MenuTitle.Size = New System.Drawing.Size(179, 24)
         Me.BT1MenuTitle.Text = "uTable 0.1v"
         Me.BT1MenuTitle.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(175, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(176, 6)
         '
         'ChangeThemeItem
         '
         Me.ChangeThemeItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Menu_1_1, Me.Menu_1_2})
-        Me.ChangeThemeItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ChangeThemeItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ChangeThemeItem.Name = "ChangeThemeItem"
-        Me.ChangeThemeItem.Size = New System.Drawing.Size(178, 24)
-        Me.ChangeThemeItem.Text = "테마 바꾸기..."
+        Me.ChangeThemeItem.Size = New System.Drawing.Size(179, 24)
+        Me.ChangeThemeItem.Text = "테마 바꾸기"
         '
         'Menu_1_1
         '
         Me.Menu_1_1.Name = "Menu_1_1"
-        Me.Menu_1_1.Size = New System.Drawing.Size(165, 24)
+        Me.Menu_1_1.Size = New System.Drawing.Size(180, 24)
         Me.Menu_1_1.Text = "화이트 (기본)"
         '
         'Menu_1_2
         '
         Me.Menu_1_2.Name = "Menu_1_2"
-        Me.Menu_1_2.Size = New System.Drawing.Size(165, 24)
+        Me.Menu_1_2.Size = New System.Drawing.Size(180, 24)
         Me.Menu_1_2.Text = "다크"
         '
         'SnapToEdgeItem
         '
-        Me.SnapToEdgeItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.SnapToEdgeItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.SnapToEdgeItem.Name = "SnapToEdgeItem"
-        Me.SnapToEdgeItem.Size = New System.Drawing.Size(178, 24)
+        Me.SnapToEdgeItem.Size = New System.Drawing.Size(179, 24)
         Me.SnapToEdgeItem.Text = "창에 붙기"
         '
         'ColorSettingItem
         '
         Me.ColorSettingItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllColorSetItem, Me.AllDarkerItem, Me.AllBrighterItem, Me.MessageItem})
-        Me.ColorSettingItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ColorSettingItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ColorSettingItem.Name = "ColorSettingItem"
-        Me.ColorSettingItem.Size = New System.Drawing.Size(178, 24)
-        Me.ColorSettingItem.Text = "색상 설정..."
+        Me.ColorSettingItem.Size = New System.Drawing.Size(179, 24)
+        Me.ColorSettingItem.Text = "색상 설정"
         '
         'AllColorSetItem
         '
@@ -508,13 +509,21 @@ Partial Class Form1
         Me.AllBrighterItem.Size = New System.Drawing.Size(198, 24)
         Me.AllBrighterItem.Text = "모두 밝게"
         '
+        'MessageItem
+        '
+        Me.MessageItem.Enabled = False
+        Me.MessageItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.MessageItem.Name = "MessageItem"
+        Me.MessageItem.Size = New System.Drawing.Size(198, 24)
+        Me.MessageItem.Text = "주의: 본 설정은 되돌릴 수 없습니다"
+        '
         'OpacitySelectItem
         '
         Me.OpacitySelectItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripComboBox1})
-        Me.OpacitySelectItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.OpacitySelectItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.OpacitySelectItem.Name = "OpacitySelectItem"
-        Me.OpacitySelectItem.Size = New System.Drawing.Size(178, 24)
-        Me.OpacitySelectItem.Text = "투명도..."
+        Me.OpacitySelectItem.Size = New System.Drawing.Size(179, 24)
+        Me.OpacitySelectItem.Text = "투명도"
         '
         'ToolStripComboBox1
         '
@@ -524,32 +533,33 @@ Partial Class Form1
         Me.ToolStripComboBox1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ToolStripComboBox1.Items.AddRange(New Object() {"100% (불투명)", "90%", "80%", "70%", "60%", "50%", "40%", "30%", "20%"})
         Me.ToolStripComboBox1.Name = "ToolStripComboBox1"
+        Me.ToolStripComboBox1.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.ToolStripComboBox1.Size = New System.Drawing.Size(121, 25)
         '
         'GetFromETItem
         '
-        Me.GetFromETItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.GetFromETItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.GetFromETItem.Name = "GetFromETItem"
-        Me.GetFromETItem.Size = New System.Drawing.Size(178, 24)
+        Me.GetFromETItem.Size = New System.Drawing.Size(179, 24)
         Me.GetFromETItem.Text = "에타에서 불러오기"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(175, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(176, 6)
         '
         'OptionItem
         '
-        Me.OptionItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.OptionItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.OptionItem.Name = "OptionItem"
-        Me.OptionItem.Size = New System.Drawing.Size(178, 24)
+        Me.OptionItem.Size = New System.Drawing.Size(179, 24)
         Me.OptionItem.Text = "uTable 설정/정보"
         '
         'ExitItem
         '
-        Me.ExitItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ExitItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ExitItem.Name = "ExitItem"
-        Me.ExitItem.Size = New System.Drawing.Size(178, 24)
+        Me.ExitItem.Size = New System.Drawing.Size(179, 24)
         Me.ExitItem.Text = "uTable 종료"
         '
         'TimeCheck
@@ -565,14 +575,6 @@ Partial Class Form1
         '
         Me.ColorDialog1.AnyColor = True
         Me.ColorDialog1.FullOpen = True
-        '
-        'MessageItem
-        '
-        Me.MessageItem.Enabled = False
-        Me.MessageItem.Font = New System.Drawing.Font("맑은 고딕 Semilight", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.MessageItem.Name = "MessageItem"
-        Me.MessageItem.Size = New System.Drawing.Size(198, 24)
-        Me.MessageItem.Text = "주의: 본 설정은 되돌릴 수 없습니다"
         '
         'Form1
         '

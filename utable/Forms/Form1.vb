@@ -540,6 +540,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddCourseBT.Click
+        SetCourse.Close()
         SetCourse.SetDesktopLocation(Location.X + AddCourseBT.Location.X + AddCourseBT.Width - SetCourse.Width, Location.Y + DayTable.Location.Y)
         SetCourse.Show()
     End Sub
@@ -560,6 +561,13 @@ Public Class Form1
                 FadeIn(Me, Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath)))
             Else
                 FadeIn(Me, 1)
+            End If
+        End If
+
+        If Not checkStartUp() Then
+            If Not GetINI("SETTING", "NoStartupSuggestion", "0", ININamePath) = 1 Then
+                WindowState = FormWindowState.Normal
+                StartupAsk.ShowDialog(Me)
             End If
         End If
 
@@ -636,7 +644,7 @@ Public Class Form1
     End Sub
 
     Private Sub MenuBT_Click(sender As Object, e As EventArgs) Handles MenuBT.Click
-        BT1_menu.Show(Cursor.Position)
+        BT1_menu.Show(Cursor.Position.X - BT1_menu.Width, Cursor.Position.Y)
     End Sub
 
     Private Sub Menu_2_Click(sender As Object, e As EventArgs) Handles SnapToEdgeItem.Click

@@ -11,9 +11,10 @@
     <AssemblyName>uTable</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -81,6 +82,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\StartupAsk.Designer.vb">
+      <DependentUpon>StartupAsk.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StartupAsk.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Modules\DataModule.vb" />
     <Compile Include="Forms\EveryTimeBrowser.Designer.vb">
       <DependentUpon>EveryTimeBrowser.vb</DependentUpon>
@@ -145,6 +152,9 @@
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StartupAsk.resx">
+      <DependentUpon>StartupAsk.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LoadingSplash.resx">
       <DependentUpon>LoadingSplash.vb</DependentUpon>
     </EmbeddedResource>
@@ -189,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptable_icon.ico" />
+    <None Include="Resources\utable_icon.png" />
     <None Include="Resources\minicon_w.png" />
     <None Include="Resources\minicon_b.png" />
     <None Include="Resources\shadow1.png" />

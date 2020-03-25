@@ -318,4 +318,9 @@ Public Class OptionForm
             CustomFontBT.Text = FontDialog1.Font.Name
         End If
     End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        MsgBox("현재 버전은 " + My.Application.Info.Version.ToString + " 입니다." + vbCr + vbCr + "확인 버튼을 누르면 프로그램 페이지로 이동합니다.", vbInformation)
+        Process.Start("https://sw.pbj.kr/apps/utable")
+    End Sub
 End Class
