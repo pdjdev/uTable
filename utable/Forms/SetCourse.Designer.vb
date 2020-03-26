@@ -45,8 +45,8 @@ Partial Class SetCourse
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.ColorPasteBT = New System.Windows.Forms.Button()
         Me.ColorCopyBT = New System.Windows.Forms.Button()
-        Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
+        Me.TitleLabel = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -301,16 +301,6 @@ Partial Class SetCourse
         Me.ColorCopyBT.Text = "복사"
         Me.ColorCopyBT.UseVisualStyleBackColor = True
         '
-        'TitleLabel
-        '
-        Me.TitleLabel.AutoSize = True
-        Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕 Semilight", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.TitleLabel.Location = New System.Drawing.Point(18, 15)
-        Me.TitleLabel.Name = "TitleLabel"
-        Me.TitleLabel.Size = New System.Drawing.Size(153, 30)
-        Me.TitleLabel.TabIndex = 26
-        Me.TitleLabel.Text = "수업 추가/수정"
-        '
         'CloseBT
         '
         Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
@@ -320,6 +310,16 @@ Partial Class SetCourse
         Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.CloseBT.TabIndex = 27
         Me.CloseBT.TabStop = False
+        '
+        'TitleLabel
+        '
+        Me.TitleLabel.AutoSize = True
+        Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕 Semilight", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TitleLabel.Location = New System.Drawing.Point(18, 15)
+        Me.TitleLabel.Name = "TitleLabel"
+        Me.TitleLabel.Size = New System.Drawing.Size(153, 30)
+        Me.TitleLabel.TabIndex = 26
+        Me.TitleLabel.Text = "수업 추가/수정"
         '
         'SetCourse
         '

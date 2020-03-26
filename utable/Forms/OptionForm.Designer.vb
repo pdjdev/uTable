@@ -32,6 +32,7 @@ Partial Class OptionForm
         Me.TabBTB1 = New System.Windows.Forms.Panel()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.TabPage3 = New System.Windows.Forms.Panel()
+        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.SnapToEdgeChk = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -59,22 +60,21 @@ Partial Class OptionForm
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ExpandCellChk = New System.Windows.Forms.CheckBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
+        Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
-        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
+        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabBTB3.SuspendLayout()
         Me.TabBTB2.SuspendLayout()
         Me.TabBTB1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabBT1
@@ -193,6 +193,15 @@ Partial Class OptionForm
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Size = New System.Drawing.Size(473, 187)
         Me.TabPage3.TabIndex = 3
+        '
+        'BannerPictureBox
+        '
+        Me.BannerPictureBox.Location = New System.Drawing.Point(3, 11)
+        Me.BannerPictureBox.Name = "BannerPictureBox"
+        Me.BannerPictureBox.Size = New System.Drawing.Size(465, 44)
+        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.BannerPictureBox.TabIndex = 4
+        Me.BannerPictureBox.TabStop = False
         '
         'Label7
         '
@@ -479,7 +488,7 @@ Partial Class OptionForm
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.White
-        Me.Panel2.Controls.Add(Me.LinkLabel1)
+        Me.Panel2.Controls.Add(Me.WebPageLabel)
         Me.Panel2.Controls.Add(Me.CloseBT)
         Me.Panel2.Controls.Add(Me.Panel5)
         Me.Panel2.Controls.Add(Me.TableLayoutPanel1)
@@ -490,9 +499,18 @@ Partial Class OptionForm
         Me.Panel2.Size = New System.Drawing.Size(503, 260)
         Me.Panel2.TabIndex = 1
         '
-        'FontDialog1
+        'WebPageLabel
         '
-        Me.FontDialog1.ShowEffects = False
+        Me.WebPageLabel.AutoSize = True
+        Me.WebPageLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.WebPageLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.WebPageLabel.Location = New System.Drawing.Point(324, 21)
+        Me.WebPageLabel.Name = "WebPageLabel"
+        Me.WebPageLabel.Size = New System.Drawing.Size(125, 26)
+        Me.WebPageLabel.TabIndex = 5
+        Me.WebPageLabel.TabStop = True
+        Me.WebPageLabel.Text = "프로그램 페이지로 가기" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(최신 버전 확인)"
+        Me.WebPageLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'CloseBT
         '
@@ -503,27 +521,9 @@ Partial Class OptionForm
         Me.CloseBT.TabIndex = 4
         Me.CloseBT.TabStop = False
         '
-        'BannerPictureBox
+        'FontDialog1
         '
-        Me.BannerPictureBox.Location = New System.Drawing.Point(3, 11)
-        Me.BannerPictureBox.Name = "BannerPictureBox"
-        Me.BannerPictureBox.Size = New System.Drawing.Size(465, 44)
-        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.BannerPictureBox.TabIndex = 4
-        Me.BannerPictureBox.TabStop = False
-        '
-        'LinkLabel1
-        '
-        Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.LinkLabel1.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.LinkLabel1.Location = New System.Drawing.Point(324, 21)
-        Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(125, 26)
-        Me.LinkLabel1.TabIndex = 5
-        Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "프로그램 페이지로 가기" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(최신 버전 확인)"
-        Me.LinkLabel1.TextAlign = System.Drawing.ContentAlignment.TopRight
+        Me.FontDialog1.ShowEffects = False
         '
         'OptionForm
         '
@@ -535,6 +535,7 @@ Partial Class OptionForm
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximumSize = New System.Drawing.Size(505, 262)
         Me.Name = "OptionForm"
         Me.Padding = New System.Windows.Forms.Padding(1)
@@ -546,6 +547,7 @@ Partial Class OptionForm
         Me.TabBTB2.ResumeLayout(False)
         Me.TabBTB1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.Panel1.ResumeLayout(False)
@@ -556,7 +558,6 @@ Partial Class OptionForm
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -600,5 +601,5 @@ Partial Class OptionForm
     Friend WithEvents FontDialog1 As FontDialog
     Friend WithEvents ShowProfChk As CheckBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents WebPageLabel As LinkLabel
 End Class

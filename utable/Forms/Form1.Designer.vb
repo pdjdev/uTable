@@ -440,7 +440,7 @@ Partial Class Form1
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
-        Me.BT1_menu.Size = New System.Drawing.Size(180, 230)
+        Me.BT1_menu.Size = New System.Drawing.Size(180, 208)
         '
         'BT1MenuTitle
         '
@@ -467,13 +467,13 @@ Partial Class Form1
         'Menu_1_1
         '
         Me.Menu_1_1.Name = "Menu_1_1"
-        Me.Menu_1_1.Size = New System.Drawing.Size(180, 24)
+        Me.Menu_1_1.Size = New System.Drawing.Size(168, 24)
         Me.Menu_1_1.Text = "화이트 (기본)"
         '
         'Menu_1_2
         '
         Me.Menu_1_2.Name = "Menu_1_2"
-        Me.Menu_1_2.Size = New System.Drawing.Size(180, 24)
+        Me.Menu_1_2.Size = New System.Drawing.Size(168, 24)
         Me.Menu_1_2.Text = "다크"
         '
         'SnapToEdgeItem

@@ -593,13 +593,25 @@ Public Class Form1
 
     End Sub
 
+    Private Sub TitleEditBT_MouseEnter(sender As Object, e As EventArgs) Handles TitleEditBT.MouseEnter
+        TitleEditBT.BackColor = buttonActiveColor(colorMode)
+    End Sub
+
+    Private Sub TitleEditBT_MouseLeave(sender As Object, e As EventArgs) Handles TitleEditBT.MouseLeave
+        TitleEditBT.BackColor = Color.Transparent
+    End Sub
+
     Private Sub TitleEditBT_Click(sender As Object, e As EventArgs) Handles TitleEditBT.Click
         If titleEditMode Then
 
             Dim newtitle As String = RenameTitleTextBox.Text
 
             If newtitle = "" Then
-                MsgBox("값을 입력해 주십시오.", vbExclamation)
+                titleEditMode = False
+                TableTitleLabel.Visible = True
+                RenameTitleTextBox.Visible = False
+                TitleEditBT.Image = My.Resources.bt_titleedit
+
             Else
                 Try
                     Dim data As String = readTable()
@@ -840,7 +852,7 @@ Public Class Form1
     End Sub
 
     Private Sub AllDarkerItem_Click(sender As Object, e As EventArgs) Handles AllDarkerItem.Click
-        Dim tmp As String = ""
+        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
         For Each s As String In courseData
             Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
             s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
@@ -851,7 +863,7 @@ Public Class Form1
     End Sub
 
     Private Sub AllBrighterItem_Click(sender As Object, e As EventArgs) Handles AllBrighterItem.Click
-        Dim tmp As String = ""
+        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
         For Each s As String In courseData
             Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
             s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
