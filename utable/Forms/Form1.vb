@@ -416,7 +416,7 @@ Public Class Form1
             For Each s As String In courseData
                 addCell(Convert.ToInt16(getData(s, "start")),
                         Convert.ToInt16(getData(s, "end")),
-                        getData(s, "day") + "-" + getData(s, "name"),
+                        getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"),
                         getData(s, "name"),
                         getData(s, "prof"),
                         getData(s, "memo"),
@@ -462,7 +462,8 @@ Public Class Form1
         End If
 
         For Each s As String In courseData
-            resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")), getData(s, "day") + "-" + getData(s, "name"))
+            resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
+                       getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
         Next
 
         TimeTable.Visible = True
@@ -812,7 +813,8 @@ Public Class Form1
         If updated Then
 
             For Each s As String In courseData
-                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")), getData(s, "day") + "-" + getData(s, "name"))
+                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
+                           getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
             Next
 
             TimeTable.Visible = True

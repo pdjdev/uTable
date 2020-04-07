@@ -63,6 +63,7 @@ Partial Class OptionForm
         Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
+        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabBTB3.SuspendLayout()
         Me.TabBTB2.SuspendLayout()
@@ -176,18 +177,20 @@ Partial Class OptionForm
         '
         Me.RichTextBox1.BackColor = System.Drawing.Color.White
         Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RichTextBox1.ForeColor = System.Drawing.Color.Black
-        Me.RichTextBox1.Location = New System.Drawing.Point(3, 63)
+        Me.RichTextBox1.Location = New System.Drawing.Point(0, 45)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(465, 118)
+        Me.RichTextBox1.Size = New System.Drawing.Size(473, 129)
         Me.RichTextBox1.TabIndex = 3
         Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
         '
         'TabPage3
         '
-        Me.TabPage3.Controls.Add(Me.BannerPictureBox)
         Me.TabPage3.Controls.Add(Me.RichTextBox1)
+        Me.TabPage3.Controls.Add(Me.FeedbackLabel)
+        Me.TabPage3.Controls.Add(Me.BannerPictureBox)
         Me.TabPage3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabPage3.Location = New System.Drawing.Point(0, 0)
         Me.TabPage3.Name = "TabPage3"
@@ -196,9 +199,10 @@ Partial Class OptionForm
         '
         'BannerPictureBox
         '
-        Me.BannerPictureBox.Location = New System.Drawing.Point(3, 11)
+        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
+        Me.BannerPictureBox.Location = New System.Drawing.Point(0, 0)
         Me.BannerPictureBox.Name = "BannerPictureBox"
-        Me.BannerPictureBox.Size = New System.Drawing.Size(465, 44)
+        Me.BannerPictureBox.Size = New System.Drawing.Size(473, 45)
         Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.BannerPictureBox.TabIndex = 4
         Me.BannerPictureBox.TabStop = False
@@ -525,6 +529,21 @@ Partial Class OptionForm
         '
         Me.FontDialog1.ShowEffects = False
         '
+        'FeedbackLabel
+        '
+        Me.FeedbackLabel.AutoSize = True
+        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.FeedbackLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.FeedbackLabel.Location = New System.Drawing.Point(0, 174)
+        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(473, 0)
+        Me.FeedbackLabel.Name = "FeedbackLabel"
+        Me.FeedbackLabel.Size = New System.Drawing.Size(473, 13)
+        Me.FeedbackLabel.TabIndex = 6
+        Me.FeedbackLabel.TabStop = True
+        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
+        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
         'OptionForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -547,6 +566,7 @@ Partial Class OptionForm
         Me.TabBTB2.ResumeLayout(False)
         Me.TabBTB1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
         CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -602,4 +622,5 @@ Partial Class OptionForm
     Friend WithEvents ShowProfChk As CheckBox
     Friend WithEvents Label8 As Label
     Friend WithEvents WebPageLabel As LinkLabel
+    Friend WithEvents FeedbackLabel As LinkLabel
 End Class

@@ -30,7 +30,7 @@
         SetCourse.modifyMode = True
 
         For Each s As String In getDatas(readTable(), "course")
-            If getData(s, "day") + "-" + getData(s, "name") = Name Then
+            If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = Name Then
                 SetCourse.olddata = s
             End If
         Next
