@@ -141,6 +141,7 @@ Public Class SetCourse
 
     Sub modifyCourse(day As Integer, name As String, prof As String, memo As String, start As Integer, endt As Integer, color As Color)
         Dim data As String = readTable()
+
         Dim newdata As String = vbCrLf
         newdata += vbTab + "<day>" + day.ToString + "</day>" + vbCrLf
         newdata += vbTab + "<name>" + name + "</name>" + vbCrLf
@@ -151,6 +152,41 @@ Public Class SetCourse
         newdata += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
 
         writeTable(data.Replace(olddata, newdata))
+    End Sub
+
+    Sub modifyAllCourse(name As String, prof As String, memo As String, color As Color)
+        Dim data As String = readTable()
+        Dim olddatas As List(Of String) = multipleMidReturn("<course>", "</course>", data)
+
+        Dim tablename As String = Nothing
+
+        If Not data.Contains("<tablename>") Then
+            tablename = "이름 없는 시간표"
+        Else
+            If getData(data, "tablename") = "" Then
+                tablename = "이름 없는 시간표"
+            Else
+                tablename = getData(data, "tablename")
+            End If
+        End If
+
+        Dim newdata As String = ""
+        Dim oldname As String = getData(olddata, "name")
+
+        For Each i In olddatas
+            Dim tmp = i
+
+            If getData(i, "name") = oldname Then
+                tmp = tmp.Replace("<name>" + oldname + "</name>", "<name>" + name + "</name>")
+                tmp = tmp.Replace("<prof>" + getData(i, "prof") + "</prof>", "<prof>" + prof + "</prof>")
+                tmp = tmp.Replace("<memo>" + getData(i, "memo") + "</memo>", "<memo>" + memo + "</memo>")
+                tmp = tmp.Replace("<color>" + getData(i, "color") + "</color>", "<color>" + ColorTranslator.ToHtml(color) + "</color>")
+            End If
+
+            newdata += "<course>" + tmp + "</course>" + vbCrLf
+        Next
+
+        writeTable("<tablename>" + tablename + "</tablename>" + vbCrLf + newdata)
     End Sub
 
     Private Sub SetCourse_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -246,10 +282,32 @@ Public Class SetCourse
             Form1.updateCell()
             'MsgBox("추가되었습니다.", vbInformation)
         Else
-            modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
-            Form1.updateCell()
-            'MsgBox("수정되었습니다.", vbInformation)
-            Close()
+            '수정 모드일때
+            Dim count As Integer = 0
+            For Each s As String In prevData
+                '이전설정 이름이 여러개 이미 있을때
+                If getData(s, "name") = getData(olddata, "name") Then count += 1
+            Next
+
+            If count > 1 Then
+                If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업 또한 모두 바꾸시겠습니까? (시간, 요일 제외)", vbQuestion + vbYesNo) = vbYes Then
+                    modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
+                    modifyAllCourse(CourseNameTB.Text, ProfTB.Text, MemoTB.Text, ColorButton.BackColor)
+                    Form1.updateCell()
+                    'MsgBox("수정되었습니다.", vbInformation)
+                    Close()
+                Else
+                    modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
+                    Form1.updateCell()
+                    'MsgBox("수정되었습니다.", vbInformation)
+                    Close()
+                End If
+            Else
+                modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
+                Form1.updateCell()
+                'MsgBox("수정되었습니다.", vbInformation)
+                Close()
+            End If
 
         End If
 
