@@ -65,6 +65,7 @@ Partial Class SetCourse
         '
         Me.CourseNameTB.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.CourseNameTB.Location = New System.Drawing.Point(18, 73)
+        Me.CourseNameTB.MaxLength = 1000
         Me.CourseNameTB.Name = "CourseNameTB"
         Me.CourseNameTB.Size = New System.Drawing.Size(237, 25)
         Me.CourseNameTB.TabIndex = 1
@@ -86,6 +87,7 @@ Partial Class SetCourse
         '
         Me.ProfTB.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ProfTB.Location = New System.Drawing.Point(260, 73)
+        Me.ProfTB.MaxLength = 1000
         Me.ProfTB.Name = "ProfTB"
         Me.ProfTB.Size = New System.Drawing.Size(136, 25)
         Me.ProfTB.TabIndex = 2
@@ -155,6 +157,7 @@ Partial Class SetCourse
         '
         Me.MemoTB.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.MemoTB.Location = New System.Drawing.Point(18, 186)
+        Me.MemoTB.MaxLength = 20000
         Me.MemoTB.Multiline = True
         Me.MemoTB.Name = "MemoTB"
         Me.MemoTB.Size = New System.Drawing.Size(378, 63)

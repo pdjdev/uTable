@@ -203,13 +203,21 @@ Public Class SetCourse
 
             Dim data = olddata
 
-            CourseNameTB.Text = getData(data, "name")
-            ProfTB.Text = getData(data, "prof")
-            DayCombo.SelectedIndex = Convert.ToInt16(getData(data, "day"))
-            StartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "start")) \ 60, Convert.ToInt16(getData(data, "start")) Mod 60, 0)
-            EndTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "end")) \ 60, Convert.ToInt16(getData(data, "end")) Mod 60, 0)
-            MemoTB.Text = getData(data, "memo")
-            ColorButton.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
+            Try
+                CourseNameTB.Text = getData(data, "name")
+                ProfTB.Text = getData(data, "prof")
+                DayCombo.SelectedIndex = Convert.ToInt16(getData(data, "day"))
+                StartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "start")) \ 60, Convert.ToInt16(getData(data, "start")) Mod 60, 0)
+                EndTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "end")) \ 60, Convert.ToInt16(getData(data, "end")) Mod 60, 0)
+                MemoTB.Text = getData(data, "memo")
+                ColorButton.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
+
+            Catch ex As Exception
+                MsgBox("수업을 불러오는 도중 문제가 발생하였습니다." + vbCr + "해당 수업의 값이 올바른지 확인하고 삭제 후 다시 추가해 주세요.", vbCritical)
+
+            End Try
+
+
         Else
             TitleLabel.Text = "수업 추가"
             StartTimePicker.Value = Now

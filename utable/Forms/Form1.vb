@@ -397,6 +397,7 @@ Public Class Form1
         End If
 
         Text = TableTitleLabel.Text
+        courseData.Clear()
 
         If data.Contains("<course>") Then
             courseData = getDatas(data, "course")
@@ -505,7 +506,7 @@ Public Class Form1
         If startt Mod 60 = 0 Then
             cell.TopTimeLabel.Text += "00"
         Else
-            cell.TopTimeLabel.Text += (startt Mod 60).ToString
+            cell.TopTimeLabel.Text += (startt Mod 60).ToString("D2")
         End If
 
         cell.BottomTimeLabel.Text = (endt \ 60).ToString + ":"
@@ -513,8 +514,12 @@ Public Class Form1
         If endt Mod 60 = 0 Then
             cell.BottomTimeLabel.Text += "00"
         Else
-            cell.BottomTimeLabel.Text += (endt Mod 60).ToString
+            cell.BottomTimeLabel.Text += (endt Mod 60).ToString("D2")
         End If
+
+        If title.Length > 100 Then title = Mid(title, 1, 100) + "..."
+        If prof.Length > 50 Then prof = Mid(prof, 1, 50) + "..."
+        If memo.Length > 2000 Then memo = Mid(memo, 1, 2000) + "..."
 
         cell.TitleLabel.Text = title
         cell.ProfLabel.Text = prof
@@ -525,7 +530,6 @@ Public Class Form1
     End Sub
 
     Sub resizeCell(startt As Integer, endt As Integer, name As String)
-
         Dim timelength As Integer = endtime - starttime
         Dim part As Double = (endt - startt) / timelength
         Dim cell As CellControl = TimeTable.Controls.Find(name, True).First
