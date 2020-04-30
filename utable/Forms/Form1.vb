@@ -330,8 +330,6 @@ Public Class Form1
             End If
         Next
 
-        If Not IsOnScreen(Me) Then Location = New Point(100, 100) '디스플레이 범위 밖일시 걍 초기화
-
         'For Each scrn In Screen.AllScreens
         ' If scrn.DeviceName = GetINI("SETTING", "WindowDisplay", "", ININamePath) Then
         ' Me.Location = scrn.Bounds.Location
@@ -553,6 +551,28 @@ Public Class Form1
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         formshown = True
         Refresh()
+
+        If Not IsOnScreen(Me) Then
+
+            Dim scrn = Screen.GetWorkingArea(Me)
+            Dim workArea = New Point(scrn.Location.X + scrn.Width, scrn.Location.Y + scrn.Height)
+            Dim tmpLoc As New Point(0, 0)
+
+            If Location.X < 0 Then
+                tmpLoc.X = 0
+            ElseIf Location.X > workArea.X - Me.Width Then
+                tmpLoc.X = workArea.X - Me.Width
+            End If
+
+            If Location.Y < 0 Then
+                tmpLoc.Y = 0
+            ElseIf Location.Y > workArea.Y - Me.Height Then
+                tmpLoc.Y = workArea.Y - Me.Height
+            End If
+
+            Location = tmpLoc '디스플레이 범위 밖일시 안으로 넣기
+            'MsgBox("바운더리 밖입니다.")
+        End If
 
         If GetINI("SETTING", "MinStart", "", ININamePath) = "1" Then
             WindowState = FormWindowState.Minimized
