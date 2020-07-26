@@ -1,7 +1,7 @@
 ﻿Public Class CellControl
     Public defHeight As Integer = 0
     Public defLoc As Integer = 0
-    Dim alwaysExpand As Boolean = False
+    Public alwaysExpand As Boolean = False
     Dim doExpand As Boolean = True
 
     Dim hovered As Boolean = False
@@ -96,12 +96,17 @@
         End If
     End Sub
 
+    Public Sub ForceExpand()
+        If Height < TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height Then
+            Height = TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height
+        End If
+    End Sub
+
     Sub ChangeFont(ctrl As Control, fntname As String, style As FontStyle)
         ctrl.Font = New Font(fntname, ctrl.Font.Size, style)
     End Sub
 
     Private Sub TopNotchPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopNotchPanel.Paint
-
         TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
     End Sub
 

@@ -32,7 +32,7 @@ Partial Class OptionForm
         Me.TabBTB1 = New System.Windows.Forms.Panel()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.TabPage3 = New System.Windows.Forms.Panel()
-        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
+        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.SnapToEdgeChk = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -61,21 +61,21 @@ Partial Class OptionForm
         Me.ExpandCellChk = New System.Windows.Forms.CheckBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
-        Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
-        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
+        Me.CloseBT = New System.Windows.Forms.PictureBox()
+        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabBTB3.SuspendLayout()
         Me.TabBTB2.SuspendLayout()
         Me.TabBTB1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabBT1
@@ -197,15 +197,20 @@ Partial Class OptionForm
         Me.TabPage3.Size = New System.Drawing.Size(473, 187)
         Me.TabPage3.TabIndex = 3
         '
-        'BannerPictureBox
+        'FeedbackLabel
         '
-        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
-        Me.BannerPictureBox.Location = New System.Drawing.Point(0, 0)
-        Me.BannerPictureBox.Name = "BannerPictureBox"
-        Me.BannerPictureBox.Size = New System.Drawing.Size(473, 45)
-        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.BannerPictureBox.TabIndex = 4
-        Me.BannerPictureBox.TabStop = False
+        Me.FeedbackLabel.AutoSize = True
+        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.FeedbackLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.FeedbackLabel.Location = New System.Drawing.Point(0, 174)
+        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(473, 0)
+        Me.FeedbackLabel.Name = "FeedbackLabel"
+        Me.FeedbackLabel.Size = New System.Drawing.Size(473, 13)
+        Me.FeedbackLabel.TabIndex = 6
+        Me.FeedbackLabel.TabStop = True
+        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
+        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'Label7
         '
@@ -516,6 +521,10 @@ Partial Class OptionForm
         Me.WebPageLabel.Text = "프로그램 페이지로 가기" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(최신 버전 확인)"
         Me.WebPageLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
+        'FontDialog1
+        '
+        Me.FontDialog1.ShowEffects = False
+        '
         'CloseBT
         '
         Me.CloseBT.Location = New System.Drawing.Point(454, 18)
@@ -525,24 +534,15 @@ Partial Class OptionForm
         Me.CloseBT.TabIndex = 4
         Me.CloseBT.TabStop = False
         '
-        'FontDialog1
+        'BannerPictureBox
         '
-        Me.FontDialog1.ShowEffects = False
-        '
-        'FeedbackLabel
-        '
-        Me.FeedbackLabel.AutoSize = True
-        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.FeedbackLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.FeedbackLabel.Location = New System.Drawing.Point(0, 174)
-        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(473, 0)
-        Me.FeedbackLabel.Name = "FeedbackLabel"
-        Me.FeedbackLabel.Size = New System.Drawing.Size(473, 13)
-        Me.FeedbackLabel.TabIndex = 6
-        Me.FeedbackLabel.TabStop = True
-        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
-        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
+        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
+        Me.BannerPictureBox.Location = New System.Drawing.Point(0, 0)
+        Me.BannerPictureBox.Name = "BannerPictureBox"
+        Me.BannerPictureBox.Size = New System.Drawing.Size(473, 45)
+        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.BannerPictureBox.TabIndex = 4
+        Me.BannerPictureBox.TabStop = False
         '
         'OptionForm
         '
@@ -567,7 +567,6 @@ Partial Class OptionForm
         Me.TabBTB1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.Panel1.ResumeLayout(False)
@@ -578,6 +577,7 @@ Partial Class OptionForm
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

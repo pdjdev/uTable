@@ -11,7 +11,7 @@
     <AssemblyName>uTable</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -84,6 +84,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Forms\EverytimeSemesterSelector.Designer.vb">
+      <DependentUpon>EverytimeSemesterSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EverytimeSemesterSelector.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\StartupAsk.Designer.vb">
       <DependentUpon>StartupAsk.vb</DependentUpon>
     </Compile>
@@ -151,6 +157,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\EveryTimeBrowser.resx">
       <DependentUpon>EveryTimeBrowser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EverytimeSemesterSelector.resx">
+      <DependentUpon>EverytimeSemesterSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>

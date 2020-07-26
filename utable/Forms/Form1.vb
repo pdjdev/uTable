@@ -437,18 +437,18 @@ Public Class Form1
 
         DayTable.Visible = Not (GetINI("SETTING", "ShowDay", "", ININamePath) = "0")
 
-        If showSaturday Then '토요일 표시
+        If showSunday Then '토+일요일 표시
+            For i = 0 To 6
+                DayTable.ColumnStyles(i).Width = 14.28
+                TimeTable.ColumnStyles(i).Width = 14.28
+            Next
+        ElseIf showSaturday Then '토요일 표시
             For i = 0 To 5
                 DayTable.ColumnStyles(i).Width = 16.67
                 TimeTable.ColumnStyles(i).Width = 16.67
             Next
             DayTable.ColumnStyles(6).Width = 0
             TimeTable.ColumnStyles(6).Width = 0
-        ElseIf showSunday Then '토+일요일 표시
-            For i = 0 To 6
-                DayTable.ColumnStyles(i).Width = 14.28
-                TimeTable.ColumnStyles(i).Width = 14.28
-            Next
         Else '둘다 안표시
             For i = 0 To 4
                 DayTable.ColumnStyles(i).Width = 20
@@ -540,6 +540,8 @@ Public Class Form1
         cell.Width = MonPanel.Width
         cell.Height = part * MonPanel.Height
         cell.defHeight = part * MonPanel.Height
+
+        If cell.alwaysExpand Then cell.ForceExpand()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddCourseBT.Click
@@ -799,11 +801,15 @@ Public Class Form1
                 FriLabel.BackColor = activeDayColor(colorMode)
                 FriLabel.ForeColor = activeDayTextColor(colorMode)
             Case DayOfWeek.Saturday
-                SatLabel.BackColor = activeDayColor(colorMode)
-                SatLabel.ForeColor = activeDayTextColor(colorMode)
+                If showSaturday Then
+                    SatLabel.BackColor = activeDayColor(colorMode)
+                    SatLabel.ForeColor = activeDayTextColor(colorMode)
+                End If
             Case DayOfWeek.Sunday
-                SunLabel.BackColor = activeDayColor(colorMode)
-                SunLabel.ForeColor = activeDayTextColor(colorMode)
+                If showSunday Then
+                    SunLabel.BackColor = activeDayColor(colorMode)
+                    SunLabel.ForeColor = activeDayTextColor(colorMode)
+                End If
         End Select
 
         Dim fdw As DateTime = DateTime.Today.AddDays(-Weekday(DateTime.Today, FirstDayOfWeek.System) + 2)
@@ -821,7 +827,8 @@ Public Class Form1
                + "기존에 설정한 시간표'Default.ptdata'는 지워지므로 필요한 경우 백업하시기 바랍니다" + vbCr + vbCr _
                + "계속하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
             EveryTimeBrowser.Close()
-            EveryTimeBrowser.ShowDialog(Me)
+            EverytimeSemesterSelector.Close()
+            EverytimeSemesterSelector.ShowDialog(Me)
         End If
 
     End Sub

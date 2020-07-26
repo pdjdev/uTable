@@ -1,5 +1,9 @@
 ﻿Public Class EveryTimeBrowser
+    Public targetUrl As String
+    Dim webdone As Boolean = False
     Dim source As String
+
+    Dim trialCount As Integer = 0
 
 #Region "Aero 그림자 효과 (Vista이상)"
 
@@ -26,6 +30,10 @@
         LoadingSplash1.Location = New Point((Width - LoadingSplash1.Width) / 2, (Height - LoadingSplash1.Height) / 2)
         LoadingSplash1.highColor = Color.DarkGray
         LoadingSplash1.lowColor = Color.LightGray
+
+        WebBrowser1.Navigate(targetUrl)
+        trialCount = 0
+
         Refresh()
     End Sub
 
@@ -33,13 +41,15 @@
         source = WebBrowser1.Document.Body.InnerHtml
         LoadingSplash1.Visible = False
 
-        If source.Contains("<div class=""tablebody"">") Then
-            WebBrowser1.Visible = False
-            WebBrowser1.Dock = DockStyle.None
-            WebBrowser1.Width = 1920
-            TableChecker.Start()
+        If Not source = Nothing Then
+            If source.Contains("<div class=""tablebody"">") Then
+                Label1.Text = "시간표를 불러오는 중..."
+                WebBrowser1.Visible = False
+                WebBrowser1.Dock = DockStyle.None
+                WebBrowser1.Width = 1920
+                TableChecker.Start()
+            End If
         End If
-
     End Sub
 
     Private Sub TableChecker_Tick(sender As Object, e As EventArgs) Handles TableChecker.Tick
@@ -122,6 +132,14 @@
                 Close()
             End If
 
+        Else
+            trialCount += 1
+
+            If trialCount = 10 Then
+                MsgBox("시간표가 불러와지지 않는 것 같습니다.." + vbCr + vbCr _
+                       + "현재 시간표가 비어 있거나 인터넷 연결이 원활하지 않거나 에브리타임 사이트 구조 변경으로 인해 프로그램이 시간표 값을 읽는 데 문제가 발생한 것일 수 있습니다." _
+                       + vbCr + vbCr + "시간표가 비어 있는지 확인해 보시고 시간표가 채워져 있는데도 여전히 불러올 수 없다면 최신 버전을 확인해 보시고, 최신 버전인데도 같은 문제가 발생한다면 '프로그램 설정' > '정보' > '오류 보고/피드백 남기기' 텍스트를 클릭하셔서 접수해주시면 가능한 빨리 업데이트하도록 하겠습니다.", vbInformation)
+            End If
         End If
 
     End Sub

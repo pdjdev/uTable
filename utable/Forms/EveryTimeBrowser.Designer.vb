@@ -27,8 +27,8 @@ Partial Class EveryTimeBrowser
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.TableChecker = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.LoadingSplash1 = New uTable.LoadingSplash()
         Me.Panel1.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -42,10 +42,11 @@ Partial Class EveryTimeBrowser
         Me.WebBrowser1.Name = "WebBrowser1"
         Me.WebBrowser1.Size = New System.Drawing.Size(380, 398)
         Me.WebBrowser1.TabIndex = 0
-        Me.WebBrowser1.Url = New System.Uri("https://everytime.kr/timetable", System.UriKind.Absolute)
+        Me.WebBrowser1.Url = New System.Uri("", System.UriKind.Relative)
         '
         'TableChecker
         '
+        Me.TableChecker.Interval = 500
         '
         'Panel1
         '
@@ -59,17 +60,6 @@ Partial Class EveryTimeBrowser
         Me.Panel1.Size = New System.Drawing.Size(380, 463)
         Me.Panel1.TabIndex = 1
         '
-        'CloseBT
-        '
-        Me.CloseBT.BackColor = System.Drawing.Color.White
-        Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
-        Me.CloseBT.Location = New System.Drawing.Point(347, 3)
-        Me.CloseBT.Name = "CloseBT"
-        Me.CloseBT.Size = New System.Drawing.Size(30, 30)
-        Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.CloseBT.TabIndex = 29
-        Me.CloseBT.TabStop = False
-        '
         'Label1
         '
         Me.Label1.BackColor = System.Drawing.Color.White
@@ -82,6 +72,17 @@ Partial Class EveryTimeBrowser
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "시간표를 불러 올 에브리타임 계정으로" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "로그인 해 주세요."
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'CloseBT
+        '
+        Me.CloseBT.BackColor = System.Drawing.Color.White
+        Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
+        Me.CloseBT.Location = New System.Drawing.Point(347, 3)
+        Me.CloseBT.Name = "CloseBT"
+        Me.CloseBT.Size = New System.Drawing.Size(30, 30)
+        Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.CloseBT.TabIndex = 29
+        Me.CloseBT.TabStop = False
         '
         'LoadingSplash1
         '
