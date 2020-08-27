@@ -1,8 +1,19 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.ComponentModel
+Imports System.Net
+Imports System.Runtime.InteropServices
+Imports System.Web
 
 Public Class OptionForm
     Public colormode As String = Nothing
     Dim loaded As Boolean = False
+    Dim newVersion As String = Nothing
+
+    Dim updateAvailabe As Boolean = False
+    Dim downUrl As String = ""
+    Dim updHtml As String = ""
+    Dim WithEvents wc As New Net.WebClient
+
+    Dim downComplete As Boolean = False
 
 #Region "Aero 그림자 효과 (Vista이상)"
 
@@ -73,7 +84,7 @@ Public Class OptionForm
         SettingMenu1.SettingLabel.Text = "기본 설정"
         SettingMenu2.SettingLabel.Text = "시간표 설정"
         SettingMenu3.SettingLabel.Text = "데이터 설정"
-        SettingMenu4.SettingLabel.Text = "기타 설정"
+        SettingMenu4.SettingLabel.Text = "업데이트"
         SettingMenu5.SettingLabel.Text = "프로그램 정보"
 
         SwitchMode(1)
@@ -165,6 +176,7 @@ Public Class OptionForm
 
         RichTextBox1.BackColor = mainColor(colormode)
         RichTextBox1.ForeColor = textColor(colormode)
+        WebPageLabel.LinkColor = lightTextColor(colormode)
         FeedbackLabel.LinkColor = lightTextColor(colormode)
 
         CustomFontBT.BackColor = buttonColor(colormode)
@@ -221,6 +233,12 @@ Public Class OptionForm
                 TabPage3.Visible = False
                 TabPage4.Visible = True
                 TabPage5.Visible = False
+
+                If downUrl = "" And UpdateChecker.IsBusy = False Then
+                    UpdateChecker.RunWorkerAsync()
+                    UpdateChkButton.Enabled = False
+                    DoUpdateButton.Enabled = False
+                End If
 
             Case 5
                 SettingMenu5.SelectionUpdate(True, colormode)
@@ -399,7 +417,148 @@ Public Class OptionForm
         Process.Start("https://sw.pbj.kr/apps/utable/report")
     End Sub
 
-    Private Sub RichTextBox1_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles RichTextBox1.LinkClicked
+    Private Sub RichTextBox_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles RichTextBox1.LinkClicked
         Process.Start(e.LinkText)
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles UpdateChkButton.Click
+        If UpdateChecker.IsBusy = False Then
+            newVersion = Nothing
+            updateAvailabe = False
+            downUrl = ""
+            updHtml = ""
+            wc = New Net.WebClient
+
+            Label11.Text = "확인 중입니다..."
+            Label10.Text = "확인 중입니다..."
+
+            UpdateChecker.RunWorkerAsync()
+            UpdateChkButton.Enabled = False
+            DoUpdateButton.Enabled = False
+        End If
+    End Sub
+
+    Private Sub UpdateChecker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles UpdateChecker.DoWork
+        Threading.Thread.Sleep(500)
+
+        Try
+            Dim source As String = webget("https://github.com/pdjdev/utable/releases.atom")
+            Dim entry As String = getData(source, "entry")
+            downUrl = "https://github.com/pdjdev/uTable/releases/download/" + getData(entry, "title") + "/uTable.exe"
+            updHtml = midReturn("<content type=""html"">", "</content>", entry)
+
+            Dim version = From c In getData(entry, "title")
+                          Where Char.IsDigit(c) OrElse c = "."
+                          Select num = c.ToString
+
+            newVersion = Join(version.ToArray, "")
+            updateAvailabe = Convert.ToDouble(newVersion) > GetAppVersion()
+        Catch ex As Exception
+            downUrl = "error"
+        End Try
+
+        Threading.Thread.Sleep(500)
+    End Sub
+
+    Function GetAppVersion() As Double
+        Dim tmp As String = My.Application.Info.Version.Major.ToString + "." _
+            + My.Application.Info.Version.Minor.ToString _
+            + My.Application.Info.Version.Build.ToString _
+            + My.Application.Info.Version.Revision.ToString
+
+        Return Convert.ToDouble(tmp)
+    End Function
+
+    Private Sub UpdateChecker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles UpdateChecker.RunWorkerCompleted
+        If Not downUrl = "error" Then
+            Label10.Text = GetAppVersion().ToString + "v"
+            Label11.Text = newVersion + "v"
+
+            If updateAvailabe Then
+                Label10.Text += " (최신 버전이 아닙니다!)"
+            Else
+                Label10.Text += " (최신 버전입니다)"
+            End If
+
+            WebBrowser1.Navigate("about:blank") '브라우저 초기화
+            WebBrowser1.Document.Write("<font face=""맑은 고딕"" size=""2"">" + HttpUtility.HtmlDecode(updHtml))
+            WebBrowser1.Refresh()
+
+            DoUpdateButton.Enabled = updateAvailabe
+            UpdateChkButton.Enabled = True
+        Else
+            Label10.Text = "오류 발생"
+            Label11.Text = "(인터넷 연결을 확인해주세요)"
+
+            UpdateChkButton.Enabled = True
+        End If
+    End Sub
+
+    Private Sub DoUpdateButton_Click(sender As Object, e As EventArgs) Handles DoUpdateButton.Click
+        If downComplete Then
+            DoUpdateTask()
+        Else
+            If MsgBox("다운로드 후 뜨게 될 작업창을 닫지 마시고 기다려주시면 자동으로 업데이트가 완료됩니다." + vbCr _
+                  + "만일 업데이트를 실패했다면 직접 다운로드 페이지로 가서 받으시기 바랍니다. (시간표, 설정 값은 그대로 유지됩니다)" + vbCr + vbCr _
+                  + "계속하시려면 '예' 를 눌러주세요.", vbYesNo + vbInformation) = vbYes Then
+                wc.CancelAsync()
+                DoUpdateButton.Enabled = False
+
+                Try
+                    wc.DownloadFileAsync(New Uri(downUrl), "tmp.exe")
+                Catch ex As Exception
+                    MsgBox("다운로드에 실패하였습니다. 인터넷 연결을 확인해 주시고 다시 시도해 주세요.", vbCritical)
+                    DoUpdateButton.Text = "다시 시도"
+                    DoUpdateButton.Enabled = True
+                    downComplete = False
+                End Try
+            End If
+        End If
+    End Sub
+
+    Private Sub wc_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles wc.DownloadProgressChanged
+        DoUpdateButton.Text = e.ProgressPercentage.ToString + "%"
+    End Sub
+
+    Private Sub wc_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles wc.DownloadFileCompleted
+        DoUpdateButton.Text = "작업 중..."
+        downComplete = True
+
+        DoUpdateTask()
+    End Sub
+
+    Sub DoUpdateTask()
+        Try
+            Dim procStartInfo As New ProcessStartInfo
+            Dim procExecuting As New Process
+
+            With procStartInfo
+                .UseShellExecute = True
+                .FileName = "cmd.exe"
+                .WindowStyle = ProcessWindowStyle.Normal
+                .Verb = "runas" 'add this to prompt for elevation
+                .Arguments = "/k @echo off & echo 잠시만 기다려 주세요... & taskkill /f /im utable.exe >nul " _
+                    + "& cd " + Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf("\")) _
+                    + " & timeout /t 2 /nobreak >nul" _
+                    + " & del /f uTable.exe & timeout /t 1 >nul" _
+                    + " & rename tmp.exe uTable.exe" _
+                    + " & timeout /t 1 /nobreak >nul" _
+                    + " & start uTable.exe & exit"
+            End With
+
+            procExecuting = Process.Start(procStartInfo)
+        Catch ex As Exception
+            MsgBox("업데이트 작업에 실패했습니다." + vbCr + vbCr + "사용자 계정 컨트롤 창에서 '예'를 클릭하셨는지 확인해 주시고 다시 시도해 주세요.", vbCritical)
+            DoUpdateButton.Text = "다시 시도"
+            DoUpdateButton.Enabled = True
+        End Try
+    End Sub
+
+    Private Sub ForceUpd_CheckedChanged(sender As Object, e As EventArgs) Handles ForceUpdChk.CheckedChanged
+        If Not downUrl = "" And ForceUpdChk.Checked Or updateAvailabe Then
+            DoUpdateButton.Enabled = True
+        Else
+            DoUpdateButton.Enabled = False
+        End If
     End Sub
 End Class

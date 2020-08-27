@@ -10,15 +10,13 @@ Module DataModule
         'MsgBox(url)
 
         Dim sourcestr As String = Nothing
-
         sourcestr = source.DownloadString(url)
-
 
         Return sourcestr
     End Function
 
     'xml형식 파일을 전체값에서 따로 추출하는 함수
-    Public Function getData(datastr As String, name As String)
+    Public Function getData(datastr As String, name As String) As String
 
         Return midReturn("<" + name + ">", "</" + name + ">", datastr)
 
