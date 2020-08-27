@@ -586,7 +586,7 @@ Partial Class Form1
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Icon = My.Resources.ptable_icon
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(500, 400)
         Me.Name = "Form1"

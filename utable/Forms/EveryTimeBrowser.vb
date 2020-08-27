@@ -1,4 +1,5 @@
 ﻿Public Class EveryTimeBrowser
+    Dim colorMode As String = Nothing '시간표 채울때 색상에 맞추도록
     Public targetUrl As String
     Dim webdone As Boolean = False
     Dim source As String
@@ -25,6 +26,7 @@
 
     Private Sub EveryTimeBrowser_Load(sender As Object, e As EventArgs) Handles Me.Load
         Opacity = 0
+        colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
 
         LoadingSplash1.BackColor = Color.White
         LoadingSplash1.Location = New Point((Width - LoadingSplash1.Width) / 2, (Height - LoadingSplash1.Height) / 2)
@@ -101,6 +103,11 @@
                             Case Else
                                 color = Color.DarkGray
                         End Select
+
+                        '다크 모드로 설정되었을시 어둡게 설정하기
+                        If colorMode = "Dark" Then
+                            color = ControlPaint.Dark(color, 0.2)
+                        End If
 
                         tabledata += "<course>" + vbCrLf
                         tabledata += vbTab + "<day>" + day.ToString + "</day>" + vbCrLf

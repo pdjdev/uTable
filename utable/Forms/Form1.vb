@@ -834,6 +834,7 @@ Public Class Form1
     End Sub
 
     Private Sub Menu_5_Click(sender As Object, e As EventArgs) Handles OptionItem.Click
+        OptionForm.Close()
         OptionForm.SetDesktopLocation(Location.X + Width - OptionForm.Width, Location.Y + TopPanel.Location.Y + TopPanel.Height)
         OptionForm.ShowDialog(Me)
     End Sub

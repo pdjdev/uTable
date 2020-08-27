@@ -45,8 +45,8 @@ Partial Class SetCourse
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.ColorPasteBT = New System.Windows.Forms.Button()
         Me.ColorCopyBT = New System.Windows.Forms.Button()
-        Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.TitleLabel = New System.Windows.Forms.Label()
+        Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.Panel1.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -304,16 +304,6 @@ Partial Class SetCourse
         Me.ColorCopyBT.Text = "복사"
         Me.ColorCopyBT.UseVisualStyleBackColor = True
         '
-        'CloseBT
-        '
-        Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
-        Me.CloseBT.Location = New System.Drawing.Point(364, 18)
-        Me.CloseBT.Name = "CloseBT"
-        Me.CloseBT.Size = New System.Drawing.Size(32, 32)
-        Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.CloseBT.TabIndex = 27
-        Me.CloseBT.TabStop = False
-        '
         'TitleLabel
         '
         Me.TitleLabel.AutoSize = True
@@ -324,6 +314,16 @@ Partial Class SetCourse
         Me.TitleLabel.TabIndex = 26
         Me.TitleLabel.Text = "수업 추가/수정"
         '
+        'CloseBT
+        '
+        Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
+        Me.CloseBT.Location = New System.Drawing.Point(364, 18)
+        Me.CloseBT.Name = "CloseBT"
+        Me.CloseBT.Size = New System.Drawing.Size(32, 32)
+        Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.CloseBT.TabIndex = 27
+        Me.CloseBT.TabStop = False
+        '
         'SetCourse
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -333,7 +333,7 @@ Partial Class SetCourse
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Icon = My.Resources.ptable_icon
         Me.Name = "SetCourse"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual

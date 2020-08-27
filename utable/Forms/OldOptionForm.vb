@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 
-Public Class OptionForm
-    Public colormode As String = Nothing
+Public Class OldOptionForm
+    Dim colormode As String = Nothing
     Dim loaded As Boolean = False
 
 #Region "Aero 그림자 효과 (Vista이상)"
@@ -31,7 +31,7 @@ Public Class OptionForm
         SendMessage(Me.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0)
     End Sub
 
-    Private Sub MoveArea_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles TitlePanel.MouseDown, TitleLabel.MouseDown
+    Private Sub MoveArea_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Panel2.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left And Me.WindowState <> FormWindowState.Maximized Then
             MoveForm()
         End If
@@ -48,35 +48,10 @@ Public Class OptionForm
         FadeOut(Me)
     End Sub
 
-    Private Sub CloseBT_MouseEnter(sender As Object, e As EventArgs) Handles CloseBT.MouseEnter
-        CloseBT.BackColor = buttonActiveColor(colormode)
-    End Sub
-
-    Private Sub CloseBT_MouseLeave(sender As Object, e As EventArgs) Handles CloseBT.MouseLeave
-        CloseBT.BackColor = Color.Transparent
-    End Sub
-
-    Private Sub CloseBT_Click(sender As Object, e As EventArgs) Handles CloseBT.Click
-        Close()
-    End Sub
-
-    Private Sub OptionForm2_Load(sender As Object, e As EventArgs) Handles Me.Load
-        UpdateColor()
+    Private Sub OptionForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         Opacity = 0
-
-        SettingMenu1.index = 1
-        SettingMenu2.index = 2
-        SettingMenu3.index = 3
-        SettingMenu4.index = 4
-        SettingMenu5.index = 5
-
-        SettingMenu1.SettingLabel.Text = "기본 설정"
-        SettingMenu2.SettingLabel.Text = "시간표 설정"
-        SettingMenu3.SettingLabel.Text = "데이터 설정"
-        SettingMenu4.SettingLabel.Text = "기타 설정"
-        SettingMenu5.SettingLabel.Text = "프로그램 정보"
-
-        SwitchMode(1)
+        UpdateColor()
+        ModeSelect(1)
 
         '설정 체크
         StartupChk.Checked = checkStartUp()
@@ -157,14 +132,14 @@ Public Class OptionForm
         colormode = GetINI("SETTING", "ColorMode", "", ININamePath)
 
         BackColor = edgeColor(colormode)
-        TitlePanel.BackColor = tableColor_1(colormode)
-        TitleLabel.ForeColor = textColor(colormode)
-        MainPanel.BackColor = mainColor(colormode)
-        MainPanel.ForeColor = textColor(colormode)
-        SidePanel.BackColor = buttonActiveColor(colormode)
-
+        Panel2.BackColor = mainColor(colormode)
+        Panel2.ForeColor = textColor(colormode)
+        TabBT1.BackColor = mainColor(colormode)
+        TabBT2.BackColor = mainColor(colormode)
+        TabBT3.BackColor = mainColor(colormode)
         RichTextBox1.BackColor = mainColor(colormode)
         RichTextBox1.ForeColor = textColor(colormode)
+        WebPageLabel.LinkColor = lightTextColor(colormode)
         FeedbackLabel.LinkColor = lightTextColor(colormode)
 
         CustomFontBT.BackColor = buttonColor(colormode)
@@ -182,56 +157,76 @@ Public Class OptionForm
         End Select
     End Sub
 
-    Public Sub SwitchMode(mode As Integer)
-        SettingMenu1.SelectionUpdate(False, colormode)
-        SettingMenu2.SelectionUpdate(False, colormode)
-        SettingMenu3.SelectionUpdate(False, colormode)
-        SettingMenu4.SelectionUpdate(False, colormode)
-        SettingMenu5.SelectionUpdate(False, colormode)
-
-        Select Case mode
+    Public Sub ModeSelect(page As Integer)
+        Select Case page
             Case 1
-                SettingMenu1.SelectionUpdate(True, colormode)
                 TabPage1.Visible = True
                 TabPage2.Visible = False
                 TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = False
+                TabBT1.Font = New Font(TabBT1.Font, FontStyle.Bold)
+                TabBT2.Font = New Font(TabBT1.Font, FontStyle.Regular)
+                TabBT3.Font = New Font(TabBT1.Font, FontStyle.Regular)
+                TabBTB1.BackColor = FocusedTabColor(colormode)
+                TabBTB2.BackColor = UnfocusedTabColor(colormode)
+                TabBTB3.BackColor = UnfocusedTabColor(colormode)
+                TabBT1.ForeColor = FocusedTabColor(colormode)
+                TabBT2.ForeColor = UnfocusedTabColor(colormode)
+                TabBT3.ForeColor = UnfocusedTabColor(colormode)
 
             Case 2
-                SettingMenu2.SelectionUpdate(True, colormode)
                 TabPage1.Visible = False
                 TabPage2.Visible = True
                 TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = False
+                TabBT1.Font = New Font(TabBT1.Font, FontStyle.Regular)
+                TabBT2.Font = New Font(TabBT1.Font, FontStyle.Bold)
+                TabBT3.Font = New Font(TabBT1.Font, FontStyle.Regular)
+                TabBTB1.BackColor = UnfocusedTabColor(colormode)
+                TabBTB2.BackColor = FocusedTabColor(colormode)
+                TabBTB3.BackColor = UnfocusedTabColor(colormode)
+                TabBT1.ForeColor = UnfocusedTabColor(colormode)
+                TabBT2.ForeColor = FocusedTabColor(colormode)
+                TabBT3.ForeColor = UnfocusedTabColor(colormode)
 
             Case 3
-                SettingMenu3.SelectionUpdate(True, colormode)
                 TabPage1.Visible = False
                 TabPage2.Visible = False
                 TabPage3.Visible = True
-                TabPage4.Visible = False
-                TabPage5.Visible = False
-
-            Case 4
-                SettingMenu4.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = False
-                TabPage3.Visible = False
-                TabPage4.Visible = True
-                TabPage5.Visible = False
-
-            Case 5
-                SettingMenu5.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = False
-                TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = True
+                TabBT1.Font = New Font(TabBT1.Font, FontStyle.Regular)
+                TabBT2.Font = New Font(TabBT1.Font, FontStyle.Regular)
+                TabBT3.Font = New Font(TabBT1.Font, FontStyle.Bold)
+                TabBTB1.BackColor = UnfocusedTabColor(colormode)
+                TabBTB2.BackColor = UnfocusedTabColor(colormode)
+                TabBTB3.BackColor = FocusedTabColor(colormode)
+                TabBT1.ForeColor = UnfocusedTabColor(colormode)
+                TabBT2.ForeColor = UnfocusedTabColor(colormode)
+                TabBT3.ForeColor = FocusedTabColor(colormode)
 
         End Select
+    End Sub
 
+    Private Sub TabBT1_Click(sender As Object, e As EventArgs) Handles TabBT1.Click
+        ModeSelect(1)
+        OptionForm.Show()
+    End Sub
+
+    Private Sub TabBT2_Click(sender As Object, e As EventArgs) Handles TabBT2.Click
+        ModeSelect(2)
+    End Sub
+
+    Private Sub TabBT3_Click(sender As Object, e As EventArgs) Handles TabBT3.Click
+        ModeSelect(3)
+    End Sub
+
+    Private Sub CloseBT_MouseEnter(sender As Object, e As EventArgs) Handles CloseBT.MouseEnter
+        CloseBT.BackColor = buttonActiveColor(colormode)
+    End Sub
+
+    Private Sub CloseBT_MouseLeave(sender As Object, e As EventArgs) Handles CloseBT.MouseLeave
+        CloseBT.BackColor = Color.Transparent
+    End Sub
+
+    Private Sub CloseBT_Click(sender As Object, e As EventArgs) Handles CloseBT.Click
+        Close()
     End Sub
 
     Private Sub StartupChk_CheckedChanged(sender As Object, e As EventArgs) Handles StartupChk.CheckedChanged
@@ -303,16 +298,10 @@ Public Class OptionForm
             SetINI("SETTING", "ColorMode", "White", ININamePath)
         End If
 
-        SettingMenu1.first = True
-        SettingMenu2.first = True
-        SettingMenu3.first = True
-        SettingMenu4.first = True
-        SettingMenu5.first = True
-
         If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
         Form1.UpdateColor()
         UpdateColor()
-        SwitchMode(1)
+        ModeSelect(1)
     End Sub
 
     Sub ApplySetting(key As String, value As Boolean)
@@ -397,9 +386,5 @@ Public Class OptionForm
     Private Sub FeedbackLabel_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles FeedbackLabel.LinkClicked
         InfoCopy()
         Process.Start("https://sw.pbj.kr/apps/utable/report")
-    End Sub
-
-    Private Sub RichTextBox1_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles RichTextBox1.LinkClicked
-        Process.Start(e.LinkText)
     End Sub
 End Class
