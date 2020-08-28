@@ -97,8 +97,7 @@
         showChkBox = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
 
         ChkBox1.Visible = showChkBox
-
-        CheckStateUpdate()
+        If showChkBox Then CheckStateUpdate()
 
         If alwaysExpand Then
             Dim fullheight As Integer = TopTimeLabel.Height + TitleLabel.Height + BottomTimeLabel.Height
