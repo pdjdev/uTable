@@ -8,6 +8,7 @@
     Public Sub SelectionUpdate(selection As Boolean, cm As String)
         selected = selection
         colormode = cm
+
         If selected Then
             HighlightPanel.BackColor = FocusedTabColor(colormode)
             SettingLabel.Font = New Font(SettingLabel.Font, FontStyle.Bold)
@@ -24,6 +25,10 @@
             SettingLabel.BackColor = goalColor
             first = False
         End If
+
+        If Not selected Then HighlightPanel.BackColor = goalColor
+
+        Refresh()
     End Sub
 
     Private Sub SettingLabel_Click(sender As Object, e As EventArgs) Handles SettingLabel.Click
@@ -64,6 +69,7 @@
 
             SettingLabel.BackColor = Color.FromArgb(R, G, B)
             Panel6.BackColor = Color.FromArgb(R, G, B)
+            If Not selected Then HighlightPanel.BackColor = Color.FromArgb(R, G, B)
         End If
     End Sub
 

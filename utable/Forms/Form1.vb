@@ -348,6 +348,7 @@ Public Class Form1
 
                 'BT1_menu 폰트 바꾸기 : 속성이 상속되지 않는지라 노가다해야함
                 If GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
+                    ClearCheckBoxItem.Font = New Font(fntname, ClearCheckBoxItem.Font.Size)
                     BT1MenuTitle.Font = New Font(fntname, BT1MenuTitle.Font.Size)
                     ChangeThemeItem.Font = New Font(fntname, ChangeThemeItem.Font.Size)
                     SnapToEdgeItem.Font = New Font(fntname, SnapToEdgeItem.Font.Size)

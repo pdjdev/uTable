@@ -15,6 +15,14 @@ Public Class OptionForm
 
     Dim downComplete As Boolean = False
 
+    '시간표 내보내기용
+    Dim tableData As String = Nothing
+
+    Dim exeFullpath As String = Application.ExecutablePath
+    Dim exePath = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
+    Dim exeName = Mid(exeFullpath, exeFullpath.LastIndexOf("\") + 2)
+
+
 #Region "Aero 그림자 효과 (Vista이상)"
 
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
@@ -72,6 +80,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub OptionForm2_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Opacity = 0
 
         If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" And GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
             If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
@@ -81,7 +90,6 @@ Public Class OptionForm
         End If
 
         UpdateColor()
-        Opacity = 0
 
         SettingMenu1.index = 1
         SettingMenu2.index = 2
@@ -173,6 +181,13 @@ Public Class OptionForm
                 W_ThemeRbt.Checked = True
         End Select
 
+        '임의경로 기본값 = 0
+        CustomSaveDirChk.Checked = (GetINI("SETTING", "CustomSaveDir", "", ININamePath) = "1")
+        CustomDirPanel.Enabled = CustomSaveDirChk.Checked
+
+        SaveDirectoryTB.Text = GetINI("SETTING", "SaveDirectory", "", ININamePath)
+        SaveNameTB.Text = GetINI("SETTING", "SaveName", "", ININamePath)
+
         If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
             Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
             FontPrevLabel.Font = New Font(fntname, FontPrevLabel.Font.Size)
@@ -180,6 +195,7 @@ Public Class OptionForm
         End If
 
         loaded = True
+        Me.Refresh()
     End Sub
 
     Public Sub UpdateColor()
@@ -203,6 +219,31 @@ Public Class OptionForm
         CustomFontBT.FlatAppearance.BorderColor = BorderColor(colormode)
         CustomFontBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
         CustomFontBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+
+        FolderBrowBT.BackColor = buttonColor(colormode)
+        FolderBrowBT.FlatAppearance.BorderColor = BorderColor(colormode)
+        FolderBrowBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+        FolderBrowBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+
+        CheckAndApplyDirSettingBT.BackColor = buttonColor(colormode)
+        CheckAndApplyDirSettingBT.FlatAppearance.BorderColor = BorderColor(colormode)
+        CheckAndApplyDirSettingBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+        CheckAndApplyDirSettingBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+
+        SaveToFileBT.BackColor = buttonColor(colormode)
+        SaveToFileBT.FlatAppearance.BorderColor = BorderColor(colormode)
+        SaveToFileBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+        SaveToFileBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+
+        CopyToClipboardBT.BackColor = buttonColor(colormode)
+        CopyToClipboardBT.FlatAppearance.BorderColor = BorderColor(colormode)
+        CopyToClipboardBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+        CopyToClipboardBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+
+        ImportDataBT.BackColor = buttonColor(colormode)
+        ImportDataBT.FlatAppearance.BorderColor = BorderColor(colormode)
+        ImportDataBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+        ImportDataBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
 
         UpdateChkButton.BackColor = buttonColor(colormode)
         UpdateChkButton.FlatAppearance.BorderColor = BorderColor(colormode)
@@ -269,6 +310,7 @@ Public Class OptionForm
                     UpdateChecker.RunWorkerAsync()
                     UpdateChkButton.Enabled = False
                     DoUpdateButton.Enabled = False
+                    ForceUpdChk.Enabled = False
                 End If
 
             Case 5
@@ -371,7 +413,8 @@ Public Class OptionForm
             DayLabel.Text = ""
         End If
 
-        Dim names As String() = {"James", "John", "Alex", "Josh", "BMO", "Jenny", "Finn", "Eve", "Mordecai", "Eileen"}
+        Dim names As String() = {"James", "John", "Alex", "Josh", "Jake", "BMO", "Jenny",
+            "Finn", "Eve", "Mordecai", "Eileen", "Jane", "Benson", "Emily", "Bridgette"}
         Dim rnd As New Random
 
         Dim cell As New CellControl
@@ -437,6 +480,7 @@ Public Class OptionForm
         If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
         Form1.UpdateColor()
         UpdateColor()
+
         SwitchMode(1)
     End Sub
 
@@ -528,6 +572,11 @@ Public Class OptionForm
         Process.Start(e.LinkText)
     End Sub
 
+    Private Sub CustomSaveDirChk_CheckedChanged(sender As Object, e As EventArgs) Handles CustomSaveDirChk.CheckedChanged
+        ApplySetting("CustomSaveDir", CustomSaveDirChk.Checked)
+        CustomDirPanel.Enabled = CustomSaveDirChk.Checked
+    End Sub
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles UpdateChkButton.Click
         If UpdateChecker.IsBusy = False Then
             WebBrowser1.Navigate("about:blank")
@@ -544,6 +593,7 @@ Public Class OptionForm
             UpdateChecker.RunWorkerAsync()
             UpdateChkButton.Enabled = False
             DoUpdateButton.Enabled = False
+            ForceUpdChk.Enabled = False
         End If
     End Sub
 
@@ -594,12 +644,14 @@ Public Class OptionForm
             WebBrowser1.Refresh()
 
             DoUpdateButton.Enabled = updateAvailabe
+            ForceUpdChk.Enabled = True
             UpdateChkButton.Enabled = True
         Else
             Label10.Text = "오류 발생"
             Label11.Text = "(인터넷 연결을 확인해주세요)"
 
             UpdateChkButton.Enabled = True
+            ForceUpdChk.Enabled = False
         End If
     End Sub
 
@@ -608,7 +660,7 @@ Public Class OptionForm
             DoUpdateTask()
         Else
             If MsgBox("다운로드 후 뜨게 될 작업창을 닫지 마시고 기다려주시면 자동으로 업데이트가 완료됩니다." + vbCr _
-                  + "만일 업데이트를 실패했다면 직접 다운로드 페이지로 가서 받으시기 바랍니다. (시간표, 설정 값은 그대로 유지됩니다)" + vbCr + vbCr _
+                  + "만일 업데이트를 실패했다면 직접 다운로드 페이지로 가서 받으시기 바랍니다. (시간표, 설정 값은 같은 실행 위치에 저장 후 실행하면 그대로 유지됩니다)" + vbCr + vbCr _
                   + "계속하시려면 '예' 를 눌러주세요.", vbYesNo + vbInformation) = vbYes Then
                 wc.CancelAsync()
                 DoUpdateButton.Enabled = False
@@ -646,13 +698,13 @@ Public Class OptionForm
                 .FileName = "cmd.exe"
                 .WindowStyle = ProcessWindowStyle.Normal
                 .Verb = "runas" 'add this to prompt for elevation
-                .Arguments = "/k @echo off & echo 잠시만 기다려 주세요... & taskkill /f /im utable.exe >nul " _
-                    + "& cd " + Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf("\")) _
+                .Arguments = "/k @echo off & mode con: cols=30 lines=3 & echo 잠시만 기다려 주세요... & taskkill /f /im " + exeName + " >nul " _
+                    + "& cd " + exePath _
                     + " & timeout /t 2 /nobreak >nul" _
-                    + " & del /f uTable.exe & timeout /t 1 >nul" _
-                    + " & rename tmp.exe uTable.exe" _
+                    + " & del /f " + exeName + " & timeout /t 1 >nul" _
+                    + " & rename tmp.exe " + exeName _
                     + " & timeout /t 1 /nobreak >nul" _
-                    + " & start uTable.exe & exit"
+                    + " & start " + exeName + " & exit"
             End With
 
             procExecuting = Process.Start(procStartInfo)
@@ -669,5 +721,202 @@ Public Class OptionForm
         Else
             DoUpdateButton.Enabled = False
         End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles SaveToFileBT.Click
+        If TableSaveRbt.Checked Then
+            tableData = readTable()
+
+            If Not (tableData.Contains("<tablename>") Or tableData.Contains("<course>")) Then
+                MsgBox("시간표를 만들어 주세요.", vbInformation)
+            Else
+                Dim title As String = "이름 없는 시간표"
+                If tableData.Contains("<tablename>") Then title = getData(tableData, "tablename")
+
+                SaveFileDialog1.FileName = title
+                SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
+                SaveFileDialog1.DefaultExt = "utdata"
+                SaveFileDialog1.ShowDialog()
+            End If
+
+        ElseIf SettingSaveRbt.Checked Then
+            SaveFileDialog1.FileName = "settings"
+            SaveFileDialog1.Filter = "INI 파일|*.ini|모든 파일|*.*"
+            SaveFileDialog1.DefaultExt = "ini"
+            SaveFileDialog1.ShowDialog()
+        End If
+
+    End Sub
+
+    Private Sub SaveFileDialog1_FileOk(sender As Object, e As CancelEventArgs) Handles SaveFileDialog1.FileOk
+        If TableSaveRbt.Checked Then
+            Try
+                Dim file As System.IO.StreamWriter
+                file = My.Computer.FileSystem.OpenTextFileWriter(SaveFileDialog1.FileName, False)
+                file.Write(tableData)
+                file.Close()
+            Catch ex As Exception
+                MsgBox("저장 도중 문제가 발생했습니다.", vbCritical)
+            End Try
+        ElseIf SettingSaveRbt.Checked Then
+            If ININamePath = SaveFileDialog1.FileName Then
+                MsgBox("설정 파일과 지정한 위치가 같습니다.", vbCritical)
+                Exit Sub
+            End If
+
+            Try
+                FileIO.FileSystem.CopyFile(ININamePath, SaveFileDialog1.FileName, True)
+            Catch ex As Exception
+                MsgBox("저장 도중 문제가 발생했습니다.", vbCritical)
+            End Try
+        End If
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles CopyToClipboardBT.Click
+        If TableSaveRbt.Checked Then
+            tableData = readTable()
+
+            If tableData = "" Then
+                MsgBox("시간표를 만들어 주세요.", vbInformation)
+            Else
+                Try
+                    Clipboard.SetText(tableData)
+                    MsgBox("복사되었습니다.", vbInformation)
+                Catch ex As Exception
+                    MsgBox("복사 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
+                End Try
+            End If
+
+        ElseIf SettingSaveRbt.Checked Then
+            Try
+                Dim settingData As String = My.Computer.FileSystem.ReadAllText(ININamePath, System.Text.Encoding.Default)
+                Clipboard.SetText(settingData)
+                MsgBox("복사되었습니다.", vbInformation)
+            Catch ex As Exception
+                MsgBox("복사 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
+            End Try
+        End If
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles ImportDataBT.Click
+        Dim clipboardTxt As String = Clipboard.GetText()
+
+        If TableSaveRbt.Checked Then
+            If clipboardTxt.Contains("<tablename>") Or clipboardTxt.Contains("<course>") Then
+                If MsgBox("클립보드에서 시간표 서식을 찾았습니다. 불러오시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
+                    Try
+                        writeTable(clipboardTxt)
+                        Form1.updateCell()
+                    Catch ex As Exception
+                        MsgBox("시간표 적용 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
+                    End Try
+                End If
+            End If
+
+            OpenFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
+            OpenFileDialog1.DefaultExt = "utdata"
+            OpenFileDialog1.ShowDialog()
+
+        ElseIf SettingSaveRbt.Checked Then
+            If clipboardTxt.Contains("[SETTING]") Then
+                If MsgBox("클립보드에서 설정값 데이터를 찾았습니다. 불러오시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
+                    Try
+                        My.Computer.FileSystem.WriteAllText(ININamePath, clipboardTxt, False, System.Text.Encoding.GetEncoding(949))
+                        reStarter()
+                        Exit Sub
+                    Catch ex As Exception
+                        MsgBox("설정 적용 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
+                    End Try
+                End If
+            End If
+
+            OpenFileDialog1.FileName = "settings"
+            OpenFileDialog1.Filter = "INI 파일|*.ini|모든 파일|*.*"
+            OpenFileDialog1.DefaultExt = "ini"
+            OpenFileDialog1.ShowDialog()
+        End If
+    End Sub
+
+    Sub reStarter()
+        MsgBox("'확인'을 눌러 프로그램을 다시 시작합니다.", vbInformation)
+
+        Dim procStartInfo As New ProcessStartInfo
+        Dim procExecuting As New Process
+
+        With procStartInfo
+            .UseShellExecute = True
+            .FileName = "cmd.exe"
+            .WindowStyle = ProcessWindowStyle.Hidden
+            .Arguments = "/k @echo off & taskkill /f /im " + exeName + " >nul " _
+                + " & timeout /t 1 /nobreak >nul" _
+                + " & start """" """ + exeFullpath + """ & exit"
+        End With
+
+        procExecuting = Process.Start(procStartInfo)
+    End Sub
+
+    Private Sub OpenFileDialog1_FileOk(sender As Object, e As CancelEventArgs) Handles OpenFileDialog1.FileOk
+        Try
+            If TableSaveRbt.Checked Then
+                Dim data As String = My.Computer.FileSystem.ReadAllText(OpenFileDialog1.FileName, System.Text.Encoding.GetEncoding(949))
+                If data.Contains("<tablename>") Or data.Contains("<course>") Then
+                    writeTable(data)
+                Else
+                    MsgBox("올바른 시간표 파일이 아닙니다.", vbCritical)
+                End If
+                Form1.updateCell()
+
+            ElseIf SettingSaveRbt.Checked Then
+                FileIO.FileSystem.CopyFile(OpenFileDialog1.FileName, ININamePath, True)
+                reStarter()
+            End If
+
+        Catch ex As Exception
+            MsgBox("저장 도중 문제가 발생했습니다.", vbCritical)
+        End Try
+    End Sub
+
+    Private Sub FolderBrowBT_Click_1(sender As Object, e As EventArgs) Handles FolderBrowBT.Click
+        FolderBrowserDialog1.SelectedPath = exePath
+        If FolderBrowserDialog1.ShowDialog() = DialogResult.OK Then
+            SaveDirectoryTB.Text = FolderBrowserDialog1.SelectedPath
+        End If
+    End Sub
+
+    Private Sub CheckAndApplyDirSettingBT_Click(sender As Object, e As EventArgs) Handles CheckAndApplyDirSettingBT.Click
+        If Not SaveDirectoryTB.Text = "" And Not My.Computer.FileSystem.DirectoryExists(SaveDirectoryTB.Text) Then
+            MsgBox("경로가 올바르지 않습니다.", vbExclamation)
+            Exit Sub
+        End If
+
+        If Not SaveNameTB.Text = "" And Not FilenameIsOK(SaveNameTB.Text) Then
+            MsgBox("파일명 형식이 올바르지 않습니다." + vbCr + vbCr + "파일명으로 쓸 수 없는 기호가 있다면 지우고 다시 시도해 주세요.", vbCritical)
+            Exit Sub
+        End If
+
+        Try
+            tableData = readTable()
+
+            If tableData.Contains("<tablename>") Or tableData.Contains("<course>") Then
+                If MsgBox("현재 시간표를 설정한 위치로 복사하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
+                    Dim tmpDir As String = exePath
+                    Dim tmpName As String = "default.utdata"
+
+                    If Not SaveDirectoryTB.Text = "" Then tmpDir = SaveDirectoryTB.Text
+                    If Not SaveNameTB.Text = "" Then tmpName = SaveNameTB.Text + ".utdata"
+                    FileIO.FileSystem.CopyFile(TableSaveLocation(), tmpDir + "\" + tmpName, True)
+                End If
+            End If
+
+            SetINI("SETTING", "SaveDirectory", SaveDirectoryTB.Text, ININamePath)
+            SetINI("SETTING", "SaveName", SaveNameTB.Text, ININamePath)
+
+            reStarter()
+
+        Catch ex As Exception
+            MsgBox("오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
+
+        End Try
+
     End Sub
 End Class
