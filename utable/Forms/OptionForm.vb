@@ -72,6 +72,14 @@ Public Class OptionForm
     End Sub
 
     Private Sub OptionForm2_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" And GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
+            If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
+                Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
+                ChangeToCustomFont(Me, fntname)
+            End If
+        End If
+
         UpdateColor()
         Opacity = 0
 
@@ -86,6 +94,8 @@ Public Class OptionForm
         SettingMenu3.SettingLabel.Text = "데이터 설정"
         SettingMenu4.SettingLabel.Text = "업데이트"
         SettingMenu5.SettingLabel.Text = "프로그램 정보"
+
+        VersionLabel.Text = "유테이블 " + GetAppVersion.ToString + "v   -  by PBJSoftware 2020"
 
         SwitchMode(1)
 
@@ -140,12 +150,21 @@ Public Class OptionForm
             ShowMemoChk.Checked = True
         End If
 
+        '체크박스표시 기본값 = 1
+        If GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0" Then
+            ShowChkBoxChk.Checked = False
+        Else
+            ShowChkBoxChk.Checked = True
+        End If
+
         '텍스트색상반전 기본값 = 0
         BlackTextChk.Checked = (GetINI("SETTING", "BlackText", "", ININamePath) = "1")
 
         '커스텀폰트 기본값 = 0
         CustomFontChk.Checked = (GetINI("SETTING", "CustomFont", "", ININamePath) = "1")
+        ApplyAllGUIFontsChk.Checked = (GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1")
         CustomFontBT.Enabled = CustomFontChk.Checked
+        ApplyAllGUIFontsChk.Enabled = CustomFontChk.Checked
 
         Select Case GetINI("SETTING", "ColorMode", "", ININamePath)
             Case "Dark"
@@ -178,11 +197,22 @@ Public Class OptionForm
         RichTextBox1.ForeColor = textColor(colormode)
         WebPageLabel.LinkColor = lightTextColor(colormode)
         FeedbackLabel.LinkColor = lightTextColor(colormode)
+        VersionLabel.ForeColor = lightTextColor(colormode)
 
         CustomFontBT.BackColor = buttonColor(colormode)
         CustomFontBT.FlatAppearance.BorderColor = BorderColor(colormode)
         CustomFontBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
         CustomFontBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+
+        UpdateChkButton.BackColor = buttonColor(colormode)
+        UpdateChkButton.FlatAppearance.BorderColor = BorderColor(colormode)
+        UpdateChkButton.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+        UpdateChkButton.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+
+        DoUpdateButton.BackColor = buttonColor(colormode)
+        DoUpdateButton.FlatAppearance.BorderColor = BorderColor(colormode)
+        DoUpdateButton.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+        DoUpdateButton.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
 
         Select Case colormode
             Case "Dark"
@@ -217,6 +247,7 @@ Public Class OptionForm
                 TabPage3.Visible = False
                 TabPage4.Visible = False
                 TabPage5.Visible = False
+                PrevUpdate() '시간표 업데이트
 
             Case 3
                 SettingMenu3.SelectionUpdate(True, colormode)
@@ -291,9 +322,84 @@ Public Class OptionForm
         ApplySetting("BlackText", BlackTextChk.Checked)
     End Sub
 
+    Private Sub ShowChkBoxChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowChkBoxChk.CheckedChanged
+        ApplySetting("ShowChkBox", ShowChkBoxChk.Checked)
+    End Sub
+
+    Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
+        ShowDayChk.CheckedChanged, ShowProfChk.CheckedChanged, ShowMemoChk.CheckedChanged, BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged
+        PrevUpdate()
+    End Sub
+
+    '시간표 미리보기 업데이트
+    Sub PrevUpdate()
+        PrevTableArea.Controls.Clear()
+
+        If ShowDayChk.Checked Then
+            If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" Then
+                If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
+                    Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
+                    DayLabel.Font = New Font(fntname, DayLabel.Font.Size, FontStyle.Bold)
+                End If
+            End If
+
+            DayLabel.BackColor = activeDayColor(colormode)
+            DayLabel.ForeColor = activeDayTextColor(colormode)
+
+            DayLabel.Text = Now.Day.ToString + " "
+
+            Select Case Now.DayOfWeek
+                Case DayOfWeek.Monday
+                    DayLabel.Text += "월"
+                Case DayOfWeek.Tuesday
+                    DayLabel.Text += "화"
+                Case DayOfWeek.Wednesday
+                    DayLabel.Text += "수"
+                Case DayOfWeek.Thursday
+                    DayLabel.Text += "목"
+                Case DayOfWeek.Friday
+                    DayLabel.Text += "금"
+                Case DayOfWeek.Saturday
+                    DayLabel.Text += "토"
+                Case DayOfWeek.Sunday
+                    DayLabel.Text += "일"
+            End Select
+
+            DayLabel.Text += "요일"
+        Else
+            DayLabel.BackColor = PrevTablePanel.BackColor
+            DayLabel.Text = ""
+        End If
+
+        Dim names As String() = {"James", "John", "Alex", "Josh", "BMO", "Jenny", "Finn", "Eve", "Mordecai", "Eileen"}
+        Dim rnd As New Random
+
+        Dim cell As New CellControl
+        With cell
+            .Name = "DemoCellControl"
+            .Dock = DockStyle.Top
+            .Height = PrevTableArea.Height * 0.6
+            .defHeight = PrevTableArea.Height * 0.6
+
+            .TopTimeLabel.Text = "12:27"
+            .BottomTimeLabel.Text = "13:27"
+
+            .TitleLabel.Text = "수업명"
+            .ProfLabel.Text = names(rnd.Next(0, names.Count)) + " 교수님"
+            .MemoLabel.Text = "메모 내용"
+        End With
+
+        PrevTableArea.Controls.Add(cell)
+    End Sub
+
     Private Sub CustomFontChk_CheckedChanged(sender As Object, e As EventArgs) Handles CustomFontChk.CheckedChanged
         ApplySetting("CustomFont", CustomFontChk.Checked)
         CustomFontBT.Enabled = CustomFontChk.Checked
+        ApplyAllGUIFontsChk.Enabled = CustomFontChk.Checked
+    End Sub
+
+    Private Sub ApplyAllGUIFontsChk_CheckedChanged(sender As Object, e As EventArgs) Handles ApplyAllGUIFontsChk.CheckedChanged
+        ApplySetting("ApplyAllGUIFonts", ApplyAllGUIFontsChk.Checked)
     End Sub
 
     Private Sub MinStartChk_CheckedChanged(sender As Object, e As EventArgs) Handles MinStartChk.CheckedChanged
@@ -310,7 +416,8 @@ Public Class OptionForm
 
     '바로 적용 보여주기 위해 시간표 새로고침
     Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged,
-        AlwaysExpandChk.CheckedChanged, ShowDayChk.CheckedChanged, ShowMemoChk.CheckedChanged, ShowProfChk.CheckedChanged, BlackTextChk.CheckedChanged
+        AlwaysExpandChk.CheckedChanged, ShowDayChk.CheckedChanged, ShowMemoChk.CheckedChanged, ShowProfChk.CheckedChanged,
+        BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged
         If loaded Then Form1.updateCell()
     End Sub
 
@@ -423,6 +530,8 @@ Public Class OptionForm
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles UpdateChkButton.Click
         If UpdateChecker.IsBusy = False Then
+            WebBrowser1.Navigate("about:blank")
+
             newVersion = Nothing
             updateAvailabe = False
             downUrl = ""

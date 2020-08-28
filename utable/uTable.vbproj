@@ -230,6 +230,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptable_icon.ico" />
+    <None Include="Resources\check1_b.png" />
+    <None Include="Resources\check0_b.png" />
+    <None Include="Resources\check1_w.png" />
+    <None Include="Resources\check0_w.png" />
     <None Include="Resources\utable_icon.png" />
     <None Include="Resources\minicon_w.png" />
     <None Include="Resources\minicon_b.png" />

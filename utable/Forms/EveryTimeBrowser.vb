@@ -28,6 +28,13 @@
         Opacity = 0
         colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
 
+        If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" And GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
+            If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
+                Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
+                ChangeToCustomFont(Me, fntname)
+            End If
+        End If
+
         LoadingSplash1.BackColor = Color.White
         LoadingSplash1.Location = New Point((Width - LoadingSplash1.Width) / 2, (Height - LoadingSplash1.Height) / 2)
         LoadingSplash1.highColor = Color.DarkGray

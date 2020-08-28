@@ -33,6 +33,7 @@ Partial Class OldOptionForm
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.TabPage3 = New System.Windows.Forms.Panel()
         Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
+        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.SnapToEdgeChk = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -61,21 +62,20 @@ Partial Class OldOptionForm
         Me.ExpandCellChk = New System.Windows.Forms.CheckBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
-        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
-        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
+        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabBTB3.SuspendLayout()
         Me.TabBTB2.SuspendLayout()
         Me.TabBTB1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel5.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabBT1
@@ -211,6 +211,16 @@ Partial Class OldOptionForm
         Me.FeedbackLabel.TabStop = True
         Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
         Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'BannerPictureBox
+        '
+        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
+        Me.BannerPictureBox.Location = New System.Drawing.Point(0, 0)
+        Me.BannerPictureBox.Name = "BannerPictureBox"
+        Me.BannerPictureBox.Size = New System.Drawing.Size(473, 45)
+        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.BannerPictureBox.TabIndex = 4
+        Me.BannerPictureBox.TabStop = False
         '
         'Label7
         '
@@ -521,10 +531,6 @@ Partial Class OldOptionForm
         Me.WebPageLabel.Text = "프로그램 페이지로 가기" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(최신 버전 확인)"
         Me.WebPageLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
-        'FontDialog1
-        '
-        Me.FontDialog1.ShowEffects = False
-        '
         'CloseBT
         '
         Me.CloseBT.Location = New System.Drawing.Point(454, 18)
@@ -534,17 +540,11 @@ Partial Class OldOptionForm
         Me.CloseBT.TabIndex = 4
         Me.CloseBT.TabStop = False
         '
-        'BannerPictureBox
+        'FontDialog1
         '
-        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
-        Me.BannerPictureBox.Location = New System.Drawing.Point(0, 0)
-        Me.BannerPictureBox.Name = "BannerPictureBox"
-        Me.BannerPictureBox.Size = New System.Drawing.Size(473, 45)
-        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.BannerPictureBox.TabIndex = 4
-        Me.BannerPictureBox.TabStop = False
+        Me.FontDialog1.ShowEffects = False
         '
-        'OptionForm
+        'OldOptionForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -554,9 +554,9 @@ Partial Class OldOptionForm
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = My.Resources.ptable_icon
+        Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.MaximumSize = New System.Drawing.Size(505, 262)
-        Me.Name = "OptionForm"
+        Me.Name = "OldOptionForm"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "InfoForm"
@@ -567,6 +567,7 @@ Partial Class OldOptionForm
         Me.TabBTB1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.Panel1.ResumeLayout(False)
@@ -577,7 +578,6 @@ Partial Class OldOptionForm
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

@@ -22,7 +22,6 @@ Partial Class SetCourse
     '코드 편집기에서는 수정하지 마세요.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SetCourse))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CourseNameTB = New System.Windows.Forms.TextBox()
         Me.ApplyBT = New System.Windows.Forms.Button()
@@ -333,7 +332,7 @@ Partial Class SetCourse
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = My.Resources.ptable_icon
+        Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Name = "SetCourse"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
@@ -367,8 +366,8 @@ Partial Class SetCourse
     Friend WithEvents EndTimePicker As DateTimePicker
     Friend WithEvents DeleteBT As Button
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents CloseBT As PictureBox
-    Friend WithEvents TitleLabel As Label
     Friend WithEvents ColorPasteBT As Button
     Friend WithEvents ColorCopyBT As Button
+    Friend WithEvents CloseBT As PictureBox
+    Friend WithEvents TitleLabel As Label
 End Class

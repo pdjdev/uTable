@@ -49,6 +49,13 @@ Public Class EverytimeSemesterSelector
     End Sub
 
     Private Sub EverytimeSemesterSelector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" And GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
+            If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
+                Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
+                ChangeToCustomFont(Me, fntname)
+            End If
+        End If
+
         yearUpd.Value = Now.Year
         Opacity = 0
         UpdateColor()

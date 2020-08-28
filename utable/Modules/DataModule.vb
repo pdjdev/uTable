@@ -46,7 +46,7 @@ Module DataModule
             Dim FirstStart As Long = total.IndexOf(first) + first.Length + 1
             Return Trim(Mid$(total, FirstStart, total.Substring(FirstStart).IndexOf(last) + 1))
         Else
-            Return ErrorToString("{ERROR}")
+            Return Nothing
         End If
     End Function
 

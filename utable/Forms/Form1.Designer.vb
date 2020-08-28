@@ -52,6 +52,7 @@ Partial Class Form1
         Me.BT1_menu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BT1MenuTitle = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ClearCheckBoxItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChangeThemeItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_1_1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_1_2 = New System.Windows.Forms.ToolStripMenuItem()
@@ -434,12 +435,12 @@ Partial Class Form1
         Me.BT1_menu.BackColor = System.Drawing.Color.White
         Me.BT1_menu.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BT1_menu.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ChangeThemeItem, Me.SnapToEdgeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
+        Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ClearCheckBoxItem, Me.ChangeThemeItem, Me.SnapToEdgeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
         Me.BT1_menu.Name = "BT1_menu"
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
-        Me.BT1_menu.Size = New System.Drawing.Size(180, 208)
+        Me.BT1_menu.Size = New System.Drawing.Size(180, 232)
         '
         'BT1MenuTitle
         '
@@ -454,6 +455,14 @@ Partial Class Form1
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
         Me.ToolStripSeparator4.Size = New System.Drawing.Size(176, 6)
+        '
+        'ClearCheckBoxItem
+        '
+        Me.ClearCheckBoxItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ClearCheckBoxItem.Name = "ClearCheckBoxItem"
+        Me.ClearCheckBoxItem.Size = New System.Drawing.Size(179, 24)
+        Me.ClearCheckBoxItem.Text = "체크상자 비우기"
+        Me.ClearCheckBoxItem.Visible = False
         '
         'ChangeThemeItem
         '
@@ -651,4 +660,5 @@ Partial Class Form1
     Friend WithEvents AllBrighterItem As ToolStripMenuItem
     Friend WithEvents ColorDialog1 As ColorDialog
     Friend WithEvents MessageItem As ToolStripMenuItem
+    Friend WithEvents ClearCheckBoxItem As ToolStripMenuItem
 End Class

@@ -192,6 +192,13 @@ Public Class SetCourse
     Private Sub SetCourse_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Opacity = 0
 
+        If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" And GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
+            If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
+                Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
+                ChangeToCustomFont(Me, fntname)
+            End If
+        End If
+
         GetCourses()
         UpdateColor()
 

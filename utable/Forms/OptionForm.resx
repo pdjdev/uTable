@@ -118,8 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="RichTextBox1.Text" xml:space="preserve">
-    <value>
-※해당 프로그램은 아직 개발 단계에 있습니다! 일부 기능이 불안정할수 있으므로 문제 발견 시 피드백을 주시면 개선하도록 하겠습니다※
+    <value>※해당 프로그램은 아직 개발 단계에 있습니다! 일부 기능이 불안정할수 있으므로 문제 발견 시 피드백을 주시면 개선하도록 하겠습니다※
 
 uTable은 대학생을 위한 간단 데스크탑 시간표 프로그램으로, 누구나 자유롭게 무료로 사용할 수 있는 '오픈 소스 소프트웨어*' 입니다.
 
@@ -130,7 +129,6 @@ uTable은 대학생을 위한 간단 데스크탑 시간표 프로그램으로, 
 이 프로그램을 재배포하실 수는 있으나, 개발자 동의를 거치지 않고 임의로 수정하거나 고친 뒤 배포하지 마시기 바랍니다. 만약 위에 대해 동의하지 않거나 설치를 원하지 않는 경우, 언제든지 설치를 중단하거나 프로그램을 제거하실 수 있습니다.
 
 *GitHub에 게시된 리포지토리는 GNU 일반 공중 사용 허가서를 따릅니다.
-
 Copyright (c) 2020 Dongjun Park (PBJSoftware)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
