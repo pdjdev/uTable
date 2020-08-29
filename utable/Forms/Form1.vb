@@ -345,6 +345,19 @@ Public Class Form1
             If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
                 Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
                 ChangeToCustomFont(Me, fntname)
+
+                'BT1_menu 폰트 바꾸기 : 속성이 상속되지 않는지라 노가다해야함
+                If GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
+                    ClearCheckBoxItem.Font = New Font(fntname, ClearCheckBoxItem.Font.Size)
+                    BT1MenuTitle.Font = New Font(fntname, BT1MenuTitle.Font.Size)
+                    ChangeThemeItem.Font = New Font(fntname, ChangeThemeItem.Font.Size)
+                    SnapToEdgeItem.Font = New Font(fntname, SnapToEdgeItem.Font.Size)
+                    ColorSettingItem.Font = New Font(fntname, ColorSettingItem.Font.Size)
+                    OpacitySelectItem.Font = New Font(fntname, OpacitySelectItem.Font.Size)
+                    GetFromETItem.Font = New Font(fntname, GetFromETItem.Font.Size)
+                    OptionItem.Font = New Font(fntname, OptionItem.Font.Size)
+                    ExitItem.Font = New Font(fntname, ExitItem.Font.Size)
+                End If
             End If
         End If
 
@@ -420,7 +433,8 @@ Public Class Form1
                         getData(s, "prof"),
                         getData(s, "memo"),
                         ColorTranslator.FromHtml(getData(s, "color")),
-                        Convert.ToInt16(getData(s, "day")))
+                        Convert.ToInt16(getData(s, "day")),
+                        getData(s, "checked"))
 
 
                 If Convert.ToInt16(getData(s, "day")) = 5 Then '토요일 추가시
@@ -432,7 +446,8 @@ Public Class Form1
 
             updated = True
         Else
-            MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)", vbInformation)
+            MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
+                   + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
         End If
 
         DayTable.Visible = Not (GetINI("SETTING", "ShowDay", "", ININamePath) = "0")
@@ -468,7 +483,7 @@ Public Class Form1
         TimeTable.Visible = True
     End Sub
 
-    Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer)
+    Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String)
 
         Dim timelength As Integer = endtime - starttime
         Dim part As Double = (endt - startt) / timelength
@@ -526,7 +541,7 @@ Public Class Form1
         cell.MemoLabel.Text = memo
         cell.Name = name
 
-
+        cell.checked = (checked = "True")
     End Sub
 
     Sub resizeCell(startt As Integer, endt As Integer, name As String)
@@ -544,13 +559,13 @@ Public Class Form1
         If cell.alwaysExpand Then cell.ForceExpand()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddCourseBT.Click
+    Private Sub AddCourseBT_Click(sender As Object, e As EventArgs) Handles AddCourseBT.Click
         SetCourse.Close()
         SetCourse.SetDesktopLocation(Location.X + AddCourseBT.Location.X + AddCourseBT.Width - SetCourse.Width, Location.Y + DayTable.Location.Y)
         SetCourse.Show()
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles RefreshBT.Click
+    Private Sub RefreshBT_Click(sender As Object, e As EventArgs) Handles RefreshBT.Click
         updateCell()
     End Sub
 
@@ -600,15 +615,15 @@ Public Class Form1
 
     End Sub
 
-    Private Sub CloseBT_MouseEnter(sender As Object, e As EventArgs) Handles MinBT.MouseEnter
+    Private Sub MinBT_MouseEnter(sender As Object, e As EventArgs) Handles MinBT.MouseEnter
         MinBT.BackColor = buttonActiveColor(colorMode)
     End Sub
 
-    Private Sub CloseBT_MouseLeave(sender As Object, e As EventArgs) Handles MinBT.MouseLeave
+    Private Sub MinBT_MouseLeave(sender As Object, e As EventArgs) Handles MinBT.MouseLeave
         MinBT.BackColor = Color.Transparent
     End Sub
 
-    Private Sub CloseBT_Click(sender As Object, e As EventArgs) Handles MinBT.Click
+    Private Sub MinBT_Click(sender As Object, e As EventArgs) Handles MinBT.Click
         If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
             WindowState = FormWindowState.Minimized
         Else
@@ -704,6 +719,7 @@ Public Class Form1
         BT1MenuTitle.ForeColor = lightTextColor(colorMode)
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
+        ClearCheckBoxItem.Visible = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
 
         If snaptoedge Then
             SnapToEdgeItem.Text = "창에 붙지 않기"
@@ -834,6 +850,7 @@ Public Class Form1
     End Sub
 
     Private Sub Menu_5_Click(sender As Object, e As EventArgs) Handles OptionItem.Click
+        OptionForm.Close()
         OptionForm.SetDesktopLocation(Location.X + Width - OptionForm.Width, Location.Y + TopPanel.Location.Y + TopPanel.Height)
         OptionForm.ShowDialog(Me)
     End Sub
@@ -903,6 +920,12 @@ Public Class Form1
             tmp += "<course>" + s + "</course>" + vbCrLf
         Next
         writeTable(tmp)
+        updateCell()
+    End Sub
+
+    Private Sub ClearCheckBoxItem_Click(sender As Object, e As EventArgs) Handles ClearCheckBoxItem.Click
+        Dim data As String = readTable()
+        writeTable(data.Replace("<checked>True</checked>", "<checked>False</checked>"))
         updateCell()
     End Sub
 End Class

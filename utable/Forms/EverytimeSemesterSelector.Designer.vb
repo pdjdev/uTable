@@ -27,6 +27,7 @@ Partial Class EverytimeSemesterSelector
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Step1Panel = New System.Windows.Forms.Panel()
+        Me.tipLabel = New System.Windows.Forms.Label()
         Me.autoChk = New System.Windows.Forms.CheckBox()
         Me.semesterCombo = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -38,7 +39,6 @@ Partial Class EverytimeSemesterSelector
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
-        Me.tipLabel = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Step1Panel.SuspendLayout()
@@ -99,6 +99,17 @@ Partial Class EverytimeSemesterSelector
         Me.Step1Panel.Name = "Step1Panel"
         Me.Step1Panel.Size = New System.Drawing.Size(358, 119)
         Me.Step1Panel.TabIndex = 39
+        '
+        'tipLabel
+        '
+        Me.tipLabel.AutoSize = True
+        Me.tipLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.tipLabel.ForeColor = System.Drawing.Color.Gray
+        Me.tipLabel.Location = New System.Drawing.Point(3, 99)
+        Me.tipLabel.Name = "tipLabel"
+        Me.tipLabel.Size = New System.Drawing.Size(282, 13)
+        Me.tipLabel.TabIndex = 39
+        Me.tipLabel.Text = "※ 해당 학기에서 기본으로 지정한 시간표를 불러옵니다"
         '
         'autoChk
         '
@@ -221,27 +232,16 @@ Partial Class EverytimeSemesterSelector
         Me.CloseBT.TabIndex = 29
         Me.CloseBT.TabStop = False
         '
-        'tipLabel
-        '
-        Me.tipLabel.AutoSize = True
-        Me.tipLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.tipLabel.ForeColor = System.Drawing.Color.Gray
-        Me.tipLabel.Location = New System.Drawing.Point(3, 99)
-        Me.tipLabel.Name = "tipLabel"
-        Me.tipLabel.Size = New System.Drawing.Size(282, 13)
-        Me.tipLabel.TabIndex = 39
-        Me.tipLabel.Text = "※ 해당 학기에서 기본으로 지정한 시간표를 불러옵니다"
-        '
         'EverytimeSemesterSelector
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.LightGray
         Me.ClientSize = New System.Drawing.Size(390, 226)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Icon = My.Resources.ptable_icon
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Name = "EverytimeSemesterSelector"
         Me.Padding = New System.Windows.Forms.Padding(1)

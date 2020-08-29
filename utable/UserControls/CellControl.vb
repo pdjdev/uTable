@@ -2,7 +2,10 @@
     Public defHeight As Integer = 0
     Public defLoc As Integer = 0
     Public alwaysExpand As Boolean = False
+    Public checked As Boolean = False
     Dim doExpand As Boolean = True
+    Dim showChkBox As Boolean = True
+    Dim blackText As Boolean = False
 
     Dim hovered As Boolean = False
 
@@ -10,11 +13,13 @@
         TitleLabel.MaximumSize() = New Size(Width, 0)
         ProfLabel.MaximumSize() = New Size(Width, 0)
         MemoLabel.MaximumSize() = New Size(Width, 0)
-        TopTimeLabel.MinimumSize() = New Size(Width, 0)
+        'TopTimeLabel.MinimumSize() = New Size(Width, 0)
         BottomTimeLabel.MinimumSize() = New Size(Width, 0)
     End Sub
 
     Private Sub TitleLabel_Click(sender As Object, e As EventArgs) Handles TitleLabel.Click
+        If Name = "DemoCellControl" Then Exit Sub
+
         SetCourse.Close()
 
         Dim appearPoint As New Point(Cursor.Position)
@@ -82,23 +87,36 @@
             TitleLabel.ForeColor = Color.Black
             ProfLabel.ForeColor = Color.Black
             MemoLabel.ForeColor = Color.Black
+            blackText = True
         End If
 
         alwaysExpand = (GetINI("SETTING", "AlwaysExpand", "", ININamePath) = "1")
         doExpand = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
         MemoLabel.Visible = Not (GetINI("SETTING", "ShowMemo", "", ININamePath) = "0")
         ProfLabel.Visible = Not (GetINI("SETTING", "ShowProf", "", ININamePath) = "0")
+        showChkBox = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
+
+        ChkBox1.Visible = showChkBox
+        If showChkBox Then CheckStateUpdate()
 
         If alwaysExpand Then
-            If Height < TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height Then
-                Height = TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height
+            Dim fullheight As Integer = TopTimeLabel.Height + TitleLabel.Height + BottomTimeLabel.Height
+            If ProfLabel.Visible Then fullheight += ProfLabel.Height
+            If MemoLabel.Visible Then fullheight += MemoLabel.Height
+
+            If Height < fullheight Then
+                Height = fullheight
             End If
         End If
     End Sub
 
     Public Sub ForceExpand()
-        If Height < TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height Then
-            Height = TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height
+        Dim fullheight As Integer = TopTimeLabel.Height + TitleLabel.Height + BottomTimeLabel.Height
+        If ProfLabel.Visible Then fullheight += ProfLabel.Height
+        If MemoLabel.Visible Then fullheight += MemoLabel.Height
+
+        If Height < fullheight Then
+            Height = fullheight
         End If
     End Sub
 
@@ -116,7 +134,10 @@
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If hovered Then
-            Dim fullheight As Integer = TopTimeLabel.Height + TitleLabel.Height + ProfLabel.Height + MemoLabel.Height + BottomTimeLabel.Height
+            Dim fullheight As Integer = TopTimeLabel.Height + TitleLabel.Height + BottomTimeLabel.Height
+            If ProfLabel.Visible Then fullheight += ProfLabel.Height
+            If MemoLabel.Visible Then fullheight += MemoLabel.Height
+
             BringToFront()
 
             If doExpand Then
@@ -137,5 +158,66 @@
             Location() = New Point(0, defLoc)
 
         End If
+    End Sub
+
+    Private Sub TopTimeLabel_SizeChanged(sender As Object, e As EventArgs) Handles TopTimeLabel.SizeChanged
+        TopPanel.Height = TopTimeLabel.Height
+    End Sub
+
+    Private Sub TopPanel_SizeChanged(sender As Object, e As EventArgs) Handles TopPanel.SizeChanged
+        ChkBox1.Width = TopPanel.Height
+    End Sub
+
+    Private Sub ChkBox1_Click(sender As Object, e As EventArgs) Handles ChkBox1.Click, TopTimeLabel.Click,
+        Panel1.Click, ProfLabel.Click, MemoLabel.Click
+        If showChkBox Then
+            checked = Not checked
+            If Not Name = "DemoCellControl" Then ModifyCheck(Name, checked)
+            CheckStateUpdate()
+        End If
+    End Sub
+
+    Private Sub CheckStateUpdate()
+        If checked Then
+            If blackText Then
+                ChkBox1.Image = My.Resources.check1_b
+            Else
+                ChkBox1.Image = My.Resources.check1_w
+            End If
+            TitleLabel.Font = New Font(TitleLabel.Font.Name, TitleLabel.Font.Size, FontStyle.Strikeout)
+        Else
+            If blackText Then
+                ChkBox1.Image = My.Resources.check0_b
+            Else
+                ChkBox1.Image = My.Resources.check0_w
+            End If
+            TitleLabel.Font = New Font(TitleLabel.Font.Name, TitleLabel.Font.Size, FontStyle.Bold)
+        End If
+    End Sub
+
+    Public Sub ModifyCheck(name As String, checked As Boolean)
+        Dim data As String = readTable()
+
+        Dim olddata As String = ""
+
+        For Each s As String In getDatas(data, "course")
+            If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = name Then
+                olddata = s
+                Exit For
+            End If
+        Next
+
+        Dim newdata As String = olddata
+
+        If Not newdata = "" Then
+            If newdata.Contains("<checked>") Then
+                Dim tmp As String = "<checked>" + getData(newdata, "checked") + "</checked>"
+                newdata = newdata.Replace(tmp, "<checked>" + checked.ToString + "</checked>")
+            Else 'check 데이터가 없을때
+                newdata += vbTab + "<checked>" + checked.ToString + "</checked>" + vbCrLf
+            End If
+        End If
+
+        writeTable(data.Replace(olddata, newdata))
     End Sub
 End Class

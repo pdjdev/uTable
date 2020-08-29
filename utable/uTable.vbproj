@@ -62,6 +62,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -88,6 +89,12 @@
       <DependentUpon>EverytimeSemesterSelector.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\EverytimeSemesterSelector.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionForm.Designer.vb">
+      <DependentUpon>OptionForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OptionForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\StartupAsk.Designer.vb">
@@ -123,10 +130,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OptionForm.Designer.vb">
-      <DependentUpon>OptionForm.vb</DependentUpon>
+    <Compile Include="Forms\OldOptionForm.Designer.vb">
+      <DependentUpon>OldOptionForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OptionForm.vb">
+    <Compile Include="Forms\OldOptionForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\INIModule.vb" />
@@ -153,6 +160,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Modules\WinModule.vb" />
+    <Compile Include="UserControls\SettingMenu.Designer.vb">
+      <DependentUpon>SettingMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SettingMenu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\EveryTimeBrowser.resx">
@@ -164,14 +177,17 @@
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OptionForm.resx">
+      <DependentUpon>OptionForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\StartupAsk.resx">
       <DependentUpon>StartupAsk.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LoadingSplash.resx">
       <DependentUpon>LoadingSplash.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OptionForm.resx">
-      <DependentUpon>OptionForm.vb</DependentUpon>
+    <EmbeddedResource Include="Forms\OldOptionForm.resx">
+      <DependentUpon>OldOptionForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -185,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\CellControl.resx">
       <DependentUpon>CellControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\SettingMenu.resx">
+      <DependentUpon>SettingMenu.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +230,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptable_icon.ico" />
+    <None Include="Resources\check1_b.png" />
+    <None Include="Resources\check0_b.png" />
+    <None Include="Resources\check1_w.png" />
+    <None Include="Resources\check0_w.png" />
     <None Include="Resources\utable_icon.png" />
     <None Include="Resources\minicon_w.png" />
     <None Include="Resources\minicon_b.png" />

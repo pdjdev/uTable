@@ -31,18 +31,21 @@ Partial Class CellControl
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.TopNotchPanel = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.TopPanel = New System.Windows.Forms.Panel()
+        Me.ChkBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1.SuspendLayout()
+        Me.TopPanel.SuspendLayout()
+        CType(Me.ChkBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TopTimeLabel
         '
-        Me.TopTimeLabel.AutoSize = True
-        Me.TopTimeLabel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TopTimeLabel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TopTimeLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.TopTimeLabel.Location = New System.Drawing.Point(0, 2)
+        Me.TopTimeLabel.Location = New System.Drawing.Point(19, 0)
         Me.TopTimeLabel.Name = "TopTimeLabel"
         Me.TopTimeLabel.Padding = New System.Windows.Forms.Padding(0, 2, 0, 0)
-        Me.TopTimeLabel.Size = New System.Drawing.Size(96, 19)
+        Me.TopTimeLabel.Size = New System.Drawing.Size(125, 19)
         Me.TopTimeLabel.TabIndex = 0
         Me.TopTimeLabel.Text = "TopTimeLabel"
         '
@@ -117,6 +120,27 @@ Partial Class CellControl
         '
         Me.Timer1.Enabled = True
         '
+        'TopPanel
+        '
+        Me.TopPanel.Controls.Add(Me.TopTimeLabel)
+        Me.TopPanel.Controls.Add(Me.ChkBox1)
+        Me.TopPanel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TopPanel.Location = New System.Drawing.Point(0, 2)
+        Me.TopPanel.Name = "TopPanel"
+        Me.TopPanel.Size = New System.Drawing.Size(144, 19)
+        Me.TopPanel.TabIndex = 3
+        '
+        'ChkBox1
+        '
+        Me.ChkBox1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.ChkBox1.Image = Global.uTable.My.Resources.Resources.check0_w
+        Me.ChkBox1.Location = New System.Drawing.Point(0, 0)
+        Me.ChkBox1.Name = "ChkBox1"
+        Me.ChkBox1.Size = New System.Drawing.Size(19, 19)
+        Me.ChkBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.ChkBox1.TabIndex = 3
+        Me.ChkBox1.TabStop = False
+        '
         'CellControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -124,7 +148,7 @@ Partial Class CellControl
         Me.BackColor = System.Drawing.Color.DarkSlateGray
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.BottomTimeLabel)
-        Me.Controls.Add(Me.TopTimeLabel)
+        Me.Controls.Add(Me.TopPanel)
         Me.Controls.Add(Me.TopNotchPanel)
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ForeColor = System.Drawing.Color.White
@@ -132,6 +156,8 @@ Partial Class CellControl
         Me.Size = New System.Drawing.Size(144, 260)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.TopPanel.ResumeLayout(False)
+        CType(Me.ChkBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -145,4 +171,6 @@ Partial Class CellControl
     Friend WithEvents TitleLabel As Label
     Friend WithEvents TopNotchPanel As Panel
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents TopPanel As Panel
+    Friend WithEvents ChkBox1 As PictureBox
 End Class

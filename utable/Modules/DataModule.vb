@@ -1,8 +1,7 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.IO
+Imports System.Text.RegularExpressions
 
 Module DataModule
-    Dim defaultLoc As String = Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf("\")) + "\default.utdata"
-
     'web에서 문자열 가져오는 함수
     Public Function webget(url As String)
         Dim source = New System.Net.WebClient()
@@ -10,15 +9,13 @@ Module DataModule
         'MsgBox(url)
 
         Dim sourcestr As String = Nothing
-
         sourcestr = source.DownloadString(url)
-
 
         Return sourcestr
     End Function
 
     'xml형식 파일을 전체값에서 따로 추출하는 함수
-    Public Function getData(datastr As String, name As String)
+    Public Function getData(datastr As String, name As String) As String
 
         Return midReturn("<" + name + ">", "</" + name + ">", datastr)
 
@@ -48,7 +45,7 @@ Module DataModule
             Dim FirstStart As Long = total.IndexOf(first) + first.Length + 1
             Return Trim(Mid$(total, FirstStart, total.Substring(FirstStart).IndexOf(last) + 1))
         Else
-            Return ErrorToString("{ERROR}")
+            Return Nothing
         End If
     End Function
 
@@ -72,16 +69,61 @@ ret:
     End Function
 
     Public Sub writeTable(data As String)
-        My.Computer.FileSystem.WriteAllText(defaultLoc, data, False, System.Text.Encoding.GetEncoding(949))
+        My.Computer.FileSystem.WriteAllText(TableSaveLocation(), data, False, System.Text.Encoding.GetEncoding(949))
     End Sub
 
     Public Function readTable()
-        If My.Computer.FileSystem.FileExists(defaultLoc) Then
+        If My.Computer.FileSystem.FileExists(TableSaveLocation()) Then
             'My.Settings.defalutTable = OptionSave()
-            Return My.Computer.FileSystem.ReadAllText(defaultLoc, System.Text.Encoding.GetEncoding(949))
+            Return My.Computer.FileSystem.ReadAllText(TableSaveLocation(), System.Text.Encoding.GetEncoding(949))
         Else
             Return ""
         End If
     End Function
 
+    Public Function TableSaveLocation() As String
+        Dim exeFullpath As String = Application.ExecutablePath
+        Dim finalDir As String = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
+        Dim finalName As String = "\default.utdata"
+
+        '임의 경로 옵션 활성화시
+        If GetINI("SETTING", "CustomSaveDir", "", ININamePath) = "1" Then
+            Dim usrDir As String = GetINI("SETTING", "SaveDirectory", "", ININamePath)
+            Dim usrSaveName As String = GetINI("SETTING", "SaveName", "", ININamePath)
+
+            '사용자가 지정한 디렉토리가 존재할때
+            If My.Computer.FileSystem.DirectoryExists(usrDir) Then
+                finalDir = usrDir
+                '존재 안함 -> 기본 디렉토리 (같은 폴더) 결정
+            End If
+
+            '파일명이 암것도 아닌게 아닐때
+            If Not usrSaveName = "" Then
+                finalName = "\" + usrSaveName + ".utdata"
+            End If
+        End If
+
+        Return finalDir + finalName
+    End Function
+
+    Public Function FilenameIsOK(ByVal fileNameAndPath As String) As Boolean
+        Try
+            Dim fileName = Path.GetFileName(fileNameAndPath)
+            Dim directory = Path.GetDirectoryName(fileNameAndPath)
+            For Each c In Path.GetInvalidFileNameChars()
+                If fileName.Contains(c) Then
+                    Return False
+                End If
+            Next
+            For Each c In Path.GetInvalidPathChars()
+                If directory.Contains(c) Then
+                    Return False
+                End If
+            Next
+        Catch ex As Exception
+            Return False
+        End Try
+
+        Return True
+    End Function
 End Module

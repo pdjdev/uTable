@@ -83,6 +83,46 @@ Namespace My.Resources
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
+        Friend ReadOnly Property check0_b() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("check0_b", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property check0_w() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("check0_w", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property check1_b() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("check1_b", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property check1_w() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("check1_w", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
         Friend ReadOnly Property closeicon_b() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("closeicon_b", resourceCulture)
@@ -117,6 +157,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("minicon_w", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property ptable_icon() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ptable_icon", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
             End Get
         End Property
         

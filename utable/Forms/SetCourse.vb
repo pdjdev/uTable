@@ -9,6 +9,9 @@ Public Class SetCourse
     Public modifyMode As Boolean = False
     Public olddata As String = Nothing
 
+    Dim touched As Boolean = False
+    Dim loaded As Boolean = False
+
 #Region "Aero 그림자 효과 (Vista이상)"
 
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
@@ -47,6 +50,8 @@ Public Class SetCourse
     Private Sub FadeInEffect(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.Refresh()
         FadeIn(Me, 1)
+
+        loaded = True
     End Sub
 
     Private Sub FadeOutEffect(sender As Object, e As EventArgs) Handles MyBase.Closing
@@ -92,6 +97,7 @@ Public Class SetCourse
 
         If ColorDialog1.ShowDialog() = DialogResult.OK Then
 
+            touched = True
             ColorButton.BackColor = ColorDialog1.Color
 
         End If
@@ -192,6 +198,13 @@ Public Class SetCourse
     Private Sub SetCourse_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Opacity = 0
 
+        If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" And GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
+            If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
+                Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
+                ChangeToCustomFont(Me, fntname)
+            End If
+        End If
+
         GetCourses()
         UpdateColor()
 
@@ -229,6 +242,10 @@ Public Class SetCourse
     End Sub
 
     Private Sub ApplyBT_Click(sender As Object, e As EventArgs) Handles ApplyBT.Click
+        Apply()
+    End Sub
+
+    Private Sub Apply()
         If CourseNameTB.Text = Nothing Then
             MsgBox("수업명을 입력하세요.", vbExclamation)
             Exit Sub
@@ -329,19 +346,27 @@ Public Class SetCourse
 
     Private Sub PrevSetCombo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles PrevSetCombo.SelectedIndexChanged
         If Not PrevSetCombo.SelectedIndex = -1 Then
-            If MsgBox("해당 수업의 값을 불러오시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-                Dim data = prevData(PrevSetCombo.SelectedIndex)
 
-                CourseNameTB.Text = getData(data, "name")
-                ProfTB.Text = getData(data, "prof")
-                DayCombo.SelectedIndex = Convert.ToInt16(getData(data, "day"))
-                StartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "start")) \ 60, Convert.ToInt16(getData(data, "start")) Mod 60, 0)
-                EndTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "end")) \ 60, Convert.ToInt16(getData(data, "end")) Mod 60, 0)
-                MemoTB.Text = getData(data, "memo")
-                ColorButton.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
+            If touched Then
+                If MsgBox("기존의 값은 지워집니다. 계속하시겠습니까?", vbQuestion + vbYesNo) = vbNo Then Exit Sub
             End If
-            PrevSetCombo.SelectedIndex = -1
+
+            loaded = False
+            Dim data = prevData(PrevSetCombo.SelectedIndex)
+
+            CourseNameTB.Text = getData(data, "name")
+            ProfTB.Text = getData(data, "prof")
+            DayCombo.SelectedIndex = Convert.ToInt16(getData(data, "day"))
+            StartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "start")) \ 60, Convert.ToInt16(getData(data, "start")) Mod 60, 0)
+            EndTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "end")) \ 60, Convert.ToInt16(getData(data, "end")) Mod 60, 0)
+            MemoTB.Text = getData(data, "memo")
+            ColorButton.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
+
+            loaded = True
+            touched = False
         End If
+
+
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
@@ -365,6 +390,20 @@ Public Class SetCourse
     End Sub
 
     Private Sub CloseBT_Click(sender As Object, e As EventArgs) Handles CloseBT.Click
+        If touched Then
+            If modifyMode Then
+                Dim ask1 As MsgBoxResult = MsgBox("변경사항을 저장하시겠습니까?", vbYesNoCancel + vbQuestion)
+
+                If ask1 = vbYes Then
+                    Apply()
+                ElseIf ask1 = vbCancel Then
+                    Exit Sub
+                End If
+            Else
+                If MsgBox("저장하지 않은 값은 지워집니다. 계속하시겠습니까?", vbQuestion + vbYesNo) = vbNo Then Exit Sub
+            End If
+        End If
+
         Close()
     End Sub
 
@@ -375,9 +414,20 @@ Public Class SetCourse
     Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles ColorPasteBT.Click
         Try
             ColorButton.BackColor = ColorTranslator.FromHtml(Clipboard.GetText)
+            touched = True
         Catch ex As Exception
             MsgBox("색상을 복사하지 않았거나 올바르지 않은 값을 복사하였습니다.", vbExclamation)
         End Try
+
+    End Sub
+
+    Private Sub TouchedEvents(sender As Object, e As EventArgs) Handles CourseNameTB.TextChanged, ProfTB.TextChanged,
+        DayCombo.TextChanged, StartTimePicker.ValueChanged, EndTimePicker.ValueChanged, MemoTB.TextChanged
+
+        If loaded Then
+            touched = True
+            If Not PrevSetCombo.SelectedIndex = -1 Then PrevSetCombo.SelectedIndex = -1
+        End If
 
     End Sub
 End Class
