@@ -1014,12 +1014,11 @@ Public Class Form1
             '나중에 점차 스타일이 추가되면 Select Case에다 DottedLine(점선), Stripes(줄무늬), Gradient(그라데이션)
             '등등 옵션 추가하여서 판별하도록 하기!
             If Not GetINI("SETTING", "TablePattern", "", ININamePath) = "None" Then
-                Dim thickness As Integer = 3 * (96 / currentDPI)
+                Dim thickness As Integer = 3 * (currentDPI / 96)
                 Dim p As New Pen(c, thickness)
                 Dim g As Graphics = panel.CreateGraphics
                 p.DashStyle = Drawing2D.DashStyle.Dot
 
-                '이거 점찍는 좌표 여전히 뭔가 이상함
                 For j As Integer = starttime To endtime
                     If j > 0 And j Mod 60 = 0 Then
                         Dim y As Integer = ((endtime - j) / timeLength) * panelHeight + thickness / 2
