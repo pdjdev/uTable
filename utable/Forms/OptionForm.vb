@@ -460,9 +460,9 @@ Public Class OptionForm
         Dim colorMul As Single = 0.9
         If colormode = "Dark" Then colorMul = 1.35
 
-        If ShowLinePatternChk.Checked Then
-            PrevTableArea.Refresh()
+        PrevTableArea.Refresh()
 
+        If ShowLinePatternChk.Checked Then
             Dim c As Color = Color.FromArgb(PrevTableArea.BackColor.R * colorMul,
                                             PrevTableArea.BackColor.G * colorMul,
                                             PrevTableArea.BackColor.B * colorMul)
@@ -1001,11 +1001,6 @@ Public Class OptionForm
             MsgBox("오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
 
         End Try
-
-    End Sub
-
-    Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
-        Throw New System.Exception("테스트 예외 처리")
 
     End Sub
 End Class
