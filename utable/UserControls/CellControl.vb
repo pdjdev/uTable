@@ -3,11 +3,13 @@
     Public defLoc As Integer = 0
     Public alwaysExpand As Boolean = False
     Public checked As Boolean = False
+    Public dayNum As Integer = 0
     Dim doExpand As Boolean = True
     Dim showChkBox As Boolean = True
     Dim blackText As Boolean = False
 
     Dim hovered As Boolean = False
+    Dim prev_hove As Boolean = False
 
     Private Sub UserControl1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         TitleLabel.MaximumSize() = New Size(Width, 0)
@@ -46,24 +48,20 @@
 
     Private Sub TopTimeLabel_MouseEnter(sender As Object, e As EventArgs) Handles TopTimeLabel.MouseEnter,
         TitleLabel.MouseEnter, ProfLabel.MouseEnter, Panel1.MouseEnter, MemoLabel.MouseEnter, BottomTimeLabel.MouseEnter
-
         hovered = True
     End Sub
 
     Private Sub CellControl_MouseLeave(sender As Object, e As EventArgs) Handles TopTimeLabel.MouseLeave,
         TitleLabel.MouseLeave, ProfLabel.MouseLeave, Panel1.MouseLeave, MemoLabel.MouseLeave, BottomTimeLabel.MouseLeave
-
         hovered = False
     End Sub
 
     Private Sub TitleLabel_MouseEnter(sender As Object, e As EventArgs) Handles TitleLabel.MouseEnter
         TitleLabel.BackColor = ControlPaint.Light(BackColor, 0.5)
-
     End Sub
 
     Private Sub TitleLabel_MouseLeave(sender As Object, e As EventArgs) Handles TitleLabel.MouseLeave
         TitleLabel.BackColor = Color.Transparent
-
     End Sub
 
     Private Sub CellControl_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -128,11 +126,14 @@
         TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
     End Sub
 
-    Private Sub MemoLabel_Click(sender As Object, e As EventArgs) Handles MemoLabel.Click
-
-    End Sub
-
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+
+        If prev_hove = hovered Then
+            Exit Sub
+        Else
+            prev_hove = hovered
+        End If
+
         If hovered Then
             Dim fullheight As Integer = TopTimeLabel.Height + TitleLabel.Height + BottomTimeLabel.Height
             If ProfLabel.Visible Then fullheight += ProfLabel.Height
@@ -151,8 +152,10 @@
             End If
 
         Else
+            '쪼그라들때
             If doExpand And Not alwaysExpand Then
                 Height = defHeight
+                If Not Name = "DemoCellControl" Then Form1.DrawTablePattern(dayNum)
             End If
 
             Location() = New Point(0, defLoc)

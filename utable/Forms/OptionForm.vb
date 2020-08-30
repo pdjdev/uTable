@@ -378,15 +378,20 @@ Public Class OptionForm
     End Sub
 
     Private Sub ShowLinePatternChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowLinePatternChk.CheckedChanged
+        '줄긋는거는 그냥 Panel의 Drawing만 Refresh하면 되는거라서 테이블을 다시 그리지는 않을거임
         If ShowLinePatternChk.Checked Then
             SetINI("SETTING", "TablePattern", "DottedLine", ININamePath)
         Else
             SetINI("SETTING", "TablePattern", "None", ININamePath)
         End If
+
+        '그래서 여기에다가 따로 적용보여주기 새로고침 할것
+        If loaded Then Form1.DrawTablePattern(-1)
     End Sub
 
     Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
-        ShowDayChk.CheckedChanged, ShowProfChk.CheckedChanged, ShowMemoChk.CheckedChanged, BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged
+        ShowDayChk.CheckedChanged, ShowProfChk.CheckedChanged, ShowMemoChk.CheckedChanged, BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged,
+        ShowLinePatternChk.CheckedChanged
         PrevUpdate()
     End Sub
 
@@ -450,6 +455,28 @@ Public Class OptionForm
         End With
 
         PrevTableArea.Controls.Add(cell)
+
+        '패턴부분
+        Dim colorMul As Single = 0.9
+        If colormode = "Dark" Then colorMul = 1.35
+
+        If ShowLinePatternChk.Checked Then
+            PrevTableArea.Refresh()
+
+            Dim c As Color = Color.FromArgb(PrevTableArea.BackColor.R * colorMul,
+                                            PrevTableArea.BackColor.G * colorMul,
+                                            PrevTableArea.BackColor.B * colorMul)
+
+            Dim thickness As Integer = 3 * (96 / Form1.currentDPI)
+            Dim p As New Pen(c, thickness)
+            Dim g As Graphics = PrevTableArea.CreateGraphics
+            p.DashStyle = Drawing2D.DashStyle.Dot
+            g.DrawLine(p, New Point(0, PrevTableArea.Height - 5 * (96 / Form1.currentDPI)),
+                       New Point(PrevTableArea.Width, PrevTableArea.Height - 5 * (96 / Form1.currentDPI)))
+
+            g.Dispose()
+            p.Dispose()
+        End If
     End Sub
 
     Private Sub CustomFontChk_CheckedChanged(sender As Object, e As EventArgs) Handles CustomFontChk.CheckedChanged
@@ -740,6 +767,12 @@ Public Class OptionForm
         End If
 
         Try
+            My.Computer.FileSystem.CopyFile(exeFullpath, exePath + "\old_uTable.exe", True)
+        Catch ex As Exception
+            MsgBox("백업 파일을 생성하는데 실패했습니다." + vbCr + ex.Message, vbCritical)
+        End Try
+
+        Try
             Dim procStartInfo As New ProcessStartInfo
             Dim procExecuting As New Process
 
@@ -748,18 +781,18 @@ Public Class OptionForm
                 .FileName = "cmd.exe"
                 .WindowStyle = ProcessWindowStyle.Normal
                 .Verb = "runas" '관리자 권한으로 실행
-                .Arguments = "/k @echo off & mode con: cols=30 lines=3 & echo 잠시만 기다려 주세요... & taskkill /f /im " + exeName + " >nul " _
+                .Arguments = "/k @echo off & mode con: cols=30 lines=3 & echo 잠시만 기다려 주세요... & taskkill /f /im """ + exeName + """ >nul " _
                     + "& cd " + exePath _
                     + " & timeout /t 2 /nobreak >nul" _
-                    + " & del /f " + exeName + " & timeout /t 1 >nul" _
-                    + " & rename tmp.exe " + exeName _
+                    + " & del /f """ + exeName + """ & timeout /t 1 >nul" _
+                    + " & rename tmp.exe """ + exeName + """" _
                     + " & timeout /t 1 /nobreak >nul" _
-                    + " & start " + exeName + " & exit"
+                    + " & start """" """ + exeName + """ & exit"
             End With
 
             procExecuting = Process.Start(procStartInfo)
         Catch ex As Exception
-            MsgBox("업데이트 작업에 실패했습니다." + vbCr + vbCr + "사용자 계정 컨트롤 창에서 '예'를 클릭하셨는지 확인해 주시고 다시 시도해 주세요.", vbCritical)
+            MsgBox("업데이트 작업에 실패했습니다." + vbCr + ex.Message + vbCr + vbCr + "사용자 계정 컨트롤 창에서 '예'를 클릭하셨는지 확인해 주시고 다시 시도해 주세요.", vbCritical)
             DoUpdateButton.Text = "다시 시도"
             DoUpdateButton.Enabled = True
         End Try
@@ -898,7 +931,7 @@ Public Class OptionForm
             .UseShellExecute = True
             .FileName = "cmd.exe"
             .WindowStyle = ProcessWindowStyle.Hidden
-            .Arguments = "/k @echo off & taskkill /f /im " + exeName + " >nul " _
+            .Arguments = "/k @echo off & taskkill /f /im """ + exeName + """ >nul " _
                 + " & timeout /t 1 /nobreak >nul" _
                 + " & start """" """ + exeFullpath + """ & exit"
         End With

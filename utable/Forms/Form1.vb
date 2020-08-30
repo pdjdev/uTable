@@ -323,8 +323,7 @@ Public Class Form1
                 FriLabel.ForeColor = activeDayTextColor(colorMode)
         End Select
 
-        DrawTablePattern()
-
+        DrawTablePattern(-1)
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -497,7 +496,7 @@ Public Class Form1
 
         TimeTable.Visible = True
 
-        DrawTablePattern()
+        DrawTablePattern(-1)
     End Sub
 
     Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String)
@@ -531,6 +530,7 @@ Public Class Form1
         cell.Width = MonPanel.Width
         cell.Height = part * MonPanel.Height
         cell.defHeight = part * MonPanel.Height
+        cell.dayNum = day
 
         'MsgBox(part * Panel1.Height)
 
@@ -612,7 +612,7 @@ Public Class Form1
             'MsgBox("바운더리 밖입니다.")
         End If
 
-        DrawTablePattern()
+        DrawTablePattern(-1)
 
         If GetINI("SETTING", "MinStart", "", ININamePath) = "1" Then
             WindowState = FormWindowState.Minimized
@@ -893,7 +893,7 @@ Public Class Form1
             Next
 
             TimeTable.Visible = True
-            DrawTablePattern()
+            DrawTablePattern(-1)
         End If
     End Sub
 
@@ -957,7 +957,8 @@ Public Class Form1
         updateCell()
     End Sub
 
-    Sub DrawTablePattern()
+    'range = 그릴 범위, -1은 전체
+    Public Sub DrawTablePattern(range As Integer)
 
         '맨 처음때 중복호출 막기위해 (Shown, UpdateCell)
         If disablePatternDrawOnce Then
@@ -971,23 +972,27 @@ Public Class Form1
 
         Dim panelHeight As Integer = MonPanel.Height
         Dim panelWidth As Integer = MonPanel.Width
-
         Dim hrlength As Double = 60 / timeLength * panelHeight
-
 
         Dim colorMul As Single = 0.9
         If colorMode = "Dark" Then
-            colorMul = 1.2
+            colorMul = 1.35
         End If
 
         'MonPanel부터 SunPanel까지
         For i = 0 To 6
+            '전체 범위도 아니고 현재 특정 범위도 아니라면
+            If Not range = -1 And Not range = i Then Continue For
+
             Dim count As Integer = 0
 
             Dim panel As Panel = TimeTable.GetControlFromPosition(i, 0)
             Dim c As Color = Color.FromArgb(panel.BackColor.R * colorMul,
                                             panel.BackColor.G * colorMul,
                                             panel.BackColor.B * colorMul)
+
+            '안해주면 제대로 그려지지 않을수있음
+            panel.Refresh()
 
             '''' 줄무늬 배경 만들어주는 코드
             'If True Then
@@ -1019,7 +1024,6 @@ Public Class Form1
                 Dim g As Graphics = panel.CreateGraphics
                 p.DashStyle = Drawing2D.DashStyle.Dot
 
-                '이거 점찍는 좌표 여전히 뭔가 이상함
                 For j As Integer = starttime To endtime
                     If j > 0 And j Mod 60 = 0 Then
                         Dim y As Integer = ((endtime - j) / timeLength) * panelHeight + thickness / 2

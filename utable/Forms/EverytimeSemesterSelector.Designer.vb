@@ -34,11 +34,12 @@ Partial Class EverytimeSemesterSelector
         Me.yearUpd = New System.Windows.Forms.NumericUpDown()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Step2Panel = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.AgreementRTB = New System.Windows.Forms.RichTextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
+        Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Step1Panel.SuspendLayout()
@@ -46,19 +47,21 @@ Partial Class EverytimeSemesterSelector
         Me.Step2Panel.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'NextBT
         '
         Me.NextBT.BackColor = System.Drawing.Color.Transparent
+        Me.NextBT.Dock = System.Windows.Forms.DockStyle.Right
         Me.NextBT.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.NextBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.NextBT.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.NextBT.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.NextBT.Location = New System.Drawing.Point(272, 173)
+        Me.NextBT.Location = New System.Drawing.Point(260, 10)
         Me.NextBT.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.NextBT.Name = "NextBT"
-        Me.NextBT.Size = New System.Drawing.Size(98, 32)
+        Me.NextBT.Size = New System.Drawing.Size(98, 36)
         Me.NextBT.TabIndex = 3
         Me.NextBT.Text = "다음"
         Me.NextBT.UseVisualStyleBackColor = False
@@ -67,8 +70,8 @@ Partial Class EverytimeSemesterSelector
         '
         Me.Panel1.BackColor = System.Drawing.Color.White
         Me.Panel1.Controls.Add(Me.Panel3)
+        Me.Panel1.Controls.Add(Me.Panel4)
         Me.Panel1.Controls.Add(Me.Panel2)
-        Me.Panel1.Controls.Add(Me.NextBT)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(1, 1)
         Me.Panel1.Name = "Panel1"
@@ -80,10 +83,10 @@ Partial Class EverytimeSemesterSelector
         '
         Me.Panel3.Controls.Add(Me.Step1Panel)
         Me.Panel3.Controls.Add(Me.Step2Panel)
-        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel3.Location = New System.Drawing.Point(15, 47)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(358, 119)
+        Me.Panel3.Size = New System.Drawing.Size(358, 116)
         Me.Panel3.TabIndex = 34
         '
         'Step1Panel
@@ -97,7 +100,7 @@ Partial Class EverytimeSemesterSelector
         Me.Step1Panel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Step1Panel.Location = New System.Drawing.Point(0, 0)
         Me.Step1Panel.Name = "Step1Panel"
-        Me.Step1Panel.Size = New System.Drawing.Size(358, 119)
+        Me.Step1Panel.Size = New System.Drawing.Size(358, 116)
         Me.Step1Panel.TabIndex = 39
         '
         'tipLabel
@@ -105,7 +108,7 @@ Partial Class EverytimeSemesterSelector
         Me.tipLabel.AutoSize = True
         Me.tipLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.tipLabel.ForeColor = System.Drawing.Color.Gray
-        Me.tipLabel.Location = New System.Drawing.Point(3, 99)
+        Me.tipLabel.Location = New System.Drawing.Point(3, 100)
         Me.tipLabel.Name = "tipLabel"
         Me.tipLabel.Size = New System.Drawing.Size(282, 13)
         Me.tipLabel.TabIndex = 39
@@ -167,38 +170,38 @@ Partial Class EverytimeSemesterSelector
         '
         'Step2Panel
         '
-        Me.Step2Panel.Controls.Add(Me.Label1)
         Me.Step2Panel.Controls.Add(Me.AgreementRTB)
+        Me.Step2Panel.Controls.Add(Me.Label1)
         Me.Step2Panel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Step2Panel.Location = New System.Drawing.Point(0, 0)
         Me.Step2Panel.Name = "Step2Panel"
-        Me.Step2Panel.Size = New System.Drawing.Size(358, 119)
+        Me.Step2Panel.Size = New System.Drawing.Size(358, 116)
         Me.Step2Panel.TabIndex = 0
-        '
-        'Label1
-        '
-        Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label1.Location = New System.Drawing.Point(0, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
-        Me.Label1.Size = New System.Drawing.Size(358, 32)
-        Me.Label1.TabIndex = 37
-        Me.Label1.Text = "다음 참고사항을 읽은 후 '로그인하기' 를 눌러 주세요."
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'AgreementRTB
         '
         Me.AgreementRTB.BackColor = System.Drawing.Color.White
         Me.AgreementRTB.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.AgreementRTB.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.AgreementRTB.Dock = System.Windows.Forms.DockStyle.Fill
         Me.AgreementRTB.ForeColor = System.Drawing.Color.Black
-        Me.AgreementRTB.Location = New System.Drawing.Point(0, 32)
+        Me.AgreementRTB.Location = New System.Drawing.Point(0, 29)
         Me.AgreementRTB.Name = "AgreementRTB"
         Me.AgreementRTB.ReadOnly = True
         Me.AgreementRTB.Size = New System.Drawing.Size(358, 87)
         Me.AgreementRTB.TabIndex = 38
         Me.AgreementRTB.Text = resources.GetString("AgreementRTB.Text")
+        '
+        'Label1
+        '
+        Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Location = New System.Drawing.Point(0, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
+        Me.Label1.Size = New System.Drawing.Size(358, 29)
+        Me.Label1.TabIndex = 37
+        Me.Label1.Text = "다음 참고사항을 읽은 후 '로그인하기' 를 눌러 주세요."
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'Panel2
         '
@@ -232,6 +235,16 @@ Partial Class EverytimeSemesterSelector
         Me.CloseBT.TabIndex = 29
         Me.CloseBT.TabStop = False
         '
+        'Panel4
+        '
+        Me.Panel4.Controls.Add(Me.NextBT)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel4.Location = New System.Drawing.Point(15, 163)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Padding = New System.Windows.Forms.Padding(0, 10, 0, 0)
+        Me.Panel4.Size = New System.Drawing.Size(358, 46)
+        Me.Panel4.TabIndex = 35
+        '
         'EverytimeSemesterSelector
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -241,7 +254,7 @@ Partial Class EverytimeSemesterSelector
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = My.Resources.ptable_icon
+        Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Name = "EverytimeSemesterSelector"
         Me.Padding = New System.Windows.Forms.Padding(1)
@@ -256,6 +269,7 @@ Partial Class EverytimeSemesterSelector
         Me.Step2Panel.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel4.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -275,4 +289,5 @@ Partial Class EverytimeSemesterSelector
     Friend WithEvents Label4 As Label
     Friend WithEvents AgreementRTB As RichTextBox
     Friend WithEvents tipLabel As Label
+    Friend WithEvents Panel4 As Panel
 End Class
