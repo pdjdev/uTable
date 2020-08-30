@@ -387,6 +387,7 @@ Public Class OptionForm
 
         '그래서 여기에다가 따로 적용보여주기 새로고침 할것
         If loaded Then Form1.DrawTablePattern(-1)
+
     End Sub
 
     Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
@@ -471,8 +472,8 @@ Public Class OptionForm
             Dim p As New Pen(c, thickness)
             Dim g As Graphics = PrevTableArea.CreateGraphics
             p.DashStyle = Drawing2D.DashStyle.Dot
-            g.DrawLine(p, New Point(0, PrevTableArea.Height - 10 * (96 / Form1.currentDPI)),
-                       New Point(PrevTableArea.Width, PrevTableArea.Height - 10 * (96 / Form1.currentDPI)))
+            g.DrawLine(p, New Point(0, PrevTableArea.Height * 0.85),
+                       New Point(PrevTableArea.Width, PrevTableArea.Height * 0.85))
 
             g.Dispose()
             p.Dispose()

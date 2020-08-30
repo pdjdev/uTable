@@ -323,6 +323,7 @@ Public Class Form1
                 FriLabel.ForeColor = activeDayTextColor(colorMode)
         End Select
 
+        TimeTable.Refresh()
         DrawTablePattern(-1)
     End Sub
 
@@ -960,19 +961,31 @@ Public Class Form1
     'range = 그릴 범위, -1은 전체
     Public Sub DrawTablePattern(range As Integer)
 
+        Dim SettingValue As String = GetINI("SETTING", "TablePattern", "", ININamePath)
+
         '맨 처음때 중복호출 막기위해 (Shown, UpdateCell)
         If disablePatternDrawOnce Then
             disablePatternDrawOnce = False
             Exit Sub
         End If
 
-        Dim timeLength As Integer = endtime - starttime
+        '설정값이 None이므로 그냥 Refresh하고 빠져나가기
+        If SettingValue = "None" Then
+            TimeTable.Refresh()
+            Exit Sub
+        End If
 
+        '시간표 시작과 끝 사이의 총 시간 길이
+        Dim timeLength As Integer = endtime - starttime
         If Not timeLength > 0 Then Exit Sub
 
         Dim panelHeight As Integer = MonPanel.Height
         Dim panelWidth As Integer = MonPanel.Width
         Dim hrlength As Double = 60 / timeLength * panelHeight
+
+        Dim left As Integer = starttime Mod 60
+        Dim thickness As Integer = 3 * (currentDPI / 96)
+
 
         Dim colorMul As Single = 0.9
         If colorMode = "Dark" Then
@@ -990,6 +1003,7 @@ Public Class Form1
             Dim c As Color = Color.FromArgb(panel.BackColor.R * colorMul,
                                             panel.BackColor.G * colorMul,
                                             panel.BackColor.B * colorMul)
+
 
             '''' 줄무늬 배경 만들어주는 코드
             'If True Then
@@ -1015,27 +1029,25 @@ Public Class Form1
             '현재는 옵션이 단 하나(DottedLine)밖에없어서 None이 아닐때 무조건 DottedLine하도록 했는데,
             '나중에 점차 스타일이 추가되면 Select Case에다 DottedLine(점선), Stripes(줄무늬), Gradient(그라데이션)
             '등등 옵션 추가하여서 판별하도록 하기!
-            If Not GetINI("SETTING", "TablePattern", "", ININamePath) = "None" Then
-                Dim thickness As Integer = 3 * (currentDPI / 96)
+
+
+
+            If Not SettingValue = "None" Then
+
                 Dim p As New Pen(c, thickness)
                 Dim g As Graphics = panel.CreateGraphics
                 p.DashStyle = Drawing2D.DashStyle.Dot
 
-                '안해주면 제대로 그려지지 않을수있음
-                panel.Refresh()
-
                 For j As Integer = starttime To endtime
                     If j > 0 And j Mod 60 = 0 Then
-                        Dim y As Integer = ((endtime - j) / timeLength) * panelHeight + thickness / 2
+                        Dim y As Integer = ((endtime - j + left) / timeLength) * panelHeight + thickness / 2
                         g.DrawLine(p, New Point(0, y), New Point(panelWidth, y))
-                        count += 1
                     End If
                 Next
 
                 g.Dispose()
                 p.Dispose()
             End If
-
             'End If
         Next
     End Sub
