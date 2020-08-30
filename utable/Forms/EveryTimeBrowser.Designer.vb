@@ -23,12 +23,11 @@ Partial Class EveryTimeBrowser
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EveryTimeBrowser))
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.TableChecker = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.LoadingSplash1 = New uTable.LoadingSplash()
         Me.Panel1.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -60,6 +59,17 @@ Partial Class EveryTimeBrowser
         Me.Panel1.Size = New System.Drawing.Size(380, 463)
         Me.Panel1.TabIndex = 1
         '
+        'CloseBT
+        '
+        Me.CloseBT.BackColor = System.Drawing.Color.White
+        Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
+        Me.CloseBT.Location = New System.Drawing.Point(347, 3)
+        Me.CloseBT.Name = "CloseBT"
+        Me.CloseBT.Size = New System.Drawing.Size(30, 30)
+        Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.CloseBT.TabIndex = 29
+        Me.CloseBT.TabStop = False
+        '
         'Label1
         '
         Me.Label1.BackColor = System.Drawing.Color.White
@@ -72,17 +82,6 @@ Partial Class EveryTimeBrowser
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "시간표를 불러 올 에브리타임 계정으로" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "로그인 해 주세요."
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'CloseBT
-        '
-        Me.CloseBT.BackColor = System.Drawing.Color.White
-        Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
-        Me.CloseBT.Location = New System.Drawing.Point(347, 3)
-        Me.CloseBT.Name = "CloseBT"
-        Me.CloseBT.Size = New System.Drawing.Size(30, 30)
-        Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.CloseBT.TabIndex = 29
-        Me.CloseBT.TabStop = False
         '
         'LoadingSplash1
         '
@@ -103,11 +102,11 @@ Partial Class EveryTimeBrowser
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Icon = My.Resources.ptable_icon
+        Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Name = "EveryTimeBrowser"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "에브리타임에서 시간표 불러오기"
+        Me.Text = "에브리타임 시간표 불러오기"
         Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.Panel1.ResumeLayout(False)

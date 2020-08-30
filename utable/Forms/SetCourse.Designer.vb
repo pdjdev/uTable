@@ -336,7 +336,7 @@ Partial Class SetCourse
         Me.Name = "SetCourse"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
-        Me.Text = "SetCourse"
+        Me.Text = "수업 추가/수정"
         Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.Panel1.ResumeLayout(False)

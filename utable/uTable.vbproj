@@ -85,6 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="ErrorForm.Designer.vb">
+      <DependentUpon>ErrorForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\EverytimeSemesterSelector.Designer.vb">
       <DependentUpon>EverytimeSemesterSelector.vb</DependentUpon>
     </Compile>
@@ -130,12 +136,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OldOptionForm.Designer.vb">
-      <DependentUpon>OldOptionForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\OldOptionForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Modules\INIModule.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -168,6 +168,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ErrorForm.resx">
+      <DependentUpon>ErrorForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EveryTimeBrowser.resx">
       <DependentUpon>EveryTimeBrowser.vb</DependentUpon>
     </EmbeddedResource>
@@ -185,10 +188,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LoadingSplash.resx">
       <DependentUpon>LoadingSplash.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OldOptionForm.resx">
-      <DependentUpon>OldOptionForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -230,6 +229,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptable_icon.ico" />
+    <None Include="Resources\check1_w_96.png" />
+    <None Include="Resources\check1_b_96.png" />
+    <None Include="Resources\check0_w_96.png" />
+    <None Include="Resources\check0_b_96.png" />
     <None Include="Resources\check1_b.png" />
     <None Include="Resources\check0_b.png" />
     <None Include="Resources\check1_w.png" />

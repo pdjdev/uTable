@@ -8,5 +8,12 @@ Namespace My
     ' StartupNextInstance: 단일 인스턴스 애플리케이션을 시작할 때 해당 애플리케이션이 이미 활성 상태인 경우 발생합니다.
     ' NetworkAvailabilityChanged: 네트워크가 연결되거나 연결이 끊어질 때 발생합니다.
     Partial Friend Class MyApplication
+
+        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            e.ExitApplication = False
+            ErrorForm.RichTextBox1.Text = e.Exception.Message + vbCr + "=====" + vbCr + DateTime.Now.ToString + vbCr + vbCr + e.Exception.ToString
+            ErrorForm.Show()
+        End Sub
+
     End Class
 End Namespace

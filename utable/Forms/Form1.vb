@@ -20,8 +20,12 @@ Public Class Form1
     Private BorderWidth As Integer = dpicalc(Me, 6)
     Private _resizeDir As ResizeDirection = ResizeDirection.None
 
+    Dim disablePatternDrawOnce As Boolean = False
+
     Dim showSaturday As Boolean = False
     Dim showSunday As Boolean = False
+
+    Public currentDPI As Integer = 96
 
 
 #Region "Aero 그림자 효과 (Vista이상)"
@@ -319,6 +323,8 @@ Public Class Form1
                 FriLabel.ForeColor = activeDayTextColor(colorMode)
         End Select
 
+        DrawTablePattern()
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -330,6 +336,10 @@ Public Class Form1
             End If
         Next
 
+        'DPI계산 (ChkBox 이미지같은거 좀 뚜렷하게 보이도록 전용 이미지 넣기)
+        Dim g As Graphics = Me.CreateGraphics()
+        currentDPI = g.DpiX
+
         'For Each scrn In Screen.AllScreens
         ' If scrn.DeviceName = GetINI("SETTING", "WindowDisplay", "", ININamePath) Then
         ' Me.Location = scrn.Bounds.Location
@@ -338,6 +348,7 @@ Public Class Form1
         'Next
 
         Opacity = 0
+        disablePatternDrawOnce = True
         UpdateColor()
         updateDateDraw()
 
@@ -381,6 +392,7 @@ Public Class Form1
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
 
+        disablePatternDrawOnce = True
         updateCell()
     End Sub
 
@@ -446,8 +458,11 @@ Public Class Form1
 
             updated = True
         Else
-            MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
+            '맨 처음 창 열렸을때일시 = 불투명도 0일때 -> 일단 창 다 띄우고 나서 msgbox 띄우기 (그래야 포커스잡기 쉬움)
+            If Not Opacity = 0 Then
+                MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
                    + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
+            End If
         End If
 
         DayTable.Visible = Not (GetINI("SETTING", "ShowDay", "", ININamePath) = "0")
@@ -481,6 +496,8 @@ Public Class Form1
         Next
 
         TimeTable.Visible = True
+
+        DrawTablePattern()
     End Sub
 
     Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String)
@@ -595,6 +612,8 @@ Public Class Form1
             'MsgBox("바운더리 밖입니다.")
         End If
 
+        DrawTablePattern()
+
         If GetINI("SETTING", "MinStart", "", ININamePath) = "1" Then
             WindowState = FormWindowState.Minimized
             Opacity = 1
@@ -613,6 +632,10 @@ Public Class Form1
             End If
         End If
 
+        If Not updated Then
+            MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
+                   + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
+        End If
     End Sub
 
     Private Sub MinBT_MouseEnter(sender As Object, e As EventArgs) Handles MinBT.MouseEnter
@@ -624,6 +647,10 @@ Public Class Form1
     End Sub
 
     Private Sub MinBT_Click(sender As Object, e As EventArgs) Handles MinBT.Click
+
+        '중복호출 막기위해
+        disablePatternDrawOnce = True
+
         If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
             WindowState = FormWindowState.Minimized
         Else
@@ -840,7 +867,7 @@ Public Class Form1
 
     Private Sub Menu_4_Click(sender As Object, e As EventArgs) Handles GetFromETItem.Click
         If MsgBox("에브리타임에 로그인 한 후 시간표를 불러옵니다." + vbCr _
-               + "기존에 설정한 시간표'Default.ptdata'는 지워지므로 필요한 경우 백업하시기 바랍니다" + vbCr + vbCr _
+               + "기존에 설정한 시간표는 지워지므로 필요한 경우 백업하시기 바랍니다" + vbCr + vbCr _
                + "계속하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
             EveryTimeBrowser.Close()
             EverytimeSemesterSelector.Close()
@@ -866,6 +893,7 @@ Public Class Form1
             Next
 
             TimeTable.Visible = True
+            DrawTablePattern()
         End If
     End Sub
 
@@ -928,4 +956,84 @@ Public Class Form1
         writeTable(data.Replace("<checked>True</checked>", "<checked>False</checked>"))
         updateCell()
     End Sub
+
+    Sub DrawTablePattern()
+
+        '맨 처음때 중복호출 막기위해 (Shown, UpdateCell)
+        If disablePatternDrawOnce Then
+            disablePatternDrawOnce = False
+            Exit Sub
+        End If
+
+        Dim timeLength As Integer = endtime - starttime
+
+        If Not timeLength > 0 Then Exit Sub
+
+        Dim panelHeight As Integer = MonPanel.Height
+        Dim panelWidth As Integer = MonPanel.Width
+
+        Dim hrlength As Double = 60 / timeLength * panelHeight
+
+
+        Dim colorMul As Single = 0.9
+        If colorMode = "Dark" Then
+            colorMul = 1.2
+        End If
+
+        'MonPanel부터 SunPanel까지
+        For i = 0 To 6
+            Dim count As Integer = 0
+
+            Dim panel As Panel = TimeTable.GetControlFromPosition(i, 0)
+            Dim c As Color = Color.FromArgb(panel.BackColor.R * colorMul,
+                                            panel.BackColor.G * colorMul,
+                                            panel.BackColor.B * colorMul)
+
+            '''' 줄무늬 배경 만들어주는 코드
+            'If True Then
+            '    Dim b As New SolidBrush(c)
+            '    Dim g As Graphics = panel.CreateGraphics
+
+            '    For j As Integer = starttime To endtime
+            '        If j > 0 And j Mod 60 = 0 Then
+            '            If count Mod 2 = 0 Then
+            '                g.FillRectangle(b, 0, Convert.ToInt32(((endtime - j) / timeLength) * panelHeight - hrlength),
+            '                                panelWidth, Convert.ToInt32(hrlength))
+            '            End If
+            '            count += 1
+            '        End If
+            '    Next
+
+            '    g.Dispose()
+            '    b.Dispose()
+            'Else
+
+            '''' 점선 만들어주는 코드
+
+            '현재는 옵션이 단 하나(DottedLine)밖에없어서 None이 아닐때 무조건 DottedLine하도록 했는데,
+            '나중에 점차 스타일이 추가되면 Select Case에다 DottedLine(점선), Stripes(줄무늬), Gradient(그라데이션)
+            '등등 옵션 추가하여서 판별하도록 하기!
+            If Not GetINI("SETTING", "TablePattern", "", ININamePath) = "None" Then
+                Dim thickness As Integer = 3 * (96 / currentDPI)
+                Dim p As New Pen(c, thickness)
+                Dim g As Graphics = panel.CreateGraphics
+                p.DashStyle = Drawing2D.DashStyle.Dot
+
+                '이거 점찍는 좌표 여전히 뭔가 이상함
+                For j As Integer = starttime To endtime
+                    If j > 0 And j Mod 60 = 0 Then
+                        Dim y As Integer = ((endtime - j) / timeLength) * panelHeight + thickness / 2
+                        g.DrawLine(p, New Point(0, y), New Point(panelWidth, y))
+                        count += 1
+                    End If
+                Next
+
+                g.Dispose()
+                p.Dispose()
+            End If
+
+            'End If
+        Next
+    End Sub
+
 End Class
