@@ -163,13 +163,13 @@
         End If
     End Sub
 
-    Private Sub TopTimeLabel_SizeChanged(sender As Object, e As EventArgs) Handles TopTimeLabel.SizeChanged
-        TopPanel.Height = TopTimeLabel.Height
-    End Sub
+    'Private Sub TopTimeLabel_SizeChanged(sender As Object, e As EventArgs) Handles TopTimeLabel.SizeChanged
+    '    TopPanel.Height = TopTimeLabel.Height
+    'End Sub
 
-    Private Sub TopPanel_SizeChanged(sender As Object, e As EventArgs) Handles TopPanel.SizeChanged
-        ChkBox1.Width = TopPanel.Height
-    End Sub
+    'Private Sub TopPanel_SizeChanged(sender As Object, e As EventArgs) Handles TopPanel.SizeChanged
+    '    ChkBox1.Width = TopPanel.Height
+    'End Sub
 
     Private Sub ChkBox1_Click(sender As Object, e As EventArgs) Handles ChkBox1.Click, TopTimeLabel.Click,
         Panel1.Click, ProfLabel.Click, MemoLabel.Click
