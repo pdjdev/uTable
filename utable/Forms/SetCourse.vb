@@ -118,20 +118,23 @@ Public Class SetCourse
     End Sub
 
     Sub SaveCourse(day As Integer, name As String, prof As String, memo As String, start As Integer, endt As Integer, color As Color)
-        Dim oldData As String = readTable()
+        Dim prevData As String = readTable()
         Dim tablename As String = Nothing
 
-        If Not oldData.Contains("<tablename>") Then
+        If Not prevData.Contains("<tablename>") Then
             tablename = "이름 없는 시간표"
         Else
-            If getData(oldData, "tablename") = "" Then
+            Dim prevName As String = getData(prevData, "tablename")
+            If prevName = "" Then
+                prevData = prevData.Replace("<tablename></tablename>", "")
                 tablename = "이름 없는 시간표"
             Else
-                tablename = getData(oldData, "tablename")
+                prevData = prevData.Replace("<tablename>" + prevName + "</tablename>", "")
+                tablename = prevName
             End If
         End If
 
-        Dim data As String = "<course>" + vbCrLf
+        Dim data As String = vbCrLf + "<course>" + vbCrLf
         data += vbTab + "<day>" + day.ToString + "</day>" + vbCrLf
         data += vbTab + "<name>" + name + "</name>" + vbCrLf
         data += vbTab + "<prof>" + prof + "</prof>" + vbCrLf
@@ -139,8 +142,9 @@ Public Class SetCourse
         data += vbTab + "<start>" + start.ToString + "</start>" + vbCrLf
         data += vbTab + "<end>" + endt.ToString + "</end>" + vbCrLf
         data += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
-        data += "</course>" + vbCrLf
-        data = "<tablename>" + tablename + "</tablename>" + vbCrLf + oldData + data
+        data += "</course>"
+
+        data = "<tablename>" + tablename + "</tablename>" + prevData + data
 
         writeTable(data)
     End Sub
@@ -338,6 +342,7 @@ Public Class SetCourse
 
         TopMost = True
         GetCourses()
+        touched = False
     End Sub
 
     Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click

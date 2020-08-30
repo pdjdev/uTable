@@ -27,6 +27,25 @@ Partial Class OptionForm
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.MainPanel = New System.Windows.Forms.Panel()
+        Me.TabPage2 = New System.Windows.Forms.Panel()
+        Me.ShowLinePatternChk = New System.Windows.Forms.CheckBox()
+        Me.ShowChkBoxChk = New System.Windows.Forms.CheckBox()
+        Me.PrevTablePanel = New System.Windows.Forms.Panel()
+        Me.PrevTableArea = New System.Windows.Forms.Panel()
+        Me.DayLabel = New System.Windows.Forms.Label()
+        Me.ApplyAllGUIFontsChk = New System.Windows.Forms.CheckBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.ShowProfChk = New System.Windows.Forms.CheckBox()
+        Me.FontPrevLabel = New System.Windows.Forms.Label()
+        Me.CustomFontBT = New System.Windows.Forms.Button()
+        Me.ShowMemoChk = New System.Windows.Forms.CheckBox()
+        Me.ShowDayChk = New System.Windows.Forms.CheckBox()
+        Me.CustomFontChk = New System.Windows.Forms.CheckBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.BlackTextChk = New System.Windows.Forms.CheckBox()
+        Me.AlwaysExpandChk = New System.Windows.Forms.CheckBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.ExpandCellChk = New System.Windows.Forms.CheckBox()
         Me.TabPage1 = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.D_ThemeRbt = New System.Windows.Forms.RadioButton()
@@ -57,72 +76,54 @@ Partial Class OptionForm
         Me.SaveDirectoryTB = New System.Windows.Forms.TextBox()
         Me.CustomSaveDirChk = New System.Windows.Forms.CheckBox()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.TabPage2 = New System.Windows.Forms.Panel()
-        Me.ShowChkBoxChk = New System.Windows.Forms.CheckBox()
-        Me.PrevTablePanel = New System.Windows.Forms.Panel()
-        Me.PrevTableArea = New System.Windows.Forms.Panel()
-        Me.DayLabel = New System.Windows.Forms.Label()
-        Me.ApplyAllGUIFontsChk = New System.Windows.Forms.CheckBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.ShowProfChk = New System.Windows.Forms.CheckBox()
-        Me.FontPrevLabel = New System.Windows.Forms.Label()
-        Me.CustomFontBT = New System.Windows.Forms.Button()
-        Me.ShowMemoChk = New System.Windows.Forms.CheckBox()
-        Me.ShowDayChk = New System.Windows.Forms.CheckBox()
-        Me.CustomFontChk = New System.Windows.Forms.CheckBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.BlackTextChk = New System.Windows.Forms.CheckBox()
-        Me.AlwaysExpandChk = New System.Windows.Forms.CheckBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.ExpandCellChk = New System.Windows.Forms.CheckBox()
-        Me.TabPage4 = New System.Windows.Forms.Panel()
-        Me.Panel4 = New System.Windows.Forms.Panel()
-        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.ForceUpdChk = New System.Windows.Forms.CheckBox()
-        Me.UpdateChkButton = New System.Windows.Forms.Button()
-        Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
-        Me.DoUpdateButton = New System.Windows.Forms.Button()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.Panel()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.VersionLabel = New System.Windows.Forms.Label()
         Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
         Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
+        Me.TabPage4 = New System.Windows.Forms.Panel()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.ForceUpdChk = New System.Windows.Forms.CheckBox()
+        Me.UpdateChkButton = New System.Windows.Forms.Button()
+        Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
+        Me.DoUpdateButton = New System.Windows.Forms.Button()
         Me.ShadowPanel2 = New System.Windows.Forms.Panel()
         Me.SidePanel = New System.Windows.Forms.Panel()
-        Me.SettingMenu5 = New uTable.SettingMenu()
-        Me.SettingMenu4 = New uTable.SettingMenu()
-        Me.SettingMenu3 = New uTable.SettingMenu()
-        Me.SettingMenu2 = New uTable.SettingMenu()
-        Me.SettingMenu1 = New uTable.SettingMenu()
         Me.ShadowPanel1 = New System.Windows.Forms.Panel()
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.UpdateChecker = New System.ComponentModel.BackgroundWorker()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.SettingMenu5 = New uTable.SettingMenu()
+        Me.SettingMenu4 = New uTable.SettingMenu()
+        Me.SettingMenu3 = New uTable.SettingMenu()
+        Me.SettingMenu2 = New uTable.SettingMenu()
+        Me.SettingMenu1 = New uTable.SettingMenu()
         Me.TitlePanel.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainPanel.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        Me.PrevTablePanel.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.Panel6.SuspendLayout()
         Me.CustomDirPanel.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
-        Me.PrevTablePanel.SuspendLayout()
-        Me.TabPage4.SuspendLayout()
-        Me.Panel4.SuspendLayout()
-        Me.Panel3.SuspendLayout()
-        Me.Panel2.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage4.SuspendLayout()
+        Me.Panel4.SuspendLayout()
+        Me.Panel2.SuspendLayout()
+        Me.Panel3.SuspendLayout()
         Me.SidePanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -163,10 +164,10 @@ Partial Class OptionForm
         'MainPanel
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
-        Me.MainPanel.Controls.Add(Me.TabPage1)
-        Me.MainPanel.Controls.Add(Me.TabPage3)
         Me.MainPanel.Controls.Add(Me.TabPage4)
         Me.MainPanel.Controls.Add(Me.TabPage2)
+        Me.MainPanel.Controls.Add(Me.TabPage1)
+        Me.MainPanel.Controls.Add(Me.TabPage3)
         Me.MainPanel.Controls.Add(Me.TabPage5)
         Me.MainPanel.Controls.Add(Me.ShadowPanel2)
         Me.MainPanel.Controls.Add(Me.SidePanel)
@@ -175,6 +176,213 @@ Partial Class OptionForm
         Me.MainPanel.Name = "MainPanel"
         Me.MainPanel.Size = New System.Drawing.Size(589, 287)
         Me.MainPanel.TabIndex = 1
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.ShowLinePatternChk)
+        Me.TabPage2.Controls.Add(Me.ShowChkBoxChk)
+        Me.TabPage2.Controls.Add(Me.PrevTablePanel)
+        Me.TabPage2.Controls.Add(Me.ApplyAllGUIFontsChk)
+        Me.TabPage2.Controls.Add(Me.Label8)
+        Me.TabPage2.Controls.Add(Me.ShowProfChk)
+        Me.TabPage2.Controls.Add(Me.FontPrevLabel)
+        Me.TabPage2.Controls.Add(Me.CustomFontBT)
+        Me.TabPage2.Controls.Add(Me.ShowMemoChk)
+        Me.TabPage2.Controls.Add(Me.ShowDayChk)
+        Me.TabPage2.Controls.Add(Me.CustomFontChk)
+        Me.TabPage2.Controls.Add(Me.Label5)
+        Me.TabPage2.Controls.Add(Me.BlackTextChk)
+        Me.TabPage2.Controls.Add(Me.AlwaysExpandChk)
+        Me.TabPage2.Controls.Add(Me.Label4)
+        Me.TabPage2.Controls.Add(Me.ExpandCellChk)
+        Me.TabPage2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage2.Location = New System.Drawing.Point(148, 10)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Size = New System.Drawing.Size(441, 277)
+        Me.TabPage2.TabIndex = 13
+        '
+        'ShowLinePatternChk
+        '
+        Me.ShowLinePatternChk.AutoSize = True
+        Me.ShowLinePatternChk.Location = New System.Drawing.Point(138, 117)
+        Me.ShowLinePatternChk.Name = "ShowLinePatternChk"
+        Me.ShowLinePatternChk.Size = New System.Drawing.Size(149, 19)
+        Me.ShowLinePatternChk.TabIndex = 25
+        Me.ShowLinePatternChk.Text = "시간 점선 표시 (1시간)"
+        Me.ShowLinePatternChk.UseVisualStyleBackColor = True
+        '
+        'ShowChkBoxChk
+        '
+        Me.ShowChkBoxChk.AutoSize = True
+        Me.ShowChkBoxChk.Location = New System.Drawing.Point(23, 117)
+        Me.ShowChkBoxChk.Name = "ShowChkBoxChk"
+        Me.ShowChkBoxChk.Size = New System.Drawing.Size(102, 19)
+        Me.ShowChkBoxChk.TabIndex = 24
+        Me.ShowChkBoxChk.Text = "체크박스 표시"
+        Me.ShowChkBoxChk.UseVisualStyleBackColor = True
+        '
+        'PrevTablePanel
+        '
+        Me.PrevTablePanel.Controls.Add(Me.PrevTableArea)
+        Me.PrevTablePanel.Controls.Add(Me.DayLabel)
+        Me.PrevTablePanel.Location = New System.Drawing.Point(295, 20)
+        Me.PrevTablePanel.Name = "PrevTablePanel"
+        Me.PrevTablePanel.Size = New System.Drawing.Size(123, 123)
+        Me.PrevTablePanel.TabIndex = 23
+        '
+        'PrevTableArea
+        '
+        Me.PrevTableArea.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PrevTableArea.Location = New System.Drawing.Point(0, 25)
+        Me.PrevTableArea.Name = "PrevTableArea"
+        Me.PrevTableArea.Size = New System.Drawing.Size(123, 98)
+        Me.PrevTableArea.TabIndex = 24
+        '
+        'DayLabel
+        '
+        Me.DayLabel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.DayLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.DayLabel.ForeColor = System.Drawing.Color.Gray
+        Me.DayLabel.Image = Global.uTable.My.Resources.Resources.shadow1
+        Me.DayLabel.Location = New System.Drawing.Point(0, 0)
+        Me.DayLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.DayLabel.Name = "DayLabel"
+        Me.DayLabel.Size = New System.Drawing.Size(123, 25)
+        Me.DayLabel.TabIndex = 1
+        Me.DayLabel.Text = "월요일"
+        Me.DayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'ApplyAllGUIFontsChk
+        '
+        Me.ApplyAllGUIFontsChk.AutoSize = True
+        Me.ApplyAllGUIFontsChk.Location = New System.Drawing.Point(234, 161)
+        Me.ApplyAllGUIFontsChk.Name = "ApplyAllGUIFontsChk"
+        Me.ApplyAllGUIFontsChk.Size = New System.Drawing.Size(113, 19)
+        Me.ApplyAllGUIFontsChk.TabIndex = 22
+        Me.ApplyAllGUIFontsChk.Text = "전체 GUI에 적용"
+        Me.ApplyAllGUIFontsChk.UseVisualStyleBackColor = True
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label8.ForeColor = System.Drawing.Color.Gray
+        Me.Label8.Location = New System.Drawing.Point(21, 232)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(388, 15)
+        Me.Label8.TabIndex = 21
+        Me.Label8.Text = "※ 사용자 지정 글꼴은 프로그램을 다시 시작하여야 완전히 적용됩니다."
+        '
+        'ShowProfChk
+        '
+        Me.ShowProfChk.AutoSize = True
+        Me.ShowProfChk.Location = New System.Drawing.Point(113, 95)
+        Me.ShowProfChk.Name = "ShowProfChk"
+        Me.ShowProfChk.Size = New System.Drawing.Size(90, 19)
+        Me.ShowProfChk.TabIndex = 19
+        Me.ShowProfChk.Text = "교수명 표시"
+        Me.ShowProfChk.UseVisualStyleBackColor = True
+        '
+        'FontPrevLabel
+        '
+        Me.FontPrevLabel.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FontPrevLabel.Location = New System.Drawing.Point(234, 179)
+        Me.FontPrevLabel.Name = "FontPrevLabel"
+        Me.FontPrevLabel.Size = New System.Drawing.Size(162, 20)
+        Me.FontPrevLabel.TabIndex = 18
+        Me.FontPrevLabel.Text = "Abc가나다012"
+        Me.FontPrevLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'CustomFontBT
+        '
+        Me.CustomFontBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.CustomFontBT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CustomFontBT.Location = New System.Drawing.Point(234, 202)
+        Me.CustomFontBT.Name = "CustomFontBT"
+        Me.CustomFontBT.Size = New System.Drawing.Size(163, 22)
+        Me.CustomFontBT.TabIndex = 17
+        Me.CustomFontBT.Text = "사용자 지정 글꼴 선택..."
+        Me.CustomFontBT.UseVisualStyleBackColor = True
+        '
+        'ShowMemoChk
+        '
+        Me.ShowMemoChk.AutoSize = True
+        Me.ShowMemoChk.Location = New System.Drawing.Point(209, 95)
+        Me.ShowMemoChk.Name = "ShowMemoChk"
+        Me.ShowMemoChk.Size = New System.Drawing.Size(78, 19)
+        Me.ShowMemoChk.TabIndex = 16
+        Me.ShowMemoChk.Text = "메모 표시"
+        Me.ShowMemoChk.UseVisualStyleBackColor = True
+        '
+        'ShowDayChk
+        '
+        Me.ShowDayChk.AutoSize = True
+        Me.ShowDayChk.Location = New System.Drawing.Point(23, 95)
+        Me.ShowDayChk.Name = "ShowDayChk"
+        Me.ShowDayChk.Size = New System.Drawing.Size(78, 19)
+        Me.ShowDayChk.TabIndex = 15
+        Me.ShowDayChk.Text = "요일 표시"
+        Me.ShowDayChk.UseVisualStyleBackColor = True
+        '
+        'CustomFontChk
+        '
+        Me.CustomFontChk.AutoSize = True
+        Me.CustomFontChk.Location = New System.Drawing.Point(23, 204)
+        Me.CustomFontChk.Name = "CustomFontChk"
+        Me.CustomFontChk.Size = New System.Drawing.Size(146, 19)
+        Me.CustomFontChk.TabIndex = 14
+        Me.CustomFontChk.Text = "사용자 지정 글꼴 설정"
+        Me.CustomFontChk.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label5.Location = New System.Drawing.Point(17, 153)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(89, 20)
+        Me.Label5.TabIndex = 13
+        Me.Label5.Text = "스타일 설정"
+        '
+        'BlackTextChk
+        '
+        Me.BlackTextChk.AutoSize = True
+        Me.BlackTextChk.Location = New System.Drawing.Point(23, 182)
+        Me.BlackTextChk.Name = "BlackTextChk"
+        Me.BlackTextChk.Size = New System.Drawing.Size(170, 19)
+        Me.BlackTextChk.TabIndex = 12
+        Me.BlackTextChk.Text = "표 글씨 색상 반전 (검은색)"
+        Me.BlackTextChk.UseVisualStyleBackColor = True
+        '
+        'AlwaysExpandChk
+        '
+        Me.AlwaysExpandChk.AutoSize = True
+        Me.AlwaysExpandChk.Location = New System.Drawing.Point(23, 70)
+        Me.AlwaysExpandChk.Name = "AlwaysExpandChk"
+        Me.AlwaysExpandChk.Size = New System.Drawing.Size(266, 19)
+        Me.AlwaysExpandChk.TabIndex = 11
+        Me.AlwaysExpandChk.Text = "수업 시간에 상관없이 내용에 맞춰 표 늘이기"
+        Me.AlwaysExpandChk.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label4.Location = New System.Drawing.Point(17, 20)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(74, 20)
+        Me.Label4.TabIndex = 10
+        Me.Label4.Text = "표시 설정"
+        '
+        'ExpandCellChk
+        '
+        Me.ExpandCellChk.AutoSize = True
+        Me.ExpandCellChk.Location = New System.Drawing.Point(23, 48)
+        Me.ExpandCellChk.Name = "ExpandCellChk"
+        Me.ExpandCellChk.Size = New System.Drawing.Size(210, 19)
+        Me.ExpandCellChk.TabIndex = 9
+        Me.ExpandCellChk.Text = "마우스 올리면 가린 내용 확장하기"
+        Me.ExpandCellChk.UseVisualStyleBackColor = True
         '
         'TabPage1
         '
@@ -496,353 +704,6 @@ Partial Class OptionForm
         Me.Label13.TabIndex = 12
         Me.Label13.Text = "시간표 저장 위치 설정"
         '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.ShowChkBoxChk)
-        Me.TabPage2.Controls.Add(Me.PrevTablePanel)
-        Me.TabPage2.Controls.Add(Me.ApplyAllGUIFontsChk)
-        Me.TabPage2.Controls.Add(Me.Label8)
-        Me.TabPage2.Controls.Add(Me.ShowProfChk)
-        Me.TabPage2.Controls.Add(Me.FontPrevLabel)
-        Me.TabPage2.Controls.Add(Me.CustomFontBT)
-        Me.TabPage2.Controls.Add(Me.ShowMemoChk)
-        Me.TabPage2.Controls.Add(Me.ShowDayChk)
-        Me.TabPage2.Controls.Add(Me.CustomFontChk)
-        Me.TabPage2.Controls.Add(Me.Label5)
-        Me.TabPage2.Controls.Add(Me.BlackTextChk)
-        Me.TabPage2.Controls.Add(Me.AlwaysExpandChk)
-        Me.TabPage2.Controls.Add(Me.Label4)
-        Me.TabPage2.Controls.Add(Me.ExpandCellChk)
-        Me.TabPage2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage2.Location = New System.Drawing.Point(148, 10)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(441, 277)
-        Me.TabPage2.TabIndex = 13
-        '
-        'ShowChkBoxChk
-        '
-        Me.ShowChkBoxChk.AutoSize = True
-        Me.ShowChkBoxChk.Location = New System.Drawing.Point(23, 117)
-        Me.ShowChkBoxChk.Name = "ShowChkBoxChk"
-        Me.ShowChkBoxChk.Size = New System.Drawing.Size(102, 19)
-        Me.ShowChkBoxChk.TabIndex = 24
-        Me.ShowChkBoxChk.Text = "체크박스 표시"
-        Me.ShowChkBoxChk.UseVisualStyleBackColor = True
-        '
-        'PrevTablePanel
-        '
-        Me.PrevTablePanel.Controls.Add(Me.PrevTableArea)
-        Me.PrevTablePanel.Controls.Add(Me.DayLabel)
-        Me.PrevTablePanel.Location = New System.Drawing.Point(295, 20)
-        Me.PrevTablePanel.Name = "PrevTablePanel"
-        Me.PrevTablePanel.Size = New System.Drawing.Size(123, 123)
-        Me.PrevTablePanel.TabIndex = 23
-        '
-        'PrevTableArea
-        '
-        Me.PrevTableArea.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PrevTableArea.Location = New System.Drawing.Point(0, 25)
-        Me.PrevTableArea.Name = "PrevTableArea"
-        Me.PrevTableArea.Size = New System.Drawing.Size(123, 98)
-        Me.PrevTableArea.TabIndex = 24
-        '
-        'DayLabel
-        '
-        Me.DayLabel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.DayLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.DayLabel.ForeColor = System.Drawing.Color.Gray
-        Me.DayLabel.Image = Global.uTable.My.Resources.Resources.shadow1
-        Me.DayLabel.Location = New System.Drawing.Point(0, 0)
-        Me.DayLabel.Margin = New System.Windows.Forms.Padding(0)
-        Me.DayLabel.Name = "DayLabel"
-        Me.DayLabel.Size = New System.Drawing.Size(123, 25)
-        Me.DayLabel.TabIndex = 1
-        Me.DayLabel.Text = "월요일"
-        Me.DayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'ApplyAllGUIFontsChk
-        '
-        Me.ApplyAllGUIFontsChk.AutoSize = True
-        Me.ApplyAllGUIFontsChk.Location = New System.Drawing.Point(234, 161)
-        Me.ApplyAllGUIFontsChk.Name = "ApplyAllGUIFontsChk"
-        Me.ApplyAllGUIFontsChk.Size = New System.Drawing.Size(113, 19)
-        Me.ApplyAllGUIFontsChk.TabIndex = 22
-        Me.ApplyAllGUIFontsChk.Text = "전체 GUI에 적용"
-        Me.ApplyAllGUIFontsChk.UseVisualStyleBackColor = True
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label8.ForeColor = System.Drawing.Color.Gray
-        Me.Label8.Location = New System.Drawing.Point(21, 232)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(388, 15)
-        Me.Label8.TabIndex = 21
-        Me.Label8.Text = "※ 사용자 지정 글꼴은 프로그램을 다시 시작하여야 완전히 적용됩니다."
-        '
-        'ShowProfChk
-        '
-        Me.ShowProfChk.AutoSize = True
-        Me.ShowProfChk.Location = New System.Drawing.Point(113, 93)
-        Me.ShowProfChk.Name = "ShowProfChk"
-        Me.ShowProfChk.Size = New System.Drawing.Size(90, 19)
-        Me.ShowProfChk.TabIndex = 19
-        Me.ShowProfChk.Text = "교수명 표시"
-        Me.ShowProfChk.UseVisualStyleBackColor = True
-        '
-        'FontPrevLabel
-        '
-        Me.FontPrevLabel.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FontPrevLabel.Location = New System.Drawing.Point(234, 179)
-        Me.FontPrevLabel.Name = "FontPrevLabel"
-        Me.FontPrevLabel.Size = New System.Drawing.Size(162, 20)
-        Me.FontPrevLabel.TabIndex = 18
-        Me.FontPrevLabel.Text = "Abc가나다012"
-        Me.FontPrevLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'CustomFontBT
-        '
-        Me.CustomFontBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CustomFontBT.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CustomFontBT.Location = New System.Drawing.Point(234, 202)
-        Me.CustomFontBT.Name = "CustomFontBT"
-        Me.CustomFontBT.Size = New System.Drawing.Size(163, 22)
-        Me.CustomFontBT.TabIndex = 17
-        Me.CustomFontBT.Text = "사용자 지정 글꼴 선택..."
-        Me.CustomFontBT.UseVisualStyleBackColor = True
-        '
-        'ShowMemoChk
-        '
-        Me.ShowMemoChk.AutoSize = True
-        Me.ShowMemoChk.Location = New System.Drawing.Point(209, 93)
-        Me.ShowMemoChk.Name = "ShowMemoChk"
-        Me.ShowMemoChk.Size = New System.Drawing.Size(78, 19)
-        Me.ShowMemoChk.TabIndex = 16
-        Me.ShowMemoChk.Text = "메모 표시"
-        Me.ShowMemoChk.UseVisualStyleBackColor = True
-        '
-        'ShowDayChk
-        '
-        Me.ShowDayChk.AutoSize = True
-        Me.ShowDayChk.Location = New System.Drawing.Point(23, 93)
-        Me.ShowDayChk.Name = "ShowDayChk"
-        Me.ShowDayChk.Size = New System.Drawing.Size(78, 19)
-        Me.ShowDayChk.TabIndex = 15
-        Me.ShowDayChk.Text = "요일 표시"
-        Me.ShowDayChk.UseVisualStyleBackColor = True
-        '
-        'CustomFontChk
-        '
-        Me.CustomFontChk.AutoSize = True
-        Me.CustomFontChk.Location = New System.Drawing.Point(23, 204)
-        Me.CustomFontChk.Name = "CustomFontChk"
-        Me.CustomFontChk.Size = New System.Drawing.Size(146, 19)
-        Me.CustomFontChk.TabIndex = 14
-        Me.CustomFontChk.Text = "사용자 지정 글꼴 설정"
-        Me.CustomFontChk.UseVisualStyleBackColor = True
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label5.Location = New System.Drawing.Point(17, 153)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(89, 20)
-        Me.Label5.TabIndex = 13
-        Me.Label5.Text = "스타일 설정"
-        '
-        'BlackTextChk
-        '
-        Me.BlackTextChk.AutoSize = True
-        Me.BlackTextChk.Location = New System.Drawing.Point(23, 182)
-        Me.BlackTextChk.Name = "BlackTextChk"
-        Me.BlackTextChk.Size = New System.Drawing.Size(170, 19)
-        Me.BlackTextChk.TabIndex = 12
-        Me.BlackTextChk.Text = "표 글씨 색상 반전 (검은색)"
-        Me.BlackTextChk.UseVisualStyleBackColor = True
-        '
-        'AlwaysExpandChk
-        '
-        Me.AlwaysExpandChk.AutoSize = True
-        Me.AlwaysExpandChk.Location = New System.Drawing.Point(23, 70)
-        Me.AlwaysExpandChk.Name = "AlwaysExpandChk"
-        Me.AlwaysExpandChk.Size = New System.Drawing.Size(266, 19)
-        Me.AlwaysExpandChk.TabIndex = 11
-        Me.AlwaysExpandChk.Text = "수업 시간에 상관없이 내용에 맞춰 표 늘이기"
-        Me.AlwaysExpandChk.UseVisualStyleBackColor = True
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label4.Location = New System.Drawing.Point(17, 20)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(74, 20)
-        Me.Label4.TabIndex = 10
-        Me.Label4.Text = "표시 설정"
-        '
-        'ExpandCellChk
-        '
-        Me.ExpandCellChk.AutoSize = True
-        Me.ExpandCellChk.Location = New System.Drawing.Point(23, 48)
-        Me.ExpandCellChk.Name = "ExpandCellChk"
-        Me.ExpandCellChk.Size = New System.Drawing.Size(210, 19)
-        Me.ExpandCellChk.TabIndex = 9
-        Me.ExpandCellChk.Text = "마우스 올리면 가린 내용 확장하기"
-        Me.ExpandCellChk.UseVisualStyleBackColor = True
-        '
-        'TabPage4
-        '
-        Me.TabPage4.Controls.Add(Me.Panel4)
-        Me.TabPage4.Controls.Add(Me.Panel2)
-        Me.TabPage4.Controls.Add(Me.Panel3)
-        Me.TabPage4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage4.Location = New System.Drawing.Point(148, 10)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(441, 277)
-        Me.TabPage4.TabIndex = 12
-        '
-        'Panel4
-        '
-        Me.Panel4.Controls.Add(Me.WebBrowser1)
-        Me.Panel4.Controls.Add(Me.Label12)
-        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel4.Location = New System.Drawing.Point(0, 64)
-        Me.Panel4.Name = "Panel4"
-        Me.Panel4.Padding = New System.Windows.Forms.Padding(20, 0, 20, 0)
-        Me.Panel4.Size = New System.Drawing.Size(441, 138)
-        Me.Panel4.TabIndex = 22
-        '
-        'WebBrowser1
-        '
-        Me.WebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WebBrowser1.Location = New System.Drawing.Point(20, 19)
-        Me.WebBrowser1.Name = "WebBrowser1"
-        Me.WebBrowser1.Size = New System.Drawing.Size(401, 119)
-        Me.WebBrowser1.TabIndex = 0
-        '
-        'Label12
-        '
-        Me.Label12.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label12.Location = New System.Drawing.Point(20, 0)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(401, 19)
-        Me.Label12.TabIndex = 0
-        Me.Label12.Text = "업데이트 내용"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Panel3
-        '
-        Me.Panel3.Controls.Add(Me.ForceUpdChk)
-        Me.Panel3.Controls.Add(Me.UpdateChkButton)
-        Me.Panel3.Controls.Add(Me.WebPageLabel)
-        Me.Panel3.Controls.Add(Me.DoUpdateButton)
-        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel3.Location = New System.Drawing.Point(0, 202)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(441, 75)
-        Me.Panel3.TabIndex = 21
-        '
-        'ForceUpdChk
-        '
-        Me.ForceUpdChk.AutoSize = True
-        Me.ForceUpdChk.Location = New System.Drawing.Point(311, 8)
-        Me.ForceUpdChk.Name = "ForceUpdChk"
-        Me.ForceUpdChk.Size = New System.Drawing.Size(102, 19)
-        Me.ForceUpdChk.TabIndex = 20
-        Me.ForceUpdChk.Text = "강제 업데이트"
-        Me.ForceUpdChk.UseVisualStyleBackColor = True
-        '
-        'UpdateChkButton
-        '
-        Me.UpdateChkButton.Enabled = False
-        Me.UpdateChkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.UpdateChkButton.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.UpdateChkButton.Location = New System.Drawing.Point(24, 9)
-        Me.UpdateChkButton.Name = "UpdateChkButton"
-        Me.UpdateChkButton.Size = New System.Drawing.Size(114, 34)
-        Me.UpdateChkButton.TabIndex = 18
-        Me.UpdateChkButton.Text = "업데이트 확인"
-        Me.UpdateChkButton.UseVisualStyleBackColor = True
-        '
-        'WebPageLabel
-        '
-        Me.WebPageLabel.AutoSize = True
-        Me.WebPageLabel.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.WebPageLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.WebPageLabel.Location = New System.Drawing.Point(21, 48)
-        Me.WebPageLabel.Name = "WebPageLabel"
-        Me.WebPageLabel.Size = New System.Drawing.Size(223, 15)
-        Me.WebPageLabel.TabIndex = 12
-        Me.WebPageLabel.TabStop = True
-        Me.WebPageLabel.Text = "프로그램 페이지로 가기 (직접 다운로드)"
-        Me.WebPageLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'DoUpdateButton
-        '
-        Me.DoUpdateButton.Enabled = False
-        Me.DoUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.DoUpdateButton.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.DoUpdateButton.Location = New System.Drawing.Point(144, 9)
-        Me.DoUpdateButton.Name = "DoUpdateButton"
-        Me.DoUpdateButton.Size = New System.Drawing.Size(159, 34)
-        Me.DoUpdateButton.TabIndex = 19
-        Me.DoUpdateButton.Text = "바로 업데이트 하기"
-        Me.DoUpdateButton.UseVisualStyleBackColor = True
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.Label6)
-        Me.Panel2.Controls.Add(Me.Label9)
-        Me.Panel2.Controls.Add(Me.Label10)
-        Me.Panel2.Controls.Add(Me.Label11)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(441, 64)
-        Me.Panel2.TabIndex = 20
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label6.Location = New System.Drawing.Point(20, 10)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(70, 19)
-        Me.Label6.TabIndex = 13
-        Me.Label6.Text = "현재 버전"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label9.Location = New System.Drawing.Point(20, 36)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(70, 19)
-        Me.Label9.TabIndex = 14
-        Me.Label9.Text = "최신 버전"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label10.Location = New System.Drawing.Point(126, 10)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(110, 19)
-        Me.Label10.TabIndex = 16
-        Me.Label10.Text = "확인 중입니다..."
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label11.Location = New System.Drawing.Point(126, 36)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(110, 19)
-        Me.Label11.TabIndex = 17
-        Me.Label11.Text = "확인 중입니다..."
-        '
         'TabPage5
         '
         Me.TabPage5.Controls.Add(Me.RichTextBox1)
@@ -906,6 +767,157 @@ Partial Class OptionForm
         Me.BannerPictureBox.TabIndex = 4
         Me.BannerPictureBox.TabStop = False
         '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.Panel4)
+        Me.TabPage4.Controls.Add(Me.Panel2)
+        Me.TabPage4.Controls.Add(Me.Panel3)
+        Me.TabPage4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage4.Location = New System.Drawing.Point(148, 10)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Size = New System.Drawing.Size(441, 277)
+        Me.TabPage4.TabIndex = 12
+        '
+        'Panel4
+        '
+        Me.Panel4.Controls.Add(Me.WebBrowser1)
+        Me.Panel4.Controls.Add(Me.Label12)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel4.Location = New System.Drawing.Point(0, 64)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Padding = New System.Windows.Forms.Padding(20, 0, 20, 0)
+        Me.Panel4.Size = New System.Drawing.Size(441, 138)
+        Me.Panel4.TabIndex = 22
+        '
+        'WebBrowser1
+        '
+        Me.WebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WebBrowser1.Location = New System.Drawing.Point(20, 19)
+        Me.WebBrowser1.Name = "WebBrowser1"
+        Me.WebBrowser1.Size = New System.Drawing.Size(401, 119)
+        Me.WebBrowser1.TabIndex = 0
+        '
+        'Label12
+        '
+        Me.Label12.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label12.Location = New System.Drawing.Point(20, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(401, 19)
+        Me.Label12.TabIndex = 0
+        Me.Label12.Text = "업데이트 내용"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.Label6)
+        Me.Panel2.Controls.Add(Me.Label9)
+        Me.Panel2.Controls.Add(Me.Label10)
+        Me.Panel2.Controls.Add(Me.Label11)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(441, 64)
+        Me.Panel2.TabIndex = 20
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label6.Location = New System.Drawing.Point(20, 10)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(70, 19)
+        Me.Label6.TabIndex = 13
+        Me.Label6.Text = "현재 버전"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label9.Location = New System.Drawing.Point(20, 36)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(70, 19)
+        Me.Label9.TabIndex = 14
+        Me.Label9.Text = "최신 버전"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label10.Location = New System.Drawing.Point(126, 10)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(110, 19)
+        Me.Label10.TabIndex = 16
+        Me.Label10.Text = "확인 중입니다..."
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label11.Location = New System.Drawing.Point(126, 36)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(110, 19)
+        Me.Label11.TabIndex = 17
+        Me.Label11.Text = "확인 중입니다..."
+        '
+        'Panel3
+        '
+        Me.Panel3.Controls.Add(Me.ForceUpdChk)
+        Me.Panel3.Controls.Add(Me.UpdateChkButton)
+        Me.Panel3.Controls.Add(Me.WebPageLabel)
+        Me.Panel3.Controls.Add(Me.DoUpdateButton)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel3.Location = New System.Drawing.Point(0, 202)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(441, 75)
+        Me.Panel3.TabIndex = 21
+        '
+        'ForceUpdChk
+        '
+        Me.ForceUpdChk.AutoSize = True
+        Me.ForceUpdChk.Location = New System.Drawing.Point(311, 8)
+        Me.ForceUpdChk.Name = "ForceUpdChk"
+        Me.ForceUpdChk.Size = New System.Drawing.Size(102, 19)
+        Me.ForceUpdChk.TabIndex = 20
+        Me.ForceUpdChk.Text = "강제 업데이트"
+        Me.ForceUpdChk.UseVisualStyleBackColor = True
+        '
+        'UpdateChkButton
+        '
+        Me.UpdateChkButton.Enabled = False
+        Me.UpdateChkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.UpdateChkButton.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.UpdateChkButton.Location = New System.Drawing.Point(24, 9)
+        Me.UpdateChkButton.Name = "UpdateChkButton"
+        Me.UpdateChkButton.Size = New System.Drawing.Size(114, 34)
+        Me.UpdateChkButton.TabIndex = 18
+        Me.UpdateChkButton.Text = "업데이트 확인"
+        Me.UpdateChkButton.UseVisualStyleBackColor = True
+        '
+        'WebPageLabel
+        '
+        Me.WebPageLabel.AutoSize = True
+        Me.WebPageLabel.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.WebPageLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.WebPageLabel.Location = New System.Drawing.Point(21, 48)
+        Me.WebPageLabel.Name = "WebPageLabel"
+        Me.WebPageLabel.Size = New System.Drawing.Size(223, 15)
+        Me.WebPageLabel.TabIndex = 12
+        Me.WebPageLabel.TabStop = True
+        Me.WebPageLabel.Text = "프로그램 페이지로 가기 (직접 다운로드)"
+        Me.WebPageLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'DoUpdateButton
+        '
+        Me.DoUpdateButton.Enabled = False
+        Me.DoUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.DoUpdateButton.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.DoUpdateButton.Location = New System.Drawing.Point(144, 9)
+        Me.DoUpdateButton.Name = "DoUpdateButton"
+        Me.DoUpdateButton.Size = New System.Drawing.Size(159, 34)
+        Me.DoUpdateButton.TabIndex = 19
+        Me.DoUpdateButton.Text = "바로 업데이트 하기"
+        Me.DoUpdateButton.UseVisualStyleBackColor = True
+        '
         'ShadowPanel2
         '
         Me.ShadowPanel2.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
@@ -931,6 +943,37 @@ Partial Class OptionForm
         Me.SidePanel.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
         Me.SidePanel.Size = New System.Drawing.Size(148, 287)
         Me.SidePanel.TabIndex = 1
+        '
+        'ShadowPanel1
+        '
+        Me.ShadowPanel1.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
+        Me.ShadowPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ShadowPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.ShadowPanel1.Name = "ShadowPanel1"
+        Me.ShadowPanel1.Size = New System.Drawing.Size(148, 10)
+        Me.ShadowPanel1.TabIndex = 0
+        '
+        'FontDialog1
+        '
+        Me.FontDialog1.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FontDialog1.ShowEffects = False
+        '
+        'UpdateChecker
+        '
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "utdata"
+        Me.SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
+        Me.SaveFileDialog1.Title = "저장 위치를 선택해 주세요"
+        '
+        'OpenFileDialog1
+        '
+        '
+        'FolderBrowserDialog1
+        '
+        Me.FolderBrowserDialog1.Description = "시간표를 저장할 위치를 선택하세요"
         '
         'SettingMenu5
         '
@@ -972,37 +1015,6 @@ Partial Class OptionForm
         Me.SettingMenu1.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu1.TabIndex = 1
         '
-        'ShadowPanel1
-        '
-        Me.ShadowPanel1.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
-        Me.ShadowPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.ShadowPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.ShadowPanel1.Name = "ShadowPanel1"
-        Me.ShadowPanel1.Size = New System.Drawing.Size(148, 10)
-        Me.ShadowPanel1.TabIndex = 0
-        '
-        'FontDialog1
-        '
-        Me.FontDialog1.ShowEffects = False
-        '
-        'UpdateChecker
-        '
-        '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.DefaultExt = "utdata"
-        Me.SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
-        Me.SaveFileDialog1.Title = "저장 위치를 선택해 주세요"
-        '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
-        'FolderBrowserDialog1
-        '
-        Me.FolderBrowserDialog1.Description = "시간표를 저장할 위치를 선택하세요"
-        '
         'OptionForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -1019,11 +1031,14 @@ Partial Class OptionForm
         Me.Name = "OptionForm"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
-        Me.Text = "OptionForm2"
+        Me.Text = "uTable 설정/정보"
         Me.TransparencyKey = System.Drawing.Color.Magenta
         Me.TitlePanel.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainPanel.ResumeLayout(False)
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        Me.PrevTablePanel.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.Panel1.ResumeLayout(False)
@@ -1034,18 +1049,15 @@ Partial Class OptionForm
         Me.Panel6.PerformLayout()
         Me.CustomDirPanel.ResumeLayout(False)
         Me.CustomDirPanel.PerformLayout()
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
-        Me.PrevTablePanel.ResumeLayout(False)
-        Me.TabPage4.ResumeLayout(False)
-        Me.Panel4.ResumeLayout(False)
-        Me.Panel3.ResumeLayout(False)
-        Me.Panel3.PerformLayout()
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
         CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage4.ResumeLayout(False)
+        Me.Panel4.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
         Me.SidePanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -1075,7 +1087,6 @@ Partial Class OptionForm
     Friend WithEvents Label1 As Label
     Friend WithEvents StartupChk As CheckBox
     Friend WithEvents TabPage2 As Panel
-    Friend WithEvents Label8 As Label
     Friend WithEvents ShowProfChk As CheckBox
     Friend WithEvents FontPrevLabel As Label
     Friend WithEvents CustomFontBT As Button
@@ -1135,4 +1146,6 @@ Partial Class OptionForm
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents CheckAndApplyDirSettingBT As Button
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
+    Friend WithEvents ShowLinePatternChk As CheckBox
+    Friend WithEvents Label8 As Label
 End Class

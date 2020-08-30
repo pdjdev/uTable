@@ -180,16 +180,32 @@
     Private Sub CheckStateUpdate()
         If checked Then
             If blackText Then
-                ChkBox1.Image = My.Resources.check1_b
+                If Form1.currentDPI = 96 Then
+                    ChkBox1.Image = My.Resources.check1_b_96
+                Else
+                    ChkBox1.Image = My.Resources.check1_b
+                End If
             Else
-                ChkBox1.Image = My.Resources.check1_w
+                If Form1.currentDPI = 96 Then
+                    ChkBox1.Image = My.Resources.check1_w_96
+                Else
+                    ChkBox1.Image = My.Resources.check1_w
+                End If
             End If
             TitleLabel.Font = New Font(TitleLabel.Font.Name, TitleLabel.Font.Size, FontStyle.Strikeout)
         Else
             If blackText Then
-                ChkBox1.Image = My.Resources.check0_b
+                If Form1.currentDPI = 96 Then
+                    ChkBox1.Image = My.Resources.check0_b_96
+                Else
+                    ChkBox1.Image = My.Resources.check0_b
+                End If
             Else
-                ChkBox1.Image = My.Resources.check0_w
+                If Form1.currentDPI = 96 Then
+                    ChkBox1.Image = My.Resources.check0_w_96
+                Else
+                    ChkBox1.Image = My.Resources.check0_w
+                End If
             End If
             TitleLabel.Font = New Font(TitleLabel.Font.Name, TitleLabel.Font.Size, FontStyle.Bold)
         End If

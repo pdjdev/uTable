@@ -165,6 +165,15 @@ Public Class OptionForm
             ShowChkBoxChk.Checked = True
         End If
 
+        '가로격자패턴 기본값 = DottedLine
+        If GetINI("SETTING", "TablePattern", "", ININamePath) = "None" Then '현재는 아무것도 없는지라 None으로 되었을때만 체크 해제하도록
+            ShowLinePatternChk.Checked = False
+        Else
+            ShowLinePatternChk.Checked = True
+        End If
+        'TODO: 다이얼로그를 확장해서 점선, 줄무늬, 지그재그, 그라데이션 등등 뭐 여러가지로 하도록 하기
+
+
         '텍스트색상반전 기본값 = 0
         BlackTextChk.Checked = (GetINI("SETTING", "BlackText", "", ININamePath) = "1")
 
@@ -366,6 +375,14 @@ Public Class OptionForm
 
     Private Sub ShowChkBoxChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowChkBoxChk.CheckedChanged
         ApplySetting("ShowChkBox", ShowChkBoxChk.Checked)
+    End Sub
+
+    Private Sub ShowLinePatternChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowLinePatternChk.CheckedChanged
+        If ShowLinePatternChk.Checked Then
+            SetINI("SETTING", "TablePattern", "DottedLine", ININamePath)
+        Else
+            SetINI("SETTING", "TablePattern", "None", ININamePath)
+        End If
     End Sub
 
     Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
@@ -583,6 +600,7 @@ Public Class OptionForm
 
             newVersion = Nothing
             updateAvailabe = False
+            downComplete = False
             downUrl = ""
             updHtml = ""
             wc = New Net.WebClient
@@ -646,35 +664,56 @@ Public Class OptionForm
             DoUpdateButton.Enabled = updateAvailabe
             ForceUpdChk.Enabled = True
             UpdateChkButton.Enabled = True
+
+            If ForceUpdChk.Checked Then
+                DoUpdateButton.Enabled = True
+            End If
+
         Else
             Label10.Text = "오류 발생"
             Label11.Text = "(인터넷 연결을 확인해주세요)"
-
+            downComplete = False
             UpdateChkButton.Enabled = True
             ForceUpdChk.Enabled = False
         End If
     End Sub
 
     Private Sub DoUpdateButton_Click(sender As Object, e As EventArgs) Handles DoUpdateButton.Click
+        DoUpdateButton.Enabled = False
+
         If downComplete Then
             DoUpdateTask()
         Else
             If MsgBox("다운로드 후 뜨게 될 작업창을 닫지 마시고 기다려주시면 자동으로 업데이트가 완료됩니다." + vbCr _
                   + "만일 업데이트를 실패했다면 직접 다운로드 페이지로 가서 받으시기 바랍니다. (시간표, 설정 값은 같은 실행 위치에 저장 후 실행하면 그대로 유지됩니다)" + vbCr + vbCr _
                   + "계속하시려면 '예' 를 눌러주세요.", vbYesNo + vbInformation) = vbYes Then
-                wc.CancelAsync()
-                DoUpdateButton.Enabled = False
-
-                Try
-                    wc.DownloadFileAsync(New Uri(downUrl), "tmp.exe")
-                Catch ex As Exception
-                    MsgBox("다운로드에 실패하였습니다. 인터넷 연결을 확인해 주시고 다시 시도해 주세요.", vbCritical)
-                    DoUpdateButton.Text = "다시 시도"
-                    DoUpdateButton.Enabled = True
-                    downComplete = False
-                End Try
+                'wc.CancelAsync()
+                DownloadUpdate()
             End If
         End If
+    End Sub
+
+    Private Sub DownloadUpdate()
+        If wc.IsBusy Then
+            MsgBox("이미 다운로드가 진행중입니다. 설정 창을 끄고 잠시 후 다시 시도해 주세요.", vbExclamation)
+            downComplete = False
+            Exit Sub
+        Else
+            Try
+                My.Computer.FileSystem.DeleteFile(exePath + "\tmp.exe")
+            Catch ex As Exception
+
+            End Try
+        End If
+
+        Try
+            wc.DownloadFileAsync(New Uri(downUrl), exePath + "\tmp.exe")
+        Catch ex As Exception
+            MsgBox("다운로드에 실패하였습니다." + vbCr + "(인터넷 연결을 확인해 주시고 다시 시도해 주세요.)" + vbCr + vbCr + ex.Message, vbCritical)
+            DoUpdateButton.Text = "다시 시도"
+            DoUpdateButton.Enabled = True
+            downComplete = False
+        End Try
     End Sub
 
     Private Sub wc_DownloadProgressChanged(sender As Object, e As DownloadProgressChangedEventArgs) Handles wc.DownloadProgressChanged
@@ -684,11 +723,22 @@ Public Class OptionForm
     Private Sub wc_DownloadFileCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles wc.DownloadFileCompleted
         DoUpdateButton.Text = "작업 중..."
         downComplete = True
-
         DoUpdateTask()
     End Sub
 
     Sub DoUpdateTask()
+
+        If Not My.Computer.FileSystem.FileExists(exePath + "\tmp.exe") Then
+            '파일이 받아지지 않았으므로 다시 시도
+            downComplete = False
+            DoUpdateButton.Text = "다시 시도 중..."
+            DoUpdateButton.Refresh()
+            Threading.Thread.Sleep(500)
+            DownloadUpdate()
+
+            Exit Sub
+        End If
+
         Try
             Dim procStartInfo As New ProcessStartInfo
             Dim procExecuting As New Process
@@ -697,7 +747,7 @@ Public Class OptionForm
                 .UseShellExecute = True
                 .FileName = "cmd.exe"
                 .WindowStyle = ProcessWindowStyle.Normal
-                .Verb = "runas" 'add this to prompt for elevation
+                .Verb = "runas" '관리자 권한으로 실행
                 .Arguments = "/k @echo off & mode con: cols=30 lines=3 & echo 잠시만 기다려 주세요... & taskkill /f /im " + exeName + " >nul " _
                     + "& cd " + exePath _
                     + " & timeout /t 2 /nobreak >nul" _
@@ -807,6 +857,7 @@ Public Class OptionForm
                     Try
                         writeTable(clipboardTxt)
                         Form1.updateCell()
+                        Exit Sub
                     Catch ex As Exception
                         MsgBox("시간표 적용 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
                     End Try
@@ -917,6 +968,11 @@ Public Class OptionForm
             MsgBox("오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
 
         End Try
+
+    End Sub
+
+    Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
+        Throw New System.Exception("테스트 예외 처리")
 
     End Sub
 End Class

@@ -133,7 +133,7 @@ Partial Class CellControl
         'ChkBox1
         '
         Me.ChkBox1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.ChkBox1.Image = Global.uTable.My.Resources.Resources.check0_w
+        Me.ChkBox1.Image = Global.uTable.My.Resources.Resources.check1_w_96
         Me.ChkBox1.Location = New System.Drawing.Point(0, 0)
         Me.ChkBox1.Name = "ChkBox1"
         Me.ChkBox1.Size = New System.Drawing.Size(19, 19)
