@@ -153,6 +153,7 @@ Partial Class CellControl
         Me.Controls.Add(Me.BottomTimeLabel)
         Me.Controls.Add(Me.TopPanel)
         Me.Controls.Add(Me.TopNotchPanel)
+        Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.Name = "CellControl"

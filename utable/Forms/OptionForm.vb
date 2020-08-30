@@ -467,12 +467,12 @@ Public Class OptionForm
                                             PrevTableArea.BackColor.G * colorMul,
                                             PrevTableArea.BackColor.B * colorMul)
 
-            Dim thickness As Integer = 3 * (96 / Form1.currentDPI)
+            Dim thickness As Integer = 3 * (Form1.currentDPI / 96)
             Dim p As New Pen(c, thickness)
             Dim g As Graphics = PrevTableArea.CreateGraphics
             p.DashStyle = Drawing2D.DashStyle.Dot
-            g.DrawLine(p, New Point(0, PrevTableArea.Height - 5 * (96 / Form1.currentDPI)),
-                       New Point(PrevTableArea.Width, PrevTableArea.Height - 5 * (96 / Form1.currentDPI)))
+            g.DrawLine(p, New Point(0, PrevTableArea.Height - 10 * (96 / Form1.currentDPI)),
+                       New Point(PrevTableArea.Width, PrevTableArea.Height - 10 * (96 / Form1.currentDPI)))
 
             g.Dispose()
             p.Dispose()

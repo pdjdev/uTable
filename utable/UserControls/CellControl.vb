@@ -70,8 +70,8 @@
                 Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
 
                 ChangeFont(Me, fntname, FontStyle.Regular)
-                ChangeFont(TopTimeLabel, fntname, FontStyle.Regular)
-                ChangeFont(BottomTimeLabel, fntname, FontStyle.Regular)
+                ChangeFont(TopTimeLabel, fntname, FontStyle.Bold)
+                ChangeFont(BottomTimeLabel, fntname, FontStyle.Bold)
                 ChangeFont(TitleLabel, fntname, FontStyle.Bold)
                 ChangeFont(ProfLabel, fntname, FontStyle.Regular)
                 ChangeFont(MemoLabel, fntname, FontStyle.Regular)
@@ -155,10 +155,10 @@
             '쪼그라들때
             If doExpand And Not alwaysExpand Then
                 Height = defHeight
-                If Not Name = "DemoCellControl" Then Form1.DrawTablePattern(dayNum)
             End If
 
             Location() = New Point(0, defLoc)
+            If Not Name = "DemoCellControl" Then Form1.DrawTablePattern(dayNum)
 
         End If
     End Sub

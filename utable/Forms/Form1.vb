@@ -991,9 +991,6 @@ Public Class Form1
                                             panel.BackColor.G * colorMul,
                                             panel.BackColor.B * colorMul)
 
-            '안해주면 제대로 그려지지 않을수있음
-            panel.Refresh()
-
             '''' 줄무늬 배경 만들어주는 코드
             'If True Then
             '    Dim b As New SolidBrush(c)
@@ -1023,6 +1020,9 @@ Public Class Form1
                 Dim p As New Pen(c, thickness)
                 Dim g As Graphics = panel.CreateGraphics
                 p.DashStyle = Drawing2D.DashStyle.Dot
+
+                '안해주면 제대로 그려지지 않을수있음
+                panel.Refresh()
 
                 For j As Integer = starttime To endtime
                     If j > 0 And j Mod 60 = 0 Then
