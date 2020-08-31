@@ -1,5 +1,6 @@
 ﻿Imports System.IO
-Imports System.Text.RegularExpressions
+'Imports System.Text.RegularExpressions
+'Imports System.Xml
 
 Module DataModule
     'web에서 문자열 가져오는 함수
@@ -49,18 +50,17 @@ Module DataModule
         End If
     End Function
 
+    '중간의 문자열을 여러개 List로 리턴하는 함수
     Public Function multipleMidReturn(ByVal first As String, ByVal last As String, ByRef total As String) As List(Of String)
         If total.Contains(first) Then
             Dim tmptotal = total
             Dim res As New List(Of String)
 
-ret:
-            If tmptotal.Contains(first) = True Then
+            While tmptotal.Contains(first) = True
                 Dim FirstStart As Long = tmptotal.IndexOf(first) + first.Length + 1
                 res.Add(Trim(Mid$(tmptotal, FirstStart, tmptotal.Substring(FirstStart).IndexOf(last) + 1)))
                 tmptotal = Mid(tmptotal, FirstStart, tmptotal.Length)
-                GoTo ret
-            End If
+            End While
 
             Return res
         Else
