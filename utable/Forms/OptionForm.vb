@@ -114,68 +114,40 @@ Public Class OptionForm
         MinStartChk.Checked = (GetINI("SETTING", "MinStart", "", ININamePath) = "1")
 
         '모서리 달라붙기 기본값 = 1
-        If GetINI("SETTING", "SnapToEdge", "", ININamePath) = "0" Then
-            SnapToEdgeChk.Checked = False
-        Else
-            SnapToEdgeChk.Checked = True
-        End If
+        SnapToEdgeChk.Checked = Not (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "0")
 
         '페이드 효과 기본값 = 1
-        If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
-            FadeEffectChk.Checked = False
-        Else
-            FadeEffectChk.Checked = True
-        End If
+        FadeEffectChk.Checked = Not (GetINI("SETTING", "FadeEffect", "", ININamePath) = "0")
 
         '표확장 기본값 = 1
-        If GetINI("SETTING", "ExpandCell", "", ININamePath) = "0" Then
-            ExpandCellChk.Checked = False
-        Else
-            ExpandCellChk.Checked = True
-        End If
+        ExpandCellChk.Checked = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
 
         '항상확장 기본값 = 0
         AlwaysExpandChk.Checked = (GetINI("SETTING", "AlwaysExpand", "", ININamePath) = "1")
 
         '요일표시 기본값 = 1
-        If GetINI("SETTING", "ShowDay", "", ININamePath) = "0" Then
-            ShowDayChk.Checked = False
-        Else
-            ShowDayChk.Checked = True
-        End If
+        ShowDayChk.Checked = Not (GetINI("SETTING", "ShowDay", "", ININamePath) = "0")
 
         '교수명표시 기본값 = 1
-        If GetINI("SETTING", "ShowProf", "", ININamePath) = "0" Then
-            ShowProfChk.Checked = False
-        Else
-            ShowProfChk.Checked = True
-        End If
+        ShowProfChk.Checked = Not (GetINI("SETTING", "ShowProf", "", ININamePath) = "0")
 
         '메모표시 기본값 = 1
-        If GetINI("SETTING", "ShowMemo", "", ININamePath) = "0" Then
-            ShowMemoChk.Checked = False
-        Else
-            ShowMemoChk.Checked = True
-        End If
+        ShowMemoChk.Checked = Not (GetINI("SETTING", "ShowMemo", "", ININamePath) = "0")
 
         '체크박스표시 기본값 = 1
-        If GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0" Then
-            ShowChkBoxChk.Checked = False
-        Else
-            ShowChkBoxChk.Checked = True
-        End If
+        ShowChkBoxChk.Checked = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
 
         '가로격자패턴 기본값 = DottedLine
-        If GetINI("SETTING", "TablePattern", "", ININamePath) = "None" Then '현재는 아무것도 없는지라 None으로 되었을때만 체크 해제하도록
-            ShowLinePatternChk.Checked = False
-        Else
-            ShowLinePatternChk.Checked = True
-        End If
+        '현재는 아무것도 없는지라 None으로 되었을때만 체크 해제하도록
+        ShowLinePatternChk.Checked = Not (GetINI("SETTING", "TablePattern", "", ININamePath) = "None")
         'TODO: 다이얼로그를 확장해서 점선, 줄무늬, 지그재그, 그라데이션 등등 뭐 여러가지로 하도록 하기
 
+        '자동색상 기본값 = 1
+        AutoTextColorChk.Checked = Not (GetINI("SETTING", "AutoTextColor", "", ININamePath) = "0")
 
         '텍스트색상반전 기본값 = 0
         BlackTextChk.Checked = (GetINI("SETTING", "BlackText", "", ININamePath) = "1")
+        BlackTextChk.Enabled = Not AutoTextColorChk.Checked
 
         '커스텀폰트 기본값 = 0
         CustomFontChk.Checked = (GetINI("SETTING", "CustomFont", "", ININamePath) = "1")
@@ -369,6 +341,11 @@ Public Class OptionForm
         ApplySetting("ShowMemo", ShowMemoChk.Checked)
     End Sub
 
+    Private Sub AutoTextColorChk_CheckedChanged(sender As Object, e As EventArgs) Handles AutoTextColorChk.CheckedChanged
+        ApplySetting("AutoTextColor", AutoTextColorChk.Checked)
+        BlackTextChk.Enabled = Not AutoTextColorChk.Checked
+    End Sub
+
     Private Sub BlackTextChk_CheckedChanged(sender As Object, e As EventArgs) Handles BlackTextChk.CheckedChanged
         ApplySetting("BlackText", BlackTextChk.Checked)
     End Sub
@@ -395,7 +372,7 @@ Public Class OptionForm
 
     Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
         ShowDayChk.CheckedChanged, ShowProfChk.CheckedChanged, ShowMemoChk.CheckedChanged, BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged,
-        ShowLinePatternChk.CheckedChanged
+        ShowLinePatternChk.CheckedChanged, AutoTextColorChk.CheckedChanged
         PrevUpdate()
     End Sub
 
@@ -508,7 +485,7 @@ Public Class OptionForm
     '바로 적용 보여주기 위해 시간표 새로고침
     Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged,
         AlwaysExpandChk.CheckedChanged, ShowDayChk.CheckedChanged, ShowMemoChk.CheckedChanged, ShowProfChk.CheckedChanged,
-        BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged
+        BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged, AutoTextColorChk.CheckedChanged
         If loaded Then Form1.updateCell()
     End Sub
 
@@ -1030,4 +1007,5 @@ Public Class OptionForm
         End Try
 
     End Sub
+
 End Class

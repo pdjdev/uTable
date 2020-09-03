@@ -171,11 +171,6 @@ Module GUIModule
     End Function
 #End Region
 
-    'Public mainColor As Color = Color.FromArgb(250, 250, 250)
-    'Public edgeColor As Color = Color.LightGray
-    'Public tableColor_1 As Color = Color.FromArgb(250, 250, 250)
-    'Public tableColor_2 As Color = Color.FromArgb(240, 240, 240)
-
 #Region "컬러 관리"
     Public Function mainColor(mode As String) As Color
         Select Case mode
@@ -305,6 +300,15 @@ Module GUIModule
                 Return Color.FromArgb(64, 64, 64)
         End Select
 
+    End Function
+
+    ' 색을 기반으로 흰색이 적합한지 검은색이 적합한지 판별
+    ' https://stackoverflow.com/a/1855903
+    Public Function CheckProperColor(ByVal color As Color) As Boolean
+        Dim d As Integer = 0
+        Dim luminance As Double = (0.299 * color.R + 0.587 * color.G + 0.114 * color.B) / 255
+
+        Return luminance > 0.5
     End Function
 
 #End Region

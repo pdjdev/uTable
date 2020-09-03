@@ -91,6 +91,12 @@
     <Compile Include="ErrorForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\EditCourse.Designer.vb">
+      <DependentUpon>EditCourse.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditCourse.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\EverytimeSemesterSelector.Designer.vb">
       <DependentUpon>EverytimeSemesterSelector.vb</DependentUpon>
     </Compile>
@@ -170,6 +176,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ErrorForm.resx">
       <DependentUpon>ErrorForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditCourse.resx">
+      <DependentUpon>EditCourse.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EveryTimeBrowser.resx">
       <DependentUpon>EveryTimeBrowser.vb</DependentUpon>

@@ -78,14 +78,19 @@
             End If
         End If
 
-        If GetINI("SETTING", "BlackText", "", ININamePath) = "1" Then
+        If Not GetINI("SETTING", "AutoTextColor", "", ININamePath) = "0" Then
+            blackText = CheckProperColor(BackColor)
+        ElseIf GetINI("SETTING", "BlackText", "", ININamePath) = "1" Then
+            blackText = True
+        End If
+
+        If blackText Then
             Me.ForeColor = Color.Black
             TopTimeLabel.ForeColor = Color.Black
             BottomTimeLabel.ForeColor = Color.Black
             TitleLabel.ForeColor = Color.Black
             ProfLabel.ForeColor = Color.Black
             MemoLabel.ForeColor = Color.Black
-            blackText = True
         End If
 
         alwaysExpand = (GetINI("SETTING", "AlwaysExpand", "", ININamePath) = "1")
