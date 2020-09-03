@@ -103,7 +103,7 @@ Public Class OptionForm
         SettingMenu4.SettingLabel.Text = "업데이트"
         SettingMenu5.SettingLabel.Text = "프로그램 정보"
 
-        VersionLabel.Text = "유테이블 " + GetAppVersion.ToString + "v   -  by PBJSoftware 2020"
+        VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString + "   -  by PBJSoftware 2020"
 
         SwitchMode(1)
 
@@ -386,7 +386,10 @@ Public Class OptionForm
         End If
 
         '그래서 여기에다가 따로 적용보여주기 새로고침 할것
-        If loaded Then Form1.DrawTablePattern(-1)
+        If loaded Then
+            Form1.tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
+            Form1.TimeTable.Refresh()
+        End If
 
     End Sub
 
@@ -652,12 +655,13 @@ Public Class OptionForm
             downUrl = "https://github.com/pdjdev/uTable/releases/download/" + getData(entry, "title") + "/uTable.exe"
             updHtml = midReturn("<content type=""html"">", "</content>", entry)
 
+            'version값 = title에서 문자와 점을 제외한 모든 텍스트 지우기
             Dim version = From c In getData(entry, "title")
                           Where Char.IsDigit(c) OrElse c = "."
                           Select num = c.ToString
-
             newVersion = Join(version.ToArray, "")
-            updateAvailabe = Convert.ToDouble(newVersion) > GetAppVersion()
+
+            updateAvailabe = (My.Application.Info.Version.CompareTo(stringToVersion(newVersion)) < 0)
         Catch ex As Exception
             downUrl = "error"
         End Try
@@ -665,19 +669,60 @@ Public Class OptionForm
         Threading.Thread.Sleep(500)
     End Sub
 
-    Function GetAppVersion() As Double
-        Dim tmp As String = My.Application.Info.Version.Major.ToString + "." _
-            + My.Application.Info.Version.Minor.ToString _
-            + My.Application.Info.Version.Build.ToString _
-            + My.Application.Info.Version.Revision.ToString
+    'GUI 표시용 버전 만들기
+    Function GetAppVersion() As String
+        Dim tmp As String = My.Application.Info.Version.Major.ToString + "." + My.Application.Info.Version.Minor.ToString
+        Dim bld As String = My.Application.Info.Version.Build.ToString
+        Dim rev As String = My.Application.Info.Version.Revision.ToString
 
-        Return Convert.ToDouble(tmp)
+        '1.1.1.0 -> 1.1.1
+        If Not bld = 0 And rev = 0 Then
+            tmp += "." + bld
+            '1.1.0.1 또는 1.1.1.1 -> 걍 표기
+        ElseIf (bld = 0 And Not rev = 0) Or (Not bld = 0 And Not rev = 0) Then
+
+            tmp += "." + bld + "." + rev
+        End If
+
+        Return tmp
+    End Function
+
+    Function stringToVersion(ver As String) As Version
+        Dim tmp As String() = ver.Split(".")
+
+        Dim maj As Integer = 0
+        Dim min As Integer = 0
+        Dim bld As Integer = 0
+        Dim rev As Integer = 0
+
+        Select Case tmp.Count
+            Case >= 4
+                maj = Convert.ToInt16(tmp(0))
+                min = Convert.ToInt16(tmp(1))
+                bld = Convert.ToInt16(tmp(2))
+                rev = Convert.ToInt16(tmp(3))
+
+            Case 3
+                maj = Convert.ToInt16(tmp(0))
+                min = Convert.ToInt16(tmp(1))
+                bld = Convert.ToInt16(tmp(2))
+
+            Case 2
+                maj = Convert.ToInt16(tmp(0))
+                min = Convert.ToInt16(tmp(1))
+
+            Case 1
+                maj = Convert.ToInt16(tmp(0))
+
+        End Select
+
+        Return New Version(maj, min, bld, rev)
     End Function
 
     Private Sub UpdateChecker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles UpdateChecker.RunWorkerCompleted
         If Not downUrl = "error" Then
-            Label10.Text = GetAppVersion().ToString + "v"
-            Label11.Text = newVersion + "v"
+            Label10.Text = "v" + GetAppVersion()
+            Label11.Text = "v" + newVersion
 
             If updateAvailabe Then
                 Label10.Text += " (최신 버전이 아닙니다!)"
@@ -755,7 +800,6 @@ Public Class OptionForm
     End Sub
 
     Sub DoUpdateTask()
-
         If Not My.Computer.FileSystem.FileExists(exePath + "\tmp.exe") Then
             '파일이 받아지지 않았으므로 다시 시도
             downComplete = False
@@ -920,24 +964,6 @@ Public Class OptionForm
             OpenFileDialog1.DefaultExt = "ini"
             OpenFileDialog1.ShowDialog()
         End If
-    End Sub
-
-    Sub reStarter()
-        MsgBox("'확인'을 눌러 프로그램을 다시 시작합니다.", vbInformation)
-
-        Dim procStartInfo As New ProcessStartInfo
-        Dim procExecuting As New Process
-
-        With procStartInfo
-            .UseShellExecute = True
-            .FileName = "cmd.exe"
-            .WindowStyle = ProcessWindowStyle.Hidden
-            .Arguments = "/k @echo off & taskkill /f /im """ + exeName + """ >nul " _
-                + " & timeout /t 1 /nobreak >nul" _
-                + " & start """" """ + exeFullpath + """ & exit"
-        End With
-
-        procExecuting = Process.Start(procStartInfo)
     End Sub
 
     Private Sub OpenFileDialog1_FileOk(sender As Object, e As CancelEventArgs) Handles OpenFileDialog1.FileOk

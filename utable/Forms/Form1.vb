@@ -20,7 +20,8 @@ Public Class Form1
     Private BorderWidth As Integer = dpicalc(Me, 6)
     Private _resizeDir As ResizeDirection = ResizeDirection.None
 
-    Dim disablePatternDrawOnce As Boolean = False
+    'Dim disablePatternDrawOnce As Boolean = False
+    Public tablePatternSetting As String = Nothing
 
     Dim showSaturday As Boolean = False
     Dim showSunday As Boolean = False
@@ -324,7 +325,6 @@ Public Class Form1
         End Select
 
         TimeTable.Refresh()
-        DrawTablePattern(-1)
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -348,7 +348,6 @@ Public Class Form1
         'Next
 
         Opacity = 0
-        disablePatternDrawOnce = True
         UpdateColor()
         updateDateDraw()
 
@@ -391,8 +390,8 @@ Public Class Form1
         End If
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
+        tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
 
-        disablePatternDrawOnce = True
         updateCell()
     End Sub
 
@@ -496,8 +495,6 @@ Public Class Form1
         Next
 
         TimeTable.Visible = True
-
-        DrawTablePattern(-1)
     End Sub
 
     Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String)
@@ -613,8 +610,6 @@ Public Class Form1
             'MsgBox("바운더리 밖입니다.")
         End If
 
-        DrawTablePattern(-1)
-
         If GetINI("SETTING", "MinStart", "", ININamePath) = "1" Then
             WindowState = FormWindowState.Minimized
             Opacity = 1
@@ -648,10 +643,6 @@ Public Class Form1
     End Sub
 
     Private Sub MinBT_Click(sender As Object, e As EventArgs) Handles MinBT.Click
-
-        '중복호출 막기위해
-        disablePatternDrawOnce = True
-
         If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
             WindowState = FormWindowState.Minimized
         Else
@@ -894,7 +885,6 @@ Public Class Form1
             Next
 
             TimeTable.Visible = True
-            DrawTablePattern(-1)
         End If
     End Sub
 
@@ -958,22 +948,16 @@ Public Class Form1
         updateCell()
     End Sub
 
-    'range = 그릴 범위, -1은 전체
-    Public Sub DrawTablePattern(range As Integer)
+    Private Sub TablePanel_Paint(sender As Object, e As PaintEventArgs) Handles MonPanel.Paint, TuePanel.Paint, WedPanel.Paint,
+        ThuPanel.Paint, FriPanel.Paint, SatPanel.Paint, SunPanel.Paint
 
-        Dim SettingValue As String = GetINI("SETTING", "TablePattern", "", ININamePath)
-
-        '맨 처음때 중복호출 막기위해 (Shown, UpdateCell)
-        If disablePatternDrawOnce Then
-            disablePatternDrawOnce = False
+        If Not showSaturday And sender.Name = SatPanel.Name Then
+            If Not showSunday Then Exit Sub
+        ElseIf Not showSunday And sender.Name = SunPanel.Name Then
             Exit Sub
         End If
 
-        '설정값이 None이므로 그냥 Refresh하고 빠져나가기
-        If SettingValue = "None" Then
-            TimeTable.Refresh()
-            Exit Sub
-        End If
+        Dim panel As Panel = sender
 
         '시간표 시작과 끝 사이의 총 시간 길이
         Dim timeLength As Integer = endtime - starttime
@@ -986,70 +970,30 @@ Public Class Form1
         Dim left As Integer = starttime Mod 60
         Dim thickness As Integer = 3 * (currentDPI / 96)
 
-
         Dim colorMul As Single = 0.9
         If colorMode = "Dark" Then
             colorMul = 1.35
         End If
 
-        'MonPanel부터 SunPanel까지
-        For i = 0 To 6
-            '전체 범위도 아니고 현재 특정 범위도 아니라면
-            If Not range = -1 And Not range = i Then Continue For
+        Dim c As Color = Color.FromArgb(panel.BackColor.R * colorMul,
+                                        panel.BackColor.G * colorMul,
+                                        panel.BackColor.B * colorMul)
 
-            Dim count As Integer = 0
+        If Not tablePatternSetting = "None" Then
 
-            Dim panel As Panel = TimeTable.GetControlFromPosition(i, 0)
-            Dim c As Color = Color.FromArgb(panel.BackColor.R * colorMul,
-                                            panel.BackColor.G * colorMul,
-                                            panel.BackColor.B * colorMul)
+            Dim p As New Pen(c, thickness)
+            Dim g As Graphics = Panel.CreateGraphics
+            p.DashStyle = Drawing2D.DashStyle.Dot
 
+            For j As Integer = starttime To endtime
+                If j > 0 And j Mod 60 = 0 Then
+                    Dim y As Integer = ((endtime - j + left) / timeLength) * panelHeight + thickness / 2
+                    g.DrawLine(p, New Point(0, y), New Point(panelWidth, y))
+                End If
+            Next
 
-            '''' 줄무늬 배경 만들어주는 코드
-            'If True Then
-            '    Dim b As New SolidBrush(c)
-            '    Dim g As Graphics = panel.CreateGraphics
-
-            '    For j As Integer = starttime To endtime
-            '        If j > 0 And j Mod 60 = 0 Then
-            '            If count Mod 2 = 0 Then
-            '                g.FillRectangle(b, 0, Convert.ToInt32(((endtime - j) / timeLength) * panelHeight - hrlength),
-            '                                panelWidth, Convert.ToInt32(hrlength))
-            '            End If
-            '            count += 1
-            '        End If
-            '    Next
-
-            '    g.Dispose()
-            '    b.Dispose()
-            'Else
-
-            '''' 점선 만들어주는 코드
-
-            '현재는 옵션이 단 하나(DottedLine)밖에없어서 None이 아닐때 무조건 DottedLine하도록 했는데,
-            '나중에 점차 스타일이 추가되면 Select Case에다 DottedLine(점선), Stripes(줄무늬), Gradient(그라데이션)
-            '등등 옵션 추가하여서 판별하도록 하기!
-
-
-
-            If Not SettingValue = "None" Then
-
-                Dim p As New Pen(c, thickness)
-                Dim g As Graphics = panel.CreateGraphics
-                p.DashStyle = Drawing2D.DashStyle.Dot
-
-                For j As Integer = starttime To endtime
-                    If j > 0 And j Mod 60 = 0 Then
-                        Dim y As Integer = ((endtime - j + left) / timeLength) * panelHeight + thickness / 2
-                        g.DrawLine(p, New Point(0, y), New Point(panelWidth, y))
-                    End If
-                Next
-
-                g.Dispose()
-                p.Dispose()
-            End If
-            'End If
-        Next
+            g.Dispose()
+            p.Dispose()
+        End If
     End Sub
-
 End Class

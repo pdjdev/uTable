@@ -59,11 +59,11 @@ Partial Class ErrorForm
         '
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button1.Location = New System.Drawing.Point(273, 10)
+        Me.Button1.Location = New System.Drawing.Point(279, 10)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(172, 41)
+        Me.Button1.Size = New System.Drawing.Size(166, 41)
         Me.Button1.TabIndex = 1
-        Me.Button1.Text = "다시 시작 (5 초후 실행)"
+        Me.Button1.Text = "다시 시작 (10 초후 실행)"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Panel1
@@ -81,9 +81,9 @@ Partial Class ErrorForm
         '
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button2.Location = New System.Drawing.Point(125, 10)
+        Me.Button2.Location = New System.Drawing.Point(127, 10)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(148, 41)
+        Me.Button2.Size = New System.Drawing.Size(152, 41)
         Me.Button2.TabIndex = 2
         Me.Button2.Text = "설정 파일 삭제 후 종료"
         Me.Button2.UseVisualStyleBackColor = True

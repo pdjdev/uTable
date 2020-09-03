@@ -50,4 +50,32 @@ Module WinModule
     End Function
 
 #End Region
+
+#Region "프로그램 실행 관리"
+
+    '프로그램 재시작
+    Public Sub reStarter()
+        Dim exeFullpath As String = Application.ExecutablePath
+        Dim exePath = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
+        Dim exeName = Mid(exeFullpath, exeFullpath.LastIndexOf("\") + 2)
+
+        MsgBox("'확인'을 눌러 프로그램을 다시 시작합니다.", vbInformation)
+
+        Dim procStartInfo As New ProcessStartInfo
+        Dim procExecuting As New Process
+
+        With procStartInfo
+            .UseShellExecute = True
+            .FileName = "cmd.exe"
+            .WindowStyle = ProcessWindowStyle.Hidden
+            .Arguments = "/k @echo off & taskkill /f /im """ + exeName + """ >nul " _
+                + " & timeout /t 1 /nobreak >nul" _
+                + " & start """" """ + exeFullpath + """ & exit"
+        End With
+
+        procExecuting = Process.Start(procStartInfo)
+    End Sub
+
+#End Region
+
 End Module

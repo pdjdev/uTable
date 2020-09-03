@@ -27,6 +27,21 @@ Partial Class OptionForm
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.MainPanel = New System.Windows.Forms.Panel()
+        Me.TabPage4 = New System.Windows.Forms.Panel()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.FileBackupChk = New System.Windows.Forms.CheckBox()
+        Me.ForceUpdChk = New System.Windows.Forms.CheckBox()
+        Me.UpdateChkButton = New System.Windows.Forms.Button()
+        Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
+        Me.DoUpdateButton = New System.Windows.Forms.Button()
         Me.TabPage2 = New System.Windows.Forms.Panel()
         Me.ShowLinePatternChk = New System.Windows.Forms.CheckBox()
         Me.ShowChkBoxChk = New System.Windows.Forms.CheckBox()
@@ -46,21 +61,6 @@ Partial Class OptionForm
         Me.AlwaysExpandChk = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ExpandCellChk = New System.Windows.Forms.CheckBox()
-        Me.TabPage4 = New System.Windows.Forms.Panel()
-        Me.Panel4 = New System.Windows.Forms.Panel()
-        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.FileBackupChk = New System.Windows.Forms.CheckBox()
-        Me.ForceUpdChk = New System.Windows.Forms.CheckBox()
-        Me.UpdateChkButton = New System.Windows.Forms.Button()
-        Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
-        Me.DoUpdateButton = New System.Windows.Forms.Button()
         Me.TabPage1 = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.D_ThemeRbt = New System.Windows.Forms.RadioButton()
@@ -112,12 +112,12 @@ Partial Class OptionForm
         Me.TitlePanel.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainPanel.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
-        Me.PrevTablePanel.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.Panel4.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.Panel3.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        Me.PrevTablePanel.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
@@ -177,6 +177,170 @@ Partial Class OptionForm
         Me.MainPanel.Name = "MainPanel"
         Me.MainPanel.Size = New System.Drawing.Size(589, 287)
         Me.MainPanel.TabIndex = 1
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.Panel4)
+        Me.TabPage4.Controls.Add(Me.Panel2)
+        Me.TabPage4.Controls.Add(Me.Panel3)
+        Me.TabPage4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage4.Location = New System.Drawing.Point(148, 10)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Size = New System.Drawing.Size(441, 277)
+        Me.TabPage4.TabIndex = 12
+        '
+        'Panel4
+        '
+        Me.Panel4.Controls.Add(Me.WebBrowser1)
+        Me.Panel4.Controls.Add(Me.Label12)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel4.Location = New System.Drawing.Point(0, 64)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Padding = New System.Windows.Forms.Padding(20, 0, 20, 0)
+        Me.Panel4.Size = New System.Drawing.Size(441, 138)
+        Me.Panel4.TabIndex = 22
+        '
+        'WebBrowser1
+        '
+        Me.WebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.WebBrowser1.Location = New System.Drawing.Point(20, 19)
+        Me.WebBrowser1.Name = "WebBrowser1"
+        Me.WebBrowser1.Size = New System.Drawing.Size(401, 119)
+        Me.WebBrowser1.TabIndex = 0
+        '
+        'Label12
+        '
+        Me.Label12.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label12.Location = New System.Drawing.Point(20, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(401, 19)
+        Me.Label12.TabIndex = 0
+        Me.Label12.Text = "업데이트 내용"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.Label6)
+        Me.Panel2.Controls.Add(Me.Label9)
+        Me.Panel2.Controls.Add(Me.Label10)
+        Me.Panel2.Controls.Add(Me.Label11)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(441, 64)
+        Me.Panel2.TabIndex = 20
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label6.Location = New System.Drawing.Point(20, 10)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(70, 19)
+        Me.Label6.TabIndex = 13
+        Me.Label6.Text = "현재 버전"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label9.Location = New System.Drawing.Point(20, 36)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(70, 19)
+        Me.Label9.TabIndex = 14
+        Me.Label9.Text = "최신 버전"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label10.Location = New System.Drawing.Point(126, 10)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(110, 19)
+        Me.Label10.TabIndex = 16
+        Me.Label10.Text = "확인 중입니다..."
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label11.Location = New System.Drawing.Point(126, 36)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(110, 19)
+        Me.Label11.TabIndex = 17
+        Me.Label11.Text = "확인 중입니다..."
+        '
+        'Panel3
+        '
+        Me.Panel3.Controls.Add(Me.FileBackupChk)
+        Me.Panel3.Controls.Add(Me.ForceUpdChk)
+        Me.Panel3.Controls.Add(Me.UpdateChkButton)
+        Me.Panel3.Controls.Add(Me.WebPageLabel)
+        Me.Panel3.Controls.Add(Me.DoUpdateButton)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel3.Location = New System.Drawing.Point(0, 202)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(441, 75)
+        Me.Panel3.TabIndex = 21
+        '
+        'FileBackupChk
+        '
+        Me.FileBackupChk.AutoSize = True
+        Me.FileBackupChk.Checked = True
+        Me.FileBackupChk.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.FileBackupChk.Location = New System.Drawing.Point(311, 27)
+        Me.FileBackupChk.Name = "FileBackupChk"
+        Me.FileBackupChk.Size = New System.Drawing.Size(106, 19)
+        Me.FileBackupChk.TabIndex = 21
+        Me.FileBackupChk.Text = "이전 파일 백업"
+        Me.FileBackupChk.UseVisualStyleBackColor = True
+        '
+        'ForceUpdChk
+        '
+        Me.ForceUpdChk.AutoSize = True
+        Me.ForceUpdChk.Location = New System.Drawing.Point(311, 8)
+        Me.ForceUpdChk.Name = "ForceUpdChk"
+        Me.ForceUpdChk.Size = New System.Drawing.Size(102, 19)
+        Me.ForceUpdChk.TabIndex = 20
+        Me.ForceUpdChk.Text = "강제 업데이트"
+        Me.ForceUpdChk.UseVisualStyleBackColor = True
+        '
+        'UpdateChkButton
+        '
+        Me.UpdateChkButton.Enabled = False
+        Me.UpdateChkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.UpdateChkButton.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.UpdateChkButton.Location = New System.Drawing.Point(24, 9)
+        Me.UpdateChkButton.Name = "UpdateChkButton"
+        Me.UpdateChkButton.Size = New System.Drawing.Size(114, 34)
+        Me.UpdateChkButton.TabIndex = 18
+        Me.UpdateChkButton.Text = "업데이트 확인"
+        Me.UpdateChkButton.UseVisualStyleBackColor = True
+        '
+        'WebPageLabel
+        '
+        Me.WebPageLabel.AutoSize = True
+        Me.WebPageLabel.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.WebPageLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.WebPageLabel.Location = New System.Drawing.Point(21, 48)
+        Me.WebPageLabel.Name = "WebPageLabel"
+        Me.WebPageLabel.Size = New System.Drawing.Size(223, 15)
+        Me.WebPageLabel.TabIndex = 12
+        Me.WebPageLabel.TabStop = True
+        Me.WebPageLabel.Text = "프로그램 페이지로 가기 (직접 다운로드)"
+        Me.WebPageLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'DoUpdateButton
+        '
+        Me.DoUpdateButton.Enabled = False
+        Me.DoUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.DoUpdateButton.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.DoUpdateButton.Location = New System.Drawing.Point(144, 9)
+        Me.DoUpdateButton.Name = "DoUpdateButton"
+        Me.DoUpdateButton.Size = New System.Drawing.Size(159, 34)
+        Me.DoUpdateButton.TabIndex = 19
+        Me.DoUpdateButton.Text = "바로 업데이트 하기"
+        Me.DoUpdateButton.UseVisualStyleBackColor = True
         '
         'TabPage2
         '
@@ -384,170 +548,6 @@ Partial Class OptionForm
         Me.ExpandCellChk.TabIndex = 9
         Me.ExpandCellChk.Text = "마우스 올리면 가린 내용 확장하기"
         Me.ExpandCellChk.UseVisualStyleBackColor = True
-        '
-        'TabPage4
-        '
-        Me.TabPage4.Controls.Add(Me.Panel4)
-        Me.TabPage4.Controls.Add(Me.Panel2)
-        Me.TabPage4.Controls.Add(Me.Panel3)
-        Me.TabPage4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage4.Location = New System.Drawing.Point(148, 10)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(441, 277)
-        Me.TabPage4.TabIndex = 12
-        '
-        'Panel4
-        '
-        Me.Panel4.Controls.Add(Me.WebBrowser1)
-        Me.Panel4.Controls.Add(Me.Label12)
-        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel4.Location = New System.Drawing.Point(0, 64)
-        Me.Panel4.Name = "Panel4"
-        Me.Panel4.Padding = New System.Windows.Forms.Padding(20, 0, 20, 0)
-        Me.Panel4.Size = New System.Drawing.Size(441, 138)
-        Me.Panel4.TabIndex = 22
-        '
-        'WebBrowser1
-        '
-        Me.WebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WebBrowser1.Location = New System.Drawing.Point(20, 19)
-        Me.WebBrowser1.Name = "WebBrowser1"
-        Me.WebBrowser1.Size = New System.Drawing.Size(401, 119)
-        Me.WebBrowser1.TabIndex = 0
-        '
-        'Label12
-        '
-        Me.Label12.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label12.Location = New System.Drawing.Point(20, 0)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(401, 19)
-        Me.Label12.TabIndex = 0
-        Me.Label12.Text = "업데이트 내용"
-        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.Label6)
-        Me.Panel2.Controls.Add(Me.Label9)
-        Me.Panel2.Controls.Add(Me.Label10)
-        Me.Panel2.Controls.Add(Me.Label11)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(441, 64)
-        Me.Panel2.TabIndex = 20
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label6.Location = New System.Drawing.Point(20, 10)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(70, 19)
-        Me.Label6.TabIndex = 13
-        Me.Label6.Text = "현재 버전"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label9.Location = New System.Drawing.Point(20, 36)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(70, 19)
-        Me.Label9.TabIndex = 14
-        Me.Label9.Text = "최신 버전"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label10.Location = New System.Drawing.Point(126, 10)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(110, 19)
-        Me.Label10.TabIndex = 16
-        Me.Label10.Text = "확인 중입니다..."
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label11.Location = New System.Drawing.Point(126, 36)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(110, 19)
-        Me.Label11.TabIndex = 17
-        Me.Label11.Text = "확인 중입니다..."
-        '
-        'Panel3
-        '
-        Me.Panel3.Controls.Add(Me.FileBackupChk)
-        Me.Panel3.Controls.Add(Me.ForceUpdChk)
-        Me.Panel3.Controls.Add(Me.UpdateChkButton)
-        Me.Panel3.Controls.Add(Me.WebPageLabel)
-        Me.Panel3.Controls.Add(Me.DoUpdateButton)
-        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel3.Location = New System.Drawing.Point(0, 202)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(441, 75)
-        Me.Panel3.TabIndex = 21
-        '
-        'FileBackupChk
-        '
-        Me.FileBackupChk.AutoSize = True
-        Me.FileBackupChk.Checked = True
-        Me.FileBackupChk.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.FileBackupChk.Location = New System.Drawing.Point(311, 27)
-        Me.FileBackupChk.Name = "FileBackupChk"
-        Me.FileBackupChk.Size = New System.Drawing.Size(106, 19)
-        Me.FileBackupChk.TabIndex = 21
-        Me.FileBackupChk.Text = "이전 파일 백업"
-        Me.FileBackupChk.UseVisualStyleBackColor = True
-        '
-        'ForceUpdChk
-        '
-        Me.ForceUpdChk.AutoSize = True
-        Me.ForceUpdChk.Location = New System.Drawing.Point(311, 8)
-        Me.ForceUpdChk.Name = "ForceUpdChk"
-        Me.ForceUpdChk.Size = New System.Drawing.Size(102, 19)
-        Me.ForceUpdChk.TabIndex = 20
-        Me.ForceUpdChk.Text = "강제 업데이트"
-        Me.ForceUpdChk.UseVisualStyleBackColor = True
-        '
-        'UpdateChkButton
-        '
-        Me.UpdateChkButton.Enabled = False
-        Me.UpdateChkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.UpdateChkButton.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.UpdateChkButton.Location = New System.Drawing.Point(24, 9)
-        Me.UpdateChkButton.Name = "UpdateChkButton"
-        Me.UpdateChkButton.Size = New System.Drawing.Size(114, 34)
-        Me.UpdateChkButton.TabIndex = 18
-        Me.UpdateChkButton.Text = "업데이트 확인"
-        Me.UpdateChkButton.UseVisualStyleBackColor = True
-        '
-        'WebPageLabel
-        '
-        Me.WebPageLabel.AutoSize = True
-        Me.WebPageLabel.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.WebPageLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.WebPageLabel.Location = New System.Drawing.Point(21, 48)
-        Me.WebPageLabel.Name = "WebPageLabel"
-        Me.WebPageLabel.Size = New System.Drawing.Size(223, 15)
-        Me.WebPageLabel.TabIndex = 12
-        Me.WebPageLabel.TabStop = True
-        Me.WebPageLabel.Text = "프로그램 페이지로 가기 (직접 다운로드)"
-        Me.WebPageLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'DoUpdateButton
-        '
-        Me.DoUpdateButton.Enabled = False
-        Me.DoUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.DoUpdateButton.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.DoUpdateButton.Location = New System.Drawing.Point(144, 9)
-        Me.DoUpdateButton.Name = "DoUpdateButton"
-        Me.DoUpdateButton.Size = New System.Drawing.Size(159, 34)
-        Me.DoUpdateButton.TabIndex = 19
-        Me.DoUpdateButton.Text = "바로 업데이트 하기"
-        Me.DoUpdateButton.UseVisualStyleBackColor = True
         '
         'TabPage1
         '
@@ -1050,15 +1050,15 @@ Partial Class OptionForm
         Me.TitlePanel.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainPanel.ResumeLayout(False)
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
-        Me.PrevTablePanel.ResumeLayout(False)
         Me.TabPage4.ResumeLayout(False)
         Me.Panel4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        Me.PrevTablePanel.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.Panel1.ResumeLayout(False)

@@ -158,7 +158,7 @@
             End If
 
             Location() = New Point(0, defLoc)
-            If Not Name = "DemoCellControl" Then Form1.DrawTablePattern(dayNum)
+            'If Not Name = "DemoCellControl" Then Form1.DrawTablePattern(dayNum)
 
         End If
     End Sub
@@ -177,6 +177,22 @@
             checked = Not checked
             If Not Name = "DemoCellControl" Then ModifyCheck(Name, checked)
             CheckStateUpdate()
+        End If
+    End Sub
+
+    Private Sub Chk_Enter(sender As Object, e As EventArgs) Handles ChkBox1.MouseEnter, TopTimeLabel.MouseEnter,
+        Panel1.MouseEnter, ProfLabel.MouseEnter, MemoLabel.MouseEnter, ChkBox1.MouseUp, TopTimeLabel.MouseUp,
+        Panel1.MouseUp, ProfLabel.MouseUp, MemoLabel.MouseUp
+        If showChkBox Then
+            ChkBox1.BackColor = ControlPaint.Light(BackColor, 0.3)
+        End If
+    End Sub
+
+    Private Sub Chk_Down(sender As Object, e As EventArgs) Handles ChkBox1.MouseDown, TopTimeLabel.MouseDown,
+        Panel1.MouseDown, ProfLabel.MouseDown, MemoLabel.MouseDown, ChkBox1.MouseLeave, TopTimeLabel.MouseLeave,
+        Panel1.MouseLeave, ProfLabel.MouseLeave, MemoLabel.MouseLeave
+        If showChkBox Then
+            ChkBox1.BackColor = Color.Transparent
         End If
     End Sub
 
