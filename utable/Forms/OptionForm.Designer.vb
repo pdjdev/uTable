@@ -37,6 +37,7 @@ Partial Class OptionForm
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.FileBackupChk = New System.Windows.Forms.CheckBox()
         Me.ForceUpdChk = New System.Windows.Forms.CheckBox()
         Me.UpdateChkButton = New System.Windows.Forms.Button()
         Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
@@ -164,8 +165,8 @@ Partial Class OptionForm
         'MainPanel
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
-        Me.MainPanel.Controls.Add(Me.TabPage4)
         Me.MainPanel.Controls.Add(Me.TabPage2)
+        Me.MainPanel.Controls.Add(Me.TabPage4)
         Me.MainPanel.Controls.Add(Me.TabPage1)
         Me.MainPanel.Controls.Add(Me.TabPage3)
         Me.MainPanel.Controls.Add(Me.TabPage5)
@@ -271,6 +272,7 @@ Partial Class OptionForm
         '
         'Panel3
         '
+        Me.Panel3.Controls.Add(Me.FileBackupChk)
         Me.Panel3.Controls.Add(Me.ForceUpdChk)
         Me.Panel3.Controls.Add(Me.UpdateChkButton)
         Me.Panel3.Controls.Add(Me.WebPageLabel)
@@ -280,6 +282,18 @@ Partial Class OptionForm
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(441, 75)
         Me.Panel3.TabIndex = 21
+        '
+        'FileBackupChk
+        '
+        Me.FileBackupChk.AutoSize = True
+        Me.FileBackupChk.Checked = True
+        Me.FileBackupChk.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.FileBackupChk.Location = New System.Drawing.Point(311, 27)
+        Me.FileBackupChk.Name = "FileBackupChk"
+        Me.FileBackupChk.Size = New System.Drawing.Size(106, 19)
+        Me.FileBackupChk.TabIndex = 21
+        Me.FileBackupChk.Text = "이전 파일 백업"
+        Me.FileBackupChk.UseVisualStyleBackColor = True
         '
         'ForceUpdChk
         '
@@ -1148,4 +1162,5 @@ Partial Class OptionForm
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
     Friend WithEvents ShowLinePatternChk As CheckBox
     Friend WithEvents Label8 As Label
+    Friend WithEvents FileBackupChk As CheckBox
 End Class

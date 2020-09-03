@@ -161,6 +161,10 @@ Public Class SetCourse
         newdata += vbTab + "<end>" + endt.ToString + "</end>" + vbCrLf
         newdata += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
 
+        If olddata.Contains("<checked>") Then
+            newdata += vbTab + "<checked>" + getData(olddata, "checked") + "</checked>" + vbCrLf
+        End If
+
         writeTable(data.Replace(olddata, newdata))
     End Sub
 
@@ -295,7 +299,9 @@ Public Class SetCourse
                         '수정일때 겹치는경우
                     Else
                         '근데 겹치는게 원래 고치려했던놈이 아닐때
-                        If Not getData(s, "name") = getData(olddata, "name") Then
+                        'If Not getData(s, "name") = getData(olddata, "name") Then
+                        If Not (getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name")) _
+                            = (getData(olddata, "day") + "-" + getData(olddata, "start") + "-" + getData(olddata, "name")) Then
                             MsgBox("다른 수업 (" + itemname + ")과 현재 설정한 수업의 시간이 겹칩니다.", vbExclamation)
                             Exit Sub
                         End If

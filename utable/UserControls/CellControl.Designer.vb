@@ -43,11 +43,13 @@ Partial Class CellControl
         Me.TopTimeLabel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TopTimeLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TopTimeLabel.Location = New System.Drawing.Point(19, 0)
+        Me.TopTimeLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.TopTimeLabel.Name = "TopTimeLabel"
         Me.TopTimeLabel.Padding = New System.Windows.Forms.Padding(0, 2, 0, 0)
         Me.TopTimeLabel.Size = New System.Drawing.Size(125, 19)
         Me.TopTimeLabel.TabIndex = 0
         Me.TopTimeLabel.Text = "TopTimeLabel"
+        Me.TopTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'BottomTimeLabel
         '
@@ -119,6 +121,7 @@ Partial Class CellControl
         'Timer1
         '
         Me.Timer1.Enabled = True
+        Me.Timer1.Interval = 150
         '
         'TopPanel
         '
@@ -150,6 +153,7 @@ Partial Class CellControl
         Me.Controls.Add(Me.BottomTimeLabel)
         Me.Controls.Add(Me.TopPanel)
         Me.Controls.Add(Me.TopNotchPanel)
+        Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.Name = "CellControl"

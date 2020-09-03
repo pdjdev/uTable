@@ -113,6 +113,10 @@ Public Class EverytimeSemesterSelector
                     MsgBox("학기를 선택해 주세요.", vbExclamation)
                     Exit Sub
                 End If
+
+                Height += dpicalc(Me, 100)
+                CenterToParent()
+
                 Step1Panel.Visible = False
                 Step2Panel.Visible = True
 
@@ -133,8 +137,10 @@ Public Class EverytimeSemesterSelector
                         EveryTimeBrowser.targetUrl = "https://everytime.kr/timetable"
                 End Select
 
+                FadeOut(Me)
+                Hide()
                 EveryTimeBrowser.ShowDialog(Form1)
-                Me.Close()
+                Close()
         End Select
     End Sub
 End Class

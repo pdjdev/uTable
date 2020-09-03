@@ -6,8 +6,7 @@
 
         If count <= 0 Then
             '다시 시작
-            Process.Start(Application.ExecutablePath)
-            Application.Exit()
+            reStarter()
         End If
     End Sub
 
@@ -20,7 +19,7 @@
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        If MsgBox("설정 파일을 삭제하시겠습니까? (API 키 또한 삭제됩니다)", vbQuestion + vbYesNo) = vbYes Then
+        If MsgBox("설정 파일을 삭제하시겠습니까? (프로그램의 설정이 초기화됩니다.)", vbQuestion + vbYesNo) = vbYes Then
             My.Computer.FileSystem.DeleteFile(ININamePath)
             Application.Exit()
         End If
@@ -38,7 +37,6 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         '다시 시작
-        Process.Start(Application.ExecutablePath)
-        Application.Exit()
+        reStarter()
     End Sub
 End Class
