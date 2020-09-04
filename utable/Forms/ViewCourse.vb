@@ -240,6 +240,7 @@ Public Class ViewCourse
 
         Try
             UpperTitleLabel.Text = getData(data, "name")
+            Text = UpperTitleLabel.Text
             SubTitleLabel.Text = getData(data, "prof") + ", "
 
             Dim startt As Integer = getData(data, "start")
@@ -278,6 +279,20 @@ Public Class ViewCourse
                 SubTitleLabel.ForeColor = Color.Black
                 CloseBT.Image = My.Resources.closeicon_b2
                 EditBT.Image = My.Resources.bt_edit_b
+            End If
+
+            '밝은 배경색에 다크 테마 or 어둑한 배경색에 화이트 테마 -> 배경색을 그대로 쓰기!
+            If (blacktext And colormode = "Dark") Or (Not blacktext And Not colormode = "Dark") Then
+                CancelBT.ForeColor = TitlePanel.BackColor
+                SaveBT.ForeColor = TitlePanel.BackColor
+
+            ElseIf Not blacktext And colormode = "Dark" Then '어둑한 배경색에 다크 테마 -> 배경색이 밝아야 한다
+                CancelBT.ForeColor = ControlPaint.Light(TitlePanel.BackColor, 0.7)
+                SaveBT.ForeColor = ControlPaint.Light(TitlePanel.BackColor, 0.7)
+
+            Else '밝은 배경색에 화이트 테마 -> 배경색이 어두워야 한다
+                CancelBT.ForeColor = c
+                SaveBT.ForeColor = c
             End If
 
         Catch ex As Exception

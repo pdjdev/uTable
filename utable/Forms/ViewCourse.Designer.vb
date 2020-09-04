@@ -260,7 +260,7 @@ Partial Class ViewCourse
         Me.MinimumSize = New System.Drawing.Size(150, 200)
         Me.Name = "ViewCourse"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
-        Me.Text = "수업 추가/수정"
+        Me.Text = "ViewCourse"
         Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.BodyPanel.ResumeLayout(False)
