@@ -17,7 +17,7 @@ Public Class Form1
     Dim snaptoedge As Boolean = False
     Dim titleEditMode As Boolean = False
     Dim colorMode As String = Nothing
-    Private BorderWidth As Integer = dpicalc(Me, 6)
+    Public BorderWidth As Integer = dpicalc(Me, 6)
     Private _resizeDir As ResizeDirection = ResizeDirection.None
 
     'Dim disablePatternDrawOnce As Boolean = False
@@ -995,5 +995,9 @@ Public Class Form1
             g.Dispose()
             p.Dispose()
         End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+        ViewCourse.Show()
     End Sub
 End Class

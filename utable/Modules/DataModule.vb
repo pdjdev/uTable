@@ -72,7 +72,7 @@ Module DataModule
         My.Computer.FileSystem.WriteAllText(TableSaveLocation(), data, False, System.Text.Encoding.GetEncoding(949))
     End Sub
 
-    Public Function readTable()
+    Public Function readTable() As String
         If My.Computer.FileSystem.FileExists(TableSaveLocation()) Then
             'My.Settings.defalutTable = OptionSave()
             Return My.Computer.FileSystem.ReadAllText(TableSaveLocation(), System.Text.Encoding.GetEncoding(949))

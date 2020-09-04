@@ -91,10 +91,10 @@
     <Compile Include="ErrorForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\EditCourse.Designer.vb">
-      <DependentUpon>EditCourse.vb</DependentUpon>
+    <Compile Include="Forms\ViewCourse.Designer.vb">
+      <DependentUpon>ViewCourse.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\EditCourse.vb">
+    <Compile Include="Forms\ViewCourse.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\EverytimeSemesterSelector.Designer.vb">
@@ -177,8 +177,8 @@
     <EmbeddedResource Include="ErrorForm.resx">
       <DependentUpon>ErrorForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EditCourse.resx">
-      <DependentUpon>EditCourse.vb</DependentUpon>
+    <EmbeddedResource Include="Forms\ViewCourse.resx">
+      <DependentUpon>ViewCourse.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EveryTimeBrowser.resx">
       <DependentUpon>EveryTimeBrowser.vb</DependentUpon>
@@ -238,6 +238,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptable_icon.ico" />
+    <None Include="Resources\closeicon_b2.png" />
+    <None Include="Resources\bt_edit_w.png" />
+    <None Include="Resources\bt_edit_b.png" />
     <None Include="Resources\check1_w_96.png" />
     <None Include="Resources\check1_b_96.png" />
     <None Include="Resources\check0_w_96.png" />

@@ -9,7 +9,7 @@ Public Class SetCourse
     Public modifyMode As Boolean = False
     Public olddata As String = Nothing
 
-    Dim touched As Boolean = False
+    Public touched As Boolean = False
     Dim loaded As Boolean = False
 
 #Region "Aero 그림자 효과 (Vista이상)"

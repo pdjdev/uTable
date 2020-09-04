@@ -22,28 +22,30 @@
     Private Sub TitleLabel_Click(sender As Object, e As EventArgs) Handles TitleLabel.Click
         If Name = "DemoCellControl" Then Exit Sub
 
-        SetCourse.Close()
-
         Dim appearPoint As New Point(Cursor.Position)
+        'SetCourse.Close()
+        ViewCourse.Close()
 
-        If appearPoint.X + SetCourse.Width > Form1.Location.X + Form1.Width Then
-            appearPoint.X = Form1.Location.X + Form1.Width - SetCourse.Width
+        If appearPoint.X + ViewCourse.Width > Form1.Location.X + Form1.Width Then
+            appearPoint.X = Form1.Location.X + Form1.Width - ViewCourse.Width
         End If
 
-        If appearPoint.Y + SetCourse.Height > Form1.Location.Y + Form1.Height Then
-            appearPoint.Y = Form1.Location.Y + Form1.Height - SetCourse.Height
+        If appearPoint.Y + ViewCourse.Height > Form1.Location.Y + Form1.Height Then
+            appearPoint.Y = Form1.Location.Y + Form1.Height - ViewCourse.Height
         End If
 
-        SetCourse.modifyMode = True
+        'SetCourse.modifyMode = True
 
         For Each s As String In getDatas(readTable(), "course")
             If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = Name Then
-                SetCourse.olddata = s
+                ViewCourse.olddata = s
             End If
         Next
 
-        SetCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
-        SetCourse.Show()
+        ViewCourse.blacktext = blackText 
+
+        ViewCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
+        ViewCourse.Show()
     End Sub
 
     Private Sub TopTimeLabel_MouseEnter(sender As Object, e As EventArgs) Handles TopTimeLabel.MouseEnter,
