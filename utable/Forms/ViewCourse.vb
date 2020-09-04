@@ -188,6 +188,9 @@ Public Class ViewCourse
 
     Private Sub FadeInEffect(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.Refresh()
+
+        MemoTB.SelectionLength = 0
+        MemoTB.SelectionStart = MemoTB.Text.Length
         FadeIn(Me, 1)
 
         loaded = True
@@ -250,7 +253,6 @@ Public Class ViewCourse
             End If
 
             SubTitleLabel.Text += "~"
-
             SubTitleLabel.Text += (endt \ 60).ToString + ":"
 
             If endt Mod 60 = 0 Then
@@ -293,11 +295,15 @@ Public Class ViewCourse
             Dim Fit As Boolean = False
             Dim CurSize As Single
             Dim SizeStep As Single = 1
+            Dim Padding As Integer = 3
 
             Do Until Fit
                 CurSize += SizeStep
                 Dim Fnt As Font = New Font(lblQueue.Font.Name, CurSize)
                 Dim textSize As Size = TextRenderer.MeasureText(lblQueue.Text, Fnt)
+
+                textSize.Height += Padding
+                textSize.Width += Padding
 
                 If textSize.Height >= lblQueue.Height Or textSize.Width >= lblQueue.Width Or lblQueue.Height = 0 Or lblQueue.Width = 0 Then
                     Fit = True
@@ -310,7 +316,7 @@ Public Class ViewCourse
                 End If
             Loop
 
-            If CurSize > 3 Then
+            If CurSize > 5 Then
                 'If Not maxSubSize = 0 Or Not maxTitleSize = 0 Then
 
                 If CurSize > maxSize Then
@@ -370,43 +376,39 @@ Public Class ViewCourse
             Exit Sub
         End If
 
-        'Try
-        Dim data As String = readTable()
-        Dim count As Integer = 0
+        Try
+            Dim data As String = readTable()
+            Dim count As Integer = 0
 
-        For Each s As String In getDatas(data, "course")
-            '이전설정 이름이 여러개 이미 있을때
-            If getData(s, "name") = getData(olddata, "name") Then count += 1
-        Next
+            For Each s As String In getDatas(data, "course")
+                '이전설정 이름이 여러개 이미 있을때
+                If getData(s, "name") = getData(olddata, "name") Then count += 1
+            Next
 
-
-
-        If count > 1 Then
-            If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-                modifyAllCourse(readTable(), MemoTB.Text)
+            If count > 1 Then
+                If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
+                    modifyAllCourse(readTable(), MemoTB.Text)
+                Else
+                    Dim newdata As String = olddata.Replace("<memo>" + getData(olddata, "memo") + "</memo>", "<memo>" + MemoTB.Text + "</memo>")
+                    writeTable(readTable.Replace(olddata, newdata))
+                End If
             Else
                 Dim newdata As String = olddata.Replace("<memo>" + getData(olddata, "memo") + "</memo>", "<memo>" + MemoTB.Text + "</memo>")
                 writeTable(readTable.Replace(olddata, newdata))
             End If
-        Else
-            Dim newdata As String = olddata.Replace("<memo>" + getData(olddata, "memo") + "</memo>", "<memo>" + MemoTB.Text + "</memo>")
-            writeTable(readTable.Replace(olddata, newdata))
-        End If
 
-        Form1.updateCell()
+            Form1.updateCell()
 
-        'Catch ex As Exception
-        ' MsgBox("적용 도중 오류가 발생했습니다.", vbCritical)
-        ' End Try
+        Catch ex As Exception
+            MsgBox("적용 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
+        End Try
 
         Close()
     End Sub
 
-
     Sub modifyAllCourse(data As String, memo As String)
         'Dim data As String = readTable()
         Dim olddatas As List(Of String) = multipleMidReturn("<course>", "</course>", data)
-
         Dim tablename As String = Nothing
 
         If Not data.Contains("<tablename>") Then

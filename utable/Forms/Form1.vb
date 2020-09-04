@@ -20,6 +20,17 @@ Public Class Form1
     Public BorderWidth As Integer = dpicalc(Me, 6)
     Private _resizeDir As ResizeDirection = ResizeDirection.None
 
+    'CellControl용 설정 변수
+    Public CustomFont As String = ""
+    Public CustomFontName As String = ""
+    Public AutoTextColor As String = ""
+    Public _BlackText As String = ""
+    Public _AlwaysExpand As String = ""
+    Public ExpandCell As String = ""
+    Public ShowMemo As String = ""
+    Public ShowProf As String = ""
+    Public _ShowChkBox As String = ""
+
     'Dim disablePatternDrawOnce As Boolean = False
     Public tablePatternSetting As String = Nothing
 
@@ -396,6 +407,18 @@ Public Class Form1
     End Sub
 
     Public Sub updateCell()
+
+        'CellControl 설정 변수 업데이트
+        CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
+        CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
+        AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
+        _BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
+        _AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
+        ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
+        ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
+        ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
+        _ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
+
         TimeTable.Visible = False
         showSaturday = False
         showSunday = False
@@ -505,6 +528,18 @@ Public Class Form1
 
         cell.ForeColor = Color.White
         cell.BackColor = color
+
+        With cell
+            .CustomFont = CustomFont
+            .CustomFontName = CustomFontName
+            .AutoTextColor = AutoTextColor
+            ._BlackText = _BlackText
+            ._AlwaysExpand = _AlwaysExpand
+            .ExpandCell = ExpandCell
+            .ShowMemo = ShowMemo
+            .ShowProf = ShowProf
+            ._ShowChkBox = _ShowChkBox
+        End With
 
         Select Case day
             Case 0

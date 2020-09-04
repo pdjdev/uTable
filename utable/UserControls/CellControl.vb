@@ -11,6 +11,17 @@
     Dim hovered As Boolean = False
     Dim prev_hove As Boolean = False
 
+    '설정값
+    Public CustomFont As String = ""
+    Public CustomFontName As String = ""
+    Public AutoTextColor As String = ""
+    Public _BlackText As String = ""
+    Public _AlwaysExpand As String = ""
+    Public ExpandCell As String = ""
+    Public ShowMemo As String = ""
+    Public ShowProf As String = ""
+    Public _ShowChkBox As String = ""
+
     Private Sub UserControl1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         TitleLabel.MaximumSize() = New Size(Width, 0)
         ProfLabel.MaximumSize() = New Size(Width, 0)
@@ -67,9 +78,9 @@
     End Sub
 
     Private Sub CellControl_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" Then
-            If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
-                Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
+        If CustomFont = "1" Then
+            If Not CustomFontName = "" Then
+                Dim fntname = CustomFontName
 
                 ChangeFont(Me, fntname, FontStyle.Regular)
                 ChangeFont(TopTimeLabel, fntname, FontStyle.Bold)
@@ -80,9 +91,9 @@
             End If
         End If
 
-        If Not GetINI("SETTING", "AutoTextColor", "", ININamePath) = "0" Then
+        If Not AutoTextColor = "0" Then
             blackText = CheckProperColor(BackColor)
-        ElseIf GetINI("SETTING", "BlackText", "", ININamePath) = "1" Then
+        ElseIf _BlackText = "1" Then
             blackText = True
         End If
 
@@ -95,11 +106,11 @@
             MemoLabel.ForeColor = Color.Black
         End If
 
-        alwaysExpand = (GetINI("SETTING", "AlwaysExpand", "", ININamePath) = "1")
-        doExpand = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
-        MemoLabel.Visible = Not (GetINI("SETTING", "ShowMemo", "", ININamePath) = "0")
-        ProfLabel.Visible = Not (GetINI("SETTING", "ShowProf", "", ININamePath) = "0")
-        showChkBox = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
+        alwaysExpand = (_AlwaysExpand = "1")
+        doExpand = Not (ExpandCell = "0")
+        MemoLabel.Visible = Not (ShowMemo = "0")
+        ProfLabel.Visible = Not (ShowProf = "0")
+        showChkBox = Not (_ShowChkBox = "0")
 
         ChkBox1.Visible = showChkBox
         If showChkBox Then CheckStateUpdate()
