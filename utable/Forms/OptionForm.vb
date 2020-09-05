@@ -446,12 +446,14 @@ Public Class OptionForm
         End With
 
         PrevTableArea.Controls.Add(cell)
+        PrevTableArea.Refresh()
 
+    End Sub
+
+    Private Sub PrevTableArea_Paint(sender As Object, e As PaintEventArgs) Handles PrevTableArea.Paint
         '패턴부분
         Dim colorMul As Single = 0.9
         If colormode = "Dark" Then colorMul = 1.35
-
-        PrevTableArea.Refresh()
 
         If ShowLinePatternChk.Checked Then
             Dim c As Color = Color.FromArgb(PrevTableArea.BackColor.R * colorMul,
@@ -1017,5 +1019,4 @@ Public Class OptionForm
         End Try
 
     End Sub
-
 End Class
