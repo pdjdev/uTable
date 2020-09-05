@@ -215,11 +215,12 @@ Public Class ViewCourse
     Sub UpdateColor()
         colormode = GetINI("SETTING", "ColorMode", "", ININamePath)
 
-        BodyPanel.BackColor = mainColor(colormode)
+        BodyPanel.BackColor = tableColor_1(colormode)
+        SaveBT.BackColor = tableColor_1(colormode)
+        CancelBT.BackColor = tableColor_1(colormode)
+        MemoTB.BackColor = tableColor_1(colormode)
+
         MainPanel.BackColor = edgeColor(colormode)
-        SaveBT.BackColor = mainColor(colormode)
-        CancelBT.BackColor = mainColor(colormode)
-        MemoTB.BackColor = mainColor(colormode)
         MemoTB.ForeColor = textColor(colormode)
     End Sub
 
@@ -303,6 +304,12 @@ Public Class ViewCourse
         AdjustText(UpperTitleLabel, maxTitleSize)
         AdjustText(SubTitleLabel, maxSubSize)
 
+        '글꼴이 자꾸 시스템 기본값으로 바뀌는것을 방지
+        MemoTB.LanguageOption = RichTextBoxLanguageOptions.UIFonts
+
+        'MemoTB.SelectAll()
+        'MemoTB.SelectionFont = New Font(UpperTitleLabel.Font.FontFamily, 10, MemoTB.Font.Style)
+
     End Sub
 
     Private Sub AdjustText(lblQueue As Label, maxSize As Single)
@@ -378,7 +385,7 @@ Public Class ViewCourse
 
         SetCourse.touched = touched
         SetCourse.Show()
-        SetCourse.MemoTB.Text = MemoTB.Text
+        SetCourse.MemoTB.Text = MemoTB.Text.Replace(vbLf, vbCrLf)
         Me.Close()
     End Sub
 
@@ -409,11 +416,11 @@ Public Class ViewCourse
                 If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
                     modifyAllCourse(readTable(), MemoTB.Text)
                 Else
-                    Dim newdata As String = olddata.Replace("<memo>" + getData(olddata, "memo") + "</memo>", "<memo>" + MemoTB.Text + "</memo>")
+                    Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + MemoTB.Text + "</memo>")
                     writeTable(readTable.Replace(olddata, newdata))
                 End If
             Else
-                Dim newdata As String = olddata.Replace("<memo>" + getData(olddata, "memo") + "</memo>", "<memo>" + MemoTB.Text + "</memo>")
+                Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + MemoTB.Text + "</memo>")
                 writeTable(readTable.Replace(olddata, newdata))
             End If
 
@@ -451,5 +458,9 @@ Public Class ViewCourse
         Next
 
         writeTable("<tablename>" + tablename + "</tablename>" + vbCrLf + newdata)
+    End Sub
+
+    Private Sub MemoTB_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles MemoTB.LinkClicked
+        Process.Start(e.LinkText)
     End Sub
 End Class

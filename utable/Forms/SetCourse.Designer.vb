@@ -159,6 +159,7 @@ Partial Class SetCourse
         Me.MemoTB.MaxLength = 20000
         Me.MemoTB.Multiline = True
         Me.MemoTB.Name = "MemoTB"
+        Me.MemoTB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.MemoTB.Size = New System.Drawing.Size(378, 63)
         Me.MemoTB.TabIndex = 6
         '

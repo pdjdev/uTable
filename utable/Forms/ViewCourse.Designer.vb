@@ -24,6 +24,7 @@ Partial Class ViewCourse
     Private Sub InitializeComponent()
         Me.BodyPanel = New System.Windows.Forms.Panel()
         Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.MemoTB = New System.Windows.Forms.RichTextBox()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.SaveBT = New System.Windows.Forms.Button()
         Me.CancelBT = New System.Windows.Forms.Button()
@@ -37,7 +38,6 @@ Partial Class ViewCourse
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.UpperPanel = New System.Windows.Forms.Panel()
         Me.MainPanel = New System.Windows.Forms.Panel()
-        Me.MemoTB = New System.Windows.Forms.RichTextBox()
         Me.BodyPanel.SuspendLayout()
         Me.Panel4.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
@@ -72,6 +72,17 @@ Partial Class ViewCourse
         Me.Panel4.Padding = New System.Windows.Forms.Padding(7, 0, 7, 0)
         Me.Panel4.Size = New System.Drawing.Size(252, 155)
         Me.Panel4.TabIndex = 4
+        '
+        'MemoTB
+        '
+        Me.MemoTB.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.MemoTB.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MemoTB.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.MemoTB.Location = New System.Drawing.Point(7, 0)
+        Me.MemoTB.Name = "MemoTB"
+        Me.MemoTB.Size = New System.Drawing.Size(238, 122)
+        Me.MemoTB.TabIndex = 2
+        Me.MemoTB.Text = ""
         '
         'TableLayoutPanel2
         '
@@ -161,10 +172,10 @@ Partial Class ViewCourse
         Me.SubTitleLabel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTitleLabel.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.SubTitleLabel.ForeColor = System.Drawing.Color.White
-        Me.SubTitleLabel.Location = New System.Drawing.Point(3, 31)
+        Me.SubTitleLabel.Location = New System.Drawing.Point(3, 32)
         Me.SubTitleLabel.Name = "SubTitleLabel"
         Me.SubTitleLabel.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
-        Me.SubTitleLabel.Size = New System.Drawing.Size(202, 22)
+        Me.SubTitleLabel.Size = New System.Drawing.Size(202, 21)
         Me.SubTitleLabel.TabIndex = 1
         Me.SubTitleLabel.Text = "SubTitleLabel"
         '
@@ -176,7 +187,7 @@ Partial Class ViewCourse
         Me.UpperTitleLabel.Location = New System.Drawing.Point(3, 0)
         Me.UpperTitleLabel.Name = "UpperTitleLabel"
         Me.UpperTitleLabel.Padding = New System.Windows.Forms.Padding(3, 0, 0, 0)
-        Me.UpperTitleLabel.Size = New System.Drawing.Size(202, 31)
+        Me.UpperTitleLabel.Size = New System.Drawing.Size(202, 32)
         Me.UpperTitleLabel.TabIndex = 0
         Me.UpperTitleLabel.Text = "UpperTitleLabel"
         Me.UpperTitleLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft
@@ -234,17 +245,6 @@ Partial Class ViewCourse
         Me.MainPanel.Padding = New System.Windows.Forms.Padding(3, 0, 3, 3)
         Me.MainPanel.Size = New System.Drawing.Size(258, 168)
         Me.MainPanel.TabIndex = 2
-        '
-        'MemoTB
-        '
-        Me.MemoTB.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.MemoTB.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MemoTB.Font = New System.Drawing.Font("맑은 고딕", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.MemoTB.Location = New System.Drawing.Point(7, 0)
-        Me.MemoTB.Name = "MemoTB"
-        Me.MemoTB.Size = New System.Drawing.Size(238, 122)
-        Me.MemoTB.TabIndex = 2
-        Me.MemoTB.Text = ""
         '
         'ViewCourse
         '
