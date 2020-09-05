@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AgreementRTB.Text" xml:space="preserve">
-    <value>에브리타임 시간표 불러오기 기능은 자체 브라우저에서 직접 시간표의 값을 읽어들여 uTable에 맞게 자동으로 입력해주는 기능입니다.
+    <value>[주의]
+에브리타임 시간표를 불러오게 되면 기존 시간표([FileName])는 지워지므로 필요한 경우 백업하시기 바랍니다!
+
+에브리타임 시간표 불러오기 기능은 자체 브라우저에서 직접 시간표의 값을 읽어들여 uTable에 맞게 자동으로 입력해주는 기능입니다.
 
 시간표를 불러오기 위해서는 사용자의 계정으로 로그인하여 시간표 페이지로 접속해야 하는데, 이때문에 사용자는 에브리타임 계정으로 로그인을 하여야 합니다. 로그인 웹페이지로 접속하여 브라우저에서 로그인 하는 것이기 때문에 uTable에서는 ID, 비밀번호를 포함한 어떠한 개인정보도 수집하지 않습니다. 그래도 프로그램 내에서 로그인 하시는 것이 불편하실경우 얼마든지 해당 창을 닫고 직접 추가하셔도 됩니다.
 

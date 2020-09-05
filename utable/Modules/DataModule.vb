@@ -69,22 +69,22 @@ Module DataModule
     End Function
 
     Public Sub writeTable(data As String)
-        My.Computer.FileSystem.WriteAllText(TableSaveLocation(), data, False, System.Text.Encoding.GetEncoding(949))
+        My.Computer.FileSystem.WriteAllText(TableSaveLocation(False), data, False, System.Text.Encoding.GetEncoding(949))
     End Sub
 
     Public Function readTable() As String
-        If My.Computer.FileSystem.FileExists(TableSaveLocation()) Then
+        If My.Computer.FileSystem.FileExists(TableSaveLocation(False)) Then
             'My.Settings.defalutTable = OptionSave()
-            Return My.Computer.FileSystem.ReadAllText(TableSaveLocation(), System.Text.Encoding.GetEncoding(949))
+            Return My.Computer.FileSystem.ReadAllText(TableSaveLocation(False), System.Text.Encoding.GetEncoding(949))
         Else
             Return ""
         End If
     End Function
 
-    Public Function TableSaveLocation() As String
+    Public Function TableSaveLocation(filenameOnly As Boolean) As String
         Dim exeFullpath As String = Application.ExecutablePath
         Dim finalDir As String = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
-        Dim finalName As String = "\default.utdata"
+        Dim finalName As String = "default.utdata"
 
         '임의 경로 옵션 활성화시
         If GetINI("SETTING", "CustomSaveDir", "", ININamePath) = "1" Then
@@ -99,11 +99,15 @@ Module DataModule
 
             '파일명이 암것도 아닌게 아닐때
             If Not usrSaveName = "" Then
-                finalName = "\" + usrSaveName + ".utdata"
+                finalName = usrSaveName + ".utdata"
             End If
         End If
 
-        Return finalDir + finalName
+        If filenameOnly Then
+            Return finalName
+        Else
+            Return finalDir + "\" + finalName
+        End If
     End Function
 
     Public Function FilenameIsOK(ByVal fileNameAndPath As String) As Boolean

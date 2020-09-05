@@ -36,18 +36,18 @@ Partial Class EverytimeSemesterSelector
         Me.Step2Panel = New System.Windows.Forms.Panel()
         Me.AgreementRTB = New System.Windows.Forms.RichTextBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
-        Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Step1Panel.SuspendLayout()
         CType(Me.yearUpd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Step2Panel.SuspendLayout()
+        Me.Panel4.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'NextBT
@@ -81,8 +81,8 @@ Partial Class EverytimeSemesterSelector
         '
         'Panel3
         '
-        Me.Panel3.Controls.Add(Me.Step1Panel)
         Me.Panel3.Controls.Add(Me.Step2Panel)
+        Me.Panel3.Controls.Add(Me.Step1Panel)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel3.Location = New System.Drawing.Point(15, 47)
         Me.Panel3.Name = "Panel3"
@@ -203,6 +203,16 @@ Partial Class EverytimeSemesterSelector
         Me.Label1.Text = "다음 참고사항을 읽은 후 '로그인하기' 를 눌러 주세요."
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
+        'Panel4
+        '
+        Me.Panel4.Controls.Add(Me.NextBT)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel4.Location = New System.Drawing.Point(15, 163)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Padding = New System.Windows.Forms.Padding(0, 10, 0, 0)
+        Me.Panel4.Size = New System.Drawing.Size(358, 46)
+        Me.Panel4.TabIndex = 35
+        '
         'Panel2
         '
         Me.Panel2.Controls.Add(Me.TitleLabel)
@@ -235,16 +245,6 @@ Partial Class EverytimeSemesterSelector
         Me.CloseBT.TabIndex = 29
         Me.CloseBT.TabStop = False
         '
-        'Panel4
-        '
-        Me.Panel4.Controls.Add(Me.NextBT)
-        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel4.Location = New System.Drawing.Point(15, 163)
-        Me.Panel4.Name = "Panel4"
-        Me.Panel4.Padding = New System.Windows.Forms.Padding(0, 10, 0, 0)
-        Me.Panel4.Size = New System.Drawing.Size(358, 46)
-        Me.Panel4.TabIndex = 35
-        '
         'EverytimeSemesterSelector
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -267,9 +267,9 @@ Partial Class EverytimeSemesterSelector
         Me.Step1Panel.PerformLayout()
         CType(Me.yearUpd, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Step2Panel.ResumeLayout(False)
+        Me.Panel4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel4.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

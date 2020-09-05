@@ -10,7 +10,7 @@ Public Class ViewCourse
     Dim colormode As String = Nothing
 
     Dim maxTitleSize As Single = 15.0!
-    Dim maxSubSize As Single = 10.0!
+    Dim maxSubSize As Single = 9.0!
 
     Public olddata As String = Nothing
     Public blacktext As Boolean = False
@@ -149,7 +149,7 @@ Public Class ViewCourse
     Private Sub Edge_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles UpperPanel.MouseMove, MainPanel.MouseMove
 
         Dim pos As Point = e.Location
-        If sender.name = MainPanel.Name Then pos.Y += UpperPanel.Height
+        If sender Is MainPanel Then pos.Y += UpperPanel.Height
 
         If pos.X < BorderWidth And pos.Y < BorderWidth Then
             resizeDir = ResizeDirection.TopLeft
@@ -219,7 +219,7 @@ Public Class ViewCourse
         MainPanel.BackColor = edgeColor(colormode)
         SaveBT.BackColor = mainColor(colormode)
         CancelBT.BackColor = mainColor(colormode)
-        MemoTB.BackColor = tableColor_1(colormode)
+        MemoTB.BackColor = mainColor(colormode)
         MemoTB.ForeColor = textColor(colormode)
     End Sub
 
@@ -309,7 +309,7 @@ Public Class ViewCourse
         If Not lblQueue.Text = Nothing Then
             Dim Fit As Boolean = False
             Dim CurSize As Single
-            Dim SizeStep As Single = 1
+            Dim SizeStep As Single = 0.1
             Dim Padding As Integer = 3
 
             Do Until Fit
@@ -331,17 +331,22 @@ Public Class ViewCourse
                 End If
             Loop
 
-            If CurSize > 5 Then
+            If CurSize > 6 Then
                 'If Not maxSubSize = 0 Or Not maxTitleSize = 0 Then
 
                 If CurSize > maxSize Then
                     lblQueue.Font = New Font(lblQueue.Font.Name, maxSize)
                     Application.DoEvents()
                     Exit Sub
+
+                ElseIf lblQueue Is UpperTitleLabel And CurSize < 9 Then
+                    lblQueue.Font = New Font(lblQueue.Font.Name, 9)
+                    Application.DoEvents()
+                    Exit Sub
+
                 End If
 
                 'End If
-
                 lblQueue.Font = New Font(lblQueue.Font.Name, CurSize)
                 Application.DoEvents()
             End If

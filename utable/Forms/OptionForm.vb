@@ -433,6 +433,16 @@ Public Class OptionForm
             .TitleLabel.Text = "수업명"
             .ProfLabel.Text = names(rnd.Next(0, names.Count)) + " 교수님"
             .MemoLabel.Text = "메모 내용"
+
+            .CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
+            .CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
+            .AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
+            ._BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
+            ._AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
+            .ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
+            .ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
+            .ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
+            ._ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
         End With
 
         PrevTableArea.Controls.Add(cell)
@@ -992,7 +1002,7 @@ Public Class OptionForm
 
                     If Not SaveDirectoryTB.Text = "" Then tmpDir = SaveDirectoryTB.Text
                     If Not SaveNameTB.Text = "" Then tmpName = SaveNameTB.Text + ".utdata"
-                    FileIO.FileSystem.CopyFile(TableSaveLocation(), tmpDir + "\" + tmpName, True)
+                    FileIO.FileSystem.CopyFile(TableSaveLocation(False), tmpDir + "\" + tmpName, True)
                 End If
             End If
 

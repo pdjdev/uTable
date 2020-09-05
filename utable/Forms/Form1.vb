@@ -893,13 +893,9 @@ Public Class Form1
     End Sub
 
     Private Sub Menu_4_Click(sender As Object, e As EventArgs) Handles GetFromETItem.Click
-        If MsgBox("에브리타임에 로그인 한 후 시간표를 불러옵니다." + vbCr _
-               + "기존에 설정한 시간표는 지워지므로 필요한 경우 백업하시기 바랍니다" + vbCr + vbCr _
-               + "계속하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-            EveryTimeBrowser.Close()
-            EverytimeSemesterSelector.Close()
-            EverytimeSemesterSelector.ShowDialog(Me)
-        End If
+        EveryTimeBrowser.Close()
+        EverytimeSemesterSelector.Close()
+        EverytimeSemesterSelector.ShowDialog(Me)
 
     End Sub
 
@@ -920,6 +916,7 @@ Public Class Form1
             Next
 
             TimeTable.Visible = True
+
         End If
     End Sub
 
@@ -986,9 +983,9 @@ Public Class Form1
     Private Sub TablePanel_Paint(sender As Object, e As PaintEventArgs) Handles MonPanel.Paint, TuePanel.Paint, WedPanel.Paint,
         ThuPanel.Paint, FriPanel.Paint, SatPanel.Paint, SunPanel.Paint
 
-        If Not showSaturday And sender.Name = SatPanel.Name Then
+        If Not showSaturday And sender Is SatPanel Then
             If Not showSunday Then Exit Sub
-        ElseIf Not showSunday And sender.Name = SunPanel.Name Then
+        ElseIf Not showSunday And sender Is SunPanel Then
             Exit Sub
         End If
 
@@ -1023,6 +1020,7 @@ Public Class Form1
             For j As Integer = starttime To endtime
                 If j > 0 And j Mod 60 = 0 Then
                     Dim y As Integer = ((endtime - j + left) / timeLength) * panelHeight + thickness / 2
+
                     g.DrawLine(p, New Point(0, y), New Point(panelWidth, y))
                 End If
             Next

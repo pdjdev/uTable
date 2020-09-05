@@ -56,6 +56,11 @@ Public Class EverytimeSemesterSelector
             End If
         End If
 
+        AgreementRTB.Text = AgreementRTB.Text.Replace("[FileName]", TableSaveLocation(True))
+
+        Step1Panel.Visible = True
+        Step2Panel.Visible = False
+
         yearUpd.Value = Now.Year
         Opacity = 0
         UpdateColor()
