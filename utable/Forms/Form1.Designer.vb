@@ -194,7 +194,7 @@ Partial Class Form1
         Me.TitleEditBT.BackColor = System.Drawing.Color.Transparent
         Me.TitleEditBT.Dock = System.Windows.Forms.DockStyle.Left
         Me.TitleEditBT.Image = Global.uTable.My.Resources.Resources.bt_titleedit
-        Me.TitleEditBT.Location = New System.Drawing.Point(368, 5)
+        Me.TitleEditBT.Location = New System.Drawing.Point(334, 5)
         Me.TitleEditBT.Name = "TitleEditBT"
         Me.TitleEditBT.Size = New System.Drawing.Size(20, 30)
         Me.TitleEditBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -209,9 +209,9 @@ Partial Class Form1
         Me.TableTitleLabel.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.TableTitleLabel.Location = New System.Drawing.Point(183, 5)
         Me.TableTitleLabel.Name = "TableTitleLabel"
-        Me.TableTitleLabel.Size = New System.Drawing.Size(185, 30)
+        Me.TableTitleLabel.Size = New System.Drawing.Size(151, 30)
         Me.TableTitleLabel.TabIndex = 29
-        Me.TableTitleLabel.Text = "2020-1학기 시간표"
+        Me.TableTitleLabel.Text = "TableTitleLabel"
         '
         'RenameTitleTextBox
         '

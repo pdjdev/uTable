@@ -49,7 +49,6 @@ Public Class Form1
 
 #End Region
 
-
 #Region "창 이동, 크기 조절, 붙기 관련"
 
     Private Function DoSnap(ByVal pos As Integer, ByVal edge As Integer) As Boolean
@@ -678,6 +677,7 @@ Public Class Form1
     End Sub
 
     Private Sub MinBT_Click(sender As Object, e As EventArgs) Handles MinBT.Click
+
         If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
             WindowState = FormWindowState.Minimized
         Else
@@ -999,7 +999,7 @@ Public Class Form1
         Dim panelWidth As Integer = MonPanel.Width
         Dim hrlength As Double = 60 / timeLength * panelHeight
 
-        Dim left As Integer = starttime Mod 60
+        'Dim left As Integer = starttime Mod 60
         Dim thickness As Integer = 3 * (currentDPI / 96)
 
         Dim colorMul As Single = 0.9
@@ -1014,14 +1014,15 @@ Public Class Form1
         If Not tablePatternSetting = "None" Then
 
             Dim p As New Pen(c, thickness)
-            Dim g As Graphics = Panel.CreateGraphics
+            Dim g As Graphics = panel.CreateGraphics
+            Dim y As Integer = (starttime Mod 60) / 60 * hrlength + thickness / 2
+
             p.DashStyle = Drawing2D.DashStyle.Dot
 
             For j As Integer = starttime To endtime
                 If j > 0 And j Mod 60 = 0 Then
-                    Dim y As Integer = ((endtime - j + left) / timeLength) * panelHeight + thickness / 2
-
                     g.DrawLine(p, New Point(0, y), New Point(panelWidth, y))
+                    y += hrlength
                 End If
             Next
 
