@@ -162,7 +162,7 @@ Public Class SetCourse
         newdata += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
 
         If olddata.Contains("<checked>") Then
-            newdata += vbTab + "<checked>" + getData(olddata, "checked") + "</checked>" + vbCrLf
+            newdata += vbTab + getData_withkeys(olddata, "checked") + vbCrLf
         End If
 
         writeTable(data.Replace(olddata, newdata))
@@ -385,7 +385,7 @@ Public Class SetCourse
 
     Private Sub DeleteBT_Click(sender As Object, e As EventArgs) Handles DeleteBT.Click
         If MsgBox("정말로 지우시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-            writeTable(readTable().Replace("<course>" + olddata + "</course>", Nothing))
+            writeTable(readTable().Replace(vbCrLf + "<course>" + olddata + "</course>", Nothing))
             Form1.updateCell()
             Close()
         End If
