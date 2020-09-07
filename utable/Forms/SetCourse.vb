@@ -136,9 +136,9 @@ Public Class SetCourse
 
         Dim data As String = vbCrLf + "<course>" + vbCrLf
         data += vbTab + "<day>" + day.ToString + "</day>" + vbCrLf
-        data += vbTab + "<name>" + name + "</name>" + vbCrLf
-        data += vbTab + "<prof>" + prof + "</prof>" + vbCrLf
-        data += vbTab + "<memo>" + memo + "</memo>" + vbCrLf
+        data += vbTab + "<name>" + xmlEncode(name) + "</name>" + vbCrLf
+        data += vbTab + "<prof>" + xmlEncode(prof) + "</prof>" + vbCrLf
+        data += vbTab + "<memo>" + xmlEncode(memo) + "</memo>" + vbCrLf
         data += vbTab + "<start>" + start.ToString + "</start>" + vbCrLf
         data += vbTab + "<end>" + endt.ToString + "</end>" + vbCrLf
         data += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
@@ -154,9 +154,9 @@ Public Class SetCourse
 
         Dim newdata As String = vbCrLf
         newdata += vbTab + "<day>" + day.ToString + "</day>" + vbCrLf
-        newdata += vbTab + "<name>" + name + "</name>" + vbCrLf
-        newdata += vbTab + "<prof>" + prof + "</prof>" + vbCrLf
-        newdata += vbTab + "<memo>" + memo + "</memo>" + vbCrLf
+        newdata += vbTab + "<name>" + xmlEncode(name) + "</name>" + vbCrLf
+        newdata += vbTab + "<prof>" + xmlEncode(prof) + "</prof>" + vbCrLf
+        newdata += vbTab + "<memo>" + xmlEncode(memo) + "</memo>" + vbCrLf
         newdata += vbTab + "<start>" + start.ToString + "</start>" + vbCrLf
         newdata += vbTab + "<end>" + endt.ToString + "</end>" + vbCrLf
         newdata += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
@@ -191,9 +191,9 @@ Public Class SetCourse
             Dim tmp = i
 
             If getData(i, "name") = oldname Then
-                tmp = tmp.Replace("<name>" + oldname + "</name>", "<name>" + name + "</name>")
-                tmp = tmp.Replace("<prof>" + getData(i, "prof") + "</prof>", "<prof>" + prof + "</prof>")
-                tmp = tmp.Replace("<memo>" + getData(i, "memo") + "</memo>", "<memo>" + memo + "</memo>")
+                tmp = tmp.Replace("<name>" + oldname + "</name>", "<name>" + xmlEncode(name) + "</name>")
+                tmp = tmp.Replace("<prof>" + getData(i, "prof") + "</prof>", "<prof>" + xmlEncode(prof) + "</prof>")
+                tmp = tmp.Replace("<memo>" + getData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
                 tmp = tmp.Replace("<color>" + getData(i, "color") + "</color>", "<color>" + ColorTranslator.ToHtml(color) + "</color>")
             End If
 
@@ -225,12 +225,12 @@ Public Class SetCourse
             Dim data = olddata
 
             Try
-                CourseNameTB.Text = getData(data, "name")
-                ProfTB.Text = getData(data, "prof")
+                CourseNameTB.Text = xmlDecode(getData(data, "name"))
+                ProfTB.Text = xmlDecode(getData(data, "prof"))
                 DayCombo.SelectedIndex = Convert.ToInt16(getData(data, "day"))
                 StartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "start")) \ 60, Convert.ToInt16(getData(data, "start")) Mod 60, 0)
                 EndTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "end")) \ 60, Convert.ToInt16(getData(data, "end")) Mod 60, 0)
-                MemoTB.Text = getData(data, "memo")
+                MemoTB.Text = xmlDecode(getData(data, "memo"))
                 ColorButton.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
 
             Catch ex As Exception
@@ -286,7 +286,7 @@ Public Class SetCourse
 
             If getData(s, "day") = DayCombo.SelectedIndex Then
                 'MsgBox("인덱스 같음")
-                Dim itemname As String = getData(s, "name") + " (" + daysname(Convert.ToInt16(getData(s, "day"))) + "요일)"
+                Dim itemname As String = xmlDecode(getData(s, "name")) + " (" + daysname(Convert.ToInt16(getData(s, "day"))) + "요일)"
 
                 If Not ((startt <= Convert.ToInt16(getData(s, "start")) And endt <= Convert.ToInt16(getData(s, "start"))) _
                     Or (startt >= Convert.ToInt16(getData(s, "end")) And endt >= Convert.ToInt16(getData(s, "end")))) Then
@@ -365,12 +365,12 @@ Public Class SetCourse
             loaded = False
             Dim data = prevData(PrevSetCombo.SelectedIndex)
 
-            CourseNameTB.Text = getData(data, "name")
-            ProfTB.Text = getData(data, "prof")
+            CourseNameTB.Text = xmlDecode(getData(data, "name"))
+            ProfTB.Text = xmlDecode(getData(data, "prof"))
             DayCombo.SelectedIndex = Convert.ToInt16(getData(data, "day"))
             StartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "start")) \ 60, Convert.ToInt16(getData(data, "start")) Mod 60, 0)
             EndTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getData(data, "end")) \ 60, Convert.ToInt16(getData(data, "end")) Mod 60, 0)
-            MemoTB.Text = getData(data, "memo")
+            MemoTB.Text = xmlDecode(getData(data, "memo"))
             ColorButton.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
 
             loaded = True

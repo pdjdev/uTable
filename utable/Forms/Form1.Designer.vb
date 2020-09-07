@@ -72,6 +72,9 @@ Partial Class Form1
         Me.hideani = New System.Windows.Forms.Timer(Me.components)
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.Tray_menu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.OpenTableTrayItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitTrayItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TimeTable.SuspendLayout()
         Me.TopPanel.SuspendLayout()
         CType(Me.TitleEditBT, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,6 +82,7 @@ Partial Class Form1
         Me.DayTable.SuspendLayout()
         Me.Panel7.SuspendLayout()
         Me.BT1_menu.SuspendLayout()
+        Me.Tray_menu.SuspendLayout()
         Me.SuspendLayout()
         '
         'TimeTable
@@ -441,7 +445,7 @@ Partial Class Form1
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
-        Me.BT1_menu.Size = New System.Drawing.Size(180, 232)
+        Me.BT1_menu.Size = New System.Drawing.Size(180, 254)
         '
         'BT1MenuTitle
         '
@@ -587,8 +591,32 @@ Partial Class Form1
         '
         'NotifyIcon1
         '
+        Me.NotifyIcon1.ContextMenuStrip = Me.Tray_menu
         Me.NotifyIcon1.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.NotifyIcon1.Text = "uTable"
+        Me.NotifyIcon1.Visible = True
+        '
+        'Tray_menu
+        '
+        Me.Tray_menu.BackColor = System.Drawing.Color.White
+        Me.Tray_menu.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Tray_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenTableTrayItem, Me.ExitTrayItem})
+        Me.Tray_menu.Name = "ContextMenuStrip1"
+        Me.Tray_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.Tray_menu.ShowImageMargin = False
+        Me.Tray_menu.Size = New System.Drawing.Size(123, 48)
+        '
+        'OpenTableTrayItem
+        '
+        Me.OpenTableTrayItem.Name = "OpenTableTrayItem"
+        Me.OpenTableTrayItem.Size = New System.Drawing.Size(122, 22)
+        Me.OpenTableTrayItem.Text = "시간표 열기"
+        '
+        'ExitTrayItem
+        '
+        Me.ExitTrayItem.Name = "ExitTrayItem"
+        Me.ExitTrayItem.Size = New System.Drawing.Size(122, 22)
+        Me.ExitTrayItem.Text = "uTable 종료"
         '
         'Form1
         '
@@ -615,6 +643,7 @@ Partial Class Form1
         Me.DayTable.ResumeLayout(False)
         Me.Panel7.ResumeLayout(False)
         Me.BT1_menu.ResumeLayout(False)
+        Me.Tray_menu.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -668,4 +697,7 @@ Partial Class Form1
     Friend WithEvents MessageItem As ToolStripMenuItem
     Friend WithEvents ClearCheckBoxItem As ToolStripMenuItem
     Friend WithEvents NotifyIcon1 As NotifyIcon
+    Friend WithEvents Tray_menu As ContextMenuStrip
+    Friend WithEvents OpenTableTrayItem As ToolStripMenuItem
+    Friend WithEvents ExitTrayItem As ToolStripMenuItem
 End Class

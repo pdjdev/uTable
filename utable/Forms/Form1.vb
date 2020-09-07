@@ -376,7 +376,7 @@ Public Class Form1
                 'BT1_menu 폰트 바꾸기 : 속성이 상속되지 않는지라 노가다해야함
                 If GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
                     ClearCheckBoxItem.Font = New Font(fntname, ClearCheckBoxItem.Font.Size)
-                    BT1MenuTitle.Font = New Font(fntname, BT1MenuTitle.Font.Size)
+                    BT1MenuTitle.Font = New Font(fntname, BT1MenuTitle.Font.Size, FontStyle.Bold)
                     ChangeThemeItem.Font = New Font(fntname, ChangeThemeItem.Font.Size)
                     SnapToEdgeItem.Font = New Font(fntname, SnapToEdgeItem.Font.Size)
                     ColorSettingItem.Font = New Font(fntname, ColorSettingItem.Font.Size)
@@ -384,6 +384,9 @@ Public Class Form1
                     GetFromETItem.Font = New Font(fntname, GetFromETItem.Font.Size)
                     OptionItem.Font = New Font(fntname, OptionItem.Font.Size)
                     ExitItem.Font = New Font(fntname, ExitItem.Font.Size)
+
+                    OpenTableTrayItem.Font = New Font(fntname, OpenTableTrayItem.Font.Size)
+                    ExitTrayItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
                 End If
             End If
         End If
@@ -445,7 +448,7 @@ Public Class Form1
             Dim max As Integer = 0
 
             If data.Contains("<tablename>") Then
-                TableTitleLabel.Text = getData(data, "tablename")
+                TableTitleLabel.Text = xmlDecode(getData(data, "tablename"))
             Else
                 TableTitleLabel.Text = "이름 없는 시간표"
             End If
@@ -466,17 +469,17 @@ Public Class Form1
                 endtime = max
 
                 '셀계산
+                '여기서 xmldecode 하니까 꼭 눈여겨두자
                 For Each s As String In courseData
                     addCell(Convert.ToInt16(getData(s, "start")),
                             Convert.ToInt16(getData(s, "end")),
                             getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"),
-                            getData(s, "name"),
-                            getData(s, "prof"),
-                            getData(s, "memo"),
+                            xmlDecode(getData(s, "name")),
+                            xmlDecode(getData(s, "prof")),
+                            xmlDecode(getData(s, "memo")),
                             ColorTranslator.FromHtml(getData(s, "color")),
                             Convert.ToInt16(getData(s, "day")),
                             getData(s, "checked"))
-
 
                     If Convert.ToInt16(getData(s, "day")) = 5 Then '토요일 추가시
                         showSaturday = True
@@ -734,10 +737,10 @@ Public Class Form1
                     Dim data As String = readTable()
                     If data.Contains("<tablename>") Then
                         Dim oldtitle As String = getData(data, "tablename")
-                        data = data.Replace("<tablename>" + oldtitle + "</tablename>", "<tablename>" + newtitle + "</tablename>")
+                        data = data.Replace("<tablename>" + oldtitle + "</tablename>", "<tablename>" + xmlEncode(newtitle) + "</tablename>")
                         writeTable(data)
                     Else
-                        writeTable("<tablename>" + newtitle + "</tablename>" + vbCrLf + data)
+                        writeTable("<tablename>" + xmlEncode(newtitle) + "</tablename>" + vbCrLf + data)
                     End If
                 Catch ex As Exception
                     MsgBox("이름 변경 도중 문제가 발생했습니다." + vbCr + ex.Message, vbCritical)
@@ -790,8 +793,11 @@ Public Class Form1
         BT1MenuTitle.Text = "uTable " + ver(0) + "." + ver(1) + "v"
 
         BT1_menu.BackColor = mainColor(colorMode)
-        BT1_menu.ForeColor = textColor(colorMode)
-        BT1MenuTitle.ForeColor = lightTextColor(colorMode)
+        '일단 다크모드일때만 텍스트컬러 바꾸기
+        If colorMode = "Dark" Then
+            BT1MenuTitle.ForeColor = lightTextColor(colorMode)
+            BT1_menu.ForeColor = textColor(colorMode)
+        End If
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
         ClearCheckBoxItem.Visible = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
@@ -824,6 +830,13 @@ Public Class Form1
             Case Else
                 ToolStripComboBox1.SelectedIndex = 0
         End Select
+    End Sub
+
+    Private Sub Tray_menu_Opening(sender As Object, e As CancelEventArgs) Handles Tray_menu.Opening
+        Tray_menu.BackColor = mainColor(colorMode)
+        If colorMode = "Dark" Then
+            Tray_menu.ForeColor = textColor(colorMode)
+        End If
     End Sub
 
     Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
@@ -949,7 +962,7 @@ Public Class Form1
 
                         End If
 
-                        NotifyIcon1.Visible = True
+                        'NotifyIcon1.Visible = True
                         '이제 진짜 푸시 보내기
                         prevNotificationName = notificationName
                         Dim message As String = ""
@@ -960,7 +973,8 @@ Public Class Form1
                             message = (targetTime - currentTime).ToString + "분 뒤 수업이 있습니다." + vbCr + "아이콘을 눌러 시간표를 확인하세요."
                         End If
 
-                        NotifyIcon1.ShowBalloonTip(9999, getData(s, "name") + " (" + getData(s, "prof") + ")", message, ToolTipIcon.None)
+                        NotifyIcon1.ShowBalloonTip(9999, xmlDecode(getData(s, "name")) _
+                                                   + " (" + xmlDecode(getData(s, "prof")) + ")", message, ToolTipIcon.None)
                     Next
 
                 End If
@@ -1007,7 +1021,7 @@ Public Class Form1
                     Dim time As New List(Of Integer)
 
                     For Each s In dayData
-                        courses.Add(getData(s, "name") + " (" + getData(s, "prof") + ")")
+                        courses.Add(xmlDecode(getData(s, "name")) + " (" + xmlDecode(getData(s, "prof")) + ")")
                         time.Add(Convert.ToInt16(getData(s, "start")))
                     Next
 
@@ -1018,7 +1032,7 @@ Public Class Form1
 
                     courses = q.ToList()
 
-                    NotifyIcon1.Visible = True
+                    'NotifyIcon1.Visible = True
                     NotifyIcon1.ShowBalloonTip(9999, "오늘의 수업", String.Join(vbCr, courses), ToolTipIcon.None)
                 End If
 
@@ -1130,7 +1144,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub ExitItem_Click(sender As Object, e As EventArgs) Handles ExitItem.Click
+    Private Sub ExitItem_Click(sender As Object, e As EventArgs) Handles ExitItem.Click, ExitTrayItem.Click
         Application.Exit()
     End Sub
 
@@ -1225,16 +1239,10 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
-        ViewCourse.Show()
-    End Sub
-
-    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked, NotifyIcon1.Click
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked, NotifyIcon1.DoubleClick, OpenTableTrayItem.Click
         WindowState = FormWindowState.Normal
-        NotifyIcon1.Visible = False
-    End Sub
-
-    Private Sub NotifyIcon1_BalloonTipClosed(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClosed, Me.Closing
-        NotifyIcon1.Visible = False
+        TopMost = True
+        Refresh()
+        TopMost = False
     End Sub
 End Class

@@ -85,6 +85,7 @@ Partial Class CellControl
         Me.MemoLabel.Size = New System.Drawing.Size(42, 15)
         Me.MemoLabel.TabIndex = 2
         Me.MemoLabel.Text = "Memo"
+        Me.MemoLabel.UseMnemonic = False
         '
         'ProfLabel
         '
@@ -97,6 +98,7 @@ Partial Class CellControl
         Me.ProfLabel.Size = New System.Drawing.Size(67, 17)
         Me.ProfLabel.TabIndex = 1
         Me.ProfLabel.Text = "ProfName"
+        Me.ProfLabel.UseMnemonic = False
         '
         'TitleLabel
         '
@@ -109,6 +111,7 @@ Partial Class CellControl
         Me.TitleLabel.Size = New System.Drawing.Size(40, 20)
         Me.TitleLabel.TabIndex = 0
         Me.TitleLabel.Text = "Title"
+        Me.TitleLabel.UseMnemonic = False
         '
         'TopNotchPanel
         '

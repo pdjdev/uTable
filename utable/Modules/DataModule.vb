@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Web
 'Imports System.Text.RegularExpressions
 'Imports System.Xml
 
@@ -142,5 +143,13 @@ Module DataModule
         End Try
 
         Return True
+    End Function
+
+    Public Function xmlEncode(value As String) As String
+        Return HttpUtility.HtmlEncode(value)
+    End Function
+
+    Public Function xmlDecode(value As String) As String
+        Return HttpUtility.HtmlDecode(value)
     End Function
 End Module

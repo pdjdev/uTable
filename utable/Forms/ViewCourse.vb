@@ -251,9 +251,9 @@ Public Class ViewCourse
         Dim data = olddata
 
         Try
-            UpperTitleLabel.Text = getData(data, "name")
+            UpperTitleLabel.Text = xmlDecode(getData(data, "name"))
             Text = UpperTitleLabel.Text
-            SubTitleLabel.Text = getData(data, "prof") + ", "
+            SubTitleLabel.Text = xmlDecode(getData(data, "prof")) + ", "
 
             Dim startt As Integer = getData(data, "start")
             Dim endt As Integer = getData(data, "end")
@@ -276,7 +276,7 @@ Public Class ViewCourse
 
             SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(getData(data, "day"))) + "요일"
 
-            MemoTB.Text = getData(data, "memo")
+            MemoTB.Text = xmlDecode(getData(data, "memo"))
             TitlePanel.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
 
             Dim c As Color = Color.FromArgb(TitlePanel.BackColor.R * colorMul,
@@ -431,11 +431,11 @@ Public Class ViewCourse
                 If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
                     modifyAllCourse(readTable(), MemoTB.Text)
                 Else
-                    Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + MemoTB.Text + "</memo>")
+                    Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
                     writeTable(readTable.Replace(olddata, newdata))
                 End If
             Else
-                Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + MemoTB.Text + "</memo>")
+                Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
                 writeTable(readTable.Replace(olddata, newdata))
             End If
 
@@ -468,7 +468,7 @@ Public Class ViewCourse
 
         For Each i In olddatas
             Dim tmp As String = i
-            If getData(i, "name") = oldname Then tmp = tmp.Replace("<memo>" + getData(i, "memo") + "</memo>", "<memo>" + memo + "</memo>")
+            If getData(i, "name") = oldname Then tmp = tmp.Replace("<memo>" + getData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
             newdata += "<course>" + tmp + "</course>" + vbCrLf
         Next
 
