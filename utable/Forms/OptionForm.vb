@@ -91,17 +91,19 @@ Public Class OptionForm
 
         UpdateColor()
 
-        SettingMenu1.index = 1
-        SettingMenu2.index = 2
-        SettingMenu3.index = 3
-        SettingMenu4.index = 4
-        SettingMenu5.index = 5
+        SettingMenu_Basic.index = 1
+        SettingMenu_Table.index = 2
+        SettingMenu_Data.index = 3
+        SettingMenu_Notification.index = 4
+        SettingMenu_Update.index = 5
+        SettingMenu_Info.index = 6
 
-        SettingMenu1.SettingLabel.Text = "기본 설정"
-        SettingMenu2.SettingLabel.Text = "시간표 설정"
-        SettingMenu3.SettingLabel.Text = "데이터 설정"
-        SettingMenu4.SettingLabel.Text = "업데이트"
-        SettingMenu5.SettingLabel.Text = "프로그램 정보"
+        SettingMenu_Basic.SettingLabel.Text = "기본 설정"
+        SettingMenu_Table.SettingLabel.Text = "시간표 설정"
+        SettingMenu_Data.SettingLabel.Text = "데이터 설정"
+        SettingMenu_Notification.SettingLabel.Text = "알리미 설정"
+        SettingMenu_Update.SettingLabel.Text = "업데이트"
+        SettingMenu_Info.SettingLabel.Text = "프로그램 정보"
 
         VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString + "   -  by PBJSoftware 2020"
 
@@ -168,6 +170,19 @@ Public Class OptionForm
 
         SaveDirectoryTB.Text = GetINI("SETTING", "SaveDirectory", "", ININamePath)
         SaveNameTB.Text = GetINI("SETTING", "SaveName", "", ININamePath)
+
+        '강의 알리미 기본값 = 1
+        CourseNotifyChk.Checked = Not (GetINI("SETTING", "CourseNotify", "", ININamePath) = "0")
+        CourseNotifyPanel.Enabled = CourseNotifyChk.Checked
+
+        '강의 미리알림 시간 = ""
+        Dim tmp As List(Of String) = GetINI("SETTING", "NotifyMin", "", ININamePath).Split(",").ToList
+        Notify_30min_Chk.Checked = tmp.Contains("30")
+        Notify_15min_Chk.Checked = tmp.Contains("15")
+        Notify_5min_Chk.Checked = tmp.Contains("5")
+
+        '오늘의 강의알림 기본값 = 1
+        TodaysCourseNotifyChk.Checked = Not (GetINI("SETTING", "TodaysCourseNotify", "", ININamePath) = "0")
 
         If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
             Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
@@ -247,45 +262,59 @@ Public Class OptionForm
     End Sub
 
     Public Sub SwitchMode(mode As Integer)
-        SettingMenu1.SelectionUpdate(False, colormode)
-        SettingMenu2.SelectionUpdate(False, colormode)
-        SettingMenu3.SelectionUpdate(False, colormode)
-        SettingMenu4.SelectionUpdate(False, colormode)
-        SettingMenu5.SelectionUpdate(False, colormode)
+        SettingMenu_Basic.SelectionUpdate(False, colormode)
+        SettingMenu_Table.SelectionUpdate(False, colormode)
+        SettingMenu_Data.SelectionUpdate(False, colormode)
+        SettingMenu_Notification.SelectionUpdate(False, colormode)
+        SettingMenu_Update.SelectionUpdate(False, colormode)
+        SettingMenu_Info.SelectionUpdate(False, colormode)
 
         Select Case mode
-            Case 1
-                SettingMenu1.SelectionUpdate(True, colormode)
-                TabPage1.Visible = True
-                TabPage2.Visible = False
-                TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = False
+            Case 1 '기본
+                SettingMenu_Basic.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = True
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = False
 
-            Case 2
-                SettingMenu2.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = True
-                TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = False
+            Case 2 '시간표
+                SettingMenu_Table.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = True
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = False
                 PrevUpdate() '시간표 업데이트
 
-            Case 3
-                SettingMenu3.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = False
-                TabPage3.Visible = True
-                TabPage4.Visible = False
-                TabPage5.Visible = False
+            Case 3 '데이터
+                SettingMenu_Data.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = True
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = False
 
-            Case 4
-                SettingMenu4.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = False
-                TabPage3.Visible = False
-                TabPage4.Visible = True
-                TabPage5.Visible = False
+            Case 4 '알리미
+                SettingMenu_Notification.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = True
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = False
+
+            Case 5 '업데이트
+                SettingMenu_Update.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = True
+                TabPage_Info.Visible = False
 
                 If downUrl = "" And UpdateChecker.IsBusy = False Then
                     UpdateChecker.RunWorkerAsync()
@@ -294,13 +323,14 @@ Public Class OptionForm
                     ForceUpdChk.Enabled = False
                 End If
 
-            Case 5
-                SettingMenu5.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = False
-                TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = True
+            Case 5 '정보
+                SettingMenu_Info.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = True
 
         End Select
 
@@ -391,7 +421,7 @@ Public Class OptionForm
             DayLabel.BackColor = activeDayColor(colormode)
             DayLabel.ForeColor = activeDayTextColor(colormode)
 
-            DayLabel.Text = Now.Day.ToString + " "
+            DayLabel.Text = Now.Day.ToString.ToString("dd") + " "
 
             Select Case Now.DayOfWeek
                 Case DayOfWeek.Monday
@@ -508,11 +538,11 @@ Public Class OptionForm
             SetINI("SETTING", "ColorMode", "White", ININamePath)
         End If
 
-        SettingMenu1.first = True
-        SettingMenu2.first = True
-        SettingMenu3.first = True
-        SettingMenu4.first = True
-        SettingMenu5.first = True
+        SettingMenu_Basic.first = True
+        SettingMenu_Table.first = True
+        SettingMenu_Data.first = True
+        SettingMenu_Update.first = True
+        SettingMenu_Info.first = True
 
         If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
         Form1.UpdateColor()
@@ -1018,5 +1048,26 @@ Public Class OptionForm
 
         End Try
 
+    End Sub
+
+    Private Sub CourseNotifyChk_CheckedChanged(sender As Object, e As EventArgs) Handles CourseNotifyChk.CheckedChanged
+        ApplySetting("CourseNotify", CourseNotifyChk.Checked)
+        CourseNotifyPanel.Enabled = CourseNotifyChk.Checked
+    End Sub
+
+    Private Sub TodaysCourseNotifyChk_CheckedChanged(sender As Object, e As EventArgs) Handles TodaysCourseNotifyChk.CheckedChanged
+        ApplySetting("TodaysCourseNotify", TodaysCourseNotifyChk.Checked)
+    End Sub
+
+    Private Sub Notify_min_CheckedChanged(sender As Object, e As EventArgs) Handles Notify_30min_Chk.CheckedChanged,
+        Notify_15min_Chk.CheckedChanged, Notify_5min_Chk.CheckedChanged
+
+        Dim values As New List(Of Integer)
+
+        If Notify_30min_Chk.Checked Then values.Add(30)
+        If Notify_15min_Chk.Checked Then values.Add(15)
+        If Notify_5min_Chk.Checked Then values.Add(5)
+
+        SetINI("SETTING", "NotifyMin", String.Join(",", values), ININamePath)
     End Sub
 End Class

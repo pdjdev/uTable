@@ -209,6 +209,17 @@ Public Class ViewCourse
     End Sub
 
     Private Sub CloseBT_Click(sender As Object, e As EventArgs) Handles CloseBT.Click
+        If touched Then
+
+            Dim ask1 As MsgBoxResult = MsgBox("변경사항을 저장하시겠습니까?", vbYesNoCancel + vbQuestion)
+
+            If ask1 = vbYes Then
+                Apply()
+            ElseIf ask1 = vbCancel Then
+                Exit Sub
+            End If
+        End If
+
         Close()
     End Sub
 
@@ -403,6 +414,10 @@ Public Class ViewCourse
             Exit Sub
         End If
 
+        Apply()
+    End Sub
+
+    Sub Apply()
         Try
             Dim data As String = readTable()
             Dim count As Integer = 0

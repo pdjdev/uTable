@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.ComponentModel
+Imports System.Runtime.InteropServices
 
 Public Class Form1
     Dim starttime As Integer = 0
@@ -13,12 +14,18 @@ Public Class Form1
     Dim hiding As Boolean = False
 
     Dim PrevDisp As String = Nothing
+    Dim PrevDay As Date = Nothing
     Dim formshown As Boolean = False
     Dim snaptoedge As Boolean = False
     Dim titleEditMode As Boolean = False
     Dim colorMode As String = Nothing
     Public BorderWidth As Integer = dpicalc(Me, 6)
     Private _resizeDir As ResizeDirection = ResizeDirection.None
+
+    '알림용
+    'Dim tableData As String = Nothing '이거는 updateCell에서도 씀!!!
+    Dim prevNotificationName As String = Nothing
+    Dim prevTime As Date = Nothing
 
     'CellControl용 설정 변수
     Public CustomFont As String = ""
@@ -406,116 +413,126 @@ Public Class Form1
     End Sub
 
     Public Sub updateCell()
+        Try
 
-        'CellControl 설정 변수 업데이트
-        CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
-        CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
-        AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
-        _BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
-        _AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
-        ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
-        ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
-        ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
-        _ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
+            'CellControl 설정 변수 업데이트
+            CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
+            CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
+            AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
+            _BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
+            _AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
+            ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
+            ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
+            ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
+            _ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
 
-        TimeTable.Visible = False
-        showSaturday = False
-        showSunday = False
+            TimeTable.Visible = False
+            showSaturday = False
+            showSunday = False
 
-        '구성요소 초기화
-        MonPanel.Controls.Clear()
-        TuePanel.Controls.Clear()
-        WedPanel.Controls.Clear()
-        ThuPanel.Controls.Clear()
-        FriPanel.Controls.Clear()
-        SatPanel.Controls.Clear()
-        SunPanel.Controls.Clear()
-        updated = False
+            '구성요소 초기화
+            MonPanel.Controls.Clear()
+            TuePanel.Controls.Clear()
+            WedPanel.Controls.Clear()
+            ThuPanel.Controls.Clear()
+            FriPanel.Controls.Clear()
+            SatPanel.Controls.Clear()
+            SunPanel.Controls.Clear()
+            updated = False
 
-        Dim data As String = readTable()
-        Dim min As Integer = 9999999
-        Dim max As Integer = 0
+            Dim data = readTable()
+            Dim min As Integer = 9999999
+            Dim max As Integer = 0
 
-        If data.Contains("<tablename>") Then
-            TableTitleLabel.Text = getData(data, "tablename")
-        Else
-            TableTitleLabel.Text = "이름 없는 시간표"
-        End If
-
-        Text = TableTitleLabel.Text
-        courseData.Clear()
-
-        If data.Contains("<course>") Then
-            courseData = getDatas(data, "course")
-
-            '최대, 최소계산
-            For Each s As String In courseData
-                If Convert.ToInt16(getData(s, "start")) < min Then min = Convert.ToInt16(getData(s, "start"))
-                If Convert.ToInt16(getData(s, "end")) > max Then max = Convert.ToInt16(getData(s, "end"))
-            Next
-
-            starttime = min
-            endtime = max
-
-            '셀계산
-            For Each s As String In courseData
-                addCell(Convert.ToInt16(getData(s, "start")),
-                        Convert.ToInt16(getData(s, "end")),
-                        getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"),
-                        getData(s, "name"),
-                        getData(s, "prof"),
-                        getData(s, "memo"),
-                        ColorTranslator.FromHtml(getData(s, "color")),
-                        Convert.ToInt16(getData(s, "day")),
-                        getData(s, "checked"))
-
-
-                If Convert.ToInt16(getData(s, "day")) = 5 Then '토요일 추가시
-                    showSaturday = True
-                ElseIf Convert.ToInt16(getData(s, "day")) = 6 Then '일요일 추가시
-                    showSunday = True
-                End If
-            Next
-
-            updated = True
-        Else
-            '맨 처음 창 열렸을때일시 = 불투명도 0일때 -> 일단 창 다 띄우고 나서 msgbox 띄우기 (그래야 포커스잡기 쉬움)
-            If Not Opacity = 0 Then
-                MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
-                   + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
+            If data.Contains("<tablename>") Then
+                TableTitleLabel.Text = getData(data, "tablename")
+            Else
+                TableTitleLabel.Text = "이름 없는 시간표"
             End If
-        End If
 
-        DayTable.Visible = Not (GetINI("SETTING", "ShowDay", "", ININamePath) = "0")
+            Text = TableTitleLabel.Text
+            courseData.Clear()
 
-        If showSunday Then '토+일요일 표시
-            For i = 0 To 6
-                DayTable.ColumnStyles(i).Width = 14.28
-                TimeTable.ColumnStyles(i).Width = 14.28
+            If data.Contains("<course>") Then
+                courseData = getDatas(data, "course")
+
+                '최대, 최소계산
+                For Each s As String In courseData
+                    If Convert.ToInt16(getData(s, "start")) < min Then min = Convert.ToInt16(getData(s, "start"))
+                    If Convert.ToInt16(getData(s, "end")) > max Then max = Convert.ToInt16(getData(s, "end"))
+                Next
+
+                starttime = min
+                endtime = max
+
+                '셀계산
+                For Each s As String In courseData
+                    addCell(Convert.ToInt16(getData(s, "start")),
+                            Convert.ToInt16(getData(s, "end")),
+                            getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"),
+                            getData(s, "name"),
+                            getData(s, "prof"),
+                            getData(s, "memo"),
+                            ColorTranslator.FromHtml(getData(s, "color")),
+                            Convert.ToInt16(getData(s, "day")),
+                            getData(s, "checked"))
+
+
+                    If Convert.ToInt16(getData(s, "day")) = 5 Then '토요일 추가시
+                        showSaturday = True
+                    ElseIf Convert.ToInt16(getData(s, "day")) = 6 Then '일요일 추가시
+                        showSunday = True
+                    End If
+                Next
+
+                updated = True
+            Else
+                '맨 처음 창 열렸을때일시 = 불투명도 0일때 -> 일단 창 다 띄우고 나서 msgbox 띄우기 (그래야 포커스잡기 쉬움)
+                If Not Opacity = 0 Then
+                    MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
+                       + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
+                End If
+            End If
+
+            DayTable.Visible = Not (GetINI("SETTING", "ShowDay", "", ININamePath) = "0")
+
+            If showSunday Then '토+일요일 표시
+                For i = 0 To 6
+                    DayTable.ColumnStyles(i).Width = 14.28
+                    TimeTable.ColumnStyles(i).Width = 14.28
+                Next
+            ElseIf showSaturday Then '토요일 표시
+                For i = 0 To 5
+                    DayTable.ColumnStyles(i).Width = 16.67
+                    TimeTable.ColumnStyles(i).Width = 16.67
+                Next
+                DayTable.ColumnStyles(6).Width = 0
+                TimeTable.ColumnStyles(6).Width = 0
+            Else '둘다 안표시
+                For i = 0 To 4
+                    DayTable.ColumnStyles(i).Width = 20
+                    TimeTable.ColumnStyles(i).Width = 20
+                Next
+                DayTable.ColumnStyles(5).Width = 0
+                DayTable.ColumnStyles(6).Width = 0
+                TimeTable.ColumnStyles(5).Width = 0
+                TimeTable.ColumnStyles(6).Width = 0
+            End If
+
+            For Each s As String In courseData
+                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
+                           getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
             Next
-        ElseIf showSaturday Then '토요일 표시
-            For i = 0 To 5
-                DayTable.ColumnStyles(i).Width = 16.67
-                TimeTable.ColumnStyles(i).Width = 16.67
-            Next
-            DayTable.ColumnStyles(6).Width = 0
-            TimeTable.ColumnStyles(6).Width = 0
-        Else '둘다 안표시
-            For i = 0 To 4
-                DayTable.ColumnStyles(i).Width = 20
-                TimeTable.ColumnStyles(i).Width = 20
-            Next
-            DayTable.ColumnStyles(5).Width = 0
-            DayTable.ColumnStyles(6).Width = 0
-            TimeTable.ColumnStyles(5).Width = 0
-            TimeTable.ColumnStyles(6).Width = 0
-        End If
 
-        For Each s As String In courseData
-            resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
-                       getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
-        Next
+        Catch ex As Exception
 
+            MsgBox("시간표 데이터를 읽던 도중 오류가 발생했습니다." + vbCr + "(" + ex.Message + ")" + vbCr + vbCr _
+                   + "시간표의 값이 올바르지 않거나, 값이 손상되었을 수 있습니다." + vbCr _
+                   + "문제가 지속되면 시간표(" + TableSaveLocation(True) + ")를 지우고 다시 만들어 주세요.", vbCritical)
+
+        End Try
+
+        prevTime = Nothing
         TimeTable.Visible = True
     End Sub
 
@@ -665,6 +682,10 @@ Public Class Form1
         If Not updated Then
             MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
                    + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
+        Else
+            If Not GetINI("SETTING", "TodaysCourseNotify", "0", ININamePath) = 0 Then
+                TodayCourseNotify()
+            End If
         End If
     End Sub
 
@@ -831,7 +852,181 @@ Public Class Form1
     End Sub
 
     Private Sub TimeCheck_Tick(sender As Object, e As EventArgs) Handles TimeCheck.Tick
-        updateDateDraw()
+        If PrevDay = Nothing Or Not PrevDay = Today Then
+            updateDateDraw()
+            PrevDay = Today
+        End If
+
+        '1분 전환때마다 조회하도록
+        '근데 테이블 reload 할때는 바로 조회가능하게 prevTime을 Nothing으로 하자
+        If prevTime = Nothing Or
+            Not New Date(prevTime.Year, prevTime.Month, prevTime.Day, prevTime.Hour, prevTime.Minute, 0) _
+            = New Date(Now.Year, Now.Month, Now.Day, Now.Hour, Now.Minute, 0) Then
+
+            'MsgBox(Now.ToString)
+            If Not (GetINI("SETTING", "CourseNotify", "", ININamePath) = "0") Then CheckNotify()
+            prevTime = Now
+        End If
+
+    End Sub
+
+    Sub CheckNotify()
+        Try
+            Dim dayData As New List(Of String)
+
+            If courseData.Count > 0 Then
+                For Each s As String In courseData
+                    Dim tmp As String = getData(s, "day")
+                    Dim day As String = ""
+
+                    Select Case Today.DayOfWeek
+                        Case DayOfWeek.Monday
+                            day = "0"
+                        Case DayOfWeek.Tuesday
+                            day = "1"
+                        Case DayOfWeek.Wednesday
+                            day = "2"
+                        Case DayOfWeek.Thursday
+                            day = "3"
+                        Case DayOfWeek.Friday
+                            day = "4"
+                        Case DayOfWeek.Saturday
+                            day = "5"
+                        Case DayOfWeek.Sunday
+                            day = "6"
+                    End Select
+
+                    If tmp = day Then
+                        dayData.Add(s)
+                    End If
+                Next
+
+                Dim currentTime As Integer = Now.Hour * 60 + Now.Minute
+                Dim notifyTime As List(Of String) = GetINI("SETTING", "NotifyMin", "", ININamePath).Split(",").ToList
+
+                Dim notificationName As String = ""
+
+                If dayData.Count > 0 Then
+                    For Each s In dayData
+                        Dim targetTime As Integer = Convert.ToInt16(getData(s, "start"))
+
+                        If targetTime < currentTime Then Continue For
+
+                        '수업 시간 됐을때
+                        If targetTime = currentTime Then
+                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-0"
+
+                            '수업 시작이 5분 이하 남았고 5분 옵션 체크됐을때
+                        ElseIf notifyTime.Contains("5") And (targetTime - currentTime) <= 5 Then
+                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-5"
+
+                            '수업 시작이 15분 이하 남았고 15분 옵션 체크됐을때
+                        ElseIf notifyTime.Contains("15") And (targetTime - currentTime) <= 15 Then
+                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-15"
+
+                            '수업 시작이 30분 이하 남았고 30분 옵션 체크됐을때
+                        ElseIf notifyTime.Contains("30") And (targetTime - currentTime) <= 30 Then
+                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-30"
+
+                        Else
+                            Continue For
+
+                        End If
+
+                        '여기서부턴 위 if문에 뭐가 걸린것 -> 알림할 껀덕지가 있는거
+                        ' but, 아래 조건에 해당하면 무시하고 마찬가지로 continue 해야함
+                        ' 1. 이미 보낸 똑같은 알람
+                        ' 2. 무시 조건에 해당하는 수업 (ex. memo에 (알림 무시) 포함)
+
+                        Dim memo As String = getData(s, "memo")
+
+                        If prevNotificationName = notificationName Then
+                            Continue For
+
+                        ElseIf memo.Contains("(알림 무시)") Or memo.Contains("(알림무시)") _
+                            Or memo.Contains("(알림X)") Or memo.Contains("(알림x)") Then
+                            Continue For
+
+                        End If
+
+                        NotifyIcon1.Visible = True
+                        '이제 진짜 푸시 보내기
+                        prevNotificationName = notificationName
+                        Dim message As String = ""
+
+                        If targetTime = currentTime Then
+                            message = "수업이 시작되었습니다." + vbCr + "아이콘을 눌러 시간표를 확인하세요."
+                        Else
+                            message = (targetTime - currentTime).ToString + "분 뒤 수업이 있습니다." + vbCr + "아이콘을 눌러 시간표를 확인하세요."
+                        End If
+
+                        NotifyIcon1.ShowBalloonTip(9999, getData(s, "name") + " (" + getData(s, "prof") + ")", message, ToolTipIcon.None)
+                    Next
+
+                End If
+
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Sub TodayCourseNotify()
+        Try
+            Dim dayData As New List(Of String)
+
+            If courseData.Count > 0 Then
+                For Each s As String In courseData
+                    Dim tmp As String = getData(s, "day")
+                    Dim day As String = ""
+
+                    Select Case Today.DayOfWeek
+                        Case DayOfWeek.Monday
+                            day = "0"
+                        Case DayOfWeek.Tuesday
+                            day = "1"
+                        Case DayOfWeek.Wednesday
+                            day = "2"
+                        Case DayOfWeek.Thursday
+                            day = "3"
+                        Case DayOfWeek.Friday
+                            day = "4"
+                        Case DayOfWeek.Saturday
+                            day = "5"
+                        Case DayOfWeek.Sunday
+                            day = "6"
+                    End Select
+
+                    If tmp = day Then
+                        dayData.Add(s)
+                    End If
+                Next
+
+                If dayData.Count > 0 Then
+                    Dim courses As New List(Of String)
+                    Dim time As New List(Of Integer)
+
+                    For Each s In dayData
+                        courses.Add(getData(s, "name") + " (" + getData(s, "prof") + ")")
+                        time.Add(Convert.ToInt16(getData(s, "start")))
+                    Next
+
+                    '표시 순서를 시작 시간 오름차순으로 정렬
+                    Dim q = From x In courses.Zip(time, Function(t, sort) New With {.Obj = t, sort})
+                            Order By x.sort Ascending
+                            Select x.Obj
+
+                    courses = q.ToList()
+
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(9999, "오늘의 수업", String.Join(vbCr, courses), ToolTipIcon.None)
+                End If
+
+            End If
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 
     Sub updateDateDraw()
@@ -896,7 +1091,6 @@ Public Class Form1
         EveryTimeBrowser.Close()
         EverytimeSemesterSelector.Close()
         EverytimeSemesterSelector.ShowDialog(Me)
-
     End Sub
 
     Private Sub Menu_5_Click(sender As Object, e As EventArgs) Handles OptionItem.Click
@@ -1033,5 +1227,14 @@ Public Class Form1
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
         ViewCourse.Show()
+    End Sub
+
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked, NotifyIcon1.Click
+        WindowState = FormWindowState.Normal
+        NotifyIcon1.Visible = False
+    End Sub
+
+    Private Sub NotifyIcon1_BalloonTipClosed(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClosed, Me.Closing
+        NotifyIcon1.Visible = False
     End Sub
 End Class

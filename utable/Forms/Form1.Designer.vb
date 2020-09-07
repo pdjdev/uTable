@@ -71,6 +71,7 @@ Partial Class Form1
         Me.TimeCheck = New System.Windows.Forms.Timer(Me.components)
         Me.hideani = New System.Windows.Forms.Timer(Me.components)
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
+        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.TimeTable.SuspendLayout()
         Me.TopPanel.SuspendLayout()
         CType(Me.TitleEditBT, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -584,6 +585,11 @@ Partial Class Form1
         Me.ColorDialog1.AnyColor = True
         Me.ColorDialog1.FullOpen = True
         '
+        'NotifyIcon1
+        '
+        Me.NotifyIcon1.Icon = Global.uTable.My.Resources.Resources.ptable_icon
+        Me.NotifyIcon1.Text = "uTable"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -661,4 +667,5 @@ Partial Class Form1
     Friend WithEvents ColorDialog1 As ColorDialog
     Friend WithEvents MessageItem As ToolStripMenuItem
     Friend WithEvents ClearCheckBoxItem As ToolStripMenuItem
+    Friend WithEvents NotifyIcon1 As NotifyIcon
 End Class
