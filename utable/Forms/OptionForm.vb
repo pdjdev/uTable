@@ -956,6 +956,7 @@ Public Class OptionForm
                 End If
             End If
 
+            OpenFileDialog1.InitialDirectory = Application.ExecutablePath.Substring(0, exeFullpath.LastIndexOf("\"))
             OpenFileDialog1.Title = "불러올 시간표 데이터를 선택해 주세요"
             OpenFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
             OpenFileDialog1.DefaultExt = "utdata"
@@ -976,6 +977,7 @@ Public Class OptionForm
                 End If
             End If
 
+            OpenFileDialog1.InitialDirectory = Application.ExecutablePath.Substring(0, exeFullpath.LastIndexOf("\"))
             OpenFileDialog1.Title = "불러올 설정 파일을 선택해 주세요"
             OpenFileDialog1.FileName = "settings"
             OpenFileDialog1.Filter = "INI 파일|*.ini|모든 파일|*.*"
@@ -1076,6 +1078,25 @@ Public Class OptionForm
         OpenFileDialog1.Title = "효과음 오디오 파일을 선택해 주세요"
         OpenFileDialog1.Filter = "WAV 오디오 파일|*.wav"
         OpenFileDialog1.DefaultExt = "wav"
+
+        If NotificationSoundLocationTB.Text = "" Or Not NotificationSoundLocationTB.Text.Contains("\") Then
+            If My.Computer.FileSystem.DirectoryExists("C:\Windows\Media") Then
+                OpenFileDialog1.InitialDirectory = "C:\Windows\Media"
+            Else
+                OpenFileDialog1.InitialDirectory = exePath
+            End If
+
+        ElseIf My.Computer.FileSystem.DirectoryExists(NotificationSoundLocationTB.Text.Substring(0, NotificationSoundLocationTB.Text.LastIndexOf("\"))) Then
+            OpenFileDialog1.InitialDirectory = NotificationSoundLocationTB.Text.Substring(0, NotificationSoundLocationTB.Text.LastIndexOf("\"))
+
+        ElseIf My.Computer.FileSystem.DirectoryExists("C:\Windows\Media") Then
+            OpenFileDialog1.InitialDirectory = "C:\Windows\Media"
+
+        Else
+            OpenFileDialog1.InitialDirectory = exePath
+
+        End If
+
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
             NotificationSoundLocationTB.Text = OpenFileDialog1.FileName
         End If
