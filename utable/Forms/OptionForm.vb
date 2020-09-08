@@ -22,6 +22,9 @@ Public Class OptionForm
     Dim exePath = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
     Dim exeName = Mid(exeFullpath, exeFullpath.LastIndexOf("\") + 2)
 
+    <DllImport("user32.dll", CharSet:=CharSet.Auto)>
+    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As Integer, <MarshalAs(UnmanagedType.LPWStr)> ByVal lParam As String) As Int32
+    End Function
 
 #Region "Aero 그림자 효과 (Vista이상)"
 
@@ -88,6 +91,8 @@ Public Class OptionForm
                 ChangeToCustomFont(Me, fntname)
             End If
         End If
+
+        SendMessage(Me.NotificationSoundLocationTB.Handle, &H1501, 0, "알림 효과음 위치 (빈 칸: 기본 시스템 소리)")
 
         UpdateColor()
 
@@ -184,6 +189,13 @@ Public Class OptionForm
         '오늘의 강의알림 기본값 = 1
         TodaysCourseNotifyChk.Checked = Not (GetINI("SETTING", "TodaysCourseNotify", "", ININamePath) = "0")
 
+        '알림효과음 = 1
+        NotifySoundChk.Checked = Not (GetINI("SETTING", "NotifySound", "", ININamePath) = "0")
+        NotificationSoundLocationTB.Enabled = NotifySoundChk.Checked
+
+        '효과음위치 = (빈칸) = 있는대로 그냥 입력
+        NotificationSoundLocationTB.Text = GetINI("SETTING", "NotifySoundFile", "", ININamePath)
+
         If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
             Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
             FontPrevLabel.Font = New Font(fntname, FontPrevLabel.Font.Size)
@@ -211,45 +223,16 @@ Public Class OptionForm
         FeedbackLabel.LinkColor = lightTextColor(colormode)
         VersionLabel.ForeColor = lightTextColor(colormode)
 
-        CustomFontBT.BackColor = buttonColor(colormode)
-        CustomFontBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        CustomFontBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        CustomFontBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        FolderBrowBT.BackColor = buttonColor(colormode)
-        FolderBrowBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        FolderBrowBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        FolderBrowBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        CheckAndApplyDirSettingBT.BackColor = buttonColor(colormode)
-        CheckAndApplyDirSettingBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        CheckAndApplyDirSettingBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        CheckAndApplyDirSettingBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        SaveToFileBT.BackColor = buttonColor(colormode)
-        SaveToFileBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        SaveToFileBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        SaveToFileBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        CopyToClipboardBT.BackColor = buttonColor(colormode)
-        CopyToClipboardBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        CopyToClipboardBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        CopyToClipboardBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        ImportDataBT.BackColor = buttonColor(colormode)
-        ImportDataBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        ImportDataBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        ImportDataBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        UpdateChkButton.BackColor = buttonColor(colormode)
-        UpdateChkButton.FlatAppearance.BorderColor = BorderColor(colormode)
-        UpdateChkButton.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        UpdateChkButton.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        DoUpdateButton.BackColor = buttonColor(colormode)
-        DoUpdateButton.FlatAppearance.BorderColor = BorderColor(colormode)
-        DoUpdateButton.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        DoUpdateButton.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+        ApplyButtonTheme(CustomFontBT)
+        ApplyButtonTheme(FolderBrowBT)
+        ApplyButtonTheme(CheckAndApplyDirSettingBT)
+        ApplyButtonTheme(SaveToFileBT)
+        ApplyButtonTheme(CopyToClipboardBT)
+        ApplyButtonTheme(ImportDataBT)
+        ApplyButtonTheme(UpdateChkButton)
+        ApplyButtonTheme(DoUpdateButton)
+        ApplyButtonTheme(NotificationSoundFileOpenBT)
+        ApplyButtonTheme(NotificationSoundPlayBT)
 
         Select Case colormode
             Case "Dark"
@@ -259,6 +242,15 @@ Public Class OptionForm
                 BannerPictureBox.Image = My.Resources.uTable_banner
                 CloseBT.Image = My.Resources.closeicon_b
         End Select
+    End Sub
+
+    Sub ApplyButtonTheme(button As Button)
+        With button
+            .BackColor = buttonColor(colormode)
+            .FlatAppearance.BorderColor = BorderColor(colormode)
+            .FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+            .FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+        End With
     End Sub
 
     Public Sub SwitchMode(mode As Integer)
@@ -961,9 +953,12 @@ Public Class OptionForm
                 End If
             End If
 
+            OpenFileDialog1.Title = "불러올 시간표 데이터를 선택해 주세요"
             OpenFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
             OpenFileDialog1.DefaultExt = "utdata"
-            OpenFileDialog1.ShowDialog()
+            If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+                Table_Setting_FileOk()
+            End If
 
         ElseIf SettingSaveRbt.Checked Then
             If clipboardTxt.Contains("[SETTING]") Then
@@ -978,14 +973,17 @@ Public Class OptionForm
                 End If
             End If
 
+            OpenFileDialog1.Title = "불러올 설정 파일을 선택해 주세요"
             OpenFileDialog1.FileName = "settings"
             OpenFileDialog1.Filter = "INI 파일|*.ini|모든 파일|*.*"
             OpenFileDialog1.DefaultExt = "ini"
-            OpenFileDialog1.ShowDialog()
+            If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+                Table_Setting_FileOk()
+            End If
         End If
     End Sub
 
-    Private Sub OpenFileDialog1_FileOk(sender As Object, e As CancelEventArgs) Handles OpenFileDialog1.FileOk
+    Private Sub Table_Setting_FileOk()
         Try
             If TableSaveRbt.Checked Then
                 Dim data As String = My.Computer.FileSystem.ReadAllText(OpenFileDialog1.FileName, System.Text.Encoding.GetEncoding(949))
@@ -1069,5 +1067,36 @@ Public Class OptionForm
         If Notify_5min_Chk.Checked Then values.Add(5)
 
         SetINI("SETTING", "NotifyMin", String.Join(",", values), ININamePath)
+    End Sub
+
+    Private Sub NotificationSoundFileOpenBT_Click(sender As Object, e As EventArgs) Handles NotificationSoundFileOpenBT.Click
+        OpenFileDialog1.Title = "효과음 오디오 파일을 선택해 주세요"
+        OpenFileDialog1.Filter = "WAV 오디오 파일|*.wav"
+        OpenFileDialog1.DefaultExt = "wav"
+        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            NotificationSoundLocationTB.Text = OpenFileDialog1.FileName
+        End If
+    End Sub
+
+    Private Sub NotificationSoundLocationTB_TextChanged(sender As Object, e As EventArgs) Handles NotificationSoundLocationTB.TextChanged
+        SetINI("SETTING", "NotifySoundFile", NotificationSoundLocationTB.Text, ININamePath)
+    End Sub
+
+    Private Sub NotifySoundChk_CheckedChanged(sender As Object, e As EventArgs) Handles NotifySoundChk.CheckedChanged
+        ApplySetting("NotifySound", NotifySoundChk.Checked)
+        NotificationSoundLocationTB.Enabled = NotifySoundChk.Checked
+    End Sub
+
+    Private Sub NotificationSoundPlayBT_Click(sender As Object, e As EventArgs) Handles NotificationSoundPlayBT.Click
+        My.Computer.Audio.Stop()
+        Dim soundLocation As String = GetINI("SETTING", "NotifySoundFile", "", ININamePath)
+        If soundLocation = "" Then soundLocation = "C:\Windows\Media\Ring01.wav"
+
+        Try
+            My.Computer.Audio.Play(soundLocation, AudioPlayMode.Background)
+        Catch ex As Exception
+            MsgBox("오류가 발생했습니다." + vbCr + "(" + ex.Message + ")" + vbCr + vbCr _
+                   + "오디오 파일이 유효한 WAV 파일인지 확인해 주시기 바랍니다.", vbCritical)
+        End Try
     End Sub
 End Class

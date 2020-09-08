@@ -445,7 +445,7 @@ Partial Class Form1
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
-        Me.BT1_menu.Size = New System.Drawing.Size(180, 254)
+        Me.BT1_menu.Size = New System.Drawing.Size(180, 232)
         '
         'BT1MenuTitle
         '

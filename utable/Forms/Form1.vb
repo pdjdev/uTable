@@ -668,6 +668,12 @@ Public Class Form1
             WindowState = FormWindowState.Minimized
             Opacity = 1
         Else
+
+            '강제 포커스
+            TopMost = True
+            Refresh()
+            TopMost = False
+
             If IsNumeric(GetINI("SETTING", "Opacity", "", ININamePath)) Then
                 FadeIn(Me, Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath)))
             Else
@@ -793,11 +799,8 @@ Public Class Form1
         BT1MenuTitle.Text = "uTable " + ver(0) + "." + ver(1) + "v"
 
         BT1_menu.BackColor = mainColor(colorMode)
-        '일단 다크모드일때만 텍스트컬러 바꾸기
-        If colorMode = "Dark" Then
-            BT1MenuTitle.ForeColor = lightTextColor(colorMode)
-            BT1_menu.ForeColor = textColor(colorMode)
-        End If
+        BT1MenuTitle.ForeColor = lightTextColor(colorMode)
+        BT1_menu.ForeColor = textColor(colorMode)
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
         ClearCheckBoxItem.Visible = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
@@ -834,9 +837,7 @@ Public Class Form1
 
     Private Sub Tray_menu_Opening(sender As Object, e As CancelEventArgs) Handles Tray_menu.Opening
         Tray_menu.BackColor = mainColor(colorMode)
-        If colorMode = "Dark" Then
-            Tray_menu.ForeColor = textColor(colorMode)
-        End If
+        Tray_menu.ForeColor = textColor(colorMode)
     End Sub
 
     Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
@@ -970,7 +971,21 @@ Public Class Form1
                         If targetTime = currentTime Then
                             message = "수업이 시작되었습니다." + vbCr + "아이콘을 눌러 시간표를 확인하세요."
                         Else
-                            message = (targetTime - currentTime).ToString + "분 뒤 수업이 있습니다." + vbCr + "아이콘을 눌러 시간표를 확인하세요."
+                            message = (targetTime - currentTime).ToString + "분 뒤 수업이 있습니다." + vbCr _
+                                + "아이콘을 눌러 시간표를 확인하세요."
+                        End If
+
+                        If Not (GetINI("SETTING", "NotifySound", "", ININamePath) = "0") Then
+                            Dim soundLocation As String = GetINI("SETTING", "NotifySoundFile", "", ININamePath)
+
+                            If soundLocation = "" Or My.Computer.FileSystem.FileExists(soundLocation) = False Then _
+                                soundLocation = "C:\Windows\Media\Ring01.wav"
+
+                            Try
+                                My.Computer.Audio.Play(soundLocation, AudioPlayMode.Background)
+                            Catch ex As Exception
+                                '소리 재생 실패
+                            End Try
                         End If
 
                         NotifyIcon1.ShowBalloonTip(9999, xmlDecode(getData(s, "name")) _
@@ -1031,9 +1046,36 @@ Public Class Form1
                             Select x.Obj
 
                     courses = q.ToList()
+                    time.Sort()
+
+                    Dim message As String = ""
+                    Dim title As String = "오늘의 수업 (" & Today.Month & "월 " & Today.Day & "일 "
+
+                    For i = 0 To time.Count - 1
+                        message += String.Format("{0:00}:{1:00}", time(i) \ 60, time(i) Mod 60) + " " + courses(i) + vbCr
+                    Next
+
+                    Select Case Today.DayOfWeek
+                        Case DayOfWeek.Monday
+                            title += "월요일"
+                        Case DayOfWeek.Tuesday
+                            title += "화요일"
+                        Case DayOfWeek.Wednesday
+                            title += "수요일"
+                        Case DayOfWeek.Thursday
+                            title += "목요일"
+                        Case DayOfWeek.Friday
+                            title += "금요일"
+                        Case DayOfWeek.Saturday
+                            title += "토요일"
+                        Case DayOfWeek.Sunday
+                            title += "일요일"
+                    End Select
+
+                    title += ")"
 
                     'NotifyIcon1.Visible = True
-                    NotifyIcon1.ShowBalloonTip(9999, "오늘의 수업", String.Join(vbCr, courses), ToolTipIcon.None)
+                    NotifyIcon1.ShowBalloonTip(9999, title, message, ToolTipIcon.None)
                 End If
 
             End If
