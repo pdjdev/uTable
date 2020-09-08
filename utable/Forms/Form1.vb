@@ -670,7 +670,7 @@ Public Class Form1
 
         If GetINI("SETTING", "MinStart", "", ININamePath) = "1" Then
             WindowState = FormWindowState.Minimized
-            Opacity = 1
+            Opacity = Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath))
         Else
 
             '강제 포커스

@@ -413,7 +413,7 @@ Public Class OptionForm
             DayLabel.BackColor = activeDayColor(colormode)
             DayLabel.ForeColor = activeDayTextColor(colormode)
 
-            DayLabel.Text = Now.Day.ToString("dd") + " "
+            DayLabel.Text = Now.Date.ToString("dd") + " "
 
             Select Case Now.DayOfWeek
                 Case DayOfWeek.Monday
