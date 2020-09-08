@@ -12,6 +12,7 @@
     Dim prev_hove As Boolean = False
 
     '설정값
+    Public FadeEffect As String = ""
     Public CustomFont As String = ""
     Public CustomFontName As String = ""
     Public AutoTextColor As String = ""
@@ -21,6 +22,12 @@
     Public ShowMemo As String = ""
     Public ShowProf As String = ""
     Public _ShowChkBox As String = ""
+
+    '(실험적) 컬러 전환 크기
+    Dim deltaColor_R As Integer = 1
+    Dim deltaColor_G As Integer = 1
+    Dim deltaColor_B As Integer = 1
+    Public goalColor As Color = Nothing
 
     Private Sub UserControl1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         TitleLabel.MaximumSize() = New Size(Width, 0)
@@ -92,7 +99,7 @@
         End If
 
         If Not AutoTextColor = "0" Then
-            blackText = CheckProperColor(BackColor)
+            blackText = CheckProperColor(goalColor)
         ElseIf _BlackText = "1" Then
             blackText = True
         End If
@@ -124,6 +131,25 @@
                 Height = fullheight
             End If
         End If
+
+        If Not FadeEffect = "0" Then
+            If dayNum Mod 2 = 0 Then
+                BackColor = Form1.MonPanel.BackColor
+            Else
+                BackColor = Form1.TuePanel.BackColor
+            End If
+
+            deltaColor_R = Int(Math.Abs((Int(goalColor.R) - Int(BackColor.R)) / 10))
+            deltaColor_G = Int(Math.Abs((Int(goalColor.G) - Int(BackColor.G)) / 10))
+            deltaColor_B = Int(Math.Abs((Int(goalColor.B) - Int(BackColor.B)) / 10))
+
+            AniTimer.Start()
+
+        Else
+            BackColor = goalColor
+        End If
+
+
     End Sub
 
     Public Sub ForceExpand()
@@ -140,9 +166,9 @@
         ctrl.Font = New Font(fntname, ctrl.Font.Size, style)
     End Sub
 
-    Private Sub TopNotchPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopNotchPanel.Paint
-        TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
-    End Sub
+    'Private Sub TopNotchPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopNotchPanel.Paint
+    '    TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
+    'End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
@@ -272,5 +298,43 @@
         End If
 
         writeTable(data.Replace(olddata, newdata))
+    End Sub
+
+    Private Sub AniTimer_Tick(sender As Object, e As EventArgs) Handles AniTimer.Tick
+
+        Dim R As Byte = BackColor.R
+        Dim G As Byte = BackColor.G
+        Dim B As Byte = BackColor.B
+
+        If goalColor.R - deltaColor_R > R Then
+            R += deltaColor_R
+        ElseIf goalColor.R + deltaColor_R < R Then
+            R -= deltaColor_R
+        Else
+            R = goalColor.R
+        End If
+
+        If goalColor.G - deltaColor_G > G Then
+            G += deltaColor_G
+        ElseIf goalColor.G + deltaColor_G < G Then
+            G -= deltaColor_G
+        Else
+            G = goalColor.G
+        End If
+
+        If goalColor.B - deltaColor_B > B Then
+            B += deltaColor_B
+        ElseIf goalColor.B + deltaColor_B < B Then
+            B -= deltaColor_B
+        Else
+            B = goalColor.B
+        End If
+
+        BackColor = Color.FromArgb(R, G, B)
+        TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
+
+        If goalColor = BackColor Then
+            AniTimer.Stop()
+        End If
     End Sub
 End Class

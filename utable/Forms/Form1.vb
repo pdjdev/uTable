@@ -28,6 +28,7 @@ Public Class Form1
     Dim prevTime As Date = Nothing
 
     'CellControl용 설정 변수
+    Public FadeEffect As String = ""
     Public CustomFont As String = ""
     Public CustomFontName As String = ""
     Public AutoTextColor As String = ""
@@ -419,6 +420,7 @@ Public Class Form1
         Try
 
             'CellControl 설정 변수 업데이트
+            FadeEffect = GetINI("SETTING", "FadeEffect", "", ININamePath)
             CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
             CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
             AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
@@ -546,9 +548,11 @@ Public Class Form1
         Dim cell As New CellControl
 
         cell.ForeColor = Color.White
-        cell.BackColor = color
+        'cell.BackColor = color
+        cell.goalColor = color
 
         With cell
+            .FadeEffect = FadeEffect
             .CustomFont = CustomFont
             .CustomFontName = CustomFontName
             .AutoTextColor = AutoTextColor

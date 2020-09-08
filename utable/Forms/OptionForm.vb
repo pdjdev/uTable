@@ -106,7 +106,7 @@ Public Class OptionForm
         SettingMenu_Basic.SettingLabel.Text = "기본 설정"
         SettingMenu_Table.SettingLabel.Text = "시간표 설정"
         SettingMenu_Data.SettingLabel.Text = "데이터 설정"
-        SettingMenu_Notification.SettingLabel.Text = "알리미 설정"
+        SettingMenu_Notification.SettingLabel.Text = "알림 설정"
         SettingMenu_Update.SettingLabel.Text = "업데이트"
         SettingMenu_Info.SettingLabel.Text = "프로그램 정보"
 
@@ -315,7 +315,7 @@ Public Class OptionForm
                     ForceUpdChk.Enabled = False
                 End If
 
-            Case 5 '정보
+            Case 6 '정보
                 SettingMenu_Info.SelectionUpdate(True, colormode)
                 TabPage_Basic.Visible = False
                 TabPage_Table.Visible = False
@@ -465,6 +465,8 @@ Public Class OptionForm
             .ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
             .ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
             ._ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
+
+            .goalColor = Color.DarkSlateGray
         End With
 
         PrevTableArea.Controls.Add(cell)
@@ -533,6 +535,7 @@ Public Class OptionForm
         SettingMenu_Basic.first = True
         SettingMenu_Table.first = True
         SettingMenu_Data.first = True
+        SettingMenu_Notification.first = True
         SettingMenu_Update.first = True
         SettingMenu_Info.first = True
 

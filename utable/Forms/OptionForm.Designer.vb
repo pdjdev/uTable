@@ -185,10 +185,10 @@ Partial Class OptionForm
         'MainPanel
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
+        Me.MainPanel.Controls.Add(Me.TabPage_Basic)
         Me.MainPanel.Controls.Add(Me.TapPage_Notification)
         Me.MainPanel.Controls.Add(Me.TabPage_Data)
         Me.MainPanel.Controls.Add(Me.TabPage_Table)
-        Me.MainPanel.Controls.Add(Me.TabPage_Basic)
         Me.MainPanel.Controls.Add(Me.TabPage_Update)
         Me.MainPanel.Controls.Add(Me.TabPage_Info)
         Me.MainPanel.Controls.Add(Me.ShadowPanel)
@@ -214,7 +214,7 @@ Partial Class OptionForm
         'TodaysCourseNotifyChk
         '
         Me.TodaysCourseNotifyChk.AutoSize = True
-        Me.TodaysCourseNotifyChk.Location = New System.Drawing.Point(21, 210)
+        Me.TodaysCourseNotifyChk.Location = New System.Drawing.Point(21, 213)
         Me.TodaysCourseNotifyChk.Name = "TodaysCourseNotifyChk"
         Me.TodaysCourseNotifyChk.Size = New System.Drawing.Size(250, 19)
         Me.TodaysCourseNotifyChk.TabIndex = 7
@@ -342,9 +342,9 @@ Partial Class OptionForm
         Me.Label21.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label21.Location = New System.Drawing.Point(17, 20)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(134, 20)
+        Me.Label21.Size = New System.Drawing.Size(74, 20)
         Me.Label21.TabIndex = 4
-        Me.Label21.Text = "알리미 설정 (베타)"
+        Me.Label21.Text = "알림 설정"
         '
         'CourseNotifyChk
         '
