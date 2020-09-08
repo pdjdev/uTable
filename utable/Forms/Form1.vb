@@ -1269,7 +1269,7 @@ Public Class Form1
 
             Dim p As New Pen(c, thickness)
             Dim g As Graphics = panel.CreateGraphics
-            Dim y As Integer = (60 - starttime Mod 60) / 60 * hrlength + thickness / 2
+            Dim y As Double = (60 - starttime Mod 60) / 60 * hrlength + thickness / 2
 
             p.DashStyle = Drawing2D.DashStyle.Dot
 
