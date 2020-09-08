@@ -686,7 +686,7 @@ Public Class Form1
         End If
 
         If Not checkStartUp() Then
-            If Not GetINI("SETTING", "NoStartupSuggestion", "0", ININamePath) = 1 Then
+            If Not GetINI("SETTING", "NoStartupSuggestion", "", ININamePath) = "1" Then
                 WindowState = FormWindowState.Normal
                 StartupAsk.ShowDialog(Me)
             End If
@@ -696,7 +696,7 @@ Public Class Form1
             MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
                    + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
         Else
-            If Not GetINI("SETTING", "TodaysCourseNotify", "0", ININamePath) = 0 Then
+            If Not GetINI("SETTING", "TodaysCourseNotify", "", ININamePath) = "0" Then
                 TodayCourseNotify()
             End If
         End If
