@@ -456,6 +456,7 @@ Public Class OptionForm
             .ProfLabel.Text = names(rnd.Next(0, names.Count)) + " 교수님"
             .MemoLabel.Text = "메모 내용"
 
+            .FadeEffect = GetINI("SETTING", "FadeEffect", "", ININamePath)
             .CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
             .CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
             .AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)

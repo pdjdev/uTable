@@ -1251,7 +1251,7 @@ Public Class Form1
 
         Dim panelHeight As Integer = MonPanel.Height
         Dim panelWidth As Integer = MonPanel.Width
-        Dim hrlength As Double = 60 / timeLength * panelHeight
+        Dim minLengh As Double = 1 / timeLength * panelHeight
 
         'Dim left As Integer = starttime Mod 60
         Dim thickness As Integer = 3 * (currentDPI / 96)
@@ -1269,14 +1269,13 @@ Public Class Form1
 
             Dim p As New Pen(c, thickness)
             Dim g As Graphics = panel.CreateGraphics
-            Dim y As Double = (60 - starttime Mod 60) / 60 * hrlength + thickness / 2
 
             p.DashStyle = Drawing2D.DashStyle.Dot
 
             For j As Integer = starttime To endtime
                 If j > 0 And j Mod 60 = 0 Then
-                    g.DrawLine(p, New Point(0, y), New Point(panelWidth, y))
-                    y += hrlength
+                    Dim pos As Double = (j - starttime) * minLengh + thickness / 2
+                    g.DrawLine(p, New Point(0, pos), New Point(panelWidth, pos))
                 End If
             Next
 
