@@ -185,8 +185,8 @@ Partial Class OptionForm
         'MainPanel
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
-        Me.MainPanel.Controls.Add(Me.TabPage_Basic)
         Me.MainPanel.Controls.Add(Me.TapPage_Notification)
+        Me.MainPanel.Controls.Add(Me.TabPage_Basic)
         Me.MainPanel.Controls.Add(Me.TabPage_Data)
         Me.MainPanel.Controls.Add(Me.TabPage_Table)
         Me.MainPanel.Controls.Add(Me.TabPage_Update)
@@ -491,9 +491,10 @@ Partial Class OptionForm
         Me.CourseNotifyChk.AutoSize = True
         Me.CourseNotifyChk.Location = New System.Drawing.Point(22, 54)
         Me.CourseNotifyChk.Name = "CourseNotifyChk"
-        Me.CourseNotifyChk.Size = New System.Drawing.Size(130, 19)
+        Me.CourseNotifyChk.Size = New System.Drawing.Size(118, 19)
         Me.CourseNotifyChk.TabIndex = 3
-        Me.CourseNotifyChk.Text = "강의 알리미 활성화"
+        Me.CourseNotifyChk.Text = "강의 알림 활성화"
+        Me.CourseNotifyChk.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.CourseNotifyChk.UseVisualStyleBackColor = True
         '
         'TabPage_Data
