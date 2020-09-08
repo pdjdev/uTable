@@ -33,6 +33,7 @@ Partial Class CellControl
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TopPanel = New System.Windows.Forms.Panel()
         Me.ChkBox1 = New System.Windows.Forms.PictureBox()
+        Me.AniTimer = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
         Me.TopPanel.SuspendLayout()
         CType(Me.ChkBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -85,6 +86,7 @@ Partial Class CellControl
         Me.MemoLabel.Size = New System.Drawing.Size(42, 15)
         Me.MemoLabel.TabIndex = 2
         Me.MemoLabel.Text = "Memo"
+        Me.MemoLabel.UseMnemonic = False
         '
         'ProfLabel
         '
@@ -97,6 +99,7 @@ Partial Class CellControl
         Me.ProfLabel.Size = New System.Drawing.Size(67, 17)
         Me.ProfLabel.TabIndex = 1
         Me.ProfLabel.Text = "ProfName"
+        Me.ProfLabel.UseMnemonic = False
         '
         'TitleLabel
         '
@@ -109,6 +112,7 @@ Partial Class CellControl
         Me.TitleLabel.Size = New System.Drawing.Size(40, 20)
         Me.TitleLabel.TabIndex = 0
         Me.TitleLabel.Text = "Title"
+        Me.TitleLabel.UseMnemonic = False
         '
         'TopNotchPanel
         '
@@ -144,11 +148,15 @@ Partial Class CellControl
         Me.ChkBox1.TabIndex = 3
         Me.ChkBox1.TabStop = False
         '
+        'AniTimer
+        '
+        Me.AniTimer.Interval = 10
+        '
         'CellControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
-        Me.BackColor = System.Drawing.Color.DarkSlateGray
+        Me.BackColor = System.Drawing.Color.Transparent
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.BottomTimeLabel)
         Me.Controls.Add(Me.TopPanel)
@@ -177,4 +185,5 @@ Partial Class CellControl
     Friend WithEvents Timer1 As Timer
     Friend WithEvents TopPanel As Panel
     Friend WithEvents ChkBox1 As PictureBox
+    Friend WithEvents AniTimer As Timer
 End Class

@@ -22,6 +22,9 @@ Public Class OptionForm
     Dim exePath = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
     Dim exeName = Mid(exeFullpath, exeFullpath.LastIndexOf("\") + 2)
 
+    <DllImport("user32.dll", CharSet:=CharSet.Auto)>
+    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As Integer, <MarshalAs(UnmanagedType.LPWStr)> ByVal lParam As String) As Int32
+    End Function
 
 #Region "Aero 그림자 효과 (Vista이상)"
 
@@ -89,19 +92,23 @@ Public Class OptionForm
             End If
         End If
 
+        SendMessage(Me.NotificationSoundLocationTB.Handle, &H1501, 0, "알림 효과음 위치 (빈 칸: 기본 시스템 소리)")
+
         UpdateColor()
 
-        SettingMenu1.index = 1
-        SettingMenu2.index = 2
-        SettingMenu3.index = 3
-        SettingMenu4.index = 4
-        SettingMenu5.index = 5
+        SettingMenu_Basic.index = 1
+        SettingMenu_Table.index = 2
+        SettingMenu_Data.index = 3
+        SettingMenu_Notification.index = 4
+        SettingMenu_Update.index = 5
+        SettingMenu_Info.index = 6
 
-        SettingMenu1.SettingLabel.Text = "기본 설정"
-        SettingMenu2.SettingLabel.Text = "시간표 설정"
-        SettingMenu3.SettingLabel.Text = "데이터 설정"
-        SettingMenu4.SettingLabel.Text = "업데이트"
-        SettingMenu5.SettingLabel.Text = "프로그램 정보"
+        SettingMenu_Basic.SettingLabel.Text = "기본 설정"
+        SettingMenu_Table.SettingLabel.Text = "시간표 설정"
+        SettingMenu_Data.SettingLabel.Text = "데이터 설정"
+        SettingMenu_Notification.SettingLabel.Text = "알림 설정"
+        SettingMenu_Update.SettingLabel.Text = "업데이트"
+        SettingMenu_Info.SettingLabel.Text = "프로그램 정보"
 
         VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString + "   -  by PBJSoftware 2020"
 
@@ -114,68 +121,40 @@ Public Class OptionForm
         MinStartChk.Checked = (GetINI("SETTING", "MinStart", "", ININamePath) = "1")
 
         '모서리 달라붙기 기본값 = 1
-        If GetINI("SETTING", "SnapToEdge", "", ININamePath) = "0" Then
-            SnapToEdgeChk.Checked = False
-        Else
-            SnapToEdgeChk.Checked = True
-        End If
+        SnapToEdgeChk.Checked = Not (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "0")
 
         '페이드 효과 기본값 = 1
-        If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
-            FadeEffectChk.Checked = False
-        Else
-            FadeEffectChk.Checked = True
-        End If
+        FadeEffectChk.Checked = Not (GetINI("SETTING", "FadeEffect", "", ININamePath) = "0")
 
         '표확장 기본값 = 1
-        If GetINI("SETTING", "ExpandCell", "", ININamePath) = "0" Then
-            ExpandCellChk.Checked = False
-        Else
-            ExpandCellChk.Checked = True
-        End If
+        ExpandCellChk.Checked = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
 
         '항상확장 기본값 = 0
         AlwaysExpandChk.Checked = (GetINI("SETTING", "AlwaysExpand", "", ININamePath) = "1")
 
         '요일표시 기본값 = 1
-        If GetINI("SETTING", "ShowDay", "", ININamePath) = "0" Then
-            ShowDayChk.Checked = False
-        Else
-            ShowDayChk.Checked = True
-        End If
+        ShowDayChk.Checked = Not (GetINI("SETTING", "ShowDay", "", ININamePath) = "0")
 
         '교수명표시 기본값 = 1
-        If GetINI("SETTING", "ShowProf", "", ININamePath) = "0" Then
-            ShowProfChk.Checked = False
-        Else
-            ShowProfChk.Checked = True
-        End If
+        ShowProfChk.Checked = Not (GetINI("SETTING", "ShowProf", "", ININamePath) = "0")
 
         '메모표시 기본값 = 1
-        If GetINI("SETTING", "ShowMemo", "", ININamePath) = "0" Then
-            ShowMemoChk.Checked = False
-        Else
-            ShowMemoChk.Checked = True
-        End If
+        ShowMemoChk.Checked = Not (GetINI("SETTING", "ShowMemo", "", ININamePath) = "0")
 
         '체크박스표시 기본값 = 1
-        If GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0" Then
-            ShowChkBoxChk.Checked = False
-        Else
-            ShowChkBoxChk.Checked = True
-        End If
+        ShowChkBoxChk.Checked = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
 
         '가로격자패턴 기본값 = DottedLine
-        If GetINI("SETTING", "TablePattern", "", ININamePath) = "None" Then '현재는 아무것도 없는지라 None으로 되었을때만 체크 해제하도록
-            ShowLinePatternChk.Checked = False
-        Else
-            ShowLinePatternChk.Checked = True
-        End If
+        '현재는 아무것도 없는지라 None으로 되었을때만 체크 해제하도록
+        ShowLinePatternChk.Checked = Not (GetINI("SETTING", "TablePattern", "", ININamePath) = "None")
         'TODO: 다이얼로그를 확장해서 점선, 줄무늬, 지그재그, 그라데이션 등등 뭐 여러가지로 하도록 하기
 
+        '자동색상 기본값 = 1
+        AutoTextColorChk.Checked = Not (GetINI("SETTING", "AutoTextColor", "", ININamePath) = "0")
 
         '텍스트색상반전 기본값 = 0
         BlackTextChk.Checked = (GetINI("SETTING", "BlackText", "", ININamePath) = "1")
+        BlackTextChk.Enabled = Not AutoTextColorChk.Checked
 
         '커스텀폰트 기본값 = 0
         CustomFontChk.Checked = (GetINI("SETTING", "CustomFont", "", ININamePath) = "1")
@@ -196,6 +175,26 @@ Public Class OptionForm
 
         SaveDirectoryTB.Text = GetINI("SETTING", "SaveDirectory", "", ININamePath)
         SaveNameTB.Text = GetINI("SETTING", "SaveName", "", ININamePath)
+
+        '강의 알리미 기본값 = 1
+        CourseNotifyChk.Checked = Not (GetINI("SETTING", "CourseNotify", "", ININamePath) = "0")
+        CourseNotifyPanel.Enabled = CourseNotifyChk.Checked
+
+        '강의 미리알림 시간 = ""
+        Dim tmp As List(Of String) = GetINI("SETTING", "NotifyMin", "", ININamePath).Split(",").ToList
+        Notify_30min_Chk.Checked = tmp.Contains("30")
+        Notify_15min_Chk.Checked = tmp.Contains("15")
+        Notify_5min_Chk.Checked = tmp.Contains("5")
+
+        '오늘의 강의알림 기본값 = 1
+        TodaysCourseNotifyChk.Checked = Not (GetINI("SETTING", "TodaysCourseNotify", "", ININamePath) = "0")
+
+        '알림효과음 = 1
+        NotifySoundChk.Checked = Not (GetINI("SETTING", "NotifySound", "", ININamePath) = "0")
+        NotificationSoundLocationTB.Enabled = NotifySoundChk.Checked
+
+        '효과음위치 = (빈칸) = 있는대로 그냥 입력
+        NotificationSoundLocationTB.Text = GetINI("SETTING", "NotifySoundFile", "", ININamePath)
 
         If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
             Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
@@ -224,45 +223,16 @@ Public Class OptionForm
         FeedbackLabel.LinkColor = lightTextColor(colormode)
         VersionLabel.ForeColor = lightTextColor(colormode)
 
-        CustomFontBT.BackColor = buttonColor(colormode)
-        CustomFontBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        CustomFontBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        CustomFontBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        FolderBrowBT.BackColor = buttonColor(colormode)
-        FolderBrowBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        FolderBrowBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        FolderBrowBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        CheckAndApplyDirSettingBT.BackColor = buttonColor(colormode)
-        CheckAndApplyDirSettingBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        CheckAndApplyDirSettingBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        CheckAndApplyDirSettingBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        SaveToFileBT.BackColor = buttonColor(colormode)
-        SaveToFileBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        SaveToFileBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        SaveToFileBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        CopyToClipboardBT.BackColor = buttonColor(colormode)
-        CopyToClipboardBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        CopyToClipboardBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        CopyToClipboardBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        ImportDataBT.BackColor = buttonColor(colormode)
-        ImportDataBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        ImportDataBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        ImportDataBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        UpdateChkButton.BackColor = buttonColor(colormode)
-        UpdateChkButton.FlatAppearance.BorderColor = BorderColor(colormode)
-        UpdateChkButton.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        UpdateChkButton.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-
-        DoUpdateButton.BackColor = buttonColor(colormode)
-        DoUpdateButton.FlatAppearance.BorderColor = BorderColor(colormode)
-        DoUpdateButton.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        DoUpdateButton.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+        ApplyButtonTheme(CustomFontBT)
+        ApplyButtonTheme(FolderBrowBT)
+        ApplyButtonTheme(CheckAndApplyDirSettingBT)
+        ApplyButtonTheme(SaveToFileBT)
+        ApplyButtonTheme(CopyToClipboardBT)
+        ApplyButtonTheme(ImportDataBT)
+        ApplyButtonTheme(UpdateChkButton)
+        ApplyButtonTheme(DoUpdateButton)
+        ApplyButtonTheme(NotificationSoundFileOpenBT)
+        ApplyButtonTheme(NotificationSoundPlayBT)
 
         Select Case colormode
             Case "Dark"
@@ -274,46 +244,69 @@ Public Class OptionForm
         End Select
     End Sub
 
+    Sub ApplyButtonTheme(button As Button)
+        With button
+            .BackColor = buttonColor(colormode)
+            .FlatAppearance.BorderColor = BorderColor(colormode)
+            .FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
+            .FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+        End With
+    End Sub
+
     Public Sub SwitchMode(mode As Integer)
-        SettingMenu1.SelectionUpdate(False, colormode)
-        SettingMenu2.SelectionUpdate(False, colormode)
-        SettingMenu3.SelectionUpdate(False, colormode)
-        SettingMenu4.SelectionUpdate(False, colormode)
-        SettingMenu5.SelectionUpdate(False, colormode)
+        SettingMenu_Basic.SelectionUpdate(False, colormode)
+        SettingMenu_Table.SelectionUpdate(False, colormode)
+        SettingMenu_Data.SelectionUpdate(False, colormode)
+        SettingMenu_Notification.SelectionUpdate(False, colormode)
+        SettingMenu_Update.SelectionUpdate(False, colormode)
+        SettingMenu_Info.SelectionUpdate(False, colormode)
 
         Select Case mode
-            Case 1
-                SettingMenu1.SelectionUpdate(True, colormode)
-                TabPage1.Visible = True
-                TabPage2.Visible = False
-                TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = False
+            Case 1 '기본
+                SettingMenu_Basic.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = True
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = False
 
-            Case 2
-                SettingMenu2.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = True
-                TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = False
+            Case 2 '시간표
+                SettingMenu_Table.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = True
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = False
                 PrevUpdate() '시간표 업데이트
 
-            Case 3
-                SettingMenu3.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = False
-                TabPage3.Visible = True
-                TabPage4.Visible = False
-                TabPage5.Visible = False
+            Case 3 '데이터
+                SettingMenu_Data.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = True
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = False
 
-            Case 4
-                SettingMenu4.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = False
-                TabPage3.Visible = False
-                TabPage4.Visible = True
-                TabPage5.Visible = False
+            Case 4 '알리미
+                SettingMenu_Notification.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = True
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = False
+
+            Case 5 '업데이트
+                SettingMenu_Update.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = True
+                TabPage_Info.Visible = False
 
                 If downUrl = "" And UpdateChecker.IsBusy = False Then
                     UpdateChecker.RunWorkerAsync()
@@ -322,13 +315,14 @@ Public Class OptionForm
                     ForceUpdChk.Enabled = False
                 End If
 
-            Case 5
-                SettingMenu5.SelectionUpdate(True, colormode)
-                TabPage1.Visible = False
-                TabPage2.Visible = False
-                TabPage3.Visible = False
-                TabPage4.Visible = False
-                TabPage5.Visible = True
+            Case 6 '정보
+                SettingMenu_Info.SelectionUpdate(True, colormode)
+                TabPage_Basic.Visible = False
+                TabPage_Table.Visible = False
+                TabPage_Data.Visible = False
+                TapPage_Notification.Visible = False
+                TabPage_Update.Visible = False
+                TabPage_Info.Visible = True
 
         End Select
 
@@ -369,6 +363,11 @@ Public Class OptionForm
         ApplySetting("ShowMemo", ShowMemoChk.Checked)
     End Sub
 
+    Private Sub AutoTextColorChk_CheckedChanged(sender As Object, e As EventArgs) Handles AutoTextColorChk.CheckedChanged
+        ApplySetting("AutoTextColor", AutoTextColorChk.Checked)
+        BlackTextChk.Enabled = Not AutoTextColorChk.Checked
+    End Sub
+
     Private Sub BlackTextChk_CheckedChanged(sender As Object, e As EventArgs) Handles BlackTextChk.CheckedChanged
         ApplySetting("BlackText", BlackTextChk.Checked)
     End Sub
@@ -395,7 +394,7 @@ Public Class OptionForm
 
     Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
         ShowDayChk.CheckedChanged, ShowProfChk.CheckedChanged, ShowMemoChk.CheckedChanged, BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged,
-        ShowLinePatternChk.CheckedChanged
+        ShowLinePatternChk.CheckedChanged, AutoTextColorChk.CheckedChanged
         PrevUpdate()
     End Sub
 
@@ -414,7 +413,7 @@ Public Class OptionForm
             DayLabel.BackColor = activeDayColor(colormode)
             DayLabel.ForeColor = activeDayTextColor(colormode)
 
-            DayLabel.Text = Now.Day.ToString + " "
+            DayLabel.Text = Now.Date.ToString("dd") + " "
 
             Select Case Now.DayOfWeek
                 Case DayOfWeek.Monday
@@ -456,15 +455,29 @@ Public Class OptionForm
             .TitleLabel.Text = "수업명"
             .ProfLabel.Text = names(rnd.Next(0, names.Count)) + " 교수님"
             .MemoLabel.Text = "메모 내용"
+
+            .CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
+            .CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
+            .AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
+            ._BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
+            ._AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
+            .ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
+            .ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
+            .ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
+            ._ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
+
+            .goalColor = Color.DarkSlateGray
         End With
 
         PrevTableArea.Controls.Add(cell)
+        PrevTableArea.Refresh()
 
+    End Sub
+
+    Private Sub PrevTableArea_Paint(sender As Object, e As PaintEventArgs) Handles PrevTableArea.Paint
         '패턴부분
         Dim colorMul As Single = 0.9
         If colormode = "Dark" Then colorMul = 1.35
-
-        PrevTableArea.Refresh()
 
         If ShowLinePatternChk.Checked Then
             Dim c As Color = Color.FromArgb(PrevTableArea.BackColor.R * colorMul,
@@ -508,7 +521,7 @@ Public Class OptionForm
     '바로 적용 보여주기 위해 시간표 새로고침
     Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged,
         AlwaysExpandChk.CheckedChanged, ShowDayChk.CheckedChanged, ShowMemoChk.CheckedChanged, ShowProfChk.CheckedChanged,
-        BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged
+        BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged, AutoTextColorChk.CheckedChanged
         If loaded Then Form1.updateCell()
     End Sub
 
@@ -519,11 +532,12 @@ Public Class OptionForm
             SetINI("SETTING", "ColorMode", "White", ININamePath)
         End If
 
-        SettingMenu1.first = True
-        SettingMenu2.first = True
-        SettingMenu3.first = True
-        SettingMenu4.first = True
-        SettingMenu5.first = True
+        SettingMenu_Basic.first = True
+        SettingMenu_Table.first = True
+        SettingMenu_Data.first = True
+        SettingMenu_Notification.first = True
+        SettingMenu_Update.first = True
+        SettingMenu_Info.first = True
 
         If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
         Form1.UpdateColor()
@@ -942,9 +956,13 @@ Public Class OptionForm
                 End If
             End If
 
+            OpenFileDialog1.InitialDirectory = Application.ExecutablePath.Substring(0, exeFullpath.LastIndexOf("\"))
+            OpenFileDialog1.Title = "불러올 시간표 데이터를 선택해 주세요"
             OpenFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
             OpenFileDialog1.DefaultExt = "utdata"
-            OpenFileDialog1.ShowDialog()
+            If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+                Table_Setting_FileOk()
+            End If
 
         ElseIf SettingSaveRbt.Checked Then
             If clipboardTxt.Contains("[SETTING]") Then
@@ -959,14 +977,18 @@ Public Class OptionForm
                 End If
             End If
 
+            OpenFileDialog1.InitialDirectory = Application.ExecutablePath.Substring(0, exeFullpath.LastIndexOf("\"))
+            OpenFileDialog1.Title = "불러올 설정 파일을 선택해 주세요"
             OpenFileDialog1.FileName = "settings"
             OpenFileDialog1.Filter = "INI 파일|*.ini|모든 파일|*.*"
             OpenFileDialog1.DefaultExt = "ini"
-            OpenFileDialog1.ShowDialog()
+            If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+                Table_Setting_FileOk()
+            End If
         End If
     End Sub
 
-    Private Sub OpenFileDialog1_FileOk(sender As Object, e As CancelEventArgs) Handles OpenFileDialog1.FileOk
+    Private Sub Table_Setting_FileOk()
         Try
             If TableSaveRbt.Checked Then
                 Dim data As String = My.Computer.FileSystem.ReadAllText(OpenFileDialog1.FileName, System.Text.Encoding.GetEncoding(949))
@@ -1015,7 +1037,7 @@ Public Class OptionForm
 
                     If Not SaveDirectoryTB.Text = "" Then tmpDir = SaveDirectoryTB.Text
                     If Not SaveNameTB.Text = "" Then tmpName = SaveNameTB.Text + ".utdata"
-                    FileIO.FileSystem.CopyFile(TableSaveLocation(), tmpDir + "\" + tmpName, True)
+                    FileIO.FileSystem.CopyFile(TableSaveLocation(False), tmpDir + "\" + tmpName, True)
                 End If
             End If
 
@@ -1029,5 +1051,76 @@ Public Class OptionForm
 
         End Try
 
+    End Sub
+
+    Private Sub CourseNotifyChk_CheckedChanged(sender As Object, e As EventArgs) Handles CourseNotifyChk.CheckedChanged
+        ApplySetting("CourseNotify", CourseNotifyChk.Checked)
+        CourseNotifyPanel.Enabled = CourseNotifyChk.Checked
+    End Sub
+
+    Private Sub TodaysCourseNotifyChk_CheckedChanged(sender As Object, e As EventArgs) Handles TodaysCourseNotifyChk.CheckedChanged
+        ApplySetting("TodaysCourseNotify", TodaysCourseNotifyChk.Checked)
+    End Sub
+
+    Private Sub Notify_min_CheckedChanged(sender As Object, e As EventArgs) Handles Notify_30min_Chk.CheckedChanged,
+        Notify_15min_Chk.CheckedChanged, Notify_5min_Chk.CheckedChanged
+
+        Dim values As New List(Of Integer)
+
+        If Notify_30min_Chk.Checked Then values.Add(30)
+        If Notify_15min_Chk.Checked Then values.Add(15)
+        If Notify_5min_Chk.Checked Then values.Add(5)
+
+        SetINI("SETTING", "NotifyMin", String.Join(",", values), ININamePath)
+    End Sub
+
+    Private Sub NotificationSoundFileOpenBT_Click(sender As Object, e As EventArgs) Handles NotificationSoundFileOpenBT.Click
+        OpenFileDialog1.Title = "효과음 오디오 파일을 선택해 주세요"
+        OpenFileDialog1.Filter = "WAV 오디오 파일|*.wav"
+        OpenFileDialog1.DefaultExt = "wav"
+
+        If NotificationSoundLocationTB.Text = "" Or Not NotificationSoundLocationTB.Text.Contains("\") Then
+            If My.Computer.FileSystem.DirectoryExists("C:\Windows\Media") Then
+                OpenFileDialog1.InitialDirectory = "C:\Windows\Media"
+            Else
+                OpenFileDialog1.InitialDirectory = exePath
+            End If
+
+        ElseIf My.Computer.FileSystem.DirectoryExists(NotificationSoundLocationTB.Text.Substring(0, NotificationSoundLocationTB.Text.LastIndexOf("\"))) Then
+            OpenFileDialog1.InitialDirectory = NotificationSoundLocationTB.Text.Substring(0, NotificationSoundLocationTB.Text.LastIndexOf("\"))
+
+        ElseIf My.Computer.FileSystem.DirectoryExists("C:\Windows\Media") Then
+            OpenFileDialog1.InitialDirectory = "C:\Windows\Media"
+
+        Else
+            OpenFileDialog1.InitialDirectory = exePath
+
+        End If
+
+        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            NotificationSoundLocationTB.Text = OpenFileDialog1.FileName
+        End If
+    End Sub
+
+    Private Sub NotificationSoundLocationTB_TextChanged(sender As Object, e As EventArgs) Handles NotificationSoundLocationTB.TextChanged
+        SetINI("SETTING", "NotifySoundFile", NotificationSoundLocationTB.Text, ININamePath)
+    End Sub
+
+    Private Sub NotifySoundChk_CheckedChanged(sender As Object, e As EventArgs) Handles NotifySoundChk.CheckedChanged
+        ApplySetting("NotifySound", NotifySoundChk.Checked)
+        NotificationSoundLocationTB.Enabled = NotifySoundChk.Checked
+    End Sub
+
+    Private Sub NotificationSoundPlayBT_Click(sender As Object, e As EventArgs) Handles NotificationSoundPlayBT.Click
+        My.Computer.Audio.Stop()
+        Dim soundLocation As String = GetINI("SETTING", "NotifySoundFile", "", ININamePath)
+        If soundLocation = "" Then soundLocation = "C:\Windows\Media\Ring01.wav"
+
+        Try
+            My.Computer.Audio.Play(soundLocation, AudioPlayMode.Background)
+        Catch ex As Exception
+            MsgBox("오류가 발생했습니다." + vbCr + "(" + ex.Message + ")" + vbCr + vbCr _
+                   + "오디오 파일이 유효한 WAV 파일인지 확인해 주시기 바랍니다.", vbCritical)
+        End Try
     End Sub
 End Class

@@ -15,5 +15,8 @@ Namespace My
             ErrorForm.Show()
         End Sub
 
+        Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+            Form1.NotifyIcon1.Visible = False
+        End Sub
     End Class
 End Namespace

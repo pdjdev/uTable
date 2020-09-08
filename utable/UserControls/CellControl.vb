@@ -11,6 +11,24 @@
     Dim hovered As Boolean = False
     Dim prev_hove As Boolean = False
 
+    '설정값
+    Public FadeEffect As String = ""
+    Public CustomFont As String = ""
+    Public CustomFontName As String = ""
+    Public AutoTextColor As String = ""
+    Public _BlackText As String = ""
+    Public _AlwaysExpand As String = ""
+    Public ExpandCell As String = ""
+    Public ShowMemo As String = ""
+    Public ShowProf As String = ""
+    Public _ShowChkBox As String = ""
+
+    '(실험적) 컬러 전환 크기
+    Dim deltaColor_R As Integer = 1
+    Dim deltaColor_G As Integer = 1
+    Dim deltaColor_B As Integer = 1
+    Public goalColor As Color = Nothing
+
     Private Sub UserControl1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         TitleLabel.MaximumSize() = New Size(Width, 0)
         ProfLabel.MaximumSize() = New Size(Width, 0)
@@ -22,28 +40,30 @@
     Private Sub TitleLabel_Click(sender As Object, e As EventArgs) Handles TitleLabel.Click
         If Name = "DemoCellControl" Then Exit Sub
 
-        SetCourse.Close()
-
         Dim appearPoint As New Point(Cursor.Position)
+        'SetCourse.Close()
+        ViewCourse.Close()
 
-        If appearPoint.X + SetCourse.Width > Form1.Location.X + Form1.Width Then
-            appearPoint.X = Form1.Location.X + Form1.Width - SetCourse.Width
+        If appearPoint.X + ViewCourse.Width > Form1.Location.X + Form1.Width Then
+            appearPoint.X = Form1.Location.X + Form1.Width - ViewCourse.Width
         End If
 
-        If appearPoint.Y + SetCourse.Height > Form1.Location.Y + Form1.Height Then
-            appearPoint.Y = Form1.Location.Y + Form1.Height - SetCourse.Height
+        If appearPoint.Y + ViewCourse.Height > Form1.Location.Y + Form1.Height Then
+            appearPoint.Y = Form1.Location.Y + Form1.Height - ViewCourse.Height
         End If
 
-        SetCourse.modifyMode = True
+        'SetCourse.modifyMode = True
 
         For Each s As String In getDatas(readTable(), "course")
             If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = Name Then
-                SetCourse.olddata = s
+                ViewCourse.olddata = s
             End If
         Next
 
-        SetCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
-        SetCourse.Show()
+        ViewCourse.blacktext = blackText 
+
+        ViewCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
+        ViewCourse.Show()
     End Sub
 
     Private Sub TopTimeLabel_MouseEnter(sender As Object, e As EventArgs) Handles TopTimeLabel.MouseEnter,
@@ -65,9 +85,9 @@
     End Sub
 
     Private Sub CellControl_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" Then
-            If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
-                Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
+        If CustomFont = "1" Then
+            If Not CustomFontName = "" Then
+                Dim fntname = CustomFontName
 
                 ChangeFont(Me, fntname, FontStyle.Regular)
                 ChangeFont(TopTimeLabel, fntname, FontStyle.Bold)
@@ -78,21 +98,26 @@
             End If
         End If
 
-        If GetINI("SETTING", "BlackText", "", ININamePath) = "1" Then
+        If Not AutoTextColor = "0" Then
+            blackText = CheckProperColor(goalColor)
+        ElseIf _BlackText = "1" Then
+            blackText = True
+        End If
+
+        If blackText Then
             Me.ForeColor = Color.Black
             TopTimeLabel.ForeColor = Color.Black
             BottomTimeLabel.ForeColor = Color.Black
             TitleLabel.ForeColor = Color.Black
             ProfLabel.ForeColor = Color.Black
             MemoLabel.ForeColor = Color.Black
-            blackText = True
         End If
 
-        alwaysExpand = (GetINI("SETTING", "AlwaysExpand", "", ININamePath) = "1")
-        doExpand = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
-        MemoLabel.Visible = Not (GetINI("SETTING", "ShowMemo", "", ININamePath) = "0")
-        ProfLabel.Visible = Not (GetINI("SETTING", "ShowProf", "", ININamePath) = "0")
-        showChkBox = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
+        alwaysExpand = (_AlwaysExpand = "1")
+        doExpand = Not (ExpandCell = "0")
+        MemoLabel.Visible = Not (ShowMemo = "0")
+        ProfLabel.Visible = Not (ShowProf = "0")
+        showChkBox = Not (_ShowChkBox = "0")
 
         ChkBox1.Visible = showChkBox
         If showChkBox Then CheckStateUpdate()
@@ -106,6 +131,25 @@
                 Height = fullheight
             End If
         End If
+
+        If Not FadeEffect = "0" Then
+            If dayNum Mod 2 = 0 Then
+                BackColor = Form1.MonPanel.BackColor
+            Else
+                BackColor = Form1.TuePanel.BackColor
+            End If
+
+            deltaColor_R = Int(Math.Abs((Int(goalColor.R) - Int(BackColor.R)) / 10))
+            deltaColor_G = Int(Math.Abs((Int(goalColor.G) - Int(BackColor.G)) / 10))
+            deltaColor_B = Int(Math.Abs((Int(goalColor.B) - Int(BackColor.B)) / 10))
+
+            AniTimer.Start()
+
+        Else
+            BackColor = goalColor
+        End If
+
+
     End Sub
 
     Public Sub ForceExpand()
@@ -122,9 +166,9 @@
         ctrl.Font = New Font(fntname, ctrl.Font.Size, style)
     End Sub
 
-    Private Sub TopNotchPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopNotchPanel.Paint
-        TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
-    End Sub
+    'Private Sub TopNotchPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopNotchPanel.Paint
+    '    TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
+    'End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
@@ -254,5 +298,43 @@
         End If
 
         writeTable(data.Replace(olddata, newdata))
+    End Sub
+
+    Private Sub AniTimer_Tick(sender As Object, e As EventArgs) Handles AniTimer.Tick
+
+        Dim R As Byte = BackColor.R
+        Dim G As Byte = BackColor.G
+        Dim B As Byte = BackColor.B
+
+        If goalColor.R - deltaColor_R > R Then
+            R += deltaColor_R
+        ElseIf goalColor.R + deltaColor_R < R Then
+            R -= deltaColor_R
+        Else
+            R = goalColor.R
+        End If
+
+        If goalColor.G - deltaColor_G > G Then
+            G += deltaColor_G
+        ElseIf goalColor.G + deltaColor_G < G Then
+            G -= deltaColor_G
+        Else
+            G = goalColor.G
+        End If
+
+        If goalColor.B - deltaColor_B > B Then
+            B += deltaColor_B
+        ElseIf goalColor.B + deltaColor_B < B Then
+            B -= deltaColor_B
+        Else
+            B = goalColor.B
+        End If
+
+        BackColor = Color.FromArgb(R, G, B)
+        TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
+
+        If goalColor = BackColor Then
+            AniTimer.Stop()
+        End If
     End Sub
 End Class
