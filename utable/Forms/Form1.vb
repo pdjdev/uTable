@@ -686,7 +686,7 @@ Public Class Form1
         End If
 
         If Not checkStartUp() Then
-            If Not GetINI("SETTING", "NoStartupSuggestion", "0", ININamePath) = 1 Then
+            If Not GetINI("SETTING", "NoStartupSuggestion", "", ININamePath) = "1" Then
                 WindowState = FormWindowState.Normal
                 StartupAsk.ShowDialog(Me)
             End If
@@ -696,7 +696,7 @@ Public Class Form1
             MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
                    + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
         Else
-            If Not GetINI("SETTING", "TodaysCourseNotify", "0", ININamePath) = 0 Then
+            If Not GetINI("SETTING", "TodaysCourseNotify", "", ININamePath) = "0" Then
                 TodayCourseNotify()
             End If
         End If
@@ -1251,7 +1251,7 @@ Public Class Form1
 
         Dim panelHeight As Integer = MonPanel.Height
         Dim panelWidth As Integer = MonPanel.Width
-        Dim hrlength As Double = 60 / timeLength * panelHeight
+        Dim minLengh As Double = 1 / timeLength * panelHeight
 
         'Dim left As Integer = starttime Mod 60
         Dim thickness As Integer = 3 * (currentDPI / 96)
@@ -1269,14 +1269,13 @@ Public Class Form1
 
             Dim p As New Pen(c, thickness)
             Dim g As Graphics = panel.CreateGraphics
-            Dim y As Integer = (starttime Mod 60) / 60 * hrlength + thickness / 2
 
             p.DashStyle = Drawing2D.DashStyle.Dot
 
             For j As Integer = starttime To endtime
                 If j > 0 And j Mod 60 = 0 Then
-                    g.DrawLine(p, New Point(0, y), New Point(panelWidth, y))
-                    y += hrlength
+                    Dim pos As Double = (j - starttime) * minLengh + thickness / 2
+                    g.DrawLine(p, New Point(0, pos), New Point(panelWidth, pos))
                 End If
             Next
 
