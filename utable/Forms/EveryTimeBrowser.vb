@@ -6,6 +6,7 @@ Public Class EveryTimeBrowser
     Dim webdone As Boolean = False
     Dim source As String
 
+    Dim dpivalue As Integer = 100
     Dim trialCount As Integer = 0
 
 #Region "브라우저 확대/축소"
@@ -32,6 +33,7 @@ Public Class EveryTimeBrowser
             MsgBox(ex.Message)
         End Try
     End Sub
+
 #End Region
 
 #Region "Aero 그림자 효과 (Vista이상)"
@@ -54,6 +56,7 @@ Public Class EveryTimeBrowser
 
     Private Sub FadeInEffect(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.Refresh()
+        dpivalue = dpicalc(Me, 100)
         FadeIn(Me, 1)
     End Sub
 
@@ -92,13 +95,13 @@ Public Class EveryTimeBrowser
         If Not source = Nothing Then
             If source.Contains("<div class=""tablebody"">") Then
                 Label1.Text = "시간표를 불러오는 중..."
-                PerformZoom(WebBrowser1, 100)
+                PerformZoom(WebBrowser1, dpivalue)
                 WebBrowser1.Visible = False
                 WebBrowser1.Dock = DockStyle.None
                 WebBrowser1.Width = 1920
                 TableChecker.Start()
             Else
-                PerformZoom(WebBrowser1, dpicalc(Me, 100))
+                PerformZoom(WebBrowser1, Convert.ToInt32(dpivalue * dpivalue / 100))
             End If
         End If
     End Sub
