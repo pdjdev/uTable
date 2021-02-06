@@ -190,7 +190,7 @@ Partial Class Form1
         Me.TopPanel.Location = New System.Drawing.Point(0, 0)
         Me.TopPanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TopPanel.Name = "TopPanel"
-        Me.TopPanel.Padding = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.TopPanel.Padding = New System.Windows.Forms.Padding(5)
         Me.TopPanel.Size = New System.Drawing.Size(814, 40)
         Me.TopPanel.TabIndex = 1
         '
@@ -600,7 +600,6 @@ Partial Class Form1
         '
         Me.Tray_menu.BackColor = System.Drawing.Color.White
         Me.Tray_menu.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Tray_menu.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.Tray_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenTableTrayItem, Me.ExitTrayItem})
         Me.Tray_menu.Name = "ContextMenuStrip1"
         Me.Tray_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -633,7 +632,7 @@ Partial Class Form1
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(500, 400)
         Me.Name = "Form1"
-        Me.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Padding = New System.Windows.Forms.Padding(4)
         Me.Text = "uTable"
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.TimeTable.ResumeLayout(False)
