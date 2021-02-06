@@ -88,6 +88,7 @@ Partial Class EveryTimeBrowser
         Me.LoadingSplash1.BackColor = System.Drawing.Color.Transparent
         Me.LoadingSplash1.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.LoadingSplash1.Location = New System.Drawing.Point(16, 401)
+        Me.LoadingSplash1.Margin = New System.Windows.Forms.Padding(4)
         Me.LoadingSplash1.Name = "LoadingSplash1"
         Me.LoadingSplash1.Size = New System.Drawing.Size(50, 50)
         Me.LoadingSplash1.TabIndex = 30
