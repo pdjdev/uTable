@@ -41,6 +41,11 @@ Partial Class OptionForm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.StartupChk = New System.Windows.Forms.CheckBox()
+        Me.TabPage_Info = New System.Windows.Forms.Panel()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.VersionLabel = New System.Windows.Forms.Label()
+        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
+        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.TapPage_Notification = New System.Windows.Forms.Panel()
         Me.TodaysCourseNotifyChk = New System.Windows.Forms.CheckBox()
         Me.CourseNotifyPanel = New System.Windows.Forms.Panel()
@@ -110,11 +115,6 @@ Partial Class OptionForm
         Me.UpdateChkButton = New System.Windows.Forms.Button()
         Me.WebPageLabel = New System.Windows.Forms.LinkLabel()
         Me.DoUpdateButton = New System.Windows.Forms.Button()
-        Me.TabPage_Info = New System.Windows.Forms.Panel()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-        Me.VersionLabel = New System.Windows.Forms.Label()
-        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
-        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.ShadowPanel = New System.Windows.Forms.Panel()
         Me.SidePanel = New System.Windows.Forms.Panel()
         Me.SettingMenu_Info = New uTable.SettingMenu()
@@ -134,6 +134,8 @@ Partial Class OptionForm
         Me.MainPanel.SuspendLayout()
         Me.TabPage_Basic.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.TabPage_Info.SuspendLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TapPage_Notification.SuspendLayout()
         Me.CourseNotifyPanel.SuspendLayout()
         Me.TabPage_Data.SuspendLayout()
@@ -145,8 +147,6 @@ Partial Class OptionForm
         Me.Panel4.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.Panel3.SuspendLayout()
-        Me.TabPage_Info.SuspendLayout()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SidePanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -188,11 +188,11 @@ Partial Class OptionForm
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
         Me.MainPanel.Controls.Add(Me.TabPage_Basic)
+        Me.MainPanel.Controls.Add(Me.TabPage_Info)
         Me.MainPanel.Controls.Add(Me.TapPage_Notification)
         Me.MainPanel.Controls.Add(Me.TabPage_Data)
         Me.MainPanel.Controls.Add(Me.TabPage_Table)
         Me.MainPanel.Controls.Add(Me.TabPage_Update)
-        Me.MainPanel.Controls.Add(Me.TabPage_Info)
         Me.MainPanel.Controls.Add(Me.ShadowPanel)
         Me.MainPanel.Controls.Add(Me.SidePanel)
         Me.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill
@@ -351,6 +351,69 @@ Partial Class OptionForm
         Me.StartupChk.TabIndex = 3
         Me.StartupChk.Text = "Windows 시작 시 같이 프로그램 실행"
         Me.StartupChk.UseVisualStyleBackColor = True
+        '
+        'TabPage_Info
+        '
+        Me.TabPage_Info.Controls.Add(Me.RichTextBox1)
+        Me.TabPage_Info.Controls.Add(Me.VersionLabel)
+        Me.TabPage_Info.Controls.Add(Me.FeedbackLabel)
+        Me.TabPage_Info.Controls.Add(Me.BannerPictureBox)
+        Me.TabPage_Info.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage_Info.Location = New System.Drawing.Point(148, 10)
+        Me.TabPage_Info.Name = "TabPage_Info"
+        Me.TabPage_Info.Padding = New System.Windows.Forms.Padding(10, 10, 10, 10)
+        Me.TabPage_Info.Size = New System.Drawing.Size(441, 277)
+        Me.TabPage_Info.TabIndex = 14
+        '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.BackColor = System.Drawing.Color.White
+        Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RichTextBox1.ForeColor = System.Drawing.Color.Black
+        Me.RichTextBox1.Location = New System.Drawing.Point(10, 103)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.ReadOnly = True
+        Me.RichTextBox1.Size = New System.Drawing.Size(421, 151)
+        Me.RichTextBox1.TabIndex = 3
+        Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
+        '
+        'VersionLabel
+        '
+        Me.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.VersionLabel.Font = New System.Drawing.Font("맑은 고딕", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.VersionLabel.Location = New System.Drawing.Point(10, 78)
+        Me.VersionLabel.Name = "VersionLabel"
+        Me.VersionLabel.Size = New System.Drawing.Size(421, 25)
+        Me.VersionLabel.TabIndex = 7
+        Me.VersionLabel.Text = "VersionLabel"
+        Me.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'FeedbackLabel
+        '
+        Me.FeedbackLabel.AutoSize = True
+        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.FeedbackLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.FeedbackLabel.Location = New System.Drawing.Point(10, 254)
+        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(420, 0)
+        Me.FeedbackLabel.Name = "FeedbackLabel"
+        Me.FeedbackLabel.Size = New System.Drawing.Size(420, 13)
+        Me.FeedbackLabel.TabIndex = 6
+        Me.FeedbackLabel.TabStop = True
+        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
+        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'BannerPictureBox
+        '
+        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
+        Me.BannerPictureBox.Image = Global.uTable.My.Resources.Resources.uTable_banner
+        Me.BannerPictureBox.Location = New System.Drawing.Point(10, 10)
+        Me.BannerPictureBox.Name = "BannerPictureBox"
+        Me.BannerPictureBox.Size = New System.Drawing.Size(421, 68)
+        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.BannerPictureBox.TabIndex = 4
+        Me.BannerPictureBox.TabStop = False
         '
         'TapPage_Notification
         '
@@ -1094,69 +1157,6 @@ Partial Class OptionForm
         Me.DoUpdateButton.Text = "바로 업데이트 하기"
         Me.DoUpdateButton.UseVisualStyleBackColor = True
         '
-        'TabPage_Info
-        '
-        Me.TabPage_Info.Controls.Add(Me.RichTextBox1)
-        Me.TabPage_Info.Controls.Add(Me.VersionLabel)
-        Me.TabPage_Info.Controls.Add(Me.FeedbackLabel)
-        Me.TabPage_Info.Controls.Add(Me.BannerPictureBox)
-        Me.TabPage_Info.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage_Info.Location = New System.Drawing.Point(148, 10)
-        Me.TabPage_Info.Name = "TabPage_Info"
-        Me.TabPage_Info.Padding = New System.Windows.Forms.Padding(10)
-        Me.TabPage_Info.Size = New System.Drawing.Size(441, 277)
-        Me.TabPage_Info.TabIndex = 14
-        '
-        'RichTextBox1
-        '
-        Me.RichTextBox1.BackColor = System.Drawing.Color.White
-        Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RichTextBox1.ForeColor = System.Drawing.Color.Black
-        Me.RichTextBox1.Location = New System.Drawing.Point(10, 103)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(421, 151)
-        Me.RichTextBox1.TabIndex = 3
-        Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
-        '
-        'VersionLabel
-        '
-        Me.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.VersionLabel.Font = New System.Drawing.Font("맑은 고딕", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.VersionLabel.Location = New System.Drawing.Point(10, 78)
-        Me.VersionLabel.Name = "VersionLabel"
-        Me.VersionLabel.Size = New System.Drawing.Size(421, 25)
-        Me.VersionLabel.TabIndex = 7
-        Me.VersionLabel.Text = "VersionLabel"
-        Me.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'FeedbackLabel
-        '
-        Me.FeedbackLabel.AutoSize = True
-        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.FeedbackLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.FeedbackLabel.Location = New System.Drawing.Point(10, 254)
-        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(420, 0)
-        Me.FeedbackLabel.Name = "FeedbackLabel"
-        Me.FeedbackLabel.Size = New System.Drawing.Size(420, 13)
-        Me.FeedbackLabel.TabIndex = 6
-        Me.FeedbackLabel.TabStop = True
-        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
-        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'BannerPictureBox
-        '
-        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
-        Me.BannerPictureBox.Image = Global.uTable.My.Resources.Resources.uTable_banner
-        Me.BannerPictureBox.Location = New System.Drawing.Point(10, 10)
-        Me.BannerPictureBox.Name = "BannerPictureBox"
-        Me.BannerPictureBox.Size = New System.Drawing.Size(421, 68)
-        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.BannerPictureBox.TabIndex = 4
-        Me.BannerPictureBox.TabStop = False
-        '
         'ShadowPanel
         '
         Me.ShadowPanel.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
@@ -1188,6 +1188,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Info.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.SettingMenu_Info.Location = New System.Drawing.Point(0, 238)
+        Me.SettingMenu_Info.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.SettingMenu_Info.Name = "SettingMenu_Info"
         Me.SettingMenu_Info.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Info.TabIndex = 5
@@ -1196,6 +1197,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Update.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Update.Location = New System.Drawing.Point(0, 166)
+        Me.SettingMenu_Update.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.SettingMenu_Update.Name = "SettingMenu_Update"
         Me.SettingMenu_Update.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Update.TabIndex = 4
@@ -1204,6 +1206,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Notification.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Notification.Location = New System.Drawing.Point(0, 127)
+        Me.SettingMenu_Notification.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.SettingMenu_Notification.Name = "SettingMenu_Notification"
         Me.SettingMenu_Notification.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Notification.TabIndex = 6
@@ -1212,6 +1215,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Data.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Data.Location = New System.Drawing.Point(0, 88)
+        Me.SettingMenu_Data.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.SettingMenu_Data.Name = "SettingMenu_Data"
         Me.SettingMenu_Data.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Data.TabIndex = 3
@@ -1220,6 +1224,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Table.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Table.Location = New System.Drawing.Point(0, 49)
+        Me.SettingMenu_Table.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.SettingMenu_Table.Name = "SettingMenu_Table"
         Me.SettingMenu_Table.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Table.TabIndex = 2
@@ -1228,6 +1233,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Basic.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Basic.Location = New System.Drawing.Point(0, 10)
+        Me.SettingMenu_Basic.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.SettingMenu_Basic.Name = "SettingMenu_Basic"
         Me.SettingMenu_Basic.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Basic.TabIndex = 1
@@ -1285,6 +1291,9 @@ Partial Class OptionForm
         Me.TabPage_Basic.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.TabPage_Info.ResumeLayout(False)
+        Me.TabPage_Info.PerformLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TapPage_Notification.ResumeLayout(False)
         Me.TapPage_Notification.PerformLayout()
         Me.CourseNotifyPanel.ResumeLayout(False)
@@ -1304,9 +1313,6 @@ Partial Class OptionForm
         Me.Panel2.PerformLayout()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
-        Me.TabPage_Info.ResumeLayout(False)
-        Me.TabPage_Info.PerformLayout()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SidePanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 

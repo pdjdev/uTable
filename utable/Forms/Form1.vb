@@ -737,36 +737,7 @@ Public Class Form1
 
     Private Sub TitleEditBT_Click(sender As Object, e As EventArgs) Handles TitleEditBT.Click
         If titleEditMode Then
-
-            Dim newtitle As String = RenameTitleTextBox.Text
-
-            If newtitle = "" Then
-                titleEditMode = False
-                TableTitleLabel.Visible = True
-                RenameTitleTextBox.Visible = False
-                TitleEditBT.Image = My.Resources.bt_titleedit
-
-            Else
-                Try
-                    Dim data As String = readTable()
-                    If data.Contains("<tablename>") Then
-                        Dim oldtitle As String = getData(data, "tablename")
-                        data = data.Replace("<tablename>" + oldtitle + "</tablename>", "<tablename>" + xmlEncode(newtitle) + "</tablename>")
-                        writeTable(data)
-                    Else
-                        writeTable("<tablename>" + xmlEncode(newtitle) + "</tablename>" + vbCrLf + data)
-                    End If
-                Catch ex As Exception
-                    MsgBox("이름 변경 도중 문제가 발생했습니다." + vbCr + ex.Message, vbCritical)
-                    Exit Sub
-                End Try
-
-                titleEditMode = False
-                TableTitleLabel.Visible = True
-                RenameTitleTextBox.Visible = False
-                TitleEditBT.Image = My.Resources.bt_titleedit
-                updateCell()
-            End If
+            TitleEditApply()
         Else
             titleEditMode = True
             RenameTitleTextBox.Width = TableTitleLabel.Width
@@ -774,6 +745,44 @@ Public Class Form1
             TableTitleLabel.Visible = False
             RenameTitleTextBox.Visible = True
             TitleEditBT.Image = My.Resources.bt_titleapply
+        End If
+    End Sub
+
+    Private Sub TitleEditApply()
+        Dim newtitle As String = RenameTitleTextBox.Text
+
+        If newtitle = "" Then
+            titleEditMode = False
+            TableTitleLabel.Visible = True
+            RenameTitleTextBox.Visible = False
+            TitleEditBT.Image = My.Resources.bt_titleedit
+
+        Else
+            Try
+                Dim data As String = readTable()
+                If data.Contains("<tablename>") Then
+                    Dim oldtitle As String = getData(data, "tablename")
+                    data = data.Replace("<tablename>" + oldtitle + "</tablename>", "<tablename>" + xmlEncode(newtitle) + "</tablename>")
+                    writeTable(data)
+                Else
+                    writeTable("<tablename>" + xmlEncode(newtitle) + "</tablename>" + vbCrLf + data)
+                End If
+            Catch ex As Exception
+                MsgBox("이름 변경 도중 문제가 발생했습니다." + vbCr + ex.Message, vbCritical)
+                Exit Sub
+            End Try
+
+            titleEditMode = False
+            TableTitleLabel.Visible = True
+            RenameTitleTextBox.Visible = False
+            TitleEditBT.Image = My.Resources.bt_titleedit
+            updateCell()
+        End If
+    End Sub
+
+    Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles RenameTitleTextBox.KeyDown
+        If e.KeyCode = Keys.Return Then
+            TitleEditApply()
         End If
     End Sub
 
@@ -1307,6 +1316,10 @@ Public Class Form1
 
     Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked,
         NotifyIcon1.DoubleClick, OpenTableTrayItem.Click
+        ReopenForm()
+    End Sub
+
+    Public Sub ReopenForm()
         Opacity = 0
         Show()
         WindowState = FormWindowState.Normal

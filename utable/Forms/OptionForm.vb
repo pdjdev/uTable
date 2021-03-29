@@ -110,7 +110,7 @@ Public Class OptionForm
         SettingMenu_Update.SettingLabel.Text = "업데이트"
         SettingMenu_Info.SettingLabel.Text = "프로그램 정보"
 
-        VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString + "   -  by PBJSoftware 2020"
+        VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString + "   -  by PBJSoftware 2021"
 
         SwitchMode(1)
 
