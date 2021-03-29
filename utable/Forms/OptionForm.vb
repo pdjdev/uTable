@@ -126,6 +126,12 @@ Public Class OptionForm
         '페이드 효과 기본값 = 1
         FadeEffectChk.Checked = Not (GetINI("SETTING", "FadeEffect", "", ININamePath) = "0")
 
+        '트레이숨기기 기본값 = 0
+        HideToTrayChk.Checked = (GetINI("SETTING", "HideToTray", "", ININamePath) = "1")
+
+        '항상위 기본값 = 0
+        TopMostChk.Checked = (GetINI("SETTING", "TopMost", "", ININamePath) = "1")
+
         '표확장 기본값 = 1
         ExpandCellChk.Checked = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
 
@@ -517,6 +523,15 @@ Public Class OptionForm
 
     Private Sub FadeEffectChk_CheckedChanged(sender As Object, e As EventArgs) Handles FadeEffectChk.CheckedChanged
         ApplySetting("FadeEffect", FadeEffectChk.Checked)
+    End Sub
+
+    Private Sub HideToTrayChk_CheckedChanged(sender As Object, e As EventArgs) Handles HideToTrayChk.CheckedChanged
+        ApplySetting("HideToTray", HideToTrayChk.Checked)
+    End Sub
+
+    Private Sub TopMostChk_CheckedChanged(sender As Object, e As EventArgs) Handles TopMostChk.CheckedChanged
+        ApplySetting("TopMost", TopMostChk.Checked)
+        Form1.TopMost = TopMostChk.Checked
     End Sub
 
     '바로 적용 보여주기 위해 시간표 새로고침

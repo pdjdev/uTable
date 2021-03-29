@@ -27,6 +27,20 @@ Partial Class OptionForm
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.MainPanel = New System.Windows.Forms.Panel()
+        Me.TabPage_Basic = New System.Windows.Forms.Panel()
+        Me.TopMostChk = New System.Windows.Forms.CheckBox()
+        Me.HideToTrayChk = New System.Windows.Forms.CheckBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.D_ThemeRbt = New System.Windows.Forms.RadioButton()
+        Me.W_ThemeRbt = New System.Windows.Forms.RadioButton()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.FadeEffectChk = New System.Windows.Forms.CheckBox()
+        Me.MinStartChk = New System.Windows.Forms.CheckBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.SnapToEdgeChk = New System.Windows.Forms.CheckBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.StartupChk = New System.Windows.Forms.CheckBox()
         Me.TapPage_Notification = New System.Windows.Forms.Panel()
         Me.TodaysCourseNotifyChk = New System.Windows.Forms.CheckBox()
         Me.CourseNotifyPanel = New System.Windows.Forms.Panel()
@@ -43,18 +57,6 @@ Partial Class OptionForm
         Me.Notify_30min_Chk = New System.Windows.Forms.CheckBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.CourseNotifyChk = New System.Windows.Forms.CheckBox()
-        Me.TabPage_Basic = New System.Windows.Forms.Panel()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.D_ThemeRbt = New System.Windows.Forms.RadioButton()
-        Me.W_ThemeRbt = New System.Windows.Forms.RadioButton()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.FadeEffectChk = New System.Windows.Forms.CheckBox()
-        Me.MinStartChk = New System.Windows.Forms.CheckBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.SnapToEdgeChk = New System.Windows.Forms.CheckBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.StartupChk = New System.Windows.Forms.CheckBox()
         Me.TabPage_Data = New System.Windows.Forms.Panel()
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.SettingSaveRbt = New System.Windows.Forms.RadioButton()
@@ -130,10 +132,10 @@ Partial Class OptionForm
         Me.TitlePanel.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainPanel.SuspendLayout()
-        Me.TapPage_Notification.SuspendLayout()
-        Me.CourseNotifyPanel.SuspendLayout()
         Me.TabPage_Basic.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.TapPage_Notification.SuspendLayout()
+        Me.CourseNotifyPanel.SuspendLayout()
         Me.TabPage_Data.SuspendLayout()
         Me.Panel6.SuspendLayout()
         Me.CustomDirPanel.SuspendLayout()
@@ -185,8 +187,8 @@ Partial Class OptionForm
         'MainPanel
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
-        Me.MainPanel.Controls.Add(Me.TapPage_Notification)
         Me.MainPanel.Controls.Add(Me.TabPage_Basic)
+        Me.MainPanel.Controls.Add(Me.TapPage_Notification)
         Me.MainPanel.Controls.Add(Me.TabPage_Data)
         Me.MainPanel.Controls.Add(Me.TabPage_Table)
         Me.MainPanel.Controls.Add(Me.TabPage_Update)
@@ -198,6 +200,157 @@ Partial Class OptionForm
         Me.MainPanel.Name = "MainPanel"
         Me.MainPanel.Size = New System.Drawing.Size(589, 287)
         Me.MainPanel.TabIndex = 1
+        '
+        'TabPage_Basic
+        '
+        Me.TabPage_Basic.Controls.Add(Me.TopMostChk)
+        Me.TabPage_Basic.Controls.Add(Me.HideToTrayChk)
+        Me.TabPage_Basic.Controls.Add(Me.Panel1)
+        Me.TabPage_Basic.Controls.Add(Me.Label3)
+        Me.TabPage_Basic.Controls.Add(Me.FadeEffectChk)
+        Me.TabPage_Basic.Controls.Add(Me.MinStartChk)
+        Me.TabPage_Basic.Controls.Add(Me.Label7)
+        Me.TabPage_Basic.Controls.Add(Me.SnapToEdgeChk)
+        Me.TabPage_Basic.Controls.Add(Me.Label2)
+        Me.TabPage_Basic.Controls.Add(Me.Label1)
+        Me.TabPage_Basic.Controls.Add(Me.StartupChk)
+        Me.TabPage_Basic.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage_Basic.Location = New System.Drawing.Point(148, 10)
+        Me.TabPage_Basic.Name = "TabPage_Basic"
+        Me.TabPage_Basic.Size = New System.Drawing.Size(441, 277)
+        Me.TabPage_Basic.TabIndex = 3
+        '
+        'TopMostChk
+        '
+        Me.TopMostChk.AutoSize = True
+        Me.TopMostChk.Location = New System.Drawing.Point(23, 238)
+        Me.TopMostChk.Name = "TopMostChk"
+        Me.TopMostChk.Size = New System.Drawing.Size(106, 19)
+        Me.TopMostChk.TabIndex = 13
+        Me.TopMostChk.Text = "항상 위에 표시"
+        Me.TopMostChk.UseVisualStyleBackColor = True
+        '
+        'HideToTrayChk
+        '
+        Me.HideToTrayChk.AutoSize = True
+        Me.HideToTrayChk.Location = New System.Drawing.Point(23, 216)
+        Me.HideToTrayChk.Name = "HideToTrayChk"
+        Me.HideToTrayChk.Size = New System.Drawing.Size(210, 19)
+        Me.HideToTrayChk.TabIndex = 12
+        Me.HideToTrayChk.Text = "최소화 시 작업 표시줄에서 숨기기"
+        Me.HideToTrayChk.UseVisualStyleBackColor = True
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.D_ThemeRbt)
+        Me.Panel1.Controls.Add(Me.W_ThemeRbt)
+        Me.Panel1.Location = New System.Drawing.Point(263, 164)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(127, 53)
+        Me.Panel1.TabIndex = 11
+        '
+        'D_ThemeRbt
+        '
+        Me.D_ThemeRbt.AutoSize = True
+        Me.D_ThemeRbt.Location = New System.Drawing.Point(3, 28)
+        Me.D_ThemeRbt.Name = "D_ThemeRbt"
+        Me.D_ThemeRbt.Size = New System.Drawing.Size(49, 19)
+        Me.D_ThemeRbt.TabIndex = 1
+        Me.D_ThemeRbt.TabStop = True
+        Me.D_ThemeRbt.Text = "다크"
+        Me.D_ThemeRbt.UseVisualStyleBackColor = True
+        '
+        'W_ThemeRbt
+        '
+        Me.W_ThemeRbt.AutoSize = True
+        Me.W_ThemeRbt.Location = New System.Drawing.Point(3, 7)
+        Me.W_ThemeRbt.Name = "W_ThemeRbt"
+        Me.W_ThemeRbt.Size = New System.Drawing.Size(97, 19)
+        Me.W_ThemeRbt.TabIndex = 0
+        Me.W_ThemeRbt.TabStop = True
+        Me.W_ThemeRbt.Text = "화이트 (기본)"
+        Me.W_ThemeRbt.UseVisualStyleBackColor = True
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label3.Location = New System.Drawing.Point(259, 144)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(74, 20)
+        Me.Label3.TabIndex = 10
+        Me.Label3.Text = "테마 선택"
+        '
+        'FadeEffectChk
+        '
+        Me.FadeEffectChk.AutoSize = True
+        Me.FadeEffectChk.Location = New System.Drawing.Point(23, 194)
+        Me.FadeEffectChk.Name = "FadeEffectChk"
+        Me.FadeEffectChk.Size = New System.Drawing.Size(199, 19)
+        Me.FadeEffectChk.TabIndex = 9
+        Me.FadeEffectChk.Text = "페이드 인/아웃 애니메이션 적용"
+        Me.FadeEffectChk.UseVisualStyleBackColor = True
+        '
+        'MinStartChk
+        '
+        Me.MinStartChk.AutoSize = True
+        Me.MinStartChk.Location = New System.Drawing.Point(23, 70)
+        Me.MinStartChk.Name = "MinStartChk"
+        Me.MinStartChk.Size = New System.Drawing.Size(146, 19)
+        Me.MinStartChk.TabIndex = 8
+        Me.MinStartChk.Text = "최소화 된 상태로 시작"
+        Me.MinStartChk.UseVisualStyleBackColor = True
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label7.Location = New System.Drawing.Point(17, 144)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(74, 20)
+        Me.Label7.TabIndex = 7
+        Me.Label7.Text = "모양 설정"
+        '
+        'SnapToEdgeChk
+        '
+        Me.SnapToEdgeChk.AutoSize = True
+        Me.SnapToEdgeChk.Location = New System.Drawing.Point(23, 172)
+        Me.SnapToEdgeChk.Name = "SnapToEdgeChk"
+        Me.SnapToEdgeChk.Size = New System.Drawing.Size(210, 19)
+        Me.SnapToEdgeChk.TabIndex = 6
+        Me.SnapToEdgeChk.Text = "화면 모서리에 자동으로 붙게 하기"
+        Me.SnapToEdgeChk.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.Gray
+        Me.Label2.Location = New System.Drawing.Point(20, 97)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(234, 30)
+        Me.Label2.TabIndex = 5
+        Me.Label2.Text = "※ 실행 파일(.exe)의 위치가 변경되는 경우" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "    다시 설정하셔야 합니다."
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Location = New System.Drawing.Point(17, 20)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(74, 20)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "시작 설정"
+        '
+        'StartupChk
+        '
+        Me.StartupChk.AutoSize = True
+        Me.StartupChk.Location = New System.Drawing.Point(23, 48)
+        Me.StartupChk.Name = "StartupChk"
+        Me.StartupChk.Size = New System.Drawing.Size(227, 19)
+        Me.StartupChk.TabIndex = 3
+        Me.StartupChk.Text = "Windows 시작 시 같이 프로그램 실행"
+        Me.StartupChk.UseVisualStyleBackColor = True
         '
         'TapPage_Notification
         '
@@ -367,135 +520,6 @@ Partial Class OptionForm
         Me.CourseNotifyChk.Text = "강의 알림 활성화"
         Me.CourseNotifyChk.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.CourseNotifyChk.UseVisualStyleBackColor = True
-        '
-        'TabPage_Basic
-        '
-        Me.TabPage_Basic.Controls.Add(Me.Panel1)
-        Me.TabPage_Basic.Controls.Add(Me.Label3)
-        Me.TabPage_Basic.Controls.Add(Me.FadeEffectChk)
-        Me.TabPage_Basic.Controls.Add(Me.MinStartChk)
-        Me.TabPage_Basic.Controls.Add(Me.Label7)
-        Me.TabPage_Basic.Controls.Add(Me.SnapToEdgeChk)
-        Me.TabPage_Basic.Controls.Add(Me.Label2)
-        Me.TabPage_Basic.Controls.Add(Me.Label1)
-        Me.TabPage_Basic.Controls.Add(Me.StartupChk)
-        Me.TabPage_Basic.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage_Basic.Location = New System.Drawing.Point(148, 10)
-        Me.TabPage_Basic.Name = "TabPage_Basic"
-        Me.TabPage_Basic.Size = New System.Drawing.Size(441, 277)
-        Me.TabPage_Basic.TabIndex = 3
-        '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.D_ThemeRbt)
-        Me.Panel1.Controls.Add(Me.W_ThemeRbt)
-        Me.Panel1.Location = New System.Drawing.Point(263, 182)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(127, 53)
-        Me.Panel1.TabIndex = 11
-        '
-        'D_ThemeRbt
-        '
-        Me.D_ThemeRbt.AutoSize = True
-        Me.D_ThemeRbt.Location = New System.Drawing.Point(3, 28)
-        Me.D_ThemeRbt.Name = "D_ThemeRbt"
-        Me.D_ThemeRbt.Size = New System.Drawing.Size(49, 19)
-        Me.D_ThemeRbt.TabIndex = 1
-        Me.D_ThemeRbt.TabStop = True
-        Me.D_ThemeRbt.Text = "다크"
-        Me.D_ThemeRbt.UseVisualStyleBackColor = True
-        '
-        'W_ThemeRbt
-        '
-        Me.W_ThemeRbt.AutoSize = True
-        Me.W_ThemeRbt.Location = New System.Drawing.Point(3, 7)
-        Me.W_ThemeRbt.Name = "W_ThemeRbt"
-        Me.W_ThemeRbt.Size = New System.Drawing.Size(97, 19)
-        Me.W_ThemeRbt.TabIndex = 0
-        Me.W_ThemeRbt.TabStop = True
-        Me.W_ThemeRbt.Text = "화이트 (기본)"
-        Me.W_ThemeRbt.UseVisualStyleBackColor = True
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label3.Location = New System.Drawing.Point(259, 162)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(74, 20)
-        Me.Label3.TabIndex = 10
-        Me.Label3.Text = "테마 선택"
-        '
-        'FadeEffectChk
-        '
-        Me.FadeEffectChk.AutoSize = True
-        Me.FadeEffectChk.Location = New System.Drawing.Point(23, 212)
-        Me.FadeEffectChk.Name = "FadeEffectChk"
-        Me.FadeEffectChk.Size = New System.Drawing.Size(199, 19)
-        Me.FadeEffectChk.TabIndex = 9
-        Me.FadeEffectChk.Text = "페이드 인/아웃 애니메이션 적용"
-        Me.FadeEffectChk.UseVisualStyleBackColor = True
-        '
-        'MinStartChk
-        '
-        Me.MinStartChk.AutoSize = True
-        Me.MinStartChk.Location = New System.Drawing.Point(23, 70)
-        Me.MinStartChk.Name = "MinStartChk"
-        Me.MinStartChk.Size = New System.Drawing.Size(146, 19)
-        Me.MinStartChk.TabIndex = 8
-        Me.MinStartChk.Text = "최소화 된 상태로 시작"
-        Me.MinStartChk.UseVisualStyleBackColor = True
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label7.Location = New System.Drawing.Point(17, 162)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(74, 20)
-        Me.Label7.TabIndex = 7
-        Me.Label7.Text = "모양 설정"
-        '
-        'SnapToEdgeChk
-        '
-        Me.SnapToEdgeChk.AutoSize = True
-        Me.SnapToEdgeChk.Location = New System.Drawing.Point(23, 190)
-        Me.SnapToEdgeChk.Name = "SnapToEdgeChk"
-        Me.SnapToEdgeChk.Size = New System.Drawing.Size(210, 19)
-        Me.SnapToEdgeChk.TabIndex = 6
-        Me.SnapToEdgeChk.Text = "화면 모서리에 자동으로 붙게 하기"
-        Me.SnapToEdgeChk.UseVisualStyleBackColor = True
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.Gray
-        Me.Label2.Location = New System.Drawing.Point(20, 97)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(234, 30)
-        Me.Label2.TabIndex = 5
-        Me.Label2.Text = "※ 실행 파일(.exe)의 위치가 변경되는 경우" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "    다시 설정하셔야 합니다."
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label1.Location = New System.Drawing.Point(17, 20)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(74, 20)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "시작 설정"
-        '
-        'StartupChk
-        '
-        Me.StartupChk.AutoSize = True
-        Me.StartupChk.Location = New System.Drawing.Point(23, 48)
-        Me.StartupChk.Name = "StartupChk"
-        Me.StartupChk.Size = New System.Drawing.Size(227, 19)
-        Me.StartupChk.TabIndex = 3
-        Me.StartupChk.Text = "Windows 시작 시 같이 프로그램 실행"
-        Me.StartupChk.UseVisualStyleBackColor = True
         '
         'TabPage_Data
         '
@@ -1257,14 +1281,14 @@ Partial Class OptionForm
         Me.TitlePanel.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainPanel.ResumeLayout(False)
-        Me.TapPage_Notification.ResumeLayout(False)
-        Me.TapPage_Notification.PerformLayout()
-        Me.CourseNotifyPanel.ResumeLayout(False)
-        Me.CourseNotifyPanel.PerformLayout()
         Me.TabPage_Basic.ResumeLayout(False)
         Me.TabPage_Basic.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.TapPage_Notification.ResumeLayout(False)
+        Me.TapPage_Notification.PerformLayout()
+        Me.CourseNotifyPanel.ResumeLayout(False)
+        Me.CourseNotifyPanel.PerformLayout()
         Me.TabPage_Data.ResumeLayout(False)
         Me.TabPage_Data.PerformLayout()
         Me.Panel6.ResumeLayout(False)
@@ -1392,4 +1416,6 @@ Partial Class OptionForm
     Friend WithEvents Label22 As Label
     Friend WithEvents NotificationSoundFileOpenBT As Button
     Friend WithEvents NotificationSoundPlayBT As Button
+    Friend WithEvents TopMostChk As CheckBox
+    Friend WithEvents HideToTrayChk As CheckBox
 End Class

@@ -379,6 +379,7 @@ Public Class Form1
                     ClearCheckBoxItem.Font = New Font(fntname, ClearCheckBoxItem.Font.Size)
                     BT1MenuTitle.Font = New Font(fntname, BT1MenuTitle.Font.Size, FontStyle.Bold)
                     ChangeThemeItem.Font = New Font(fntname, ChangeThemeItem.Font.Size)
+                    TopMostItem.Font = New Font(fntname, SnapToEdgeItem.Font.Size)
                     SnapToEdgeItem.Font = New Font(fntname, SnapToEdgeItem.Font.Size)
                     ColorSettingItem.Font = New Font(fntname, ColorSettingItem.Font.Size)
                     OpacitySelectItem.Font = New Font(fntname, OpacitySelectItem.Font.Size)
@@ -700,6 +701,8 @@ Public Class Form1
                 TodayCourseNotify()
             End If
         End If
+
+        TopMost = (GetINI("SETTING", "TopMost", "", ININamePath) = "1")
     End Sub
 
     Private Sub MinBT_MouseEnter(sender As Object, e As EventArgs) Handles MinBT.MouseEnter
@@ -714,8 +717,9 @@ Public Class Form1
 
         If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
             WindowState = FormWindowState.Minimized
+            If GetINI("SETTING", "HideToTray", "", ININamePath) = "1" Then Hide()
         Else
-            hiding = True
+                hiding = True
             tmp_opa = Opacity
             prevloc = Me.Location
             hideani.Start()
@@ -789,6 +793,16 @@ Public Class Form1
         BT1_menu.Show(Cursor.Position.X - BT1_menu.Width, Cursor.Position.Y)
     End Sub
 
+    Private Sub TopMostItem_Click(sender As Object, e As EventArgs) Handles TopMostItem.Click
+        If TopMost = True Then
+            SetINI("SETTING", "TopMost", "0", ININamePath)
+            TopMost = False
+        Else
+            SetINI("SETTING", "TopMost", "1", ININamePath)
+            TopMost = True
+        End If
+    End Sub
+
     Private Sub Menu_2_Click(sender As Object, e As EventArgs) Handles SnapToEdgeItem.Click
         If snaptoedge Then
             SetINI("SETTING", "SnapToEdge", "0", ININamePath)
@@ -813,6 +827,12 @@ Public Class Form1
             SnapToEdgeItem.Text = "창에 붙지 않기"
         Else
             SnapToEdgeItem.Text = "창에 붙기"
+        End If
+
+        If TopMost Then
+            TopMostItem.Text = "항상 위에 표시 안함"
+        Else
+            TopMostItem.Text = "항상 위에 표시"
         End If
 
         Select Case GetINI("SETTING", "Opacity", "", ININamePath)
@@ -1183,6 +1203,7 @@ Public Class Form1
             WindowState = FormWindowState.Minimized
             Me.Opacity = tmp_opa
             hiding = False
+            If GetINI("SETTING", "HideToTray", "", ININamePath) = "1" Then Hide()
         Else
             Me.SetDesktopLocation(Location.X, Location.Y + dpicalc(Me, poscount))
             poscount += 1
@@ -1284,10 +1305,14 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked, NotifyIcon1.DoubleClick, OpenTableTrayItem.Click
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked,
+        NotifyIcon1.DoubleClick, OpenTableTrayItem.Click
+        Opacity = 0
+        Show()
         WindowState = FormWindowState.Normal
         TopMost = True
         Refresh()
         TopMost = False
+        FadeIn(Me, Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath)))
     End Sub
 End Class
