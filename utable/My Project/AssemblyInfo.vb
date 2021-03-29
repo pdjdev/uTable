@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("대학생을 위한 시간표 프로그램")>
 <Assembly: AssemblyCompany("PBJSoftware")>
 <Assembly: AssemblyProduct("uTable")>
-<Assembly: AssemblyCopyright("Copyright © PBJSoftware 2020")>
+<Assembly: AssemblyCopyright("Copyright © PBJSoftware 2021")>
 <Assembly: AssemblyTrademark("PBJSoftware")>
 
 <Assembly: ComVisible(True)>
@@ -31,5 +31,6 @@ Imports System.Runtime.InteropServices
 ' 기본값으로 할 수 있습니다.
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.5.0.0")>
-<Assembly: AssemblyFileVersion("1.5.0.0")>
+<Assembly: AssemblyVersion("1.6.0.0")>
+<Assembly: AssemblyFileVersion("1.6.0.0")>
+

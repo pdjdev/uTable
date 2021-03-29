@@ -43,11 +43,11 @@ Partial Class CellControl
         '
         Me.TopTimeLabel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TopTimeLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.TopTimeLabel.Location = New System.Drawing.Point(24, 0)
+        Me.TopTimeLabel.Location = New System.Drawing.Point(19, 0)
         Me.TopTimeLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.TopTimeLabel.Name = "TopTimeLabel"
         Me.TopTimeLabel.Padding = New System.Windows.Forms.Padding(0, 2, 0, 0)
-        Me.TopTimeLabel.Size = New System.Drawing.Size(156, 24)
+        Me.TopTimeLabel.Size = New System.Drawing.Size(125, 19)
         Me.TopTimeLabel.TabIndex = 0
         Me.TopTimeLabel.Text = "TopTimeLabel"
         Me.TopTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -57,10 +57,9 @@ Partial Class CellControl
         Me.BottomTimeLabel.AutoSize = True
         Me.BottomTimeLabel.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.BottomTimeLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.BottomTimeLabel.Location = New System.Drawing.Point(0, 302)
-        Me.BottomTimeLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.BottomTimeLabel.Location = New System.Drawing.Point(0, 243)
         Me.BottomTimeLabel.Name = "BottomTimeLabel"
-        Me.BottomTimeLabel.Size = New System.Drawing.Size(156, 23)
+        Me.BottomTimeLabel.Size = New System.Drawing.Size(118, 17)
         Me.BottomTimeLabel.TabIndex = 1
         Me.BottomTimeLabel.Text = "BottomTimeLabel"
         Me.BottomTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight
@@ -71,10 +70,9 @@ Partial Class CellControl
         Me.Panel1.Controls.Add(Me.ProfLabel)
         Me.Panel1.Controls.Add(Me.TitleLabel)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(0, 26)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel1.Location = New System.Drawing.Point(0, 21)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(180, 276)
+        Me.Panel1.Size = New System.Drawing.Size(144, 222)
         Me.Panel1.TabIndex = 2
         '
         'MemoLabel
@@ -82,11 +80,10 @@ Partial Class CellControl
         Me.MemoLabel.AutoSize = True
         Me.MemoLabel.Dock = System.Windows.Forms.DockStyle.Top
         Me.MemoLabel.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.MemoLabel.Location = New System.Drawing.Point(0, 48)
-        Me.MemoLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.MemoLabel.MaximumSize = New System.Drawing.Size(180, 0)
+        Me.MemoLabel.Location = New System.Drawing.Point(0, 37)
+        Me.MemoLabel.MaximumSize = New System.Drawing.Size(144, 0)
         Me.MemoLabel.Name = "MemoLabel"
-        Me.MemoLabel.Size = New System.Drawing.Size(53, 20)
+        Me.MemoLabel.Size = New System.Drawing.Size(42, 15)
         Me.MemoLabel.TabIndex = 2
         Me.MemoLabel.Text = "Memo"
         Me.MemoLabel.UseMnemonic = False
@@ -96,11 +93,10 @@ Partial Class CellControl
         Me.ProfLabel.AutoSize = True
         Me.ProfLabel.Dock = System.Windows.Forms.DockStyle.Top
         Me.ProfLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.ProfLabel.Location = New System.Drawing.Point(0, 25)
-        Me.ProfLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.ProfLabel.MaximumSize = New System.Drawing.Size(180, 0)
+        Me.ProfLabel.Location = New System.Drawing.Point(0, 20)
+        Me.ProfLabel.MaximumSize = New System.Drawing.Size(144, 0)
         Me.ProfLabel.Name = "ProfLabel"
-        Me.ProfLabel.Size = New System.Drawing.Size(87, 23)
+        Me.ProfLabel.Size = New System.Drawing.Size(67, 17)
         Me.ProfLabel.TabIndex = 1
         Me.ProfLabel.Text = "ProfName"
         Me.ProfLabel.UseMnemonic = False
@@ -111,10 +107,9 @@ Partial Class CellControl
         Me.TitleLabel.Dock = System.Windows.Forms.DockStyle.Top
         Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TitleLabel.Location = New System.Drawing.Point(0, 0)
-        Me.TitleLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.TitleLabel.MaximumSize = New System.Drawing.Size(180, 0)
+        Me.TitleLabel.MaximumSize = New System.Drawing.Size(144, 0)
         Me.TitleLabel.Name = "TitleLabel"
-        Me.TitleLabel.Size = New System.Drawing.Size(50, 25)
+        Me.TitleLabel.Size = New System.Drawing.Size(40, 20)
         Me.TitleLabel.TabIndex = 0
         Me.TitleLabel.Text = "Title"
         Me.TitleLabel.UseMnemonic = False
@@ -123,9 +118,8 @@ Partial Class CellControl
         '
         Me.TopNotchPanel.Dock = System.Windows.Forms.DockStyle.Top
         Me.TopNotchPanel.Location = New System.Drawing.Point(0, 0)
-        Me.TopNotchPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TopNotchPanel.Name = "TopNotchPanel"
-        Me.TopNotchPanel.Size = New System.Drawing.Size(180, 2)
+        Me.TopNotchPanel.Size = New System.Drawing.Size(144, 2)
         Me.TopNotchPanel.TabIndex = 3
         '
         'Timer1
@@ -139,9 +133,8 @@ Partial Class CellControl
         Me.TopPanel.Controls.Add(Me.ChkBox1)
         Me.TopPanel.Dock = System.Windows.Forms.DockStyle.Top
         Me.TopPanel.Location = New System.Drawing.Point(0, 2)
-        Me.TopPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TopPanel.Name = "TopPanel"
-        Me.TopPanel.Size = New System.Drawing.Size(180, 24)
+        Me.TopPanel.Size = New System.Drawing.Size(144, 19)
         Me.TopPanel.TabIndex = 3
         '
         'ChkBox1
@@ -149,9 +142,8 @@ Partial Class CellControl
         Me.ChkBox1.Dock = System.Windows.Forms.DockStyle.Left
         Me.ChkBox1.Image = Global.uTable.My.Resources.Resources.check1_w_96
         Me.ChkBox1.Location = New System.Drawing.Point(0, 0)
-        Me.ChkBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ChkBox1.Name = "ChkBox1"
-        Me.ChkBox1.Size = New System.Drawing.Size(24, 24)
+        Me.ChkBox1.Size = New System.Drawing.Size(19, 19)
         Me.ChkBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.ChkBox1.TabIndex = 3
         Me.ChkBox1.TabStop = False
@@ -162,7 +154,7 @@ Partial Class CellControl
         '
         'CellControl
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.Transparent
         Me.Controls.Add(Me.Panel1)
@@ -172,9 +164,8 @@ Partial Class CellControl
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ForeColor = System.Drawing.Color.White
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "CellControl"
-        Me.Size = New System.Drawing.Size(180, 325)
+        Me.Size = New System.Drawing.Size(144, 260)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.TopPanel.ResumeLayout(False)

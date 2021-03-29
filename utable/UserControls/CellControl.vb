@@ -53,10 +53,10 @@
         End If
 
         'SetCourse.modifyMode = True
-
         For Each s As String In getDatas(readTable(), "course")
             If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = Name Then
                 ViewCourse.olddata = s
+                Exit For
             End If
         Next
 

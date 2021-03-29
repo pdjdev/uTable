@@ -56,7 +56,6 @@ Partial Class Form1
         Me.ChangeThemeItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_1_1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_1_2 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SnapToEdgeItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorSettingItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AllColorSetItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AllDarkerItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -65,6 +64,9 @@ Partial Class Form1
         Me.OpacitySelectItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
         Me.GetFromETItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.TopMostItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SnapToEdgeItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.OptionItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -185,7 +187,7 @@ Partial Class Form1
         Me.TopPanel.Location = New System.Drawing.Point(0, 0)
         Me.TopPanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TopPanel.Name = "TopPanel"
-        Me.TopPanel.Padding = New System.Windows.Forms.Padding(5)
+        Me.TopPanel.Padding = New System.Windows.Forms.Padding(5, 5, 5, 5)
         Me.TopPanel.Size = New System.Drawing.Size(814, 40)
         Me.TopPanel.TabIndex = 1
         '
@@ -435,12 +437,12 @@ Partial Class Form1
         Me.BT1_menu.BackColor = System.Drawing.Color.White
         Me.BT1_menu.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BT1_menu.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ClearCheckBoxItem, Me.ChangeThemeItem, Me.SnapToEdgeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
+        Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ClearCheckBoxItem, Me.ChangeThemeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator2, Me.TopMostItem, Me.SnapToEdgeItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
         Me.BT1_menu.Name = "BT1_menu"
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
-        Me.BT1_menu.Size = New System.Drawing.Size(180, 232)
+        Me.BT1_menu.Size = New System.Drawing.Size(180, 262)
         '
         'BT1MenuTitle
         '
@@ -483,13 +485,6 @@ Partial Class Form1
         Me.Menu_1_2.Name = "Menu_1_2"
         Me.Menu_1_2.Size = New System.Drawing.Size(168, 24)
         Me.Menu_1_2.Text = "다크"
-        '
-        'SnapToEdgeItem
-        '
-        Me.SnapToEdgeItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.SnapToEdgeItem.Name = "SnapToEdgeItem"
-        Me.SnapToEdgeItem.Size = New System.Drawing.Size(179, 24)
-        Me.SnapToEdgeItem.Text = "창에 붙기"
         '
         'ColorSettingItem
         '
@@ -550,6 +545,25 @@ Partial Class Form1
         Me.GetFromETItem.Name = "GetFromETItem"
         Me.GetFromETItem.Size = New System.Drawing.Size(179, 24)
         Me.GetFromETItem.Text = "에타에서 불러오기"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(176, 6)
+        '
+        'TopMostItem
+        '
+        Me.TopMostItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TopMostItem.Name = "TopMostItem"
+        Me.TopMostItem.Size = New System.Drawing.Size(179, 24)
+        Me.TopMostItem.Text = "항상 위에 표시"
+        '
+        'SnapToEdgeItem
+        '
+        Me.SnapToEdgeItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.SnapToEdgeItem.Name = "SnapToEdgeItem"
+        Me.SnapToEdgeItem.Size = New System.Drawing.Size(179, 24)
+        Me.SnapToEdgeItem.Text = "창에 붙기"
         '
         'ToolStripSeparator1
         '
@@ -627,7 +641,7 @@ Partial Class Form1
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(500, 400)
         Me.Name = "Form1"
-        Me.Padding = New System.Windows.Forms.Padding(4)
+        Me.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Text = "uTable"
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.TimeTable.ResumeLayout(False)
@@ -690,4 +704,10 @@ Partial Class Form1
     Friend WithEvents ColorDialog1 As ColorDialog
     Friend WithEvents MessageItem As ToolStripMenuItem
     Friend WithEvents ClearCheckBoxItem As ToolStripMenuItem
+    Friend WithEvents NotifyIcon1 As NotifyIcon
+    Friend WithEvents Tray_menu As ContextMenuStrip
+    Friend WithEvents OpenTableTrayItem As ToolStripMenuItem
+    Friend WithEvents ExitTrayItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents TopMostItem As ToolStripMenuItem
 End Class
