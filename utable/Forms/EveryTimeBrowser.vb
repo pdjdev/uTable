@@ -1,6 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-
-Public Class EveryTimeBrowser
+﻿Public Class EveryTimeBrowser
     Dim colorMode As String = Nothing '시간표 채울때 색상에 맞추도록
     Public targetUrl As String
     Dim webdone As Boolean = False
@@ -45,15 +43,6 @@ Public Class EveryTimeBrowser
 
 #End Region
 
-    <DllImport("urlmon.dll", CharSet:=CharSet.Ansi)>
-    Private Shared Function UrlMkSetSessionOption(ByVal dwOption As Integer, ByVal pBuffer As String, ByVal dwBufferLength As Integer, ByVal dwReserved As Integer) As Integer
-    End Function
-
-    Const URLMON_OPTION_USERAGENT As Integer = &H10000001
-    Public Sub ChangeUserAgent(ByVal Agent As String)
-        UrlMkSetSessionOption(URLMON_OPTION_USERAGENT, Agent, Agent.Length, 0)
-    End Sub
-
     Private Sub FadeInEffect(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.Refresh()
         dpivalue = dpicalc(Me, 100)
@@ -65,8 +54,6 @@ Public Class EveryTimeBrowser
     End Sub
 
     Private Sub EveryTimeBrowser_Load(sender As Object, e As EventArgs) Handles Me.Load
-        ChangeUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.123 Safari/537.36")
-
         Opacity = 0
         colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
 
@@ -182,7 +169,6 @@ Public Class EveryTimeBrowser
 
             Next
 
-            Threading.Thread.Sleep(3000)
             WebBrowser1.Navigate("https://everytime.kr/user/logout")
 
             If MsgBox("불러오기가 완료되었습니다. 바로 적용하시겠습니까?" + vbCr + "기존 시간표는 지워집니다!",

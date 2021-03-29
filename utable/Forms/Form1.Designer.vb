@@ -73,10 +73,6 @@ Partial Class Form1
         Me.TimeCheck = New System.Windows.Forms.Timer(Me.components)
         Me.hideani = New System.Windows.Forms.Timer(Me.components)
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
-        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
-        Me.Tray_menu = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.OpenTableTrayItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExitTrayItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TimeTable.SuspendLayout()
         Me.TopPanel.SuspendLayout()
         CType(Me.TitleEditBT, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -84,7 +80,6 @@ Partial Class Form1
         Me.DayTable.SuspendLayout()
         Me.Panel7.SuspendLayout()
         Me.BT1_menu.SuspendLayout()
-        Me.Tray_menu.SuspendLayout()
         Me.SuspendLayout()
         '
         'TimeTable
@@ -201,7 +196,7 @@ Partial Class Form1
         Me.TitleEditBT.BackColor = System.Drawing.Color.Transparent
         Me.TitleEditBT.Dock = System.Windows.Forms.DockStyle.Left
         Me.TitleEditBT.Image = Global.uTable.My.Resources.Resources.bt_titleedit
-        Me.TitleEditBT.Location = New System.Drawing.Point(334, 5)
+        Me.TitleEditBT.Location = New System.Drawing.Point(368, 5)
         Me.TitleEditBT.Name = "TitleEditBT"
         Me.TitleEditBT.Size = New System.Drawing.Size(20, 30)
         Me.TitleEditBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -216,9 +211,9 @@ Partial Class Form1
         Me.TableTitleLabel.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.TableTitleLabel.Location = New System.Drawing.Point(183, 5)
         Me.TableTitleLabel.Name = "TableTitleLabel"
-        Me.TableTitleLabel.Size = New System.Drawing.Size(151, 30)
+        Me.TableTitleLabel.Size = New System.Drawing.Size(185, 30)
         Me.TableTitleLabel.TabIndex = 29
-        Me.TableTitleLabel.Text = "TableTitleLabel"
+        Me.TableTitleLabel.Text = "2020-1학기 시간표"
         '
         'RenameTitleTextBox
         '
@@ -614,7 +609,6 @@ Partial Class Form1
         '
         Me.Tray_menu.BackColor = System.Drawing.Color.White
         Me.Tray_menu.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Tray_menu.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.Tray_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenTableTrayItem, Me.ExitTrayItem})
         Me.Tray_menu.Name = "ContextMenuStrip1"
         Me.Tray_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
@@ -658,7 +652,6 @@ Partial Class Form1
         Me.DayTable.ResumeLayout(False)
         Me.Panel7.ResumeLayout(False)
         Me.BT1_menu.ResumeLayout(False)
-        Me.Tray_menu.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
