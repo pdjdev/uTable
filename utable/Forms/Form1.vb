@@ -1,7 +1,16 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.InteropServices
 
+' TODO
+' 메모기능 손보기
+' - memo.rtf로 저장하기
+' - 자동저장기능 구현 (5초간 타이핑 대기 후 동기저장)
+' - rtf가 이상하게 굴면 그냥 rtb대신 tb 넣고 txt파일로 저장
+
 Public Class Form1
+
+#Region "변수"
+
     Dim starttime As Integer = 0
     Dim endtime As Integer = 0
     Dim updated As Boolean = False
@@ -47,6 +56,10 @@ Public Class Form1
 
     Public currentDPI As Integer = 96
 
+    Dim isSizeDragging As Boolean = False
+    Dim DragPosition As New Point
+
+#End Region
 
 #Region "Aero 그림자 효과 (Vista이상)"
 
@@ -177,8 +190,7 @@ Public Class Form1
         If dir <> -1 Then
             ReleaseCapture()
             SendMessage(Me.Handle, WM_NCLBUTTONDOWN, dir, 0)
-            TimeTable.Visible = True
-            SizeLabel.Hide()
+            SuspendTable(False)
         End If
     End Sub
 
@@ -197,10 +209,7 @@ Public Class Form1
         If e.Button = Windows.Forms.MouseButtons.Left And Me.WindowState <> FormWindowState.Maximized Then
             If Not GetINI("SETTING", "WindowLocked", "", ININamePath) = "1" Then
                 'TimeTable.SuspendLayout()
-                TimeTable.Visible = False
-                SizeLabel.Show()
-                SizeLabel.Text = "드래그하여 크기를 조절하세요"
-
+                SuspendTable(True)
                 ResizeForm(resizeDir)
             End If
         End If
@@ -260,7 +269,20 @@ Public Class Form1
         Cursor = Cursors.Default
     End Sub
 
+    Sub SuspendTable(bool As Boolean)
+        If bool Then
+            TimeTable.Visible = False
+            SizeLabel.Show()
+            SizeLabel.Text = "드래그하여 크기를 조절하세요"
+        Else
+            TimeTable.Visible = True
+            SizeLabel.Hide()
+        End If
+    End Sub
+
 #End Region
+
+#Region "GUI 색 업데이트/설정"
 
     Public Sub UpdateColor()
 
@@ -269,7 +291,9 @@ Public Class Form1
         BackColor = edgeColor(colorMode)
 
         TopPanel.BackColor = mainColor(colorMode)
-        Panel7.BackColor = mainColor(colorMode)
+        MainPanel.BackColor = mainColor(colorMode)
+
+        ' ====== 시간표 색상 적용 =====
 
         MonLabel.BackColor = tableColor_1(colorMode)
         TueLabel.BackColor = tableColor_2(colorMode)
@@ -295,6 +319,11 @@ Public Class Form1
         SatPanel.BackColor = tableColor_2(colorMode)
         SunPanel.BackColor = tableColor_1(colorMode)
 
+        ' ====== 시간표 색상 끝 =====
+
+
+        ' ====== 상단컨트롤 색상 적용 =====
+
         RefreshBT.FlatAppearance.BorderColor = BorderColor(colorMode)
         AddCourseBT.FlatAppearance.BorderColor = BorderColor(colorMode)
         MenuBT.FlatAppearance.BorderColor = BorderColor(colorMode)
@@ -312,6 +341,41 @@ Public Class Form1
         MenuBT.ForeColor = textColor(colorMode)
 
         TableTitleLabel.ForeColor = textColor(colorMode)
+
+        ' ====== 상단컨트롤 색상 끝 =====
+
+
+        ' ====== 메모패널 색상 적용 =====
+
+        MemoPanel.BackColor = mainColor(colorMode)
+        MemoPanel.ForeColor = textColor(colorMode)
+        DragSizePanel.BackColor = dragBarColor(colorMode)
+        DragSizePanel.ForeColor = textColor(colorMode)
+        MemoRTB.BackColor = tableColor_1(colorMode)
+        MemoRTB.ForeColor = textColor(colorMode)
+
+        MemoFontBT.FlatAppearance.BorderColor = BorderColor(colorMode)
+        MemoZoomBT1.FlatAppearance.BorderColor = BorderColor(colorMode)
+        MemoZoomBT2.FlatAppearance.BorderColor = BorderColor(colorMode)
+        MemoZoomNumBT.FlatAppearance.BorderColor = BorderColor(colorMode)
+
+        MemoFontBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
+        MemoZoomBT1.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
+        MemoZoomBT2.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
+        MemoZoomNumBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
+
+        MemoFontBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+        MemoZoomBT1.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+        MemoZoomBT2.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+        MemoZoomNumBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+
+        MemoFontBT.ForeColor = textColor(colorMode)
+        MemoZoomBT1.ForeColor = textColor(colorMode)
+        MemoZoomBT2.ForeColor = textColor(colorMode)
+        MemoZoomNumBT.ForeColor = textColor(colorMode)
+
+        ' ====== 메모패널 색상 끝 =====
+
 
         Select Case colorMode
             Case "Dark"
@@ -344,6 +408,68 @@ Public Class Form1
 
         TimeTable.Refresh()
     End Sub
+
+    Sub updateDateDraw()
+
+        '요일 색상 초기화
+        MonLabel.BackColor = tableColor_1(colorMode)
+        TueLabel.BackColor = tableColor_2(colorMode)
+        WedLabel.BackColor = tableColor_1(colorMode)
+        ThuLabel.BackColor = tableColor_2(colorMode)
+        FriLabel.BackColor = tableColor_1(colorMode)
+        SatLabel.BackColor = tableColor_2(colorMode)
+        SunLabel.BackColor = tableColor_1(colorMode)
+
+        MonLabel.ForeColor = lightTextColor(colorMode)
+        TueLabel.ForeColor = lightTextColor(colorMode)
+        WedLabel.ForeColor = lightTextColor(colorMode)
+        ThuLabel.ForeColor = lightTextColor(colorMode)
+        FriLabel.ForeColor = lightTextColor(colorMode)
+        SatLabel.ForeColor = lightTextColor(colorMode)
+        SunLabel.ForeColor = lightTextColor(colorMode)
+
+        '
+        Select Case Now.DayOfWeek
+            Case DayOfWeek.Monday
+                MonLabel.BackColor = activeDayColor(colorMode)
+                MonLabel.ForeColor = activeDayTextColor(colorMode)
+            Case DayOfWeek.Tuesday
+                TueLabel.BackColor = activeDayColor(colorMode)
+                TueLabel.ForeColor = activeDayTextColor(colorMode)
+            Case DayOfWeek.Wednesday
+                WedLabel.BackColor = activeDayColor(colorMode)
+                WedLabel.ForeColor = activeDayTextColor(colorMode)
+            Case DayOfWeek.Thursday
+                ThuLabel.BackColor = activeDayColor(colorMode)
+                ThuLabel.ForeColor = activeDayTextColor(colorMode)
+            Case DayOfWeek.Friday
+                FriLabel.BackColor = activeDayColor(colorMode)
+                FriLabel.ForeColor = activeDayTextColor(colorMode)
+            Case DayOfWeek.Saturday
+                If showSaturday Then
+                    SatLabel.BackColor = activeDayColor(colorMode)
+                    SatLabel.ForeColor = activeDayTextColor(colorMode)
+                End If
+            Case DayOfWeek.Sunday
+                If showSunday Then
+                    SunLabel.BackColor = activeDayColor(colorMode)
+                    SunLabel.ForeColor = activeDayTextColor(colorMode)
+                End If
+        End Select
+
+        Dim fdw As DateTime = DateTime.Today.AddDays(-Weekday(DateTime.Today, FirstDayOfWeek.System) + 2)
+        MonLabel.Text = fdw.ToString("dd") + " 월요일"
+        TueLabel.Text = fdw.AddDays(1).ToString("dd") + " 화요일"
+        WedLabel.Text = fdw.AddDays(2).ToString("dd") + " 수요일"
+        ThuLabel.Text = fdw.AddDays(3).ToString("dd") + " 목요일"
+        FriLabel.Text = fdw.AddDays(4).ToString("dd") + " 금요일"
+        SatLabel.Text = fdw.AddDays(5).ToString("dd") + " 토요일"
+        SunLabel.Text = fdw.AddDays(6).ToString("dd") + " 일요일"
+    End Sub
+
+#End Region
+
+#Region "앱 주요 이벤트 (Load, Shown)"
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -383,6 +509,7 @@ Public Class Form1
                     SnapToEdgeItem.Font = New Font(fntname, SnapToEdgeItem.Font.Size)
                     ColorSettingItem.Font = New Font(fntname, ColorSettingItem.Font.Size)
                     OpacitySelectItem.Font = New Font(fntname, OpacitySelectItem.Font.Size)
+                    ShowMemoItem.Font = New Font(fntname, ShowMemoItem.Font.Size)
                     GetFromETItem.Font = New Font(fntname, GetFromETItem.Font.Size)
                     OptionItem.Font = New Font(fntname, OptionItem.Font.Size)
                     ExitItem.Font = New Font(fntname, ExitItem.Font.Size)
@@ -414,8 +541,343 @@ Public Class Form1
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
         tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
 
+        MemoOptionUpdate()
+        updateCell()
+
+    End Sub
+
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        formshown = True
+        Refresh()
+
+        If Not IsOnScreen(Me) Then
+
+            Dim scrn = Screen.GetWorkingArea(Me)
+            Dim workArea = New Point(scrn.Location.X + scrn.Width, scrn.Location.Y + scrn.Height)
+            Dim tmpLoc As New Point(0, 0)
+
+            If Location.X < 0 Then
+                tmpLoc.X = 0
+            ElseIf Location.X > workArea.X - Me.Width Then
+                tmpLoc.X = workArea.X - Me.Width
+            End If
+
+            If Location.Y < 0 Then
+                tmpLoc.Y = 0
+            ElseIf Location.Y > workArea.Y - Me.Height Then
+                tmpLoc.Y = workArea.Y - Me.Height
+            End If
+
+            Location = tmpLoc '디스플레이 범위 밖일시 안으로 넣기
+            'MsgBox("바운더리 밖입니다.")
+        End If
+
+        If GetINI("SETTING", "MinStart", "", ININamePath) = "1" Then
+            WindowState = FormWindowState.Minimized
+            Opacity = Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath))
+        Else
+
+            '강제 포커스
+            TopMost = True
+            Refresh()
+            TopMost = False
+
+            If IsNumeric(GetINI("SETTING", "Opacity", "", ININamePath)) Then
+                FadeIn(Me, Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath)))
+            Else
+                FadeIn(Me, 1)
+            End If
+        End If
+
+        If Not checkStartUp() Then
+            If Not GetINI("SETTING", "NoStartupSuggestion", "", ININamePath) = "1" Then
+                WindowState = FormWindowState.Normal
+                StartupAsk.ShowDialog(Me)
+            End If
+        End If
+
+        If Not updated Then
+            MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
+                   + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
+        Else
+            If Not GetINI("SETTING", "TodaysCourseNotify", "", ININamePath) = "0" Then
+                TodayCourseNotify()
+            End If
+        End If
+
+        TopMost = (GetINI("SETTING", "TopMost", "", ININamePath) = "1")
+    End Sub
+
+#End Region
+
+#Region "앱 WindowState 변경"
+
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked,
+        NotifyIcon1.DoubleClick, OpenTableTrayItem.Click
+        ReopenForm()
+    End Sub
+
+    Public Sub ReopenForm()
+        Opacity = 0
+        Show()
+        WindowState = FormWindowState.Normal
+        TopMost = True
+        Refresh()
+        TopMost = False
+        FadeIn(Me, Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath)))
+    End Sub
+
+#End Region
+
+#Region "버튼/도구상자/키 이벤트"
+    Private Sub AddCourseBT_Click(sender As Object, e As EventArgs) Handles AddCourseBT.Click
+        SetCourse.Close()
+        SetCourse.SetDesktopLocation(Location.X + AddCourseBT.Location.X + AddCourseBT.Width - SetCourse.Width, Location.Y + DayTable.Location.Y)
+        SetCourse.Show()
+    End Sub
+
+    Private Sub RefreshBT_Click(sender As Object, e As EventArgs) Handles RefreshBT.Click
         updateCell()
     End Sub
+
+    Private Sub MinBT_MouseEnter(sender As Object, e As EventArgs) Handles MinBT.MouseEnter
+        MinBT.BackColor = buttonActiveColor(colorMode)
+    End Sub
+
+    Private Sub MinBT_MouseLeave(sender As Object, e As EventArgs) Handles MinBT.MouseLeave
+        MinBT.BackColor = Color.Transparent
+    End Sub
+
+    Private Sub MinBT_Click(sender As Object, e As EventArgs) Handles MinBT.Click
+
+        If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
+            WindowState = FormWindowState.Minimized
+            If GetINI("SETTING", "HideToTray", "", ININamePath) = "1" Then Hide()
+        Else
+            hiding = True
+            tmp_opa = Opacity
+            prevloc = Me.Location
+            hideani.Start()
+        End If
+
+    End Sub
+
+    Private Sub TitleEditBT_MouseEnter(sender As Object, e As EventArgs) Handles TitleEditBT.MouseEnter
+        TitleEditBT.BackColor = buttonActiveColor(colorMode)
+    End Sub
+
+    Private Sub TitleEditBT_MouseLeave(sender As Object, e As EventArgs) Handles TitleEditBT.MouseLeave
+        TitleEditBT.BackColor = Color.Transparent
+    End Sub
+
+    Private Sub TitleEditBT_Click(sender As Object, e As EventArgs) Handles TitleEditBT.Click
+        If titleEditMode Then
+            TitleEditApply()
+        Else
+            titleEditMode = True
+            RenameTitleTextBox.Width = TableTitleLabel.Width
+            RenameTitleTextBox.Text = TableTitleLabel.Text
+            TableTitleLabel.Visible = False
+            RenameTitleTextBox.Visible = True
+            TitleEditBT.Image = My.Resources.bt_titleapply
+        End If
+    End Sub
+
+
+    Private Sub Menu_1_1_Click(sender As Object, e As EventArgs) Handles Menu_1_1.Click
+        SetINI("SETTING", "ColorMode", "White", ININamePath)
+        If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
+        UpdateColor()
+    End Sub
+
+    Private Sub Menu_1_2_Click(sender As Object, e As EventArgs) Handles Menu_1_2.Click
+        SetINI("SETTING", "ColorMode", "Dark", ININamePath)
+        If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
+        UpdateColor()
+    End Sub
+
+    Private Sub MenuBT_Click(sender As Object, e As EventArgs) Handles MenuBT.Click
+        BT1_menu.Show(Cursor.Position.X - BT1_menu.Width, Cursor.Position.Y)
+    End Sub
+
+    Private Sub TopMostItem_Click(sender As Object, e As EventArgs) Handles TopMostItem.Click
+        If TopMost = True Then
+            SetINI("SETTING", "TopMost", "0", ININamePath)
+            TopMost = False
+        Else
+            SetINI("SETTING", "TopMost", "1", ININamePath)
+            TopMost = True
+        End If
+    End Sub
+
+    Private Sub Menu_2_Click(sender As Object, e As EventArgs) Handles SnapToEdgeItem.Click
+        If snaptoedge Then
+            SetINI("SETTING", "SnapToEdge", "0", ININamePath)
+        Else
+            SetINI("SETTING", "SnapToEdge", "1", ININamePath)
+        End If
+    End Sub
+
+    Private Sub BT1_menu_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles BT1_menu.Opening
+
+        Dim ver = My.Application.Info.Version.ToString.Split(".")
+        BT1MenuTitle.Text = "uTable " + ver(0) + "." + ver(1) + "v"
+
+        BT1_menu.BackColor = mainColor(colorMode)
+        BT1MenuTitle.ForeColor = lightTextColor(colorMode)
+        BT1_menu.ForeColor = textColor(colorMode)
+
+        snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
+        ClearCheckBoxItem.Visible = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
+
+        If snaptoedge Then
+            SnapToEdgeItem.Text = "창에 붙지 않기"
+        Else
+            SnapToEdgeItem.Text = "창에 붙기"
+        End If
+
+        If TopMost Then
+            TopMostItem.Text = "항상 위에 표시 안함"
+        Else
+            TopMostItem.Text = "항상 위에 표시"
+        End If
+
+        Select Case GetINI("SETTING", "Opacity", "", ININamePath)
+            Case "1"
+                ToolStripComboBox1.SelectedIndex = 0
+            Case "0.9"
+                ToolStripComboBox1.SelectedIndex = 1
+            Case "0.8"
+                ToolStripComboBox1.SelectedIndex = 2
+            Case "0.7"
+                ToolStripComboBox1.SelectedIndex = 3
+            Case "0.6"
+                ToolStripComboBox1.SelectedIndex = 4
+            Case "0.5"
+                ToolStripComboBox1.SelectedIndex = 5
+            Case "0.4"
+                ToolStripComboBox1.SelectedIndex = 6
+            Case "0.3"
+                ToolStripComboBox1.SelectedIndex = 7
+            Case "0.2"
+                ToolStripComboBox1.SelectedIndex = 8
+            Case Else
+                ToolStripComboBox1.SelectedIndex = 0
+        End Select
+
+        If GetINI("SETTING", "MemoShow", "", ININamePath) = "1" Then
+            ShowMemoItem.Text = "공통 메모장 숨기기"
+        Else
+            ShowMemoItem.Text = "공통 메모장 표시"
+        End If
+    End Sub
+
+    Private Sub Tray_menu_Opening(sender As Object, e As CancelEventArgs) Handles Tray_menu.Opening
+        Tray_menu.BackColor = mainColor(colorMode)
+        Tray_menu.ForeColor = textColor(colorMode)
+    End Sub
+
+    Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+        Select Case ToolStripComboBox1.SelectedIndex
+            Case 0 '100
+                Opacity = 1
+            Case 1 '90
+                Opacity = 0.9
+            Case 2 '80
+                Opacity = 0.8
+            Case 3 '70
+                Opacity = 0.7
+            Case 4 '60
+                Opacity = 0.6
+            Case 5 '50
+                Opacity = 0.5
+            Case 6 '40
+                Opacity = 0.4
+            Case 7 '30
+                Opacity = 0.3
+            Case 8 '20
+                Opacity = 0.2
+        End Select
+
+        SetINI("SETTING", "Opacity", Opacity.ToString, ININamePath)
+    End Sub
+
+    Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles RenameTitleTextBox.KeyDown
+        If e.KeyCode = Keys.Return Then
+            TitleEditApply()
+        End If
+    End Sub
+
+    Private Sub Menu_4_Click(sender As Object, e As EventArgs) Handles GetFromETItem.Click
+        EveryTimeBrowser.Close()
+        EverytimeSemesterSelector.Close()
+        EverytimeSemesterSelector.ShowDialog(Me)
+    End Sub
+
+    Private Sub Menu_5_Click(sender As Object, e As EventArgs) Handles OptionItem.Click
+        OptionForm.Close()
+        OptionForm.SetDesktopLocation(Location.X + Width - OptionForm.Width, Location.Y + TopPanel.Location.Y + TopPanel.Height)
+        OptionForm.ShowDialog(Me)
+    End Sub
+
+    Private Sub ExitItem_Click(sender As Object, e As EventArgs) Handles ExitItem.Click, ExitTrayItem.Click
+        Application.Exit()
+    End Sub
+
+    Private Sub AllColorSetItem_Click(sender As Object, e As EventArgs) Handles AllColorSetItem.Click
+        If ColorDialog1.ShowDialog() = DialogResult.OK Then
+            Dim tmp As String = ""
+            For Each s As String In courseData
+                s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ColorDialog1.Color))
+                tmp += "<course>" + s + "</course>" + vbCrLf
+            Next
+            writeTable(tmp)
+            updateCell()
+        End If
+    End Sub
+
+    Private Sub AllDarkerItem_Click(sender As Object, e As EventArgs) Handles AllDarkerItem.Click
+        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
+        For Each s As String In courseData
+            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
+            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
+            tmp += "<course>" + s + "</course>" + vbCrLf
+        Next
+        writeTable(tmp)
+        updateCell()
+    End Sub
+
+    Private Sub AllBrighterItem_Click(sender As Object, e As EventArgs) Handles AllBrighterItem.Click
+        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
+        For Each s As String In courseData
+            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
+            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
+            tmp += "<course>" + s + "</course>" + vbCrLf
+        Next
+        writeTable(tmp)
+        updateCell()
+    End Sub
+
+    Private Sub ClearCheckBoxItem_Click(sender As Object, e As EventArgs) Handles ClearCheckBoxItem.Click
+        Dim data As String = readTable()
+        writeTable(data.Replace("<checked>True</checked>", "<checked>False</checked>"))
+        updateCell()
+    End Sub
+
+    Private Sub ShowMemoItem_Click(sender As Object, e As EventArgs) Handles ShowMemoItem.Click
+        If GetINI("SETTING", "MemoShow", "", ININamePath) = "1" Then
+            SetINI("SETTING", "MemoShow", "0", ININamePath)
+        Else
+            SetINI("SETTING", "MemoShow", "1", ININamePath)
+        End If
+
+        MemoOptionUpdate()
+    End Sub
+
+#End Region
+
+#Region "시간표 셀 관리"
 
     Public Sub updateCell()
         Try
@@ -633,120 +1095,9 @@ Public Class Form1
         If cell.alwaysExpand Then cell.ForceExpand()
     End Sub
 
-    Private Sub AddCourseBT_Click(sender As Object, e As EventArgs) Handles AddCourseBT.Click
-        SetCourse.Close()
-        SetCourse.SetDesktopLocation(Location.X + AddCourseBT.Location.X + AddCourseBT.Width - SetCourse.Width, Location.Y + DayTable.Location.Y)
-        SetCourse.Show()
-    End Sub
+#End Region
 
-    Private Sub RefreshBT_Click(sender As Object, e As EventArgs) Handles RefreshBT.Click
-        updateCell()
-    End Sub
-
-    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        formshown = True
-        Refresh()
-
-        If Not IsOnScreen(Me) Then
-
-            Dim scrn = Screen.GetWorkingArea(Me)
-            Dim workArea = New Point(scrn.Location.X + scrn.Width, scrn.Location.Y + scrn.Height)
-            Dim tmpLoc As New Point(0, 0)
-
-            If Location.X < 0 Then
-                tmpLoc.X = 0
-            ElseIf Location.X > workArea.X - Me.Width Then
-                tmpLoc.X = workArea.X - Me.Width
-            End If
-
-            If Location.Y < 0 Then
-                tmpLoc.Y = 0
-            ElseIf Location.Y > workArea.Y - Me.Height Then
-                tmpLoc.Y = workArea.Y - Me.Height
-            End If
-
-            Location = tmpLoc '디스플레이 범위 밖일시 안으로 넣기
-            'MsgBox("바운더리 밖입니다.")
-        End If
-
-        If GetINI("SETTING", "MinStart", "", ININamePath) = "1" Then
-            WindowState = FormWindowState.Minimized
-            Opacity = Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath))
-        Else
-
-            '강제 포커스
-            TopMost = True
-            Refresh()
-            TopMost = False
-
-            If IsNumeric(GetINI("SETTING", "Opacity", "", ININamePath)) Then
-                FadeIn(Me, Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath)))
-            Else
-                FadeIn(Me, 1)
-            End If
-        End If
-
-        If Not checkStartUp() Then
-            If Not GetINI("SETTING", "NoStartupSuggestion", "", ININamePath) = "1" Then
-                WindowState = FormWindowState.Normal
-                StartupAsk.ShowDialog(Me)
-            End If
-        End If
-
-        If Not updated Then
-            MsgBox("설정값을 읽어올 수 없습니다." + vbCr + "(시간표를 설정해 주세요)" _
-                   + vbCr + vbCr + "tip: 우측 상단의 메뉴(...) 버튼 > '에타에서 불러오기' 를 통해 에브리타임 시간표를 바로 불러올 수 있습니다.", vbInformation)
-        Else
-            If Not GetINI("SETTING", "TodaysCourseNotify", "", ININamePath) = "0" Then
-                TodayCourseNotify()
-            End If
-        End If
-
-        TopMost = (GetINI("SETTING", "TopMost", "", ININamePath) = "1")
-    End Sub
-
-    Private Sub MinBT_MouseEnter(sender As Object, e As EventArgs) Handles MinBT.MouseEnter
-        MinBT.BackColor = buttonActiveColor(colorMode)
-    End Sub
-
-    Private Sub MinBT_MouseLeave(sender As Object, e As EventArgs) Handles MinBT.MouseLeave
-        MinBT.BackColor = Color.Transparent
-    End Sub
-
-    Private Sub MinBT_Click(sender As Object, e As EventArgs) Handles MinBT.Click
-
-        If GetINI("SETTING", "FadeEffect", "", ININamePath) = "0" Then
-            WindowState = FormWindowState.Minimized
-            If GetINI("SETTING", "HideToTray", "", ININamePath) = "1" Then Hide()
-        Else
-                hiding = True
-            tmp_opa = Opacity
-            prevloc = Me.Location
-            hideani.Start()
-        End If
-
-    End Sub
-
-    Private Sub TitleEditBT_MouseEnter(sender As Object, e As EventArgs) Handles TitleEditBT.MouseEnter
-        TitleEditBT.BackColor = buttonActiveColor(colorMode)
-    End Sub
-
-    Private Sub TitleEditBT_MouseLeave(sender As Object, e As EventArgs) Handles TitleEditBT.MouseLeave
-        TitleEditBT.BackColor = Color.Transparent
-    End Sub
-
-    Private Sub TitleEditBT_Click(sender As Object, e As EventArgs) Handles TitleEditBT.Click
-        If titleEditMode Then
-            TitleEditApply()
-        Else
-            titleEditMode = True
-            RenameTitleTextBox.Width = TableTitleLabel.Width
-            RenameTitleTextBox.Text = TableTitleLabel.Text
-            TableTitleLabel.Visible = False
-            RenameTitleTextBox.Visible = True
-            TitleEditBT.Image = My.Resources.bt_titleapply
-        End If
-    End Sub
+#Region "시간표 타이틀 관리"
 
     Private Sub TitleEditApply()
         Dim newtitle As String = RenameTitleTextBox.Text
@@ -780,123 +1131,78 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles RenameTitleTextBox.KeyDown
-        If e.KeyCode = Keys.Return Then
-            TitleEditApply()
+#End Region
+
+#Region "시간표 그리기 관리 (크기비율, 점선배경)"
+
+    Private Sub TimeTable_SizeChanged(sender As Object, e As EventArgs) Handles TimeTable.SizeChanged
+        'TimeTable.ResumeLayout()
+
+        If updated Then
+
+            For Each s As String In courseData
+                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
+                           getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
+            Next
+
+            TimeTable.Visible = True
+
         End If
     End Sub
 
-    Private Sub Menu_1_1_Click(sender As Object, e As EventArgs) Handles Menu_1_1.Click
-        SetINI("SETTING", "ColorMode", "White", ININamePath)
-        If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
-        UpdateColor()
-    End Sub
+    Private Sub TablePanel_Paint(sender As Object, e As PaintEventArgs) Handles MonPanel.Paint, TuePanel.Paint, WedPanel.Paint,
+        ThuPanel.Paint, FriPanel.Paint, SatPanel.Paint, SunPanel.Paint
 
-    Private Sub Menu_1_2_Click(sender As Object, e As EventArgs) Handles Menu_1_2.Click
-        SetINI("SETTING", "ColorMode", "Dark", ININamePath)
-        If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
-        UpdateColor()
-    End Sub
+        If Not showSaturday And sender Is SatPanel Then
+            If Not showSunday Then Exit Sub
+        ElseIf Not showSunday And sender Is SunPanel Then
+            Exit Sub
+        End If
 
-    Private Sub MenuBT_Click(sender As Object, e As EventArgs) Handles MenuBT.Click
-        BT1_menu.Show(Cursor.Position.X - BT1_menu.Width, Cursor.Position.Y)
-    End Sub
+        Dim panel As Panel = sender
 
-    Private Sub TopMostItem_Click(sender As Object, e As EventArgs) Handles TopMostItem.Click
-        If TopMost = True Then
-            SetINI("SETTING", "TopMost", "0", ININamePath)
-            TopMost = False
-        Else
-            SetINI("SETTING", "TopMost", "1", ININamePath)
-            TopMost = True
+        '시간표 시작과 끝 사이의 총 시간 길이
+        Dim timeLength As Integer = endtime - starttime
+        If Not timeLength > 0 Then Exit Sub
+
+        Dim panelHeight As Integer = MonPanel.Height
+        Dim panelWidth As Integer = MonPanel.Width
+        Dim minLengh As Double = 1 / timeLength * panelHeight
+
+        'Dim left As Integer = starttime Mod 60
+        Dim thickness As Integer = 3 * (currentDPI / 96)
+
+        Dim colorMul As Single = 0.9
+        If colorMode = "Dark" Then
+            colorMul = 1.35
+        End If
+
+        Dim c As Color = Color.FromArgb(panel.BackColor.R * colorMul,
+                                        panel.BackColor.G * colorMul,
+                                        panel.BackColor.B * colorMul)
+
+        If Not tablePatternSetting = "None" Then
+
+            Dim p As New Pen(c, thickness)
+            Dim g As Graphics = panel.CreateGraphics
+
+            p.DashStyle = Drawing2D.DashStyle.Dot
+
+            For j As Integer = starttime To endtime
+                If j > 0 And j Mod 60 = 0 Then
+                    Dim pos As Double = (j - starttime) * minLengh + thickness / 2
+                    g.DrawLine(p, New Point(0, pos), New Point(panelWidth, pos))
+                End If
+            Next
+
+            g.Dispose()
+            p.Dispose()
         End If
     End Sub
 
-    Private Sub Menu_2_Click(sender As Object, e As EventArgs) Handles SnapToEdgeItem.Click
-        If snaptoedge Then
-            SetINI("SETTING", "SnapToEdge", "0", ININamePath)
-        Else
-            SetINI("SETTING", "SnapToEdge", "1", ININamePath)
-        End If
-    End Sub
+#End Region
 
-    Private Sub BT1_menu_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles BT1_menu.Opening
-
-        Dim ver = My.Application.Info.Version.ToString.Split(".")
-        BT1MenuTitle.Text = "uTable " + ver(0) + "." + ver(1) + "v"
-
-        BT1_menu.BackColor = mainColor(colorMode)
-        BT1MenuTitle.ForeColor = lightTextColor(colorMode)
-        BT1_menu.ForeColor = textColor(colorMode)
-
-        snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
-        ClearCheckBoxItem.Visible = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
-
-        If snaptoedge Then
-            SnapToEdgeItem.Text = "창에 붙지 않기"
-        Else
-            SnapToEdgeItem.Text = "창에 붙기"
-        End If
-
-        If TopMost Then
-            TopMostItem.Text = "항상 위에 표시 안함"
-        Else
-            TopMostItem.Text = "항상 위에 표시"
-        End If
-
-        Select Case GetINI("SETTING", "Opacity", "", ININamePath)
-            Case "1"
-                ToolStripComboBox1.SelectedIndex = 0
-            Case "0.9"
-                ToolStripComboBox1.SelectedIndex = 1
-            Case "0.8"
-                ToolStripComboBox1.SelectedIndex = 2
-            Case "0.7"
-                ToolStripComboBox1.SelectedIndex = 3
-            Case "0.6"
-                ToolStripComboBox1.SelectedIndex = 4
-            Case "0.5"
-                ToolStripComboBox1.SelectedIndex = 5
-            Case "0.4"
-                ToolStripComboBox1.SelectedIndex = 6
-            Case "0.3"
-                ToolStripComboBox1.SelectedIndex = 7
-            Case "0.2"
-                ToolStripComboBox1.SelectedIndex = 8
-            Case Else
-                ToolStripComboBox1.SelectedIndex = 0
-        End Select
-    End Sub
-
-    Private Sub Tray_menu_Opening(sender As Object, e As CancelEventArgs) Handles Tray_menu.Opening
-        Tray_menu.BackColor = mainColor(colorMode)
-        Tray_menu.ForeColor = textColor(colorMode)
-    End Sub
-
-    Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
-        Select Case ToolStripComboBox1.SelectedIndex
-            Case 0 '100
-                Opacity = 1
-            Case 1 '90
-                Opacity = 0.9
-            Case 2 '80
-                Opacity = 0.8
-            Case 3 '70
-                Opacity = 0.7
-            Case 4 '60
-                Opacity = 0.6
-            Case 5 '50
-                Opacity = 0.5
-            Case 6 '40
-                Opacity = 0.4
-            Case 7 '30
-                Opacity = 0.3
-            Case 8 '20
-                Opacity = 0.2
-        End Select
-
-        SetINI("SETTING", "Opacity", Opacity.ToString, ININamePath)
-    End Sub
+#Region "타이머 이벤트 (Animation, Checker)"
 
     Private Sub TimeCheck_Tick(sender As Object, e As EventArgs) Handles TimeCheck.Tick
         If PrevDay = Nothing Or Not PrevDay = Today Then
@@ -916,6 +1222,28 @@ Public Class Form1
         End If
 
     End Sub
+
+
+    Private Sub hideani_Tick(sender As Object, e As EventArgs) Handles hideani.Tick
+        If poscount >= 15 Then
+            Me.Opacity = 0
+            poscount = 0
+            hideani.Stop()
+            Me.SetDesktopLocation(prevloc.X, prevloc.Y)
+            WindowState = FormWindowState.Minimized
+            Me.Opacity = tmp_opa
+            hiding = False
+            If GetINI("SETTING", "HideToTray", "", ININamePath) = "1" Then Hide()
+        Else
+            Me.SetDesktopLocation(Location.X, Location.Y + dpicalc(Me, poscount))
+            poscount += 1
+            Opacity -= tmp_opa / 15
+        End If
+    End Sub
+
+#End Region
+
+#Region "알림 설정"
 
     Sub CheckNotify()
         Try
@@ -1118,214 +1446,160 @@ Public Class Form1
 
     End Sub
 
-    Sub updateDateDraw()
+#End Region
 
-        '요일 색상 초기화
-        MonLabel.BackColor = tableColor_1(colorMode)
-        TueLabel.BackColor = tableColor_2(colorMode)
-        WedLabel.BackColor = tableColor_1(colorMode)
-        ThuLabel.BackColor = tableColor_2(colorMode)
-        FriLabel.BackColor = tableColor_1(colorMode)
-        SatLabel.BackColor = tableColor_2(colorMode)
-        SunLabel.BackColor = tableColor_1(colorMode)
+#Region "공통 메모란 설정"
+    Private Sub DragSizePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles DragSizePanel.MouseDown
+        isSizeDragging = True
+        SuspendTable(True)
+    End Sub
 
-        MonLabel.ForeColor = lightTextColor(colorMode)
-        TueLabel.ForeColor = lightTextColor(colorMode)
-        WedLabel.ForeColor = lightTextColor(colorMode)
-        ThuLabel.ForeColor = lightTextColor(colorMode)
-        FriLabel.ForeColor = lightTextColor(colorMode)
-        SatLabel.ForeColor = lightTextColor(colorMode)
-        SunLabel.ForeColor = lightTextColor(colorMode)
+    Private Sub DragSizePanel_MouseMove(sender As Object, e As MouseEventArgs) Handles DragSizePanel.MouseMove
+        If isSizeDragging Then
 
-        '
-        Select Case Now.DayOfWeek
-            Case DayOfWeek.Monday
-                MonLabel.BackColor = activeDayColor(colorMode)
-                MonLabel.ForeColor = activeDayTextColor(colorMode)
-            Case DayOfWeek.Tuesday
-                TueLabel.BackColor = activeDayColor(colorMode)
-                TueLabel.ForeColor = activeDayTextColor(colorMode)
-            Case DayOfWeek.Wednesday
-                WedLabel.BackColor = activeDayColor(colorMode)
-                WedLabel.ForeColor = activeDayTextColor(colorMode)
-            Case DayOfWeek.Thursday
-                ThuLabel.BackColor = activeDayColor(colorMode)
-                ThuLabel.ForeColor = activeDayTextColor(colorMode)
-            Case DayOfWeek.Friday
-                FriLabel.BackColor = activeDayColor(colorMode)
-                FriLabel.ForeColor = activeDayTextColor(colorMode)
-            Case DayOfWeek.Saturday
-                If showSaturday Then
-                    SatLabel.BackColor = activeDayColor(colorMode)
-                    SatLabel.ForeColor = activeDayTextColor(colorMode)
-                End If
-            Case DayOfWeek.Sunday
-                If showSunday Then
-                    SunLabel.BackColor = activeDayColor(colorMode)
-                    SunLabel.ForeColor = activeDayTextColor(colorMode)
-                End If
+            Select Case MemoPanel.Dock
+                Case DockStyle.Top
+                    If Height - (MousePosition.Y - DesktopBounds.Location.Y) > TopPanel.Height Then
+                        MemoPanel.Height = MousePosition.Y - DesktopBounds.Location.Y
+                        SetINI("SETTING", "MemoSize", MemoPanel.Height.ToString, ININamePath)
+                    End If
+                Case DockStyle.Bottom
+                    If MousePosition.Y - DesktopBounds.Location.Y > TopPanel.Height Then
+                        MemoPanel.Height = Height - MousePosition.Y + DesktopBounds.Location.Y
+                        SetINI("SETTING", "MemoSize", MemoPanel.Height.ToString, ININamePath)
+                    End If
+
+                Case DockStyle.Left
+                    If Width - (MousePosition.X - DesktopBounds.Location.X) > MinBT.Width Then
+                        MemoPanel.Width = MousePosition.X - DesktopBounds.Location.X
+                        SetINI("SETTING", "MemoSize", MemoPanel.Width.ToString, ININamePath)
+                    End If
+
+                Case DockStyle.Right
+                    If MousePosition.X - DesktopBounds.Location.X > MinBT.Width Then
+                        MemoPanel.Width = Width - MousePosition.X + DesktopBounds.Location.X
+                        SetINI("SETTING", "MemoSize", MemoPanel.Width.ToString, ININamePath)
+                    End If
+
+            End Select
+
+            DragSizePanel.Refresh()
+
+        End If
+    End Sub
+
+    Public Sub MemoOptionUpdate()
+        If GetINI("SETTING", "MemoShow", "", ININamePath) = "1" Then
+
+            If GetINI("SETTING", "MemoSize", "", ININamePath) = "" Then
+                ' 기본값
+                SetINI("SETTING", "MemoSize", (110 * currentDPI / 96).ToString, ININamePath)
+            End If
+
+
+            Dim memosize As Double = Convert.ToDouble(GetINI("SETTING", "MemoSize", "", ININamePath))
+            Dim memodock As String = GetINI("SETTING", "MemoDock", "", ININamePath)
+
+            Select Case memodock
+                Case "Top", "Bottom"
+                    If memosize > Height - TopPanel.Height Then
+                        memosize = Height - TopPanel.Height
+                    End If
+                Case "Left", "Right"
+                    If memosize > Width - MinBT.Width Then
+                        memosize = Width - MinBT.Width
+                    End If
+            End Select
+
+            Select Case memodock
+                Case "Top"
+                    MemoFormDockSelector(DockStyle.Top)
+                    MemoPanel.Height = memosize
+                Case "Bottom"
+                    MemoFormDockSelector(DockStyle.Bottom)
+                    MemoPanel.Height = memosize
+                Case "Left"
+                    MemoFormDockSelector(DockStyle.Left)
+                    MemoPanel.Width = memosize
+                Case "Right"
+                    MemoFormDockSelector(DockStyle.Right)
+                    MemoPanel.Width = memosize
+                Case Else
+                    ' 기본값
+                    MemoFormDockSelector(DockStyle.Bottom)
+                    SetINI("SETTING", "MemoDock", "Bottom", ININamePath)
+            End Select
+        Else
+            MemoPanel.Hide()
+        End If
+
+        Refresh()
+    End Sub
+
+    Public Sub MemoFormDockSelector(style As DockStyle)
+
+        Dim thickness As Integer = 15 * 96 / currentDPI
+
+        Select Case style
+            Case DockStyle.Top
+                MemoPanel.Dock = DockStyle.Top
+                DragSizePanel.Dock = DockStyle.Bottom
+                DragSizePanel.Height = thickness
+
+            Case DockStyle.Bottom
+                MemoPanel.Dock = DockStyle.Bottom
+                DragSizePanel.Dock = DockStyle.Top
+                DragSizePanel.Height = thickness
+
+            Case DockStyle.Left
+                MemoPanel.Dock = DockStyle.Left
+                DragSizePanel.Dock = DockStyle.Right
+                DragSizePanel.Width = thickness
+
+            Case DockStyle.Right
+                MemoPanel.Dock = DockStyle.Right
+                DragSizePanel.Dock = DockStyle.Left
+                DragSizePanel.Width = thickness
+
         End Select
 
-        Dim fdw As DateTime = DateTime.Today.AddDays(-Weekday(DateTime.Today, FirstDayOfWeek.System) + 2)
-        MonLabel.Text = fdw.ToString("dd") + " 월요일"
-        TueLabel.Text = fdw.AddDays(1).ToString("dd") + " 화요일"
-        WedLabel.Text = fdw.AddDays(2).ToString("dd") + " 수요일"
-        ThuLabel.Text = fdw.AddDays(3).ToString("dd") + " 목요일"
-        FriLabel.Text = fdw.AddDays(4).ToString("dd") + " 금요일"
-        SatLabel.Text = fdw.AddDays(5).ToString("dd") + " 토요일"
-        SunLabel.Text = fdw.AddDays(6).ToString("dd") + " 일요일"
+        MemoPanel.Show()
     End Sub
 
-    Private Sub Menu_4_Click(sender As Object, e As EventArgs) Handles GetFromETItem.Click
-        EveryTimeBrowser.Close()
-        EverytimeSemesterSelector.Close()
-        EverytimeSemesterSelector.ShowDialog(Me)
+    Private Sub DragSizePanel_MouseUp(sender As Object, e As MouseEventArgs) Handles DragSizePanel.MouseUp
+        isSizeDragging = False
+        SuspendTable(False)
     End Sub
 
-    Private Sub Menu_5_Click(sender As Object, e As EventArgs) Handles OptionItem.Click
-        OptionForm.Close()
-        OptionForm.SetDesktopLocation(Location.X + Width - OptionForm.Width, Location.Y + TopPanel.Location.Y + TopPanel.Height)
-        OptionForm.ShowDialog(Me)
+    Private Sub DragSizePanel_Paint(sender As Object, e As PaintEventArgs) Handles DragSizePanel.Paint
+        Dim thinkness As Integer = currentDPI / 96
+        Dim pen As Pen = New Pen(DragSizePanel.ForeColor, thinkness)
+        Dim linelength As Integer = 50 * currentDPI / 96
+        linelength -= linelength Mod thinkness
+
+        Dim p1, p2, p3, p4 As Point
+
+        Select Case MemoPanel.Dock
+            Case DockStyle.Top, DockStyle.Bottom
+                p1 = New Point((DragSizePanel.Width - linelength) / 2, DragSizePanel.Height * 0.33)
+                p2 = New Point((DragSizePanel.Width + linelength) / 2, DragSizePanel.Height * 0.33)
+                p3 = New Point((DragSizePanel.Width - linelength) / 2, DragSizePanel.Height * 0.66)
+                p4 = New Point((DragSizePanel.Width + linelength) / 2, DragSizePanel.Height * 0.66)
+            Case Else
+                p1 = New Point(DragSizePanel.Width * 0.33, (DragSizePanel.Height - linelength) / 2)
+                p2 = New Point(DragSizePanel.Width * 0.33, (DragSizePanel.Height + linelength) / 2)
+                p3 = New Point(DragSizePanel.Width * 0.66, (DragSizePanel.Height - linelength) / 2)
+                p4 = New Point(DragSizePanel.Width * 0.66, (DragSizePanel.Height + linelength) / 2)
+        End Select
+
+        e.Graphics.DrawLine(pen, p1, p2)
+        e.Graphics.DrawLine(pen, p3, p4)
     End Sub
 
-    Private Sub TimeTable_SizeChanged(sender As Object, e As EventArgs) Handles TimeTable.SizeChanged
-        'TimeTable.ResumeLayout()
-
-        If updated Then
-
-            For Each s As String In courseData
-                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
-                           getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
-            Next
-
-            TimeTable.Visible = True
-
-        End If
+    Private Sub DragSizePanel_SizeChanged(sender As Object, e As EventArgs) Handles DragSizePanel.SizeChanged
+        DragSizePanel.Refresh()
     End Sub
 
-    Private Sub hideani_Tick(sender As Object, e As EventArgs) Handles hideani.Tick
-        If poscount >= 15 Then
-            Me.Opacity = 0
-            poscount = 0
-            hideani.Stop()
-            Me.SetDesktopLocation(prevloc.X, prevloc.Y)
-            WindowState = FormWindowState.Minimized
-            Me.Opacity = tmp_opa
-            hiding = False
-            If GetINI("SETTING", "HideToTray", "", ININamePath) = "1" Then Hide()
-        Else
-            Me.SetDesktopLocation(Location.X, Location.Y + dpicalc(Me, poscount))
-            poscount += 1
-            Opacity -= tmp_opa / 15
-        End If
-    End Sub
+#End Region
 
-    Private Sub ExitItem_Click(sender As Object, e As EventArgs) Handles ExitItem.Click, ExitTrayItem.Click
-        Application.Exit()
-    End Sub
-
-    Private Sub AllColorSetItem_Click(sender As Object, e As EventArgs) Handles AllColorSetItem.Click
-        If ColorDialog1.ShowDialog() = DialogResult.OK Then
-            Dim tmp As String = ""
-            For Each s As String In courseData
-                s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ColorDialog1.Color))
-                tmp += "<course>" + s + "</course>" + vbCrLf
-            Next
-            writeTable(tmp)
-            updateCell()
-        End If
-    End Sub
-
-    Private Sub AllDarkerItem_Click(sender As Object, e As EventArgs) Handles AllDarkerItem.Click
-        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
-        For Each s As String In courseData
-            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
-            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
-            tmp += "<course>" + s + "</course>" + vbCrLf
-        Next
-        writeTable(tmp)
-        updateCell()
-    End Sub
-
-    Private Sub AllBrighterItem_Click(sender As Object, e As EventArgs) Handles AllBrighterItem.Click
-        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
-        For Each s As String In courseData
-            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
-            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
-            tmp += "<course>" + s + "</course>" + vbCrLf
-        Next
-        writeTable(tmp)
-        updateCell()
-    End Sub
-
-    Private Sub ClearCheckBoxItem_Click(sender As Object, e As EventArgs) Handles ClearCheckBoxItem.Click
-        Dim data As String = readTable()
-        writeTable(data.Replace("<checked>True</checked>", "<checked>False</checked>"))
-        updateCell()
-    End Sub
-
-    Private Sub TablePanel_Paint(sender As Object, e As PaintEventArgs) Handles MonPanel.Paint, TuePanel.Paint, WedPanel.Paint,
-        ThuPanel.Paint, FriPanel.Paint, SatPanel.Paint, SunPanel.Paint
-
-        If Not showSaturday And sender Is SatPanel Then
-            If Not showSunday Then Exit Sub
-        ElseIf Not showSunday And sender Is SunPanel Then
-            Exit Sub
-        End If
-
-        Dim panel As Panel = sender
-
-        '시간표 시작과 끝 사이의 총 시간 길이
-        Dim timeLength As Integer = endtime - starttime
-        If Not timeLength > 0 Then Exit Sub
-
-        Dim panelHeight As Integer = MonPanel.Height
-        Dim panelWidth As Integer = MonPanel.Width
-        Dim minLengh As Double = 1 / timeLength * panelHeight
-
-        'Dim left As Integer = starttime Mod 60
-        Dim thickness As Integer = 3 * (currentDPI / 96)
-
-        Dim colorMul As Single = 0.9
-        If colorMode = "Dark" Then
-            colorMul = 1.35
-        End If
-
-        Dim c As Color = Color.FromArgb(panel.BackColor.R * colorMul,
-                                        panel.BackColor.G * colorMul,
-                                        panel.BackColor.B * colorMul)
-
-        If Not tablePatternSetting = "None" Then
-
-            Dim p As New Pen(c, thickness)
-            Dim g As Graphics = panel.CreateGraphics
-
-            p.DashStyle = Drawing2D.DashStyle.Dot
-
-            For j As Integer = starttime To endtime
-                If j > 0 And j Mod 60 = 0 Then
-                    Dim pos As Double = (j - starttime) * minLengh + thickness / 2
-                    g.DrawLine(p, New Point(0, pos), New Point(panelWidth, pos))
-                End If
-            Next
-
-            g.Dispose()
-            p.Dispose()
-        End If
-    End Sub
-
-    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked,
-        NotifyIcon1.DoubleClick, OpenTableTrayItem.Click
-        ReopenForm()
-    End Sub
-
-    Public Sub ReopenForm()
-        Opacity = 0
-        Show()
-        WindowState = FormWindowState.Normal
-        TopMost = True
-        Refresh()
-        TopMost = False
-        FadeIn(Me, Convert.ToDouble(GetINI("SETTING", "Opacity", "", ININamePath)))
-    End Sub
 End Class

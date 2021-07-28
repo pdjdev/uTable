@@ -212,6 +212,16 @@ Module GUIModule
 
     End Function
 
+    Public Function dragBarColor(mode As String) As Color
+        Select Case mode
+            Case "Dark"
+                Return Color.FromArgb(38, 38, 38)
+            Case Else
+                Return Color.FromArgb(230, 230, 230)
+        End Select
+
+    End Function
+
     Public Function tableColor_1(mode As String) As Color
         Select Case mode
             Case "Dark"

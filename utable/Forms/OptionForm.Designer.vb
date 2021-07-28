@@ -361,7 +361,7 @@ Partial Class OptionForm
         Me.TabPage_Info.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabPage_Info.Location = New System.Drawing.Point(148, 10)
         Me.TabPage_Info.Name = "TabPage_Info"
-        Me.TabPage_Info.Padding = New System.Windows.Forms.Padding(10, 10, 10, 10)
+        Me.TabPage_Info.Padding = New System.Windows.Forms.Padding(10)
         Me.TabPage_Info.Size = New System.Drawing.Size(441, 277)
         Me.TabPage_Info.TabIndex = 14
         '
@@ -1188,7 +1188,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Info.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.SettingMenu_Info.Location = New System.Drawing.Point(0, 238)
-        Me.SettingMenu_Info.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SettingMenu_Info.Margin = New System.Windows.Forms.Padding(4)
         Me.SettingMenu_Info.Name = "SettingMenu_Info"
         Me.SettingMenu_Info.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Info.TabIndex = 5
@@ -1197,7 +1197,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Update.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Update.Location = New System.Drawing.Point(0, 166)
-        Me.SettingMenu_Update.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SettingMenu_Update.Margin = New System.Windows.Forms.Padding(4)
         Me.SettingMenu_Update.Name = "SettingMenu_Update"
         Me.SettingMenu_Update.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Update.TabIndex = 4
@@ -1206,7 +1206,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Notification.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Notification.Location = New System.Drawing.Point(0, 127)
-        Me.SettingMenu_Notification.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SettingMenu_Notification.Margin = New System.Windows.Forms.Padding(4)
         Me.SettingMenu_Notification.Name = "SettingMenu_Notification"
         Me.SettingMenu_Notification.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Notification.TabIndex = 6
@@ -1215,7 +1215,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Data.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Data.Location = New System.Drawing.Point(0, 88)
-        Me.SettingMenu_Data.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SettingMenu_Data.Margin = New System.Windows.Forms.Padding(4)
         Me.SettingMenu_Data.Name = "SettingMenu_Data"
         Me.SettingMenu_Data.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Data.TabIndex = 3
@@ -1224,7 +1224,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Table.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Table.Location = New System.Drawing.Point(0, 49)
-        Me.SettingMenu_Table.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SettingMenu_Table.Margin = New System.Windows.Forms.Padding(4)
         Me.SettingMenu_Table.Name = "SettingMenu_Table"
         Me.SettingMenu_Table.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Table.TabIndex = 2
@@ -1233,7 +1233,7 @@ Partial Class OptionForm
         '
         Me.SettingMenu_Basic.Dock = System.Windows.Forms.DockStyle.Top
         Me.SettingMenu_Basic.Location = New System.Drawing.Point(0, 10)
-        Me.SettingMenu_Basic.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SettingMenu_Basic.Margin = New System.Windows.Forms.Padding(4)
         Me.SettingMenu_Basic.Name = "SettingMenu_Basic"
         Me.SettingMenu_Basic.Size = New System.Drawing.Size(148, 39)
         Me.SettingMenu_Basic.TabIndex = 1

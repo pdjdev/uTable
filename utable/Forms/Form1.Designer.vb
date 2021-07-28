@@ -47,7 +47,7 @@ Partial Class Form1
         Me.WedLabel = New System.Windows.Forms.Label()
         Me.TueLabel = New System.Windows.Forms.Label()
         Me.MonLabel = New System.Windows.Forms.Label()
-        Me.Panel7 = New System.Windows.Forms.Panel()
+        Me.MainPanel = New System.Windows.Forms.Panel()
         Me.SizeLabel = New System.Windows.Forms.Label()
         Me.BT1_menu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BT1MenuTitle = New System.Windows.Forms.ToolStripMenuItem()
@@ -77,14 +77,26 @@ Partial Class Form1
         Me.Tray_menu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.OpenTableTrayItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitTrayItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MemoPanel = New System.Windows.Forms.Panel()
+        Me.DragSizePanel = New System.Windows.Forms.Panel()
+        Me.ShowMemoItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MemoRTB = New System.Windows.Forms.RichTextBox()
+        Me.MemoToolPanel = New System.Windows.Forms.Panel()
+        Me.MemoFontBT = New System.Windows.Forms.Button()
+        Me.MemoZoomBT1 = New System.Windows.Forms.Button()
+        Me.MemoZoomNumBT = New System.Windows.Forms.Button()
+        Me.MemoZoomBT2 = New System.Windows.Forms.Button()
+        Me.SavingLabel = New System.Windows.Forms.Label()
         Me.TimeTable.SuspendLayout()
         Me.TopPanel.SuspendLayout()
         CType(Me.TitleEditBT, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MinBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DayTable.SuspendLayout()
-        Me.Panel7.SuspendLayout()
+        Me.MainPanel.SuspendLayout()
         Me.BT1_menu.SuspendLayout()
         Me.Tray_menu.SuspendLayout()
+        Me.MemoPanel.SuspendLayout()
+        Me.MemoToolPanel.SuspendLayout()
         Me.SuspendLayout()
         '
         'TimeTable
@@ -110,7 +122,8 @@ Partial Class Form1
         Me.TimeTable.Name = "TimeTable"
         Me.TimeTable.RowCount = 1
         Me.TimeTable.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TimeTable.Size = New System.Drawing.Size(814, 570)
+        Me.TimeTable.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 485.0!))
+        Me.TimeTable.Size = New System.Drawing.Size(814, 440)
         Me.TimeTable.TabIndex = 0
         '
         'SunPanel
@@ -119,7 +132,7 @@ Partial Class Form1
         Me.SunPanel.Location = New System.Drawing.Point(696, 0)
         Me.SunPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.SunPanel.Name = "SunPanel"
-        Me.SunPanel.Size = New System.Drawing.Size(118, 570)
+        Me.SunPanel.Size = New System.Drawing.Size(118, 440)
         Me.SunPanel.TabIndex = 6
         '
         'SatPanel
@@ -129,7 +142,7 @@ Partial Class Form1
         Me.SatPanel.Location = New System.Drawing.Point(580, 0)
         Me.SatPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.SatPanel.Name = "SatPanel"
-        Me.SatPanel.Size = New System.Drawing.Size(116, 570)
+        Me.SatPanel.Size = New System.Drawing.Size(116, 440)
         Me.SatPanel.TabIndex = 5
         '
         'FriPanel
@@ -138,7 +151,7 @@ Partial Class Form1
         Me.FriPanel.Location = New System.Drawing.Point(464, 0)
         Me.FriPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.FriPanel.Name = "FriPanel"
-        Me.FriPanel.Size = New System.Drawing.Size(116, 570)
+        Me.FriPanel.Size = New System.Drawing.Size(116, 440)
         Me.FriPanel.TabIndex = 4
         '
         'ThuPanel
@@ -148,7 +161,7 @@ Partial Class Form1
         Me.ThuPanel.Location = New System.Drawing.Point(348, 0)
         Me.ThuPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.ThuPanel.Name = "ThuPanel"
-        Me.ThuPanel.Size = New System.Drawing.Size(116, 570)
+        Me.ThuPanel.Size = New System.Drawing.Size(116, 440)
         Me.ThuPanel.TabIndex = 3
         '
         'WedPanel
@@ -157,7 +170,7 @@ Partial Class Form1
         Me.WedPanel.Location = New System.Drawing.Point(232, 0)
         Me.WedPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.WedPanel.Name = "WedPanel"
-        Me.WedPanel.Size = New System.Drawing.Size(116, 570)
+        Me.WedPanel.Size = New System.Drawing.Size(116, 440)
         Me.WedPanel.TabIndex = 2
         '
         'TuePanel
@@ -167,7 +180,7 @@ Partial Class Form1
         Me.TuePanel.Location = New System.Drawing.Point(116, 0)
         Me.TuePanel.Margin = New System.Windows.Forms.Padding(0)
         Me.TuePanel.Name = "TuePanel"
-        Me.TuePanel.Size = New System.Drawing.Size(116, 570)
+        Me.TuePanel.Size = New System.Drawing.Size(116, 440)
         Me.TuePanel.TabIndex = 1
         '
         'MonPanel
@@ -176,7 +189,7 @@ Partial Class Form1
         Me.MonPanel.Location = New System.Drawing.Point(0, 0)
         Me.MonPanel.Margin = New System.Windows.Forms.Padding(0)
         Me.MonPanel.Name = "MonPanel"
-        Me.MonPanel.Size = New System.Drawing.Size(116, 570)
+        Me.MonPanel.Size = New System.Drawing.Size(116, 440)
         Me.MonPanel.TabIndex = 0
         '
         'TopPanel
@@ -192,7 +205,7 @@ Partial Class Form1
         Me.TopPanel.Location = New System.Drawing.Point(0, 0)
         Me.TopPanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TopPanel.Name = "TopPanel"
-        Me.TopPanel.Padding = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.TopPanel.Padding = New System.Windows.Forms.Padding(5)
         Me.TopPanel.Size = New System.Drawing.Size(814, 40)
         Me.TopPanel.TabIndex = 1
         '
@@ -411,18 +424,18 @@ Partial Class Form1
         Me.MonLabel.Text = "월요일"
         Me.MonLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Panel7
+        'MainPanel
         '
-        Me.Panel7.BackColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
-        Me.Panel7.Controls.Add(Me.TimeTable)
-        Me.Panel7.Controls.Add(Me.SizeLabel)
-        Me.Panel7.Controls.Add(Me.DayTable)
-        Me.Panel7.Controls.Add(Me.TopPanel)
-        Me.Panel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel7.Location = New System.Drawing.Point(4, 4)
-        Me.Panel7.Name = "Panel7"
-        Me.Panel7.Size = New System.Drawing.Size(814, 640)
-        Me.Panel7.TabIndex = 4
+        Me.MainPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
+        Me.MainPanel.Controls.Add(Me.TimeTable)
+        Me.MainPanel.Controls.Add(Me.SizeLabel)
+        Me.MainPanel.Controls.Add(Me.DayTable)
+        Me.MainPanel.Controls.Add(Me.TopPanel)
+        Me.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MainPanel.Location = New System.Drawing.Point(4, 4)
+        Me.MainPanel.Name = "MainPanel"
+        Me.MainPanel.Size = New System.Drawing.Size(814, 510)
+        Me.MainPanel.TabIndex = 4
         '
         'SizeLabel
         '
@@ -431,7 +444,7 @@ Partial Class Form1
         Me.SizeLabel.ForeColor = System.Drawing.Color.Gray
         Me.SizeLabel.Location = New System.Drawing.Point(0, 70)
         Me.SizeLabel.Name = "SizeLabel"
-        Me.SizeLabel.Size = New System.Drawing.Size(814, 570)
+        Me.SizeLabel.Size = New System.Drawing.Size(814, 440)
         Me.SizeLabel.TabIndex = 4
         Me.SizeLabel.Text = "드래그하여 크기를 조절하세요."
         Me.SizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -442,12 +455,12 @@ Partial Class Form1
         Me.BT1_menu.BackColor = System.Drawing.Color.White
         Me.BT1_menu.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BT1_menu.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ClearCheckBoxItem, Me.ChangeThemeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator2, Me.TopMostItem, Me.SnapToEdgeItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
+        Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ClearCheckBoxItem, Me.ChangeThemeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator2, Me.TopMostItem, Me.SnapToEdgeItem, Me.ShowMemoItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
         Me.BT1_menu.Name = "BT1_menu"
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
-        Me.BT1_menu.Size = New System.Drawing.Size(180, 262)
+        Me.BT1_menu.Size = New System.Drawing.Size(180, 286)
         '
         'BT1MenuTitle
         '
@@ -633,13 +646,142 @@ Partial Class Form1
         Me.ExitTrayItem.Size = New System.Drawing.Size(122, 22)
         Me.ExitTrayItem.Text = "uTable 종료"
         '
+        'MemoPanel
+        '
+        Me.MemoPanel.Controls.Add(Me.MemoRTB)
+        Me.MemoPanel.Controls.Add(Me.MemoToolPanel)
+        Me.MemoPanel.Controls.Add(Me.DragSizePanel)
+        Me.MemoPanel.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.MemoPanel.Location = New System.Drawing.Point(4, 514)
+        Me.MemoPanel.MinimumSize = New System.Drawing.Size(30, 30)
+        Me.MemoPanel.Name = "MemoPanel"
+        Me.MemoPanel.Size = New System.Drawing.Size(814, 130)
+        Me.MemoPanel.TabIndex = 33
+        '
+        'DragSizePanel
+        '
+        Me.DragSizePanel.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.DragSizePanel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.DragSizePanel.Location = New System.Drawing.Point(0, 0)
+        Me.DragSizePanel.Name = "DragSizePanel"
+        Me.DragSizePanel.Size = New System.Drawing.Size(814, 12)
+        Me.DragSizePanel.TabIndex = 0
+        '
+        'ShowMemoItem
+        '
+        Me.ShowMemoItem.Font = New System.Drawing.Font("맑은 고딕", 11.25!)
+        Me.ShowMemoItem.Name = "ShowMemoItem"
+        Me.ShowMemoItem.Size = New System.Drawing.Size(179, 24)
+        Me.ShowMemoItem.Text = "공통 메모칸 표시"
+        '
+        'MemoRTB
+        '
+        Me.MemoRTB.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.MemoRTB.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MemoRTB.Location = New System.Drawing.Point(0, 37)
+        Me.MemoRTB.Name = "MemoRTB"
+        Me.MemoRTB.Size = New System.Drawing.Size(814, 93)
+        Me.MemoRTB.TabIndex = 1
+        Me.MemoRTB.Text = ""
+        '
+        'MemoToolPanel
+        '
+        Me.MemoToolPanel.Controls.Add(Me.SavingLabel)
+        Me.MemoToolPanel.Controls.Add(Me.MemoZoomBT2)
+        Me.MemoToolPanel.Controls.Add(Me.MemoZoomNumBT)
+        Me.MemoToolPanel.Controls.Add(Me.MemoZoomBT1)
+        Me.MemoToolPanel.Controls.Add(Me.MemoFontBT)
+        Me.MemoToolPanel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.MemoToolPanel.Location = New System.Drawing.Point(0, 12)
+        Me.MemoToolPanel.Name = "MemoToolPanel"
+        Me.MemoToolPanel.Padding = New System.Windows.Forms.Padding(2)
+        Me.MemoToolPanel.Size = New System.Drawing.Size(814, 25)
+        Me.MemoToolPanel.TabIndex = 2
+        '
+        'MemoFontBT
+        '
+        Me.MemoFontBT.BackColor = System.Drawing.Color.Transparent
+        Me.MemoFontBT.Dock = System.Windows.Forms.DockStyle.Left
+        Me.MemoFontBT.FlatAppearance.BorderColor = System.Drawing.Color.White
+        Me.MemoFontBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.MemoFontBT.Font = New System.Drawing.Font("맑은 고딕", 7.0!)
+        Me.MemoFontBT.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.MemoFontBT.Location = New System.Drawing.Point(2, 2)
+        Me.MemoFontBT.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MemoFontBT.Name = "MemoFontBT"
+        Me.MemoFontBT.Size = New System.Drawing.Size(105, 21)
+        Me.MemoFontBT.TabIndex = 4
+        Me.MemoFontBT.Text = "맑은 고딕"
+        Me.MemoFontBT.UseVisualStyleBackColor = False
+        '
+        'MemoZoomBT1
+        '
+        Me.MemoZoomBT1.BackColor = System.Drawing.Color.Transparent
+        Me.MemoZoomBT1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.MemoZoomBT1.FlatAppearance.BorderColor = System.Drawing.Color.White
+        Me.MemoZoomBT1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.MemoZoomBT1.Font = New System.Drawing.Font("맑은 고딕", 8.0!)
+        Me.MemoZoomBT1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.MemoZoomBT1.Location = New System.Drawing.Point(107, 2)
+        Me.MemoZoomBT1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MemoZoomBT1.Name = "MemoZoomBT1"
+        Me.MemoZoomBT1.Size = New System.Drawing.Size(21, 21)
+        Me.MemoZoomBT1.TabIndex = 5
+        Me.MemoZoomBT1.Text = "-"
+        Me.MemoZoomBT1.UseVisualStyleBackColor = False
+        '
+        'MemoZoomNumBT
+        '
+        Me.MemoZoomNumBT.BackColor = System.Drawing.Color.Transparent
+        Me.MemoZoomNumBT.Dock = System.Windows.Forms.DockStyle.Left
+        Me.MemoZoomNumBT.FlatAppearance.BorderColor = System.Drawing.Color.White
+        Me.MemoZoomNumBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.MemoZoomNumBT.Font = New System.Drawing.Font("맑은 고딕", 8.0!)
+        Me.MemoZoomNumBT.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.MemoZoomNumBT.Location = New System.Drawing.Point(128, 2)
+        Me.MemoZoomNumBT.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MemoZoomNumBT.Name = "MemoZoomNumBT"
+        Me.MemoZoomNumBT.Size = New System.Drawing.Size(55, 21)
+        Me.MemoZoomNumBT.TabIndex = 6
+        Me.MemoZoomNumBT.Text = "100%"
+        Me.MemoZoomNumBT.UseVisualStyleBackColor = False
+        '
+        'MemoZoomBT2
+        '
+        Me.MemoZoomBT2.BackColor = System.Drawing.Color.Transparent
+        Me.MemoZoomBT2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.MemoZoomBT2.FlatAppearance.BorderColor = System.Drawing.Color.White
+        Me.MemoZoomBT2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.MemoZoomBT2.Font = New System.Drawing.Font("맑은 고딕", 8.0!)
+        Me.MemoZoomBT2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.MemoZoomBT2.Location = New System.Drawing.Point(183, 2)
+        Me.MemoZoomBT2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MemoZoomBT2.Name = "MemoZoomBT2"
+        Me.MemoZoomBT2.Size = New System.Drawing.Size(21, 21)
+        Me.MemoZoomBT2.TabIndex = 7
+        Me.MemoZoomBT2.Text = "+"
+        Me.MemoZoomBT2.UseVisualStyleBackColor = False
+        '
+        'SavingLabel
+        '
+        Me.SavingLabel.Dock = System.Windows.Forms.DockStyle.Right
+        Me.SavingLabel.Font = New System.Drawing.Font("맑은 고딕", 7.0!)
+        Me.SavingLabel.ForeColor = System.Drawing.Color.DeepSkyBlue
+        Me.SavingLabel.Location = New System.Drawing.Point(714, 2)
+        Me.SavingLabel.Name = "SavingLabel"
+        Me.SavingLabel.Size = New System.Drawing.Size(98, 21)
+        Me.SavingLabel.TabIndex = 8
+        Me.SavingLabel.Text = "변경사항 저장중..."
+        Me.SavingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.LightGray
         Me.ClientSize = New System.Drawing.Size(822, 648)
-        Me.Controls.Add(Me.Panel7)
+        Me.Controls.Add(Me.MainPanel)
+        Me.Controls.Add(Me.MemoPanel)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -647,7 +789,7 @@ Partial Class Form1
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(500, 400)
         Me.Name = "Form1"
-        Me.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Padding = New System.Windows.Forms.Padding(4)
         Me.Text = "uTable"
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.TimeTable.ResumeLayout(False)
@@ -656,9 +798,11 @@ Partial Class Form1
         CType(Me.TitleEditBT, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MinBT, System.ComponentModel.ISupportInitialize).EndInit()
         Me.DayTable.ResumeLayout(False)
-        Me.Panel7.ResumeLayout(False)
+        Me.MainPanel.ResumeLayout(False)
         Me.BT1_menu.ResumeLayout(False)
         Me.Tray_menu.ResumeLayout(False)
+        Me.MemoPanel.ResumeLayout(False)
+        Me.MemoToolPanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -672,7 +816,7 @@ Partial Class Form1
     Friend WithEvents WedLabel As Label
     Friend WithEvents TueLabel As Label
     Friend WithEvents RefreshBT As Button
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents MainPanel As Panel
     Friend WithEvents FriPanel As Panel
     Friend WithEvents ThuPanel As Panel
     Friend WithEvents WedPanel As Panel
@@ -717,4 +861,14 @@ Partial Class Form1
     Friend WithEvents ExitTrayItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents TopMostItem As ToolStripMenuItem
+    Friend WithEvents MemoPanel As Panel
+    Friend WithEvents DragSizePanel As Panel
+    Friend WithEvents ShowMemoItem As ToolStripMenuItem
+    Friend WithEvents MemoRTB As RichTextBox
+    Friend WithEvents MemoToolPanel As Panel
+    Friend WithEvents SavingLabel As Label
+    Friend WithEvents MemoZoomBT2 As Button
+    Friend WithEvents MemoZoomNumBT As Button
+    Friend WithEvents MemoZoomBT1 As Button
+    Friend WithEvents MemoFontBT As Button
 End Class
