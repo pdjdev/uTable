@@ -133,11 +133,11 @@
   <data name="check1_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check1_w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bt_edit_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bt_edit_w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="uTable_banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\uTable_banner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="shadow1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadow1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="check0_b" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check0_b.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,6 +151,9 @@
   <data name="closeicon_b" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\closeicon_b.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="menuicon_b" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\menuicon_b.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="check1_b" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check1_b.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -160,28 +163,31 @@
   <data name="check0_b_96" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check0_b_96.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bt_edit_b" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bt_edit_b.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="bt_titleedit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bt_titleedit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ptable_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ptable_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="uTable_banner_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\uTable_banner_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="minicon_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\minicon_w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="check0_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check0_w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bt_edit_b" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bt_edit_b.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="uTable_banner_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\uTable_banner_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bt_edit_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bt_edit_w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ptable_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ptable_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="closeicon_b2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\closeicon_b2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minicon_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minicon_w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shadow1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shadow1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menuicon_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\menuicon_w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

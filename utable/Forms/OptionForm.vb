@@ -147,6 +147,9 @@ Public Class OptionForm
         '메모표시 기본값 = 1
         ShowMemoChk.Checked = Not (GetINI("SETTING", "ShowMemo", "", ININamePath) = "0")
 
+        '메모장표시 기본값 = 0
+        MemoShowChk.Checked = (GetINI("SETTING", "MemoShow", "", ININamePath) = "1")
+
         '체크박스표시 기본값 = 1
         ShowChkBoxChk.Checked = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
 
@@ -367,6 +370,11 @@ Public Class OptionForm
 
     Private Sub ShowMemoChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowMemoChk.CheckedChanged
         ApplySetting("ShowMemo", ShowMemoChk.Checked)
+    End Sub
+
+    Private Sub MemoShowChk_CheckedChanged(sender As Object, e As EventArgs) Handles MemoShowChk.CheckedChanged
+        ApplySetting("MemoShow", MemoShowChk.Checked)
+        Form1.MemoOptionUpdate()
     End Sub
 
     Private Sub AutoTextColorChk_CheckedChanged(sender As Object, e As EventArgs) Handles AutoTextColorChk.CheckedChanged

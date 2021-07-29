@@ -59,6 +59,10 @@ Public Class Form1
     Dim isSizeDragging As Boolean = False
     Dim DragPosition As New Point
 
+    '메모 자동저장 라벨용
+    Dim o_color As Color = Color.DeepSkyBlue
+    Dim Perc As Double = 1
+
 #End Region
 
 #Region "Aero 그림자 효과 (Vista이상)"
@@ -351,28 +355,33 @@ Public Class Form1
         MemoPanel.ForeColor = textColor(colorMode)
         DragSizePanel.BackColor = dragBarColor(colorMode)
         DragSizePanel.ForeColor = textColor(colorMode)
-        MemoRTB.BackColor = tableColor_1(colorMode)
+        MemoRTB.BackColor = tableColor_2(colorMode)
         MemoRTB.ForeColor = textColor(colorMode)
 
-        MemoFontBT.FlatAppearance.BorderColor = BorderColor(colorMode)
         MemoZoomBT1.FlatAppearance.BorderColor = BorderColor(colorMode)
         MemoZoomBT2.FlatAppearance.BorderColor = BorderColor(colorMode)
         MemoZoomNumBT.FlatAppearance.BorderColor = BorderColor(colorMode)
+        MemoMenuBT.FlatAppearance.BorderColor = BorderColor(colorMode)
+        MemoCloseBT.FlatAppearance.BorderColor = BorderColor(colorMode)
 
-        MemoFontBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
         MemoZoomBT1.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
         MemoZoomBT2.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
         MemoZoomNumBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
+        MemoMenuBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
+        MemoCloseBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
 
-        MemoFontBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
         MemoZoomBT1.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
         MemoZoomBT2.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
         MemoZoomNumBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+        MemoMenuBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+        MemoCloseBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
 
-        MemoFontBT.ForeColor = textColor(colorMode)
         MemoZoomBT1.ForeColor = textColor(colorMode)
         MemoZoomBT2.ForeColor = textColor(colorMode)
         MemoZoomNumBT.ForeColor = textColor(colorMode)
+        MemoMenuBT.ForeColor = textColor(colorMode)
+        MemoCloseBT.ForeColor = textColor(colorMode)
+        MemoTitleLabel.ForeColor = activeDayColor(colorMode)
 
         ' ====== 메모패널 색상 끝 =====
 
@@ -380,10 +389,14 @@ Public Class Form1
         Select Case colorMode
             Case "Dark"
                 MinBT.Image = My.Resources.minicon_w
+                MemoMenuBT.BackgroundImage = My.Resources.menuicon_w
+                MemoCloseBT.BackgroundImage = My.Resources.closeicon_w
                 Menu_1_1.Checked = False
                 Menu_1_2.Checked = True
             Case Else
                 MinBT.Image = My.Resources.minicon_b
+                MemoMenuBT.BackgroundImage = My.Resources.menuicon_b
+                MemoCloseBT.BackgroundImage = My.Resources.closeicon_b
                 Menu_1_1.Checked = True
                 Menu_1_2.Checked = False
         End Select
@@ -465,6 +478,8 @@ Public Class Form1
         FriLabel.Text = fdw.AddDays(4).ToString("dd") + " 금요일"
         SatLabel.Text = fdw.AddDays(5).ToString("dd") + " 토요일"
         SunLabel.Text = fdw.AddDays(6).ToString("dd") + " 일요일"
+
+        MemoTitleLabel.Text = DateTime.Now.Year.ToString & "-" & DateTime.Now.Month.ToString & "-" & DateTime.Now.Day.ToString
     End Sub
 
 #End Region
@@ -500,7 +515,7 @@ Public Class Form1
                 Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
                 ChangeToCustomFont(Me, fntname)
 
-                'BT1_menu 폰트 바꾸기 : 속성이 상속되지 않는지라 노가다해야함
+                'BT1_menu, Memo_menu 폰트 바꾸기 : 속성이 상속되지 않는지라 노가다해야함
                 If GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
                     ClearCheckBoxItem.Font = New Font(fntname, ClearCheckBoxItem.Font.Size)
                     BT1MenuTitle.Font = New Font(fntname, BT1MenuTitle.Font.Size, FontStyle.Bold)
@@ -516,6 +531,22 @@ Public Class Form1
 
                     OpenTableTrayItem.Font = New Font(fntname, OpenTableTrayItem.Font.Size)
                     ExitTrayItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+
+                    MemoDockItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    MemoDockTopItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    MemoDockBottomItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    MemoDockLeftItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    MemoDockRightItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+
+                    MemoClearItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    CloseMemoItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+
+                    MemoFontSetItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    MemoUndoItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    MemoCopyItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    MemoPasteItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+                    MemoSelectAllItem.Font = New Font(fntname, ExitTrayItem.Font.Size)
+
                 End If
             End If
         End If
@@ -542,6 +573,7 @@ Public Class Form1
         tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
 
         MemoOptionUpdate()
+
         updateCell()
 
     End Sub
@@ -767,9 +799,9 @@ Public Class Form1
         End Select
 
         If GetINI("SETTING", "MemoShow", "", ININamePath) = "1" Then
-            ShowMemoItem.Text = "공통 메모장 숨기기"
+            ShowMemoItem.Text = "메모장 숨기기"
         Else
-            ShowMemoItem.Text = "공통 메모장 표시"
+            ShowMemoItem.Text = "메모장 표시"
         End If
     End Sub
 
@@ -1488,14 +1520,17 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub DragSizePanel_MouseUp(sender As Object, e As MouseEventArgs) Handles DragSizePanel.MouseUp
+        isSizeDragging = False
+        SuspendTable(False)
+    End Sub
+
     Public Sub MemoOptionUpdate()
         If GetINI("SETTING", "MemoShow", "", ININamePath) = "1" Then
 
-            If GetINI("SETTING", "MemoSize", "", ININamePath) = "" Then
-                ' 기본값
+            ' 기본값
+            If GetINI("SETTING", "MemoSize", "", ININamePath) = "" Then _
                 SetINI("SETTING", "MemoSize", (110 * currentDPI / 96).ToString, ININamePath)
-            End If
-
 
             Dim memosize As Double = Convert.ToDouble(GetINI("SETTING", "MemoSize", "", ININamePath))
             Dim memodock As String = GetINI("SETTING", "MemoDock", "", ININamePath)
@@ -1529,6 +1564,8 @@ Public Class Form1
                     MemoFormDockSelector(DockStyle.Bottom)
                     SetINI("SETTING", "MemoDock", "Bottom", ININamePath)
             End Select
+
+            MemoContentUpdate()
         Else
             MemoPanel.Hide()
         End If
@@ -1536,9 +1573,24 @@ Public Class Form1
         Refresh()
     End Sub
 
+    Public Sub MemoContentUpdate()
+        Try
+            Dim content As String = IO.File.ReadAllText(INIPath + "\memo.rtf", System.Text.Encoding.GetEncoding(949))
+            Dim zoomft As String = GetINI("SETTING", "MemoZoom", "", ININamePath)
+            MemoRTB.Rtf = content
+
+            If Not zoomft = "" Then
+                MemoRTB.ZoomFactor = Convert.ToDouble(zoomft)
+                UpdateMemoZoomFactor()
+            End If
+
+        Catch ex As Exception
+        End Try
+    End Sub
+
     Public Sub MemoFormDockSelector(style As DockStyle)
 
-        Dim thickness As Integer = 15 * 96 / currentDPI
+        Dim thickness As Integer = 12 * currentDPI / 96
 
         Select Case style
             Case DockStyle.Top
@@ -1564,11 +1616,6 @@ Public Class Form1
         End Select
 
         MemoPanel.Show()
-    End Sub
-
-    Private Sub DragSizePanel_MouseUp(sender As Object, e As MouseEventArgs) Handles DragSizePanel.MouseUp
-        isSizeDragging = False
-        SuspendTable(False)
     End Sub
 
     Private Sub DragSizePanel_Paint(sender As Object, e As PaintEventArgs) Handles DragSizePanel.Paint
@@ -1598,6 +1645,193 @@ Public Class Form1
 
     Private Sub DragSizePanel_SizeChanged(sender As Object, e As EventArgs) Handles DragSizePanel.SizeChanged
         DragSizePanel.Refresh()
+    End Sub
+
+    Private Sub MemoCloseButtons_Click(sender As Object, e As EventArgs) Handles CloseMemoItem.Click, MemoCloseBT.Click
+        SetINI("SETTING", "MemoShow", "0", ININamePath)
+        MemoOptionUpdate()
+    End Sub
+
+    Private Sub Memo_menu_Opening(sender As Object, e As CancelEventArgs) Handles Memo_menu.Opening
+        Memo_menu.BackColor = mainColor(colorMode)
+        Memo_menu.ForeColor = textColor(colorMode)
+
+        MemoDockTopItem.Text = "위쪽"
+        MemoDockBottomItem.Text = "아래쪽"
+        MemoDockLeftItem.Text = "왼쪽"
+        MemoDockRightItem.Text = "오른쪽"
+
+        Select Case GetINI("SETTING", "MemoDock", "", ININamePath)
+            Case "Top"
+                MemoDockTopItem.Text += " (현재)"
+            Case "Bottom"
+                MemoDockBottomItem.Text += " (현재)"
+            Case "Left"
+                MemoDockLeftItem.Text += " (현재)"
+            Case "Right"
+                MemoDockRightItem.Text += " (현재)"
+        End Select
+    End Sub
+
+    Private Sub MemoDockTopItem_Click(sender As Object, e As EventArgs) Handles MemoDockTopItem.Click,
+        MemoDockBottomItem.Click, MemoDockLeftItem.Click, MemoDockRightItem.Click
+
+        Select Case sender.Name
+            Case MemoDockTopItem.Name
+                SetINI("SETTING", "MemoDock", "Top", ININamePath)
+
+            Case MemoDockBottomItem.Name
+                SetINI("SETTING", "MemoDock", "Bottom", ININamePath)
+
+            Case MemoDockLeftItem.Name
+                SetINI("SETTING", "MemoDock", "Left", ININamePath)
+
+            Case MemoDockRightItem.Name
+                SetINI("SETTING", "MemoDock", "Right", ININamePath)
+
+        End Select
+
+        MemoOptionUpdate()
+
+    End Sub
+
+    Private Sub UpdateMemoZoomFactor()
+        SetINI("SETTING", "MemoZoom", MemoRTB.ZoomFactor.ToString, ININamePath)
+        MemoZoomNumBT.Text = Convert.ToInt32((MemoRTB.ZoomFactor * 100)).ToString + "%"
+        If MemoRTB.ZoomFactor = 1 Then
+            MemoZoomNumBT.ForeColor = Color.Gray
+        Else
+            MemoZoomNumBT.ForeColor = Color.DodgerBlue
+        End If
+    End Sub
+
+    Private Sub MemoMenuBT_Click(sender As Object, e As EventArgs) Handles MemoMenuBT.Click
+        Memo_menu.Show(Cursor.Position.X, Cursor.Position.Y)
+    End Sub
+
+    Private Sub MemoRTB_TextChanged(sender As Object, e As EventArgs) Handles MemoRTB.TextChanged
+        MemoAutoSave()
+    End Sub
+
+    Private Sub MemoRTB_KeyDown(sender As Object, e As KeyEventArgs) Handles MemoRTB.KeyDown, Me.KeyDown
+        UpdateMemoZoomFactor()
+    End Sub
+
+    Private Sub MemoRTB_KeyUp(sender As Object, e As KeyEventArgs) Handles MemoRTB.KeyUp, Me.KeyUp
+        UpdateMemoZoomFactor()
+    End Sub
+
+    Private Sub MemoZoomNumBT_Click(sender As Object, e As EventArgs) Handles MemoZoomNumBT.Click
+        MemoRTB.ZoomFactor = 1
+        UpdateMemoZoomFactor()
+    End Sub
+
+    Private Sub MemoZoomBT1_Click(sender As Object, e As EventArgs) Handles MemoZoomBT1.Click
+        If MemoRTB.ZoomFactor > 0.015625 + 0.2 Then
+            MemoRTB.ZoomFactor -= 0.2
+            UpdateMemoZoomFactor()
+        End If
+    End Sub
+
+    Private Sub MemoZoomBT2_Click(sender As Object, e As EventArgs) Handles MemoZoomBT2.Click
+        MemoRTB.ZoomFactor += 0.2
+        UpdateMemoZoomFactor()
+    End Sub
+
+    Private Sub MemoAutoSave()
+        MemoSavingLabel.Text = "변경사항 저장중..."
+        MemoSavingLabel.ForeColor = o_color
+        MemoAutoSaveTimer.Stop()
+        MemoAutoSaveTimer.Start()
+    End Sub
+
+    Private Sub MemoAutoSaveTimer_Tick(sender As Object, e As EventArgs) Handles MemoAutoSaveTimer.Tick
+        MemoAutoSaveAniTimer.Start()
+        MemoAutoSaveTimer.Stop()
+
+        ' === 저장 작업 시작 ===
+        If GetINI("SETTING", "MemoShow", "", ININamePath) = "1" Then
+            Try
+                IO.File.WriteAllText(INIPath + "\memo.rtf", MemoRTB.Rtf, System.Text.Encoding.GetEncoding(949))
+            Catch ex As Exception
+                MemoSavingLabel.Text = "저장 실패 (" + ex.Message + ")"
+            End Try
+        End If
+
+    End Sub
+
+    Private Sub MemoAutoSaveAniTimer_Tick(sender As Object, e As EventArgs) Handles MemoAutoSaveAniTimer.Tick
+        If Perc < 1.5 - 0.1 Then
+            Perc += 0.1
+
+            If colorMode = "Dark" Then
+                MemoSavingLabel.ForeColor = ControlPaint.Dark(o_color, Perc - 1)
+            Else
+                MemoSavingLabel.ForeColor = ControlPaint.Light(o_color, Perc)
+            End If
+
+        Else
+            MemoAutoSaveAniTimer.Stop()
+            'MemoSavingLabel.Hide()
+            MemoSavingLabel.Text = ""
+            Perc = 1
+        End If
+    End Sub
+
+    Private Sub DragSizePanel_MouseEnter(sender As Object, e As EventArgs) Handles DragSizePanel.MouseEnter
+        Select Case MemoPanel.Dock
+            Case DockStyle.Top, DockStyle.Bottom
+                Cursor = Cursors.HSplit
+            Case Else
+                Cursor = Cursors.VSplit
+        End Select
+    End Sub
+
+    Private Sub DragSizePanel_MouseLeave(sender As Object, e As EventArgs) Handles DragSizePanel.MouseLeave
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub MemoClearItem_Click(sender As Object, e As EventArgs) Handles MemoClearItem.Click
+        If MsgBox("메모 내용을 지우시겠습니까?", vbQuestion + vbYesNo) = vbYes Then MemoRTB.Clear()
+    End Sub
+
+    Private Sub MemoRTBMenu_Opening(sender As Object, e As CancelEventArgs) Handles MemoRTBMenu.Opening
+        MemoRTBMenu.BackColor = mainColor(colorMode)
+        MemoRTBMenu.ForeColor = textColor(colorMode)
+
+        MemoCopyItem.Visible = MemoRTB.SelectedText.Length > 0
+        MemoPasteItem.Visible = (Clipboard.ContainsText(TextDataFormat.Rtf) Or Clipboard.ContainsText(TextDataFormat.Text))
+        MemoUndoItem.Visible = MemoRTB.CanUndo
+        MemoSelectAllItem.Visible = MemoRTB.TextLength > 0
+
+    End Sub
+
+    Private Sub MemoFontSetItem_Click(sender As Object, e As EventArgs) Handles MemoFontSetItem.Click
+        FontDialog1.ShowColor = True
+
+        FontDialog1.Font = MemoRTB.SelectionFont
+        FontDialog1.Color = MemoRTB.SelectionColor
+
+        If FontDialog1.ShowDialog() = DialogResult.OK Then
+            MemoRTB.SelectionFont = FontDialog1.Font
+            MemoRTB.SelectionColor = FontDialog1.Color
+        End If
+    End Sub
+
+    Private Sub CopyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MemoCopyItem.Click
+        MemoRTB.Copy()
+    End Sub
+
+    Private Sub MemoUndoItem_Click(sender As Object, e As EventArgs) Handles MemoUndoItem.Click
+        MemoRTB.Undo()
+    End Sub
+
+    Private Sub MemoPasteItem_Click(sender As Object, e As EventArgs) Handles MemoPasteItem.Click
+        MemoRTB.Paste()
+    End Sub
+
+    Private Sub MemoSelectAllItem_Click(sender As Object, e As EventArgs) Handles MemoSelectAllItem.Click
+        MemoRTB.SelectAll()
     End Sub
 
 #End Region
