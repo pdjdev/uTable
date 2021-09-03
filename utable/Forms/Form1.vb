@@ -1840,10 +1840,6 @@ Public Class Form1
         MemoRTB.SelectAll()
     End Sub
 
-    Private Sub MemoTitleLabel_Click(sender As Object, e As EventArgs) Handles MemoTitleLabel.Click
-        Throw New Exception("test exception")
-    End Sub
-
 #End Region
 
 End Class
