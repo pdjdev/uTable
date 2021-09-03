@@ -27,6 +27,7 @@ Partial Class ErrorForm
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -59,33 +60,46 @@ Partial Class ErrorForm
         '
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button1.Location = New System.Drawing.Point(279, 10)
+        Me.Button1.Location = New System.Drawing.Point(308, 10)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(166, 41)
+        Me.Button1.Size = New System.Drawing.Size(121, 41)
         Me.Button1.TabIndex = 1
-        Me.Button1.Text = "다시 시작 (10 초후 실행)"
+        Me.Button1.Text = "다시 시작" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(10 초후 실행)"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.Button3)
         Me.Panel1.Controls.Add(Me.Button2)
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 242)
+        Me.Panel1.Location = New System.Drawing.Point(0, 303)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Padding = New System.Windows.Forms.Padding(10)
-        Me.Panel1.Size = New System.Drawing.Size(455, 61)
+        Me.Panel1.Size = New System.Drawing.Size(439, 61)
         Me.Panel1.TabIndex = 3
+        '
+        'Button3
+        '
+        Me.Button3.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Button3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button3.Location = New System.Drawing.Point(10, 10)
+        Me.Button3.MinimumSize = New System.Drawing.Size(181, 41)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(181, 41)
+        Me.Button3.TabIndex = 3
+        Me.Button3.Text = "오류 보고 페이지 열기"
+        Me.Button3.UseVisualStyleBackColor = True
         '
         'Button2
         '
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button2.Location = New System.Drawing.Point(127, 10)
+        Me.Button2.Location = New System.Drawing.Point(212, 10)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(152, 41)
+        Me.Button2.Size = New System.Drawing.Size(96, 41)
         Me.Button2.TabIndex = 2
-        Me.Button2.Text = "설정 파일 삭제 후 종료"
+        Me.Button2.Text = "설정 파일" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "삭제 후 종료"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Panel2
@@ -96,7 +110,7 @@ Partial Class ErrorForm
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Padding = New System.Windows.Forms.Padding(10)
-        Me.Panel2.Size = New System.Drawing.Size(455, 70)
+        Me.Panel2.Size = New System.Drawing.Size(439, 70)
         Me.Panel2.TabIndex = 4
         '
         'Label2
@@ -106,7 +120,7 @@ Partial Class ErrorForm
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(10, 36)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(435, 32)
+        Me.Label2.Size = New System.Drawing.Size(419, 32)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "해당 오류가 지속될 경우 설정 파일을 삭제한 후 다시 시도해 보시기 바랍니다." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(설정 파일을 지울 경우 설정값이 초기화되므로 별도로 백업해 놓으" &
     "시기 바랍니다.)"
@@ -119,7 +133,7 @@ Partial Class ErrorForm
         Me.Panel3.Location = New System.Drawing.Point(0, 70)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Padding = New System.Windows.Forms.Padding(10, 0, 10, 0)
-        Me.Panel3.Size = New System.Drawing.Size(455, 172)
+        Me.Panel3.Size = New System.Drawing.Size(439, 233)
         Me.Panel3.TabIndex = 5
         '
         'RichTextBox1
@@ -129,7 +143,7 @@ Partial Class ErrorForm
         Me.RichTextBox1.Location = New System.Drawing.Point(10, 22)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(435, 150)
+        Me.RichTextBox1.Size = New System.Drawing.Size(419, 211)
         Me.RichTextBox1.TabIndex = 2
         Me.RichTextBox1.Text = ""
         '
@@ -151,17 +165,20 @@ Partial Class ErrorForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(455, 303)
+        Me.ClientSize = New System.Drawing.Size(439, 364)
         Me.Controls.Add(Me.Panel3)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MinimumSize = New System.Drawing.Size(437, 395)
         Me.Name = "ErrorForm"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "오류 발생"
+        Me.TopMost = True
         Me.Panel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
@@ -181,4 +198,5 @@ Partial Class ErrorForm
     Friend WithEvents Panel3 As Panel
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents Label3 As Label
+    Friend WithEvents Button3 As Button
 End Class

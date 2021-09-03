@@ -129,6 +129,9 @@ Public Class OptionForm
         '트레이숨기기 기본값 = 0
         HideToTrayChk.Checked = (GetINI("SETTING", "HideToTray", "", ININamePath) = "1")
 
+        '항상트레이숨기기 기본값 = 0
+        AlwaysHideToTrayChk.Checked = (GetINI("SETTING", "AlwaysHideToTray", "", ININamePath) = "1")
+
         '항상위 기본값 = 0
         TopMostChk.Checked = (GetINI("SETTING", "TopMost", "", ININamePath) = "1")
 
@@ -537,6 +540,21 @@ Public Class OptionForm
         ApplySetting("HideToTray", HideToTrayChk.Checked)
     End Sub
 
+    Private Sub AlwaysHideToTrayChk_Click(sender As Object, e As EventArgs) Handles AlwaysHideToTrayChk.Click
+        If MsgBox("설정 창이 닫히고 시간표가 다시 열립니다." + vbCr + "계속하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
+            AlwaysHideToTrayChk.Checked = Not AlwaysHideToTrayChk.Checked
+            ApplySetting("AlwaysHideToTray", AlwaysHideToTrayChk.Checked)
+
+            Form1.ShowInTaskbar = Not AlwaysHideToTrayChk.Checked
+            Form1.ReopenForm()
+            Me.Close()
+        End If
+    End Sub
+
+    Private Sub AlwaysHideToTrayChk_CheckedChanged(sender As Object, e As EventArgs) Handles AlwaysHideToTrayChk.CheckedChanged
+        HideToTrayChk.Enabled = Not AlwaysHideToTrayChk.Checked
+    End Sub
+
     Private Sub TopMostChk_CheckedChanged(sender As Object, e As EventArgs) Handles TopMostChk.CheckedChanged
         ApplySetting("TopMost", TopMostChk.Checked)
         Form1.TopMost = TopMostChk.Checked
@@ -590,67 +608,11 @@ Public Class OptionForm
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles WebPageLabel.LinkClicked
         MsgBox("현재 버전은 " + My.Application.Info.Version.ToString + " 입니다." + vbCr + vbCr + "확인 버튼을 누르면 프로그램 페이지로 이동합니다.", vbInformation)
-        Process.Start("https://sw.pbj.kr/apps/utable")
-    End Sub
-
-
-    Sub InfoCopy()
-        Dim cominfo As String = ""
-
-        If MsgBox("프로그램 설정값을 복사하시겠습니까?" + vbCr + vbCr _
-                  + "오류 보고일 경우, 더욱 정확한 조사를 위해 '예'를 눌러 복사해 주시기 바랍니다." _
-                  + vbCr + "(시간표와 같은 민감한 개인 정보는 다음 대화 상자에서 포함 여부를 설정하실 수 있습니다.)",
-                  vbQuestion + vbYesNo) = vbYes Then
-            Dim g As Graphics = Me.CreateGraphics
-            Dim dpi = g.DpiX.ToString()
-
-            cominfo += "[Device Information]" _
-                + vbCr + "AppName: " + My.Application.Info.ProductName _
-                + vbCr + "AppVersion: " + My.Application.Info.Version.ToString _
-                + vbCr + "OS fullname: " + My.Computer.Info.OSFullName.ToString _
-                + vbCr + "OS version: " + My.Computer.Info.OSVersion.ToString _
-                + vbCr + "OS Platform: " + My.Computer.Info.OSPlatform.ToString _
-                + vbCr + "TotalPhysicalMemory: " + My.Computer.Info.TotalPhysicalMemory.ToString _
-                + vbCr + "ScreenDPI: " + dpi _
-                + vbCr + "OS type: "
-            If My.Computer.FileSystem.DirectoryExists("C:\Program Files (x86)") Then
-                cominfo = cominfo + "64Bit OS"
-            Else
-                cominfo = cominfo + "32Bit OS"
-            End If
-
-            cominfo += vbCr + vbCr + "[Application Settings Value]" + vbCr
-            '설정값 나열
-            If My.Computer.FileSystem.FileExists(ININamePath) Then
-                'My.Settings.defalutTable = OptionSave()
-                cominfo += My.Computer.FileSystem.ReadAllText(ININamePath, System.Text.Encoding.GetEncoding(949))
-            Else
-                cominfo += "(None)"
-            End If
-
-            If MsgBox("현재 적용된 시간표 내용(Default.udata)도 포함하시겠습니까?" + vbCr _
-                      + vbCr + "(해당 설정은 프로그램 오류 조사시에만 사용됩니다." _
-                      + "하지만 해당 정보는 민감한 개인 정보이기 때문에 제공하기 원치 않으신 경우 " _
-                      + "'아니오'를 누르시면 해당 정보는 제외된 채 정보가 복사됩니다)",
-                      vbQuestion + vbYesNo) = vbYes Then
-                cominfo += vbCr + vbCr + "[uTable Default Data]" + vbCr
-                cominfo += readTable()
-                cominfo += vbCr + "[End of Data]"
-            End If
-
-            cominfo += vbCr + vbCr
-
-            cominfo += "[Report Time]" + vbCr + DateTime.Now.ToString
-            Clipboard.SetText(cominfo)
-
-            MsgBox("복사가 완료되었습니다.", vbInformation)
-        End If
-
-
+        Process.Start("https: //sw.pbj.kr/apps/utable")
     End Sub
 
     Private Sub FeedbackLabel_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles FeedbackLabel.LinkClicked
-        InfoCopy()
+        InfoCopy(Me)
         Process.Start("https://sw.pbj.kr/apps/utable/report")
     End Sub
 

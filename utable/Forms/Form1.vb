@@ -571,6 +571,7 @@ Public Class Form1
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
         tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
+        ShowInTaskbar = Not (GetINI("SETTING", "AlwaysHideToTray", "", ININamePath) = "1")
 
         MemoOptionUpdate()
 
@@ -650,6 +651,10 @@ Public Class Form1
         ReopenForm()
     End Sub
 
+    Private Sub NotifyIcon1_MouseClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseClick
+        Tray_menu.Show(Cursor.Position)
+    End Sub
+
     Public Sub ReopenForm()
         Opacity = 0
         Show()
@@ -665,7 +670,8 @@ Public Class Form1
 #Region "버튼/도구상자/키 이벤트"
     Private Sub AddCourseBT_Click(sender As Object, e As EventArgs) Handles AddCourseBT.Click
         SetCourse.Close()
-        SetCourse.SetDesktopLocation(Location.X + AddCourseBT.Location.X + AddCourseBT.Width - SetCourse.Width, Location.Y + DayTable.Location.Y)
+        SetCourse.SetDesktopLocation(Location.X + AddCourseBT.Location.X + AddCourseBT.Width - SetCourse.Width + MainPanel.Location.X,
+                                     Location.Y + DayTable.Location.Y + MainPanel.Location.Y)
         SetCourse.Show()
     End Sub
 
@@ -1832,6 +1838,10 @@ Public Class Form1
 
     Private Sub MemoSelectAllItem_Click(sender As Object, e As EventArgs) Handles MemoSelectAllItem.Click
         MemoRTB.SelectAll()
+    End Sub
+
+    Private Sub MemoTitleLabel_Click(sender As Object, e As EventArgs) Handles MemoTitleLabel.Click
+        Throw New Exception("test exception")
     End Sub
 
 #End Region
