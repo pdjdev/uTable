@@ -608,7 +608,7 @@ Public Class OptionForm
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles WebPageLabel.LinkClicked
         MsgBox("현재 버전은 " + My.Application.Info.Version.ToString + " 입니다." + vbCr + vbCr + "확인 버튼을 누르면 프로그램 페이지로 이동합니다.", vbInformation)
-        Process.Start("https: //sw.pbj.kr/apps/utable")
+        Process.Start("https://utable.sw.pbj.kr")
     End Sub
 
     Private Sub FeedbackLabel_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles FeedbackLabel.LinkClicked
