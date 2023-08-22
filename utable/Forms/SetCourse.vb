@@ -60,7 +60,7 @@ Public Class SetCourse
 
     Public Sub UpdateColor()
 
-        colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        colormode = GetINI("SETTING", "ColorMode", "", ININamePath)
 
         BackColor = edgeColor(colormode)
         Panel1.BackColor = mainColor(colormode)
@@ -83,7 +83,7 @@ Public Class SetCourse
         ColorPasteBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
         ColorPasteBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
 
-        Select Case colorMode
+        Select Case colormode
             Case "Dark"
                 CloseBT.Image = My.Resources.closeicon_w
             Case Else
@@ -204,6 +204,7 @@ Public Class SetCourse
     End Sub
 
     Private Sub SetCourse_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Opacity = 0
 
         If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" And GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then

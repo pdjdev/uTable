@@ -60,7 +60,7 @@
             End If
         Next
 
-        ViewCourse.blacktext = blackText 
+        ViewCourse.blacktext = blackText
 
         ViewCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
         ViewCourse.Show()
@@ -336,5 +336,9 @@
         If goalColor = BackColor Then
             AniTimer.Stop()
         End If
+    End Sub
+
+    Private Sub TopPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopPanel.Paint
+
     End Sub
 End Class

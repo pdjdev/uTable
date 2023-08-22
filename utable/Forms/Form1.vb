@@ -63,6 +63,10 @@ Public Class Form1
     Dim o_color As Color = Color.DeepSkyBlue
     Dim Perc As Double = 1
 
+    '코너 라운딩 사이즈
+    Dim RndCorner As Boolean = True
+    Dim RndSize As Integer = 6
+
 #End Region
 
 #Region "Aero 그림자 효과 (Vista이상)"
@@ -569,6 +573,11 @@ Public Class Form1
             SetINI("SETTING", "SnapToEdge", "1", ININamePath)
         End If
 
+        If GetINI("SETTING", "FixStartTime", "", ININamePath) = "1" Then
+            Dim fSTVal = GetINI("SETTING", "FixStartTimeValue", "", ININamePath)
+            If IsNumeric(fSTVal) Then starttime = Convert.ToInt16(fSTVal)
+        End If
+
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
         tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
         ShowInTaskbar = Not (GetINI("SETTING", "AlwaysHideToTray", "", ININamePath) = "1")
@@ -847,10 +856,28 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Menu_4_Click(sender As Object, e As EventArgs) Handles GetFromETItem.Click
-        EveryTimeBrowser.Close()
-        EverytimeSemesterSelector.Close()
-        EverytimeSemesterSelector.ShowDialog(Me)
+    Public Sub Menu_4_Click(sender As Object, e As EventArgs) Handles GetFromETItem.Click
+        ' DLL 존재 여부 체크 (스토어에디션은 X)
+        Dim DLLOK = False
+        Dim exeFullpath As String = Application.ExecutablePath
+        Dim finalDir As String = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
+
+        If Not (My.Computer.FileSystem.FileExists(finalDir + "\Microsoft.Web.WebView2.Core.dll") And
+           My.Computer.FileSystem.FileExists(finalDir + "\Microsoft.Web.WebView2.WinForms.dll") And
+           My.Computer.FileSystem.FileExists(finalDir + "\WebView2Loader.dll")) Then
+            If MsgBox("에브리타임 시간표를 불러오기 위해서는 추가적인 다운로드(0.6MB)가 필요합니다. 파일은 uTable이 실행된 위치에 저장됩니다." _
+                   + vbCr + vbCr + "'확인'을 누르면 다운로드 및 불러오기 작업이 진행되며, '취소'를 누르면 작업이 중단됩니다.", vbOKCancel + vbInformation, "다운로드 필요") = vbOK Then
+                DLLDownloader.ShowDialog(Me)
+            End If
+        Else
+            DLLOK = True
+        End If
+
+        If DLLOK Then
+            EveryTimeBrowserNew.Close()
+            EverytimeSemesterSelector.Close()
+            EverytimeSemesterSelector.ShowDialog(Me)
+        End If
     End Sub
 
     Private Sub Menu_5_Click(sender As Object, e As EventArgs) Handles OptionItem.Click
@@ -971,6 +998,11 @@ Public Class Form1
                 starttime = min
                 endtime = max
 
+                If GetINI("SETTING", "FixStartTime", "", ININamePath) = "1" Then
+                    Dim fSTVal = GetINI("SETTING", "FixStartTimeValue", "", ININamePath)
+                    If IsNumeric(fSTVal) Then starttime = Convert.ToInt16(fSTVal)
+                End If
+
                 '셀계산
                 '여기서 xmldecode 하니까 꼭 눈여겨두자
                 For Each s As String In courseData
@@ -1004,23 +1036,36 @@ Public Class Form1
 
             If showSunday Then '토+일요일 표시
                 For i = 0 To 6
+                    DayTable.ColumnStyles(i).SizeType = SizeType.Percent
                     DayTable.ColumnStyles(i).Width = 14.28
+                    TimeTable.ColumnStyles(i).SizeType = SizeType.Percent
                     TimeTable.ColumnStyles(i).Width = 14.28
                 Next
             ElseIf showSaturday Then '토요일 표시
                 For i = 0 To 5
+                    DayTable.ColumnStyles(i).SizeType = SizeType.Percent
                     DayTable.ColumnStyles(i).Width = 16.67
+                    TimeTable.ColumnStyles(i).SizeType = SizeType.Percent
                     TimeTable.ColumnStyles(i).Width = 16.67
                 Next
+                DayTable.ColumnStyles(6).SizeType = SizeType.Absolute
                 DayTable.ColumnStyles(6).Width = 0
+                TimeTable.ColumnStyles(6).SizeType = SizeType.Absolute
                 TimeTable.ColumnStyles(6).Width = 0
             Else '둘다 안표시
                 For i = 0 To 4
+                    DayTable.ColumnStyles(i).SizeType = SizeType.Percent
                     DayTable.ColumnStyles(i).Width = 20
+                    TimeTable.ColumnStyles(i).SizeType = SizeType.Percent
                     TimeTable.ColumnStyles(i).Width = 20
                 Next
+
+                DayTable.ColumnStyles(5).SizeType = SizeType.Absolute
+                DayTable.ColumnStyles(6).SizeType = SizeType.Absolute
                 DayTable.ColumnStyles(5).Width = 0
                 DayTable.ColumnStyles(6).Width = 0
+                TimeTable.ColumnStyles(5).SizeType = SizeType.Absolute
+                TimeTable.ColumnStyles(6).SizeType = SizeType.Absolute
                 TimeTable.ColumnStyles(5).Width = 0
                 TimeTable.ColumnStyles(6).Width = 0
             End If
@@ -1219,10 +1264,47 @@ Public Class Form1
                                         panel.BackColor.G * colorMul,
                                         panel.BackColor.B * colorMul)
 
+        Dim g As Graphics = panel.CreateGraphics
+        g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        g.Clear(panel.BackColor)
+
+
+        'Win11용 코더라운딩
+        Dim showRnd = False
+        Dim isLeft = True
+
+        '월요일일시
+        If panel Is MonPanel Then
+            showRnd = True
+        Else '나머지
+            If (Not showSaturday And panel Is FriPanel) Or (showSunday And panel Is SunPanel) Then
+                showRnd = True
+                isLeft = False
+            End If
+        End If
+
+        If showRnd Then
+            Dim edgeBrush = New SolidBrush(BackColor)
+            Dim backBrush = New SolidBrush(panel.BackColor)
+            Dim rndSize = Convert.ToInt16(Me.RndSize * (currentDPI / 96))
+
+            If isLeft Then
+                '좌측
+                g.FillRectangle(edgeBrush, 0, panel.Height - rndSize, rndSize, rndSize)
+                g.FillEllipse(backBrush, 0, panel.Height - rndSize * 2, rndSize * 2, rndSize * 2)
+            Else
+                '우측
+                g.FillRectangle(edgeBrush, panel.Width - rndSize, panel.Height - rndSize, rndSize, rndSize)
+                g.FillEllipse(backBrush, panel.Width - rndSize * 2, panel.Height - rndSize * 2, rndSize * 2, rndSize * 2)
+            End If
+        End If
+
+
+        ' 점선 표시
         If Not tablePatternSetting = "None" Then
 
             Dim p As New Pen(c, thickness)
-            Dim g As Graphics = panel.CreateGraphics
+            'Dim g As Graphics = panel.CreateGraphics
 
             p.DashStyle = Drawing2D.DashStyle.Dot
 
@@ -1236,6 +1318,7 @@ Public Class Form1
             g.Dispose()
             p.Dispose()
         End If
+
     End Sub
 
 #End Region
@@ -1838,6 +1921,23 @@ Public Class Form1
 
     Private Sub MemoSelectAllItem_Click(sender As Object, e As EventArgs) Handles MemoSelectAllItem.Click
         MemoRTB.SelectAll()
+    End Sub
+
+    Private Sub TopPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopPanel.Paint
+        Dim edgeBrush = New SolidBrush(BackColor)
+        Dim backBrush = New SolidBrush(TopPanel.BackColor)
+        Dim g As Graphics = TopPanel.CreateGraphics
+        Dim rndSize = Convert.ToInt16(Me.RndSize * (currentDPI / 96))
+        g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        g.Clear(TopPanel.BackColor)
+
+        '좌측
+        g.FillRectangle(edgeBrush, 0, 0, rndSize, rndSize)
+        g.FillEllipse(backBrush, 0, 0, rndSize * 2, rndSize * 2)
+
+        '우측
+        g.FillRectangle(edgeBrush, TopPanel.Width - rndSize, 0, rndSize, rndSize)
+        g.FillEllipse(backBrush, TopPanel.Width - rndSize * 2, 0, rndSize * 2, rndSize * 2)
     End Sub
 
 #End Region

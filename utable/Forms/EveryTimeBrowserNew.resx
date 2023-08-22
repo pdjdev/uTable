@@ -117,39 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RichTextBox1.Text" xml:space="preserve">
-    <value>※해당 프로그램은 아직 개발 단계에 있습니다! 일부 기능이 불안정할수 있으므로 문제 발견 시 피드백을 주시면 개선하도록 하겠습니다※
-
-uTable은 대학생을 위한 간단 데스크탑 시간표 프로그램으로, 누구나 자유롭게 무료로 사용할 수 있는 '오픈 소스 소프트웨어*' 입니다.
-
-[사용권 동의]
-본 프로그램(uTable) 는 PBJ소프트웨어에서 개발하고 배포하는 무료 소프트웨어입니다.
-이 프로그램은 개인, 가정, 기업, 관공서, 학교, 학원 등 언제나 어디에서나 무료로 제약없이 사용 가능합니다.
-본 프로그램은 현재 개발중이므로 일부 기능이나 작동 등에 결함이 있을 수 있습니다. 또한 본 프로그램으로 인해 생기는 사고나 불이익은 PBJ소프트웨어 측에서 책임 져 드릴 수 없으니 참고 바랍니다.
-이 프로그램을 재배포하실 수는 있으나, 개발자 동의를 거치지 않고 임의로 수정하거나 고친 뒤 배포하지 마시기 바랍니다. 만약 위에 대해 동의하지 않거나 설치를 원하지 않는 경우, 언제든지 설치를 중단하거나 프로그램을 제거하실 수 있습니다.
-
-*GitHub에 게시된 리포지토리는 GNU 일반 공중 사용 허가서를 따릅니다.
-Copyright (c) 2020-2023 Dongjun Park (PBJSoftware)
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</value>
-  </data>
-  <metadata name="FontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="TableChecker.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
-  </metadata>
-  <metadata name="UpdateChecker.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>137, 17</value>
-  </metadata>
-  <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>274, 17</value>
-  </metadata>
-  <metadata name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>413, 17</value>
-  </metadata>
-  <metadata name="FolderBrowserDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>557, 17</value>
   </metadata>
 </root>
