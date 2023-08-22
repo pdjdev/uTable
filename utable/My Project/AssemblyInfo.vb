@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Reflection
+﻿Imports System.Reflection
 Imports System.Runtime.InteropServices
 
 ' 어셈블리에 대한 일반 정보는 다음 특성 집합을 통해 
@@ -31,6 +30,6 @@ Imports System.Runtime.InteropServices
 ' 기본값으로 할 수 있습니다.
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.7.0.0")>
-<Assembly: AssemblyFileVersion("1.7.0.0")>
+<Assembly: AssemblyVersion("1.8.0.0")>
+<Assembly: AssemblyFileVersion("1.8.0.0")>
 

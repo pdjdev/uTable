@@ -15,6 +15,9 @@ Public Class OptionForm
 
     Dim downComplete As Boolean = False
 
+    '시작시간고정 최초변경판별용
+    Dim FixStartTimeChanged = False
+
     '시간표 내보내기용
     Dim tableData As String = Nothing
 
@@ -79,6 +82,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub CloseBT_Click(sender As Object, e As EventArgs) Handles CloseBT.Click
+        Form1.updateCell()
         Close()
     End Sub
 
@@ -110,7 +114,7 @@ Public Class OptionForm
         SettingMenu_Update.SettingLabel.Text = "업데이트"
         SettingMenu_Info.SettingLabel.Text = "프로그램 정보"
 
-        VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString + "   -  by PBJSoftware 2021"
+        VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString + "   -  by PBJSoftware 2023"
 
         SwitchMode(1)
 
@@ -137,6 +141,17 @@ Public Class OptionForm
 
         '표확장 기본값 = 1
         ExpandCellChk.Checked = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
+
+        '고정시작시간 기본값 = 0
+        FixStartTimeChk.Checked = (GetINI("SETTING", "FixStartTime", "", ININamePath) = "1")
+
+        If FixStartTimeChk.Checked Then
+            Dim FixStartTimeSetVal = GetINI("SETTING", "FixStartTimeValue", "", ININamePath)
+
+            If IsNumeric(FixStartTimeSetVal) Then
+                FixStartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(FixStartTimeSetVal) \ 60, Convert.ToInt16(FixStartTimeSetVal) Mod 60, 0)
+            End If
+        End If
 
         '항상확장 기본값 = 0
         AlwaysExpandChk.Checked = (GetINI("SETTING", "AlwaysExpand", "", ININamePath) = "1")
@@ -358,9 +373,19 @@ Public Class OptionForm
         ApplySetting("ExpandCell", ExpandCellChk.Checked)
     End Sub
 
+    Private Sub FixStartTimeChk_CheckedChanged(sender As Object, e As EventArgs) Handles FixStartTimeChk.CheckedChanged
+        ApplySetting("FixStartTime", FixStartTimeChk.Checked)
+        FixStartTimePicker.Enabled = FixStartTimeChk.Checked
+    End Sub
+
     Private Sub AlwaysExpandChk_CheckedChanged(sender As Object, e As EventArgs) Handles AlwaysExpandChk.CheckedChanged
         ApplySetting("AlwaysExpand", AlwaysExpandChk.Checked)
         ExpandCellChk.Enabled = Not AlwaysExpandChk.Checked
+    End Sub
+
+
+    Private Sub FixStartTimePicker_ValueChanged(sender As Object, e As EventArgs) Handles FixStartTimePicker.ValueChanged
+        SetINI("SETTING", "FixStartTimeValue", (FixStartTimePicker.Value.Hour * 60 + FixStartTimePicker.Value.Minute).ToString, ININamePath)
     End Sub
 
     Private Sub ShowDayChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowDayChk.CheckedChanged
@@ -1109,4 +1134,5 @@ Public Class OptionForm
                    + "오디오 파일이 유효한 WAV 파일인지 확인해 주시기 바랍니다.", vbCritical)
         End Try
     End Sub
+
 End Class

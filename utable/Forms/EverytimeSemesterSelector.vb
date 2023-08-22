@@ -42,6 +42,7 @@ Public Class EverytimeSemesterSelector
     Private Sub FadeInEffect(sender As Object, e As EventArgs) Handles MyBase.Shown
         Me.Refresh()
         FadeIn(Me, 1)
+        TopMost = False
     End Sub
 
     Private Sub FadeOutEffect(sender As Object, e As EventArgs) Handles MyBase.Closing
@@ -49,13 +50,6 @@ Public Class EverytimeSemesterSelector
     End Sub
 
     Private Sub EverytimeSemesterSelector_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If GetINI("SETTING", "CustomFont", "", ININamePath) = "1" And GetINI("SETTING", "ApplyAllGUIFonts", "", ININamePath) = "1" Then
-            If Not GetINI("SETTING", "CustomFontName", "", ININamePath) = "" Then
-                Dim fntname = GetINI("SETTING", "CustomFontName", "", ININamePath)
-                ChangeToCustomFont(Me, fntname)
-            End If
-        End If
-
         AgreementRTB.Text = AgreementRTB.Text.Replace("[FileName]", TableSaveLocation(True))
 
         Step1Panel.Visible = True
@@ -120,7 +114,7 @@ Public Class EverytimeSemesterSelector
                 End If
 
                 Height += dpicalc(Me, 100)
-                CenterToParent()
+                SetDesktopLocation(Location.X, Location.Y - dpicalc(Me, 100) / 2)
 
                 Step1Panel.Visible = False
                 Step2Panel.Visible = True
@@ -131,20 +125,20 @@ Public Class EverytimeSemesterSelector
             Case 2
                 Select Case semesterCombo.SelectedIndex
                     Case 0 '1학기
-                        EveryTimeBrowser.targetUrl = "https://everytime.kr/timetable/" + yearUpd.Value.ToString + "/1"
+                        EveryTimeBrowserNew.targetUrl = "https://everytime.kr/timetable/" + yearUpd.Value.ToString + "/1"
                     Case 1 '여름학기
-                        EveryTimeBrowser.targetUrl = "https://everytime.kr/timetable/" + yearUpd.Value.ToString + "/%EC%97%AC%EB%A6%84"
+                        EveryTimeBrowserNew.targetUrl = "https://everytime.kr/timetable/" + yearUpd.Value.ToString + "/%EC%97%AC%EB%A6%84"
                     Case 2 '2학기
-                        EveryTimeBrowser.targetUrl = "https://everytime.kr/timetable/" + yearUpd.Value.ToString + "/2"
+                        EveryTimeBrowserNew.targetUrl = "https://everytime.kr/timetable/" + yearUpd.Value.ToString + "/2"
                     Case 3 '겨울학기
-                        EveryTimeBrowser.targetUrl = "https://everytime.kr/timetable/" + yearUpd.Value.ToString + "/%EA%B2%A8%EC%9A%B8"
+                        EveryTimeBrowserNew.targetUrl = "https://everytime.kr/timetable/" + yearUpd.Value.ToString + "/%EA%B2%A8%EC%9A%B8"
                     Case Else
-                        EveryTimeBrowser.targetUrl = "https://everytime.kr/timetable"
+                        EveryTimeBrowserNew.targetUrl = "https://everytime.kr/timetable"
                 End Select
 
                 FadeOut(Me)
                 Hide()
-                EveryTimeBrowser.ShowDialog(Form1)
+                EveryTimeBrowserNew.ShowDialog(Form1)
                 Close()
         End Select
     End Sub
