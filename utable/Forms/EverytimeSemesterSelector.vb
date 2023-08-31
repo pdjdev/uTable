@@ -142,4 +142,9 @@ Public Class EverytimeSemesterSelector
                 Close()
         End Select
     End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        TopMost = False
+        Process.Start("https://utable.sw.pbj.kr/everytime-troubleshooting")
+    End Sub
 End Class

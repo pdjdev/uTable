@@ -29,9 +29,12 @@ Partial Class EveryTimeBrowserNew
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.LoadingSplash1 = New uTable.LoadingSplash()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Panel1.SuspendLayout()
         CType(Me.WebView21, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableChecker
@@ -41,13 +44,13 @@ Partial Class EveryTimeBrowserNew
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.LoadingSplash1)
         Me.Panel1.Controls.Add(Me.WebView21)
-        Me.Panel1.Controls.Add(Me.CloseBT)
-        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(1, 1)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(380, 463)
+        Me.Panel1.Size = New System.Drawing.Size(401, 547)
         Me.Panel1.TabIndex = 1
         '
         'WebView21
@@ -56,9 +59,9 @@ Partial Class EveryTimeBrowserNew
         Me.WebView21.CreationProperties = Nothing
         Me.WebView21.DefaultBackgroundColor = System.Drawing.Color.White
         Me.WebView21.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WebView21.Location = New System.Drawing.Point(0, 65)
+        Me.WebView21.Location = New System.Drawing.Point(0, 64)
         Me.WebView21.Name = "WebView21"
-        Me.WebView21.Size = New System.Drawing.Size(380, 398)
+        Me.WebView21.Size = New System.Drawing.Size(401, 483)
         Me.WebView21.TabIndex = 30
         Me.WebView21.ZoomFactor = 1.0R
         '
@@ -67,7 +70,7 @@ Partial Class EveryTimeBrowserNew
         Me.CloseBT.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CloseBT.BackColor = System.Drawing.Color.White
         Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
-        Me.CloseBT.Location = New System.Drawing.Point(347, 3)
+        Me.CloseBT.Location = New System.Drawing.Point(368, 3)
         Me.CloseBT.Name = "CloseBT"
         Me.CloseBT.Size = New System.Drawing.Size(30, 30)
         Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -82,28 +85,50 @@ Partial Class EveryTimeBrowserNew
         Me.Label1.ForeColor = System.Drawing.Color.Gray
         Me.Label1.Location = New System.Drawing.Point(0, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(380, 65)
+        Me.Label1.Size = New System.Drawing.Size(401, 33)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "시간표를 불러 올 에브리타임 계정으로" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "로그인 해 주세요."
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.Label1.Text = "시간표를 불러 올 계정으로 로그인 해 주세요."
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
         'LoadingSplash1
         '
         Me.LoadingSplash1.BackColor = System.Drawing.Color.Transparent
         Me.LoadingSplash1.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.LoadingSplash1.Location = New System.Drawing.Point(15, 399)
+        Me.LoadingSplash1.Location = New System.Drawing.Point(4, 493)
         Me.LoadingSplash1.Margin = New System.Windows.Forms.Padding(4)
         Me.LoadingSplash1.Name = "LoadingSplash1"
         Me.LoadingSplash1.Size = New System.Drawing.Size(50, 50)
         Me.LoadingSplash1.TabIndex = 32
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.LinkLabel1)
+        Me.Panel2.Controls.Add(Me.CloseBT)
+        Me.Panel2.Controls.Add(Me.Label1)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(401, 64)
+        Me.Panel2.TabIndex = 33
+        '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.LinkLabel1.LinkColor = System.Drawing.Color.Maroon
+        Me.LinkLabel1.Location = New System.Drawing.Point(0, 33)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(401, 28)
+        Me.LinkLabel1.TabIndex = 30
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "로그인에 문제가 있나요?"
+        Me.LinkLabel1.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'EveryTimeBrowserNew
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.Gray
-        Me.ClientSize = New System.Drawing.Size(382, 465)
-        Me.Controls.Add(Me.LoadingSplash1)
+        Me.ClientSize = New System.Drawing.Size(403, 549)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -117,6 +142,7 @@ Partial Class EveryTimeBrowserNew
         Me.Panel1.ResumeLayout(False)
         CType(Me.WebView21, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -126,4 +152,6 @@ Partial Class EveryTimeBrowserNew
     Friend WithEvents CloseBT As PictureBox
     Friend WithEvents WebView21 As Microsoft.Web.WebView2.WinForms.WebView2
     Friend WithEvents LoadingSplash1 As LoadingSplash
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents LinkLabel1 As LinkLabel
 End Class

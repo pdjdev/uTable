@@ -96,6 +96,16 @@ Public Class OptionForm
             End If
         End If
 
+        If Form1.isStore Then
+            UpdateCtrlPanel.Visible = False
+            UpdateCtrlMSStorePanel.Visible = True
+            UpdateChkButtonMSStore.Visible = True
+        Else
+            UpdateCtrlPanel.Visible = True
+            UpdateCtrlMSStorePanel.Visible = False
+            UpdateChkButtonMSStore.Visible = False
+        End If
+
         SendMessage(Me.NotificationSoundLocationTB.Handle, &H1501, 0, "알림 효과음 위치 (빈 칸: 기본 시스템 소리)")
 
         UpdateColor()
@@ -114,7 +124,13 @@ Public Class OptionForm
         SettingMenu_Update.SettingLabel.Text = "업데이트"
         SettingMenu_Info.SettingLabel.Text = "프로그램 정보"
 
-        VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString + "   -  by PBJSoftware 2023"
+        VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString
+
+        If Form1.isStore Then
+            VersionLabel.Text += " (MS Store)  -  by PBJSoftware 2023"
+        Else
+            VersionLabel.Text += "   -  by PBJSoftware 2023"
+        End If
 
         SwitchMode(1)
 
@@ -635,6 +651,10 @@ Public Class OptionForm
         MsgBox("현재 버전은 " + My.Application.Info.Version.ToString + " 입니다." + vbCr + vbCr + "확인 버튼을 누르면 프로그램 페이지로 이동합니다.", vbInformation)
         Process.Start("https://utable.sw.pbj.kr")
     End Sub
+    Private Sub MSStoreLinkLabel_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles MSStoreLinkLabel.LinkClicked
+        MsgBox("현재 버전은 " + My.Application.Info.Version.ToString + " 입니다." + vbCr + vbCr + "'스토어 앱에서 다운로드' 버튼을 누르면 스토어가 실행됩니다.", vbInformation)
+        Process.Start("https://apps.microsoft.com/store/detail/9NV0P4LCC9MS?launch=true&mode=mini")
+    End Sub
 
     Private Sub FeedbackLabel_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles FeedbackLabel.LinkClicked
         InfoCopy(Me)
@@ -650,7 +670,7 @@ Public Class OptionForm
         CustomDirPanel.Enabled = CustomSaveDirChk.Checked
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles UpdateChkButton.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles UpdateChkButton.Click, UpdateChkButtonMSStore.Click
         If UpdateChecker.IsBusy = False Then
             WebBrowser1.Navigate("about:blank")
 
@@ -777,16 +797,18 @@ Public Class OptionForm
     End Sub
 
     Private Sub DoUpdateButton_Click(sender As Object, e As EventArgs) Handles DoUpdateButton.Click
-        DoUpdateButton.Enabled = False
+        If Not Form1.isStore Then
+            DoUpdateButton.Enabled = False
 
-        If downComplete Then
-            DoUpdateTask()
-        Else
-            If MsgBox("다운로드 후 뜨게 될 작업창을 닫지 마시고 기다려주시면 자동으로 업데이트가 완료됩니다." + vbCr _
-                  + "만일 업데이트를 실패했다면 직접 다운로드 페이지로 가서 받으시기 바랍니다. (시간표, 설정 값은 같은 실행 위치에 저장 후 실행하면 그대로 유지됩니다)" + vbCr + vbCr _
-                  + "계속하시려면 '예' 를 눌러주세요.", vbYesNo + vbInformation) = vbYes Then
-                'wc.CancelAsync()
-                DownloadUpdate()
+            If downComplete Then
+                DoUpdateTask()
+            Else
+                If MsgBox("다운로드 후 뜨게 될 작업창을 닫지 마시고 기다려주시면 자동으로 업데이트가 완료됩니다." + vbCr _
+                      + "만일 업데이트를 실패했다면 직접 다운로드 페이지로 가서 받으시기 바랍니다. (시간표, 설정 값은 같은 실행 위치에 저장 후 실행하면 그대로 유지됩니다)" + vbCr + vbCr _
+                      + "계속하시려면 '예' 를 눌러주세요.", vbYesNo + vbInformation) = vbYes Then
+                    'wc.CancelAsync()
+                    DownloadUpdate()
+                End If
             End If
         End If
     End Sub
@@ -1134,5 +1156,4 @@ Public Class OptionForm
                    + "오디오 파일이 유효한 WAV 파일인지 확인해 주시기 바랍니다.", vbCritical)
         End Try
     End Sub
-
 End Class

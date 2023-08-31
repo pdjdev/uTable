@@ -421,6 +421,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptable_icon.ico" />
+    <None Include="Resources\msstore_logo.png" />
     <None Include="Resources\menuicon_w.png" />
     <None Include="Resources\menuicon_b.png" />
     <None Include="Resources\memo_font_b.png" />
