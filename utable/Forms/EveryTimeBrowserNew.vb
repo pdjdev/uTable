@@ -81,6 +81,7 @@ Public Class EveryTimeBrowserNew
             End If
         End If
 
+        WebView21.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
         WebView21.Source = New Uri(targetUrl)
         trialCount = 0
 
@@ -218,5 +219,10 @@ Public Class EveryTimeBrowserNew
 
     Private Sub WebView21_NavigationStarting(sender As Object, e As CoreWebView2NavigationStartingEventArgs) Handles WebView21.NavigationStarting
         LoadingSplash1.Visible = True
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        TopMost = False
+        Process.Start("https://utable.sw.pbj.kr/everytime-troubleshooting")
     End Sub
 End Class

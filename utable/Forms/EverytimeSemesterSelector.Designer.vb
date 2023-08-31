@@ -26,9 +26,6 @@ Partial Class EverytimeSemesterSelector
         Me.NextBT = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Step2Panel = New System.Windows.Forms.Panel()
-        Me.AgreementRTB = New System.Windows.Forms.RichTextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Step1Panel = New System.Windows.Forms.Panel()
         Me.tipLabel = New System.Windows.Forms.Label()
         Me.autoChk = New System.Windows.Forms.CheckBox()
@@ -36,15 +33,19 @@ Partial Class EverytimeSemesterSelector
         Me.Label3 = New System.Windows.Forms.Label()
         Me.yearUpd = New System.Windows.Forms.NumericUpDown()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.Step2Panel = New System.Windows.Forms.Panel()
+        Me.AgreementRTB = New System.Windows.Forms.RichTextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
-        Me.Step2Panel.SuspendLayout()
         Me.Step1Panel.SuspendLayout()
         CType(Me.yearUpd, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Step2Panel.SuspendLayout()
         Me.Panel4.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -88,41 +89,6 @@ Partial Class EverytimeSemesterSelector
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(358, 116)
         Me.Panel3.TabIndex = 34
-        '
-        'Step2Panel
-        '
-        Me.Step2Panel.Controls.Add(Me.AgreementRTB)
-        Me.Step2Panel.Controls.Add(Me.Label1)
-        Me.Step2Panel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Step2Panel.Location = New System.Drawing.Point(0, 0)
-        Me.Step2Panel.Name = "Step2Panel"
-        Me.Step2Panel.Size = New System.Drawing.Size(358, 116)
-        Me.Step2Panel.TabIndex = 0
-        '
-        'AgreementRTB
-        '
-        Me.AgreementRTB.BackColor = System.Drawing.Color.White
-        Me.AgreementRTB.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.AgreementRTB.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.AgreementRTB.ForeColor = System.Drawing.Color.Black
-        Me.AgreementRTB.Location = New System.Drawing.Point(0, 29)
-        Me.AgreementRTB.Name = "AgreementRTB"
-        Me.AgreementRTB.ReadOnly = True
-        Me.AgreementRTB.Size = New System.Drawing.Size(358, 87)
-        Me.AgreementRTB.TabIndex = 38
-        Me.AgreementRTB.Text = resources.GetString("AgreementRTB.Text")
-        '
-        'Label1
-        '
-        Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label1.Location = New System.Drawing.Point(0, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
-        Me.Label1.Size = New System.Drawing.Size(358, 29)
-        Me.Label1.TabIndex = 37
-        Me.Label1.Text = "다음 참고사항을 읽은 후 '로그인하기' 를 눌러 주세요."
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'Step1Panel
         '
@@ -203,8 +169,44 @@ Partial Class EverytimeSemesterSelector
         Me.Label4.TabIndex = 36
         Me.Label4.Text = "년"
         '
+        'Step2Panel
+        '
+        Me.Step2Panel.Controls.Add(Me.AgreementRTB)
+        Me.Step2Panel.Controls.Add(Me.Label1)
+        Me.Step2Panel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Step2Panel.Location = New System.Drawing.Point(0, 0)
+        Me.Step2Panel.Name = "Step2Panel"
+        Me.Step2Panel.Size = New System.Drawing.Size(358, 116)
+        Me.Step2Panel.TabIndex = 0
+        '
+        'AgreementRTB
+        '
+        Me.AgreementRTB.BackColor = System.Drawing.Color.White
+        Me.AgreementRTB.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.AgreementRTB.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AgreementRTB.ForeColor = System.Drawing.Color.Black
+        Me.AgreementRTB.Location = New System.Drawing.Point(0, 29)
+        Me.AgreementRTB.Name = "AgreementRTB"
+        Me.AgreementRTB.ReadOnly = True
+        Me.AgreementRTB.Size = New System.Drawing.Size(358, 87)
+        Me.AgreementRTB.TabIndex = 38
+        Me.AgreementRTB.Text = resources.GetString("AgreementRTB.Text")
+        '
+        'Label1
+        '
+        Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Location = New System.Drawing.Point(0, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
+        Me.Label1.Size = New System.Drawing.Size(358, 29)
+        Me.Label1.TabIndex = 37
+        Me.Label1.Text = "다음 참고사항을 읽은 후 '로그인하기' 를 눌러 주세요."
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        '
         'Panel4
         '
+        Me.Panel4.Controls.Add(Me.LinkLabel1)
         Me.Panel4.Controls.Add(Me.NextBT)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel4.Location = New System.Drawing.Point(15, 163)
@@ -245,6 +247,18 @@ Partial Class EverytimeSemesterSelector
         Me.CloseBT.TabIndex = 29
         Me.CloseBT.TabStop = False
         '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.LinkLabel1.LinkColor = System.Drawing.Color.Maroon
+        Me.LinkLabel1.Location = New System.Drawing.Point(0, 18)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(260, 28)
+        Me.LinkLabel1.TabIndex = 31
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "로그인에 문제가 있나요?"
+        Me.LinkLabel1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        '
         'EverytimeSemesterSelector
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -263,10 +277,10 @@ Partial Class EverytimeSemesterSelector
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.Panel1.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
-        Me.Step2Panel.ResumeLayout(False)
         Me.Step1Panel.ResumeLayout(False)
         Me.Step1Panel.PerformLayout()
         CType(Me.yearUpd, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Step2Panel.ResumeLayout(False)
         Me.Panel4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
@@ -290,4 +304,5 @@ Partial Class EverytimeSemesterSelector
     Friend WithEvents AgreementRTB As RichTextBox
     Friend WithEvents tipLabel As Label
     Friend WithEvents Panel4 As Panel
+    Friend WithEvents LinkLabel1 As LinkLabel
 End Class
