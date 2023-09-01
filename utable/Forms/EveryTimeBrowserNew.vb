@@ -81,7 +81,7 @@ Public Class EveryTimeBrowserNew
             End If
         End If
 
-        WebView21.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+        WebView21.CoreWebView2.Settings.IsReputationCheckingRequired = False
         WebView21.Source = New Uri(targetUrl)
         trialCount = 0
 
@@ -94,8 +94,12 @@ Public Class EveryTimeBrowserNew
         LoadingSplash1.Visible = False
 
         If WebView21.Source.ToString.Contains("/timetable") Then
-            Debug.Print("Detected!!" + vbCrLf)
+            'Debug.Print("Detected!!" + vbCrLf)
+            TSLinkLabel1.Visible = False
             Label1.Text = "시간표를 불러오는 중..."
+            Label1.Dock = DockStyle.Fill
+            Label1.TextAlign = ContentAlignment.MiddleCenter
+
             'PerformZoom(WebBrowser1, dpivalue)
             WebView21.Visible = False
             WebView21.Dock = DockStyle.None
@@ -221,7 +225,7 @@ Public Class EveryTimeBrowserNew
         LoadingSplash1.Visible = True
     End Sub
 
-    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles TSLinkLabel1.LinkClicked
         TopMost = False
         Process.Start("https://utable.sw.pbj.kr/everytime-troubleshooting")
     End Sub

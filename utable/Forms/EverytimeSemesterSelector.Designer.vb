@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class EverytimeSemesterSelector
     Inherits System.Windows.Forms.Form
 
     'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class EverytimeSemesterSelector
     '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
     '수정하려면 Windows Form 디자이너를 사용하십시오.  
     '코드 편집기에서는 수정하지 마세요.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EverytimeSemesterSelector))
         Me.NextBT = New System.Windows.Forms.Button()
@@ -40,7 +40,6 @@ Partial Class EverytimeSemesterSelector
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Step1Panel.SuspendLayout()
@@ -206,7 +205,6 @@ Partial Class EverytimeSemesterSelector
         '
         'Panel4
         '
-        Me.Panel4.Controls.Add(Me.LinkLabel1)
         Me.Panel4.Controls.Add(Me.NextBT)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel4.Location = New System.Drawing.Point(15, 163)
@@ -246,18 +244,6 @@ Partial Class EverytimeSemesterSelector
         Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.CloseBT.TabIndex = 29
         Me.CloseBT.TabStop = False
-        '
-        'LinkLabel1
-        '
-        Me.LinkLabel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.LinkLabel1.LinkColor = System.Drawing.Color.Maroon
-        Me.LinkLabel1.Location = New System.Drawing.Point(0, 18)
-        Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(260, 28)
-        Me.LinkLabel1.TabIndex = 31
-        Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "로그인에 문제가 있나요?"
-        Me.LinkLabel1.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'EverytimeSemesterSelector
         '
@@ -304,5 +290,4 @@ Partial Class EverytimeSemesterSelector
     Friend WithEvents AgreementRTB As RichTextBox
     Friend WithEvents tipLabel As Label
     Friend WithEvents Panel4 As Panel
-    Friend WithEvents LinkLabel1 As LinkLabel
 End Class
