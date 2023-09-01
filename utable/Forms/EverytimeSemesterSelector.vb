@@ -138,13 +138,19 @@ Public Class EverytimeSemesterSelector
 
                 FadeOut(Me)
                 Hide()
-                EveryTimeBrowserNew.ShowDialog(Form1)
+                Try
+                    EveryTimeBrowserNew.ShowDialog(Form1)
+                Catch ex As Exception
+                    If MsgBox("브라우저 실행 중 문제가 발생했습니다." + vbCr _
+                              + "(" + ex.Message + ")" + vbCr + vbCr _
+                              + "문제 해결 페이지로 이동하시겠습니까?", vbExclamation + vbYesNo) = vbYes Then
+                        TopMost = False
+                        Process.Start("https://utable.sw.pbj.kr/everytime-troubleshooting")
+                        Close()
+                    End If
+                End Try
+
                 Close()
         End Select
-    End Sub
-
-    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        TopMost = False
-        Process.Start("https://utable.sw.pbj.kr/everytime-troubleshooting")
     End Sub
 End Class

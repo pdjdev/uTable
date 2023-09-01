@@ -26,15 +26,15 @@ Partial Class EveryTimeBrowserNew
         Me.TableChecker = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.WebView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.TSLinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.LoadingSplash1 = New uTable.LoadingSplash()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Panel1.SuspendLayout()
         CType(Me.WebView21, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
+        CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableChecker
@@ -64,6 +64,29 @@ Partial Class EveryTimeBrowserNew
         Me.WebView21.Size = New System.Drawing.Size(401, 483)
         Me.WebView21.TabIndex = 30
         Me.WebView21.ZoomFactor = 1.0R
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.TSLinkLabel1)
+        Me.Panel2.Controls.Add(Me.CloseBT)
+        Me.Panel2.Controls.Add(Me.Label1)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(401, 64)
+        Me.Panel2.TabIndex = 33
+        '
+        'TSLinkLabel1
+        '
+        Me.TSLinkLabel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TSLinkLabel1.LinkColor = System.Drawing.Color.Maroon
+        Me.TSLinkLabel1.Location = New System.Drawing.Point(0, 33)
+        Me.TSLinkLabel1.Name = "TSLinkLabel1"
+        Me.TSLinkLabel1.Size = New System.Drawing.Size(401, 28)
+        Me.TSLinkLabel1.TabIndex = 30
+        Me.TSLinkLabel1.TabStop = True
+        Me.TSLinkLabel1.Text = "로그인에 문제가 있나요?"
+        Me.TSLinkLabel1.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'CloseBT
         '
@@ -100,29 +123,6 @@ Partial Class EveryTimeBrowserNew
         Me.LoadingSplash1.Size = New System.Drawing.Size(50, 50)
         Me.LoadingSplash1.TabIndex = 32
         '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.LinkLabel1)
-        Me.Panel2.Controls.Add(Me.CloseBT)
-        Me.Panel2.Controls.Add(Me.Label1)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(401, 64)
-        Me.Panel2.TabIndex = 33
-        '
-        'LinkLabel1
-        '
-        Me.LinkLabel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.LinkLabel1.LinkColor = System.Drawing.Color.Maroon
-        Me.LinkLabel1.Location = New System.Drawing.Point(0, 33)
-        Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(401, 28)
-        Me.LinkLabel1.TabIndex = 30
-        Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "로그인에 문제가 있나요?"
-        Me.LinkLabel1.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
         'EveryTimeBrowserNew
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -141,8 +141,8 @@ Partial Class EveryTimeBrowserNew
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.Panel1.ResumeLayout(False)
         CType(Me.WebView21, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
+        CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -153,5 +153,5 @@ Partial Class EveryTimeBrowserNew
     Friend WithEvents WebView21 As Microsoft.Web.WebView2.WinForms.WebView2
     Friend WithEvents LoadingSplash1 As LoadingSplash
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents TSLinkLabel1 As LinkLabel
 End Class
