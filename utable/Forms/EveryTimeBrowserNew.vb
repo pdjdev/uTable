@@ -82,6 +82,7 @@ Public Class EveryTimeBrowserNew
         End If
 
         WebView21.CoreWebView2.Settings.IsReputationCheckingRequired = False
+
         WebView21.Source = New Uri(targetUrl)
         trialCount = 0
 
@@ -100,6 +101,7 @@ Public Class EveryTimeBrowserNew
             Label1.Dock = DockStyle.Fill
             Label1.TextAlign = ContentAlignment.MiddleCenter
 
+            WebView21.ZoomFactor = 100 / dpivalue
             'PerformZoom(WebBrowser1, dpivalue)
             WebView21.Visible = False
             WebView21.Dock = DockStyle.None
@@ -108,6 +110,8 @@ Public Class EveryTimeBrowserNew
         Else
             'PerformZoom(WebBrowser1, Convert.ToInt32(dpivalue * dpivalue / 100))
             Debug.Print("Not detected!!" + vbCrLf)
+
+
         End If
     End Sub
 
@@ -142,25 +146,25 @@ Public Class EveryTimeBrowserNew
                         '컬러 추출
                         Select Case midReturn("subject color", """", c)
                             Case "1"
-                                color = Color.FromArgb(240, 134, 118)
+                                color = color.FromArgb(240, 134, 118)
                             Case "2"
-                                color = Color.FromArgb(251, 171, 102)
+                                color = color.FromArgb(251, 171, 102)
                             Case "3"
-                                color = Color.FromArgb(236, 195, 105)
+                                color = color.FromArgb(236, 195, 105)
                             Case "4"
-                                color = Color.FromArgb(167, 202, 112)
+                                color = color.FromArgb(167, 202, 112)
                             Case "5"
-                                color = Color.FromArgb(118, 203, 136)
+                                color = color.FromArgb(118, 203, 136)
                             Case "6"
-                                color = Color.FromArgb(125, 209, 193)
+                                color = color.FromArgb(125, 209, 193)
                             Case "7"
-                                color = Color.FromArgb(122, 165, 233)
+                                color = color.FromArgb(122, 165, 233)
                             Case "8"
-                                color = Color.FromArgb(61, 103, 173)
+                                color = color.FromArgb(61, 103, 173)
                             Case "9"
-                                color = Color.FromArgb(159, 134, 225)
+                                color = color.FromArgb(159, 134, 225)
                             Case Else
-                                color = Color.DarkGray
+                                color = color.DarkGray
                         End Select
 
                         '다크 모드로 설정되었을시 어둡게 설정하기
