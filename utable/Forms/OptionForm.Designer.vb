@@ -424,7 +424,7 @@ Partial Class OptionForm
         '
         Me.MSStoreLinkLabel.AutoSize = True
         Me.MSStoreLinkLabel.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.MSStoreLinkLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.MSStoreLinkLabel.LinkColor = System.Drawing.Color.DodgerBlue
         Me.MSStoreLinkLabel.Location = New System.Drawing.Point(91, 51)
         Me.MSStoreLinkLabel.Name = "MSStoreLinkLabel"
         Me.MSStoreLinkLabel.Size = New System.Drawing.Size(123, 15)
