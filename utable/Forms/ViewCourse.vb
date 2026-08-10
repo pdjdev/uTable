@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 
 Public Class ViewCourse
-    Dim BorderWidth As Integer = Form1.BorderWidth
+    Dim BorderWidth As Integer = MainForm.BorderWidth
     Private _resizeDir As ResizeDirection = ResizeDirection.None
 
     Dim prevData As New List(Of String)
@@ -140,7 +140,7 @@ Public Class ViewCourse
         End If
     End Sub
 
-    Private Sub Form1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles UpperPanel.MouseDown, MainPanel.MouseDown
+    Private Sub MainForm_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles UpperPanel.MouseDown, MainPanel.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left And Me.WindowState <> FormWindowState.Maximized Then
             ResizeForm(resizeDir)
         End If
@@ -181,7 +181,7 @@ Public Class ViewCourse
 
     End Sub
 
-    Private Sub Form1_MouseLeave(sender As Object, e As EventArgs) Handles UpperPanel.MouseLeave, MainPanel.MouseLeave
+    Private Sub MainForm_MouseLeave(sender As Object, e As EventArgs) Handles UpperPanel.MouseLeave, MainPanel.MouseLeave
         Cursor = Cursors.Default
     End Sub
 #End Region
@@ -362,12 +362,12 @@ Public Class ViewCourse
 
         Dim appearPoint As Point = Location
 
-        If appearPoint.X + SetCourse.Width > Form1.Location.X + Form1.Width Then
-            appearPoint.X = Form1.Location.X + Form1.Width - SetCourse.Width
+        If appearPoint.X + SetCourse.Width > MainForm.Location.X + MainForm.Width Then
+            appearPoint.X = MainForm.Location.X + MainForm.Width - SetCourse.Width
         End If
 
-        If appearPoint.Y + SetCourse.Height > Form1.Location.Y + Form1.Height Then
-            appearPoint.Y = Form1.Location.Y + Form1.Height - SetCourse.Height
+        If appearPoint.Y + SetCourse.Height > MainForm.Location.Y + MainForm.Height Then
+            appearPoint.Y = MainForm.Location.Y + MainForm.Height - SetCourse.Height
         End If
 
         SetCourse.modifyMode = True
@@ -419,7 +419,7 @@ Public Class ViewCourse
                 writeTable(readTable.Replace(olddata, newdata))
             End If
 
-            Form1.updateCell()
+            MainForm.updateCell()
 
         Catch ex As Exception
             MsgBox("적용 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)

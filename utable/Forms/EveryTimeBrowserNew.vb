@@ -157,7 +157,7 @@ Public Class EveryTimeBrowserNew
             If MsgBox("불러오기가 완료되었습니다. 바로 적용하시겠습니까?" + vbCr + "기존 시간표는 지워집니다!",
                       vbQuestion + vbYesNo) = vbYes Then
                 writeTable("<tablename>에타에서 불러온 시간표</tablename>" + vbCrLf + tabledata)
-                Form1.updateCell()
+                MainForm.updateCell()
                 Close()
             End If
 

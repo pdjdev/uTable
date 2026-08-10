@@ -78,8 +78,8 @@ Public Class DLLDownloader
             EveryTimeBrowserNew.Close()
             EverytimeSemesterSelector.Close()
             EverytimeSemesterSelector.StartPosition = FormStartPosition.Manual
-            EverytimeSemesterSelector.SetDesktopLocation(Form1.Location.X + (Form1.Width - EverytimeSemesterSelector.Width) / 2,
-                                                         Form1.Location.Y + (Form1.Height - EverytimeSemesterSelector.Height) / 2)
+            EverytimeSemesterSelector.SetDesktopLocation(MainForm.Location.X + (MainForm.Width - EverytimeSemesterSelector.Width) / 2,
+                                                         MainForm.Location.Y + (MainForm.Height - EverytimeSemesterSelector.Height) / 2)
             EverytimeSemesterSelector.Show()
             EverytimeSemesterSelector.TopMost = True
             Close()

@@ -139,7 +139,7 @@ Public Class EverytimeSemesterSelector
                 FadeOut(Me)
                 Hide()
                 Try
-                    EveryTimeBrowserNew.ShowDialog(Form1)
+                    EveryTimeBrowserNew.ShowDialog(MainForm)
                 Catch ex As Exception
                     If MsgBox("브라우저 실행 중 문제가 발생했습니다." + vbCr _
                               + "(" + ex.Message + ")" + vbCr + vbCr _

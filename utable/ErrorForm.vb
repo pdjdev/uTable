@@ -15,7 +15,7 @@
     End Sub
 
     Private Sub ErrorForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        SetDesktopLocation(Form1.Location.X + (Form1.Width - Width) / 2, Form1.Location.Y + (Form1.Height - Height) / 2)
+        SetDesktopLocation(MainForm.Location.X + (MainForm.Width - Width) / 2, MainForm.Location.Y + (MainForm.Height - Height) / 2)
         TopMost = True
 
         Button1.Text = "다시 시작" + vbCr + "(" + count.ToString + " 초후 실행)"

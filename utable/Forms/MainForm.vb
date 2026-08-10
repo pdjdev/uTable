@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' - 자동저장기능 구현 (5초간 타이핑 대기 후 동기저장)
 ' - rtf가 이상하게 굴면 그냥 rtb대신 tb 넣고 txt파일로 저장
 
-Public Class Form1
+Public Class MainForm
 
 #Region "변수"
 
@@ -218,7 +218,7 @@ Public Class Form1
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
     End Sub
 
-    Private Sub Form1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
+    Private Sub MainForm_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left And Me.WindowState <> FormWindowState.Maximized Then
             If Not GetINI("SETTING", "WindowLocked", "", ININamePath) = "1" Then
                 'TimeTable.SuspendLayout()
@@ -278,7 +278,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Form1_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+    Private Sub MainForm_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         Cursor = Cursors.Default
     End Sub
 
@@ -495,7 +495,7 @@ Public Class Form1
 
 #Region "앱 주요 이벤트 (Load, Shown)"
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         For Each scrn In Screen.AllScreens
             If scrn.DeviceName = GetINI("SETTING", "WindowDisplay", "", ININamePath) Then
@@ -594,7 +594,7 @@ Public Class Form1
     End Sub
 
 
-    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+    Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         formshown = True
         Refresh()
 

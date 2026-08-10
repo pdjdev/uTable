@@ -82,7 +82,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub CloseBT_Click(sender As Object, e As EventArgs) Handles CloseBT.Click
-        Form1.updateCell()
+        MainForm.updateCell()
         Close()
     End Sub
 
@@ -96,7 +96,7 @@ Public Class OptionForm
             End If
         End If
 
-        If Form1.isStore Then
+        If MainForm.isStore Then
             UpdateCtrlPanel.Visible = False
             UpdateCtrlMSStorePanel.Visible = True
             UpdateChkButtonMSStore.Visible = True
@@ -126,7 +126,7 @@ Public Class OptionForm
 
         VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString
 
-        If Form1.isStore Then
+        If MainForm.isStore Then
             VersionLabel.Text += " (MS Store)  -  by PBJSoftware 2023"
         Else
             VersionLabel.Text += "   -  by PBJSoftware 2023"
@@ -418,7 +418,7 @@ Public Class OptionForm
 
     Private Sub MemoShowChk_CheckedChanged(sender As Object, e As EventArgs) Handles MemoShowChk.CheckedChanged
         ApplySetting("MemoShow", MemoShowChk.Checked)
-        Form1.MemoOptionUpdate()
+        MainForm.MemoOptionUpdate()
     End Sub
 
     Private Sub AutoTextColorChk_CheckedChanged(sender As Object, e As EventArgs) Handles AutoTextColorChk.CheckedChanged
@@ -444,8 +444,8 @@ Public Class OptionForm
 
         '그래서 여기에다가 따로 적용보여주기 새로고침 할것
         If loaded Then
-            Form1.tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
-            Form1.TimeTable.Refresh()
+            MainForm.tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
+            MainForm.TimeTable.Refresh()
         End If
 
     End Sub
@@ -543,7 +543,7 @@ Public Class OptionForm
                                             PrevTableArea.BackColor.G * colorMul,
                                             PrevTableArea.BackColor.B * colorMul)
 
-            Dim thickness As Integer = 3 * (Form1.currentDPI / 96)
+            Dim thickness As Integer = 3 * (MainForm.currentDPI / 96)
             Dim p As New Pen(c, thickness)
             Dim g As Graphics = PrevTableArea.CreateGraphics
             p.DashStyle = Drawing2D.DashStyle.Dot
@@ -586,8 +586,8 @@ Public Class OptionForm
             AlwaysHideToTrayChk.Checked = Not AlwaysHideToTrayChk.Checked
             ApplySetting("AlwaysHideToTray", AlwaysHideToTrayChk.Checked)
 
-            Form1.ShowInTaskbar = Not AlwaysHideToTrayChk.Checked
-            Form1.ReopenForm()
+            MainForm.ShowInTaskbar = Not AlwaysHideToTrayChk.Checked
+            MainForm.ReopenForm()
             Me.Close()
         End If
     End Sub
@@ -598,14 +598,14 @@ Public Class OptionForm
 
     Private Sub TopMostChk_CheckedChanged(sender As Object, e As EventArgs) Handles TopMostChk.CheckedChanged
         ApplySetting("TopMost", TopMostChk.Checked)
-        Form1.TopMost = TopMostChk.Checked
+        MainForm.TopMost = TopMostChk.Checked
     End Sub
 
     '바로 적용 보여주기 위해 시간표 새로고침
     Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged,
         AlwaysExpandChk.CheckedChanged, ShowDayChk.CheckedChanged, ShowMemoChk.CheckedChanged, ShowProfChk.CheckedChanged,
         BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged, AutoTextColorChk.CheckedChanged
-        If loaded Then Form1.updateCell()
+        If loaded Then MainForm.updateCell()
     End Sub
 
     Private Sub D_ThemeRbt_CheckedChanged(sender As Object, e As EventArgs) Handles D_ThemeRbt.CheckedChanged
@@ -623,7 +623,7 @@ Public Class OptionForm
         SettingMenu_Info.first = True
 
         If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
-        Form1.UpdateColor()
+        MainForm.UpdateColor()
         UpdateColor()
 
         SwitchMode(1)
@@ -797,7 +797,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub DoUpdateButton_Click(sender As Object, e As EventArgs) Handles DoUpdateButton.Click
-        If Not Form1.isStore Then
+        If Not MainForm.isStore Then
             DoUpdateButton.Enabled = False
 
             If downComplete Then
@@ -981,7 +981,7 @@ Public Class OptionForm
                 If MsgBox("클립보드에서 시간표 서식을 찾았습니다. 불러오시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
                     Try
                         writeTable(clipboardTxt)
-                        Form1.updateCell()
+                        MainForm.updateCell()
                         Exit Sub
                     Catch ex As Exception
                         MsgBox("시간표 적용 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
@@ -1030,7 +1030,7 @@ Public Class OptionForm
                 Else
                     MsgBox("올바른 시간표 파일이 아닙니다.", vbCritical)
                 End If
-                Form1.updateCell()
+                MainForm.updateCell()
 
             ElseIf SettingSaveRbt.Checked Then
                 FileIO.FileSystem.CopyFile(OpenFileDialog1.FileName, ININamePath, True)
