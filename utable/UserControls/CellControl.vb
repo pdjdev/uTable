@@ -52,13 +52,10 @@
             appearPoint.Y = Form1.Location.Y + Form1.Height - ViewCourse.Height
         End If
 
-        'SetCourse.modifyMode = True
-        For Each s As String In getTableDatas(readTable(), "course")
-            If getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") = Name Then
-                ViewCourse.olddata = s
-                Exit For
-            End If
-        Next
+        '셀 생성 시 보관한 원본 과목 데이터를 사용한다. 클릭마다 파일을 읽고 전체 XML을
+        '다시 파싱하던 경로를 제거한다.
+        ViewCourse.olddata = TryCast(Tag, String)
+        If String.IsNullOrEmpty(ViewCourse.olddata) Then Exit Sub
 
         ViewCourse.blacktext = blackText
 
@@ -277,14 +274,8 @@
     Public Sub ModifyCheck(name As String, checked As Boolean)
         Dim data As String = readTable()
 
-        Dim olddata As String = ""
-
-        For Each s As String In getTableDatas(data, "course")
-            If getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") = name Then
-                olddata = s
-                Exit For
-            End If
-        Next
+        Dim olddata As String = TryCast(Tag, String)
+        If String.IsNullOrEmpty(olddata) Then Exit Sub
 
         Dim newdata As String = olddata
 
@@ -298,6 +289,7 @@
         End If
 
         writeTable(data.Replace(olddata, newdata))
+        Tag = newdata
     End Sub
 
     Private Sub AniTimer_Tick(sender As Object, e As EventArgs) Handles AniTimer.Tick

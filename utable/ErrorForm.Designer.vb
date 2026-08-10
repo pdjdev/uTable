@@ -45,10 +45,11 @@ Partial Class ErrorForm
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label1.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(10, 10)
+        Me.Label1.Location = New System.Drawing.Point(12, 12)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
-        Me.Label1.Size = New System.Drawing.Size(164, 26)
+        Me.Label1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 6)
+        Me.Label1.Size = New System.Drawing.Size(188, 35)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "오류가 발생했습니다."
         '
@@ -60,9 +61,10 @@ Partial Class ErrorForm
         '
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button1.Location = New System.Drawing.Point(308, 10)
+        Me.Button1.Location = New System.Drawing.Point(386, 12)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(121, 41)
+        Me.Button1.Size = New System.Drawing.Size(151, 52)
         Me.Button1.TabIndex = 1
         Me.Button1.Text = "다시 시작" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(10 초후 실행)"
         Me.Button1.UseVisualStyleBackColor = True
@@ -73,20 +75,22 @@ Partial Class ErrorForm
         Me.Panel1.Controls.Add(Me.Button2)
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 303)
+        Me.Panel1.Location = New System.Drawing.Point(0, 379)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Padding = New System.Windows.Forms.Padding(10)
-        Me.Panel1.Size = New System.Drawing.Size(439, 61)
+        Me.Panel1.Padding = New System.Windows.Forms.Padding(12, 12, 12, 12)
+        Me.Panel1.Size = New System.Drawing.Size(549, 76)
         Me.Panel1.TabIndex = 3
         '
         'Button3
         '
         Me.Button3.Dock = System.Windows.Forms.DockStyle.Left
         Me.Button3.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button3.Location = New System.Drawing.Point(10, 10)
-        Me.Button3.MinimumSize = New System.Drawing.Size(181, 41)
+        Me.Button3.Location = New System.Drawing.Point(12, 12)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button3.MinimumSize = New System.Drawing.Size(226, 51)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(181, 41)
+        Me.Button3.Size = New System.Drawing.Size(226, 52)
         Me.Button3.TabIndex = 3
         Me.Button3.Text = "오류 보고 페이지 열기"
         Me.Button3.UseVisualStyleBackColor = True
@@ -95,9 +99,10 @@ Partial Class ErrorForm
         '
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button2.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Button2.Location = New System.Drawing.Point(212, 10)
+        Me.Button2.Location = New System.Drawing.Point(266, 12)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(96, 41)
+        Me.Button2.Size = New System.Drawing.Size(120, 52)
         Me.Button2.TabIndex = 2
         Me.Button2.Text = "설정 파일" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "삭제 후 종료"
         Me.Button2.UseVisualStyleBackColor = True
@@ -108,9 +113,10 @@ Partial Class ErrorForm
         Me.Panel2.Controls.Add(Me.Label1)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Padding = New System.Windows.Forms.Padding(10)
-        Me.Panel2.Size = New System.Drawing.Size(439, 70)
+        Me.Panel2.Padding = New System.Windows.Forms.Padding(12, 12, 12, 12)
+        Me.Panel2.Size = New System.Drawing.Size(549, 88)
         Me.Panel2.TabIndex = 4
         '
         'Label2
@@ -118,9 +124,10 @@ Partial Class ErrorForm
         Me.Label2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label2.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(10, 36)
+        Me.Label2.Location = New System.Drawing.Point(12, 47)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(419, 32)
+        Me.Label2.Size = New System.Drawing.Size(525, 40)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "해당 오류가 지속될 경우 설정 파일을 삭제한 후 다시 시도해 보시기 바랍니다." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(설정 파일을 지울 경우 설정값이 초기화되므로 별도로 백업해 놓으" &
     "시기 바랍니다.)"
@@ -130,20 +137,22 @@ Partial Class ErrorForm
         Me.Panel3.Controls.Add(Me.RichTextBox1)
         Me.Panel3.Controls.Add(Me.Label3)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel3.Location = New System.Drawing.Point(0, 70)
+        Me.Panel3.Location = New System.Drawing.Point(0, 88)
+        Me.Panel3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Padding = New System.Windows.Forms.Padding(10, 0, 10, 0)
-        Me.Panel3.Size = New System.Drawing.Size(439, 233)
+        Me.Panel3.Padding = New System.Windows.Forms.Padding(12, 0, 12, 0)
+        Me.Panel3.Size = New System.Drawing.Size(549, 291)
         Me.Panel3.TabIndex = 5
         '
         'RichTextBox1
         '
         Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RichTextBox1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.RichTextBox1.Location = New System.Drawing.Point(10, 22)
+        Me.RichTextBox1.Location = New System.Drawing.Point(12, 31)
+        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(419, 211)
+        Me.RichTextBox1.Size = New System.Drawing.Size(525, 260)
         Me.RichTextBox1.TabIndex = 2
         Me.RichTextBox1.Text = ""
         '
@@ -153,27 +162,28 @@ Partial Class ErrorForm
         Me.Label3.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label3.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Gray
-        Me.Label3.Location = New System.Drawing.Point(10, 0)
+        Me.Label3.Location = New System.Drawing.Point(12, 0)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
-        Me.Label3.Size = New System.Drawing.Size(268, 22)
+        Me.Label3.Padding = New System.Windows.Forms.Padding(0, 0, 0, 6)
+        Me.Label3.Size = New System.Drawing.Size(322, 31)
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "오류 정보 (선택 후 Ctrl + A 하여 복사 가능)"
         '
         'ErrorForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(439, 364)
+        Me.ClientSize = New System.Drawing.Size(549, 455)
         Me.Controls.Add(Me.Panel3)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
-        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.MinimumSize = New System.Drawing.Size(437, 395)
+        Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.MinimumSize = New System.Drawing.Size(542, 482)
         Me.Name = "ErrorForm"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual

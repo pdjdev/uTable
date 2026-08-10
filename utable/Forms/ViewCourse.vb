@@ -248,15 +248,15 @@ Public Class ViewCourse
         UpdateColor()
 
         Dim colorMul As Single = 0.9
-        Dim data = olddata
 
         Try
-            UpperTitleLabel.Text = xmlDecode(getTableData(data, "name"))
+            Dim course As TableCourse = getTableCourse(olddata)
+            UpperTitleLabel.Text = xmlDecode(course.Name)
             Text = UpperTitleLabel.Text
-            SubTitleLabel.Text = xmlDecode(getTableData(data, "prof")) + ", "
+            SubTitleLabel.Text = xmlDecode(course.Professor) + ", "
 
-            Dim startt As Integer = getTableData(data, "start")
-            Dim endt As Integer = getTableData(data, "end")
+            Dim startt As Integer = Convert.ToInt32(course.Start)
+            Dim endt As Integer = Convert.ToInt32(course.End)
 
             SubTitleLabel.Text += (startt \ 60).ToString + ":"
             If startt Mod 60 = 0 Then
@@ -274,10 +274,10 @@ Public Class ViewCourse
                 SubTitleLabel.Text += (endt Mod 60).ToString("D2")
             End If
 
-            SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(getTableData(data, "day"))) + "요일"
+            SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(course.Day)) + "요일"
 
-            MemoTB.Text = xmlDecode(getTableData(data, "memo"))
-            TitlePanel.BackColor = ColorTranslator.FromHtml(getTableData(data, "color"))
+            MemoTB.Text = xmlDecode(course.Memo)
+            TitlePanel.BackColor = ColorTranslator.FromHtml(course.Color)
 
             Dim c As Color = Color.FromArgb(TitlePanel.BackColor.R * colorMul,
                                         TitlePanel.BackColor.G * colorMul,
@@ -324,51 +324,31 @@ Public Class ViewCourse
     End Sub
 
     Private Sub AdjustText(lblQueue As Label, maxSize As Single)
-        If Not lblQueue.Text = Nothing Then
-            Dim Fit As Boolean = False
-            Dim CurSize As Single
-            Dim SizeStep As Single = 0.1
-            Dim Padding As Integer = 3
+        If String.IsNullOrEmpty(lblQueue.Text) OrElse lblQueue.Width <= 0 OrElse lblQueue.Height <= 0 Then Exit Sub
 
-            Do Until Fit
-                CurSize += SizeStep
-                Dim Fnt As Font = New Font(lblQueue.Font.Name, CurSize)
-                Dim textSize As Size = TextRenderer.MeasureText(lblQueue.Text, Fnt)
+        '0.1pt씩 Font/MeasureText를 반복 생성하던 선형 탐색 대신 이분 탐색을 사용한다.
+        Dim lower As Single = 6.0!
+        Dim upper As Single = maxSize
+        Dim best As Single = lower
 
-                textSize.Height += Padding
-                textSize.Width += Padding
+        For i As Integer = 1 To 7
+            Dim candidate As Single = (lower + upper) / 2
+            Dim fits As Boolean
+            Using testFont As New Font(lblQueue.Font.Name, candidate, lblQueue.Font.Style)
+                Dim textSize As Size = TextRenderer.MeasureText(lblQueue.Text, testFont)
+                fits = textSize.Width + 3 <= lblQueue.Width AndAlso textSize.Height + 3 <= lblQueue.Height
+            End Using
 
-                If textSize.Height >= lblQueue.Height Or textSize.Width >= lblQueue.Width Or lblQueue.Height = 0 Or lblQueue.Width = 0 Then
-                    Fit = True
-                    If textSize.Width > lblQueue.Width Then
-                        CurSize -= SizeStep
-                    End If
-                    If textSize.Height > lblQueue.Height Then
-                        CurSize -= SizeStep
-                    End If
-                End If
-            Loop
-
-            If CurSize > 6 Then
-                'If Not maxSubSize = 0 Or Not maxTitleSize = 0 Then
-
-                If CurSize > maxSize Then
-                    lblQueue.Font = New Font(lblQueue.Font.Name, maxSize)
-                    Application.DoEvents()
-                    Exit Sub
-
-                ElseIf lblQueue Is UpperTitleLabel And CurSize < 9 Then
-                    lblQueue.Font = New Font(lblQueue.Font.Name, 9)
-                    Application.DoEvents()
-                    Exit Sub
-
-                End If
-
-                'End If
-                lblQueue.Font = New Font(lblQueue.Font.Name, CurSize)
-                Application.DoEvents()
+            If fits Then
+                best = candidate
+                lower = candidate
+            Else
+                upper = candidate
             End If
-        End If
+        Next
+
+        If lblQueue Is UpperTitleLabel AndAlso best < 9.0! Then best = 9.0!
+        lblQueue.Font = New Font(lblQueue.Font.Name, best, lblQueue.Font.Style)
     End Sub
 
     Private Sub ViewCourse_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged

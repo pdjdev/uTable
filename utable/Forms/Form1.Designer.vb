@@ -544,19 +544,19 @@ Partial Class Form1
         'AllColorSetItem
         '
         Me.AllColorSetItem.Name = "AllColorSetItem"
-        Me.AllColorSetItem.Size = New System.Drawing.Size(251, 32)
+        Me.AllColorSetItem.Size = New System.Drawing.Size(236, 32)
         Me.AllColorSetItem.Text = "전체 색상 설정"
         '
         'AllDarkerItem
         '
         Me.AllDarkerItem.Name = "AllDarkerItem"
-        Me.AllDarkerItem.Size = New System.Drawing.Size(251, 32)
+        Me.AllDarkerItem.Size = New System.Drawing.Size(236, 32)
         Me.AllDarkerItem.Text = "모두 어둡게"
         '
         'AllBrighterItem
         '
         Me.AllBrighterItem.Name = "AllBrighterItem"
-        Me.AllBrighterItem.Size = New System.Drawing.Size(251, 32)
+        Me.AllBrighterItem.Size = New System.Drawing.Size(236, 32)
         Me.AllBrighterItem.Text = "모두 밝게"
         '
         'MessageItem
@@ -564,7 +564,7 @@ Partial Class Form1
         Me.MessageItem.Enabled = False
         Me.MessageItem.Font = New System.Drawing.Font("Noto Sans KR", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.MessageItem.Name = "MessageItem"
-        Me.MessageItem.Size = New System.Drawing.Size(251, 32)
+        Me.MessageItem.Size = New System.Drawing.Size(236, 32)
         Me.MessageItem.Text = "주의: 본 설정은 되돌릴 수 없습니다"
         '
         'OpacitySelectItem

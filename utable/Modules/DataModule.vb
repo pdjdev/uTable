@@ -9,6 +9,23 @@ Friend Class ReleaseFeedEntry
     Public Property ContentHtml As String
 End Class
 
+'시간표 과목의 메모리 표현 - 값은 기존 함수와 호환되도록 XML-encoded 상태로 보관
+Friend Class TableCourse
+    Public Property RawData As String
+    Public Property Day As String
+    Public Property Name As String
+    Public Property Professor As String
+    Public Property Memo As String
+    Public Property Start As String
+    Public Property [End] As String
+    Public Property Color As String
+    Public Property Checked As String
+
+    Public Function Identity() As String
+        Return Day + "-" + Start + "-" + Name
+    End Function
+End Class
+
 Module DataModule
     Private Const TableFragmentRootName As String = "utable-fragment"
 
@@ -36,6 +53,38 @@ Module DataModule
 
     Private Function GetElementInnerXml(element As XElement) As String
         Return String.Concat(element.Nodes().Select(Function(node) node.ToString(SaveOptions.DisableFormatting)))
+    End Function
+
+    Private Function GetChildInnerXml(element As XElement, name As String) As String
+        Dim child As XElement = element.Element(name)
+        If child Is Nothing Then Return Nothing
+        Return GetElementInnerXml(child)
+    End Function
+
+    Private Function ToTableCourse(element As XElement) As TableCourse
+        Return New TableCourse With {
+            .RawData = GetElementInnerXml(element).Trim(),
+            .Day = GetChildInnerXml(element, "day"),
+            .Name = GetChildInnerXml(element, "name"),
+            .Professor = GetChildInnerXml(element, "prof"),
+            .Memo = GetChildInnerXml(element, "memo"),
+            .Start = GetChildInnerXml(element, "start"),
+            .End = GetChildInnerXml(element, "end"),
+            .Color = GetChildInnerXml(element, "color"),
+            .Checked = GetChildInnerXml(element, "checked")
+        }
+    End Function
+
+    '전체 시간표 XML은 한 번만 파싱해 과목 목록으로 변환한다.
+    Public Function getTableCourses(datastr As String) As List(Of TableCourse)
+        Dim document As XDocument = ParseTableFragment(datastr)
+        Return document.Root.Elements("course").Select(Function(element) ToTableCourse(element)).ToList()
+    End Function
+
+    'olddata처럼 course 내부 fragment만 가진 기존 화면을 위한 단일 과목 파서.
+    Public Function getTableCourse(datastr As String) As TableCourse
+        Dim document As XDocument = ParseTableFragment("<course>" + datastr + "</course>")
+        Return ToTableCourse(document.Root.Element("course"))
     End Function
 
     '시간표 XML fragment에서 최상위 태그의 내용을 추출한다.

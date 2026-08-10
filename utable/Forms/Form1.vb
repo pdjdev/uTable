@@ -19,6 +19,7 @@ Public Class Form1
     Dim endtime As Integer = 0
     Dim updated As Boolean = False
     Dim courseData As New List(Of String)
+    Dim courseRecords As New List(Of TableCourse)
 
     '슬라이딩 애니메이션용 변수
     Dim poscount As Integer = 0
@@ -957,6 +958,7 @@ Public Class Form1
 #Region "시간표 셀 관리"
 
     Public Sub updateCell()
+        SuspendCourseLayouts()
         Try
 
             'CellControl 설정 변수 업데이트
@@ -976,13 +978,13 @@ Public Class Form1
             showSunday = False
 
             '구성요소 초기화
-            MonPanel.Controls.Clear()
-            TuePanel.Controls.Clear()
-            WedPanel.Controls.Clear()
-            ThuPanel.Controls.Clear()
-            FriPanel.Controls.Clear()
-            SatPanel.Controls.Clear()
-            SunPanel.Controls.Clear()
+            ClearCourseCells(MonPanel)
+            ClearCourseCells(TuePanel)
+            ClearCourseCells(WedPanel)
+            ClearCourseCells(ThuPanel)
+            ClearCourseCells(FriPanel)
+            ClearCourseCells(SatPanel)
+            ClearCourseCells(SunPanel)
             updated = False
 
             Dim data = readTable()
@@ -997,14 +999,16 @@ Public Class Form1
 
             Text = TableTitleLabel.Text
             courseData.Clear()
+            courseRecords.Clear()
 
             If data.Contains("<course>") Then
-                courseData = getTableDatas(data, "course")
+                courseRecords = getTableCourses(data)
+                courseData = courseRecords.Select(Function(course) course.RawData).ToList()
 
                 '최대, 최소계산
-                For Each s As String In courseData
-                    If Convert.ToInt16(getTableData(s, "start")) < min Then min = Convert.ToInt16(getTableData(s, "start"))
-                    If Convert.ToInt16(getTableData(s, "end")) > max Then max = Convert.ToInt16(getTableData(s, "end"))
+                For Each course As TableCourse In courseRecords
+                    If Convert.ToInt16(course.Start) < min Then min = Convert.ToInt16(course.Start)
+                    If Convert.ToInt16(course.End) > max Then max = Convert.ToInt16(course.End)
                 Next
 
                 starttime = min
@@ -1017,20 +1021,14 @@ Public Class Form1
 
                 '셀계산
                 '여기서 xmldecode 하니까 꼭 눈여겨두자
-                For Each s As String In courseData
-                    addCell(Convert.ToInt16(getTableData(s, "start")),
-                            Convert.ToInt16(getTableData(s, "end")),
-                            getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name"),
-                            xmlDecode(getTableData(s, "name")),
-                            xmlDecode(getTableData(s, "prof")),
-                            xmlDecode(getTableData(s, "memo")),
-                            ColorTranslator.FromHtml(getTableData(s, "color")),
-                            Convert.ToInt16(getTableData(s, "day")),
-                            getTableData(s, "checked"))
+                For Each course As TableCourse In courseRecords
+                    addCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity(),
+                            xmlDecode(course.Name), xmlDecode(course.Professor), xmlDecode(course.Memo),
+                            ColorTranslator.FromHtml(course.Color), Convert.ToInt16(course.Day), course.Checked, course.RawData)
 
-                    If Convert.ToInt16(getTableData(s, "day")) = 5 Then '토요일 추가시
+                    If Convert.ToInt16(course.Day) = 5 Then '토요일 추가시
                         showSaturday = True
-                    ElseIf Convert.ToInt16(getTableData(s, "day")) = 6 Then '일요일 추가시
+                    ElseIf Convert.ToInt16(course.Day) = 6 Then '일요일 추가시
                         showSunday = True
                     End If
                 Next
@@ -1082,9 +1080,8 @@ Public Class Form1
                 TimeTable.ColumnStyles(6).Width = 0
             End If
 
-            For Each s As String In courseData
-                resizeCell(Convert.ToInt16(getTableData(s, "start")), Convert.ToInt16(getTableData(s, "end")),
-                           getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name"))
+            For Each course As TableCourse In courseRecords
+                resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity())
             Next
 
         Catch ex As Exception
@@ -1093,13 +1090,36 @@ Public Class Form1
                    + "시간표의 값이 올바르지 않거나, 값이 손상되었을 수 있습니다." + vbCr _
                    + "문제가 지속되면 시간표(" + TableSaveLocation(True) + ")를 지우고 다시 만들어 주세요.", vbCritical)
 
+        Finally
+            ResumeCourseLayouts()
         End Try
 
         prevTime = Nothing
         TimeTable.Visible = True
     End Sub
 
-    Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String)
+    Private Sub ClearCourseCells(panel As Panel)
+        For Each control As Control In panel.Controls.Cast(Of Control).ToArray()
+            panel.Controls.Remove(control)
+            control.Dispose()
+        Next
+    End Sub
+
+    Private Sub SuspendCourseLayouts()
+        TimeTable.SuspendLayout()
+        For Each panel As Panel In {MonPanel, TuePanel, WedPanel, ThuPanel, FriPanel, SatPanel, SunPanel}
+            panel.SuspendLayout()
+        Next
+    End Sub
+
+    Private Sub ResumeCourseLayouts()
+        For Each panel As Panel In {MonPanel, TuePanel, WedPanel, ThuPanel, FriPanel, SatPanel, SunPanel}
+            panel.ResumeLayout(False)
+        Next
+        TimeTable.ResumeLayout(True)
+    End Sub
+
+    Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String, rawData As String)
 
         Dim timelength As Integer = endtime - starttime
         Dim part As Double = (endt - startt) / timelength
@@ -1171,6 +1191,7 @@ Public Class Form1
         cell.ProfLabel.Text = prof
         cell.MemoLabel.Text = memo
         cell.Name = name
+        cell.Tag = rawData
 
         cell.checked = (checked = "True")
     End Sub
@@ -1235,9 +1256,8 @@ Public Class Form1
 
         If updated Then
 
-            For Each s As String In courseData
-                resizeCell(Convert.ToInt16(getTableData(s, "start")), Convert.ToInt16(getTableData(s, "end")),
-                           getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name"))
+            For Each course As TableCourse In courseRecords
+                resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity())
             Next
 
             TimeTable.Visible = True
