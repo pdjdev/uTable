@@ -1024,7 +1024,7 @@ Public Class OptionForm
     Private Sub Table_Setting_FileOk()
         Try
             If TableSaveRbt.Checked Then
-                Dim data As String = My.Computer.FileSystem.ReadAllText(OpenFileDialog1.FileName, System.Text.Encoding.GetEncoding(949))
+                Dim data As String = ReadTableFile(OpenFileDialog1.FileName)
                 If data.Contains("<tablename>") Or data.Contains("<course>") Then
                     writeTable(data)
                 Else

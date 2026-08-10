@@ -28,6 +28,26 @@ End Class
 
 Module DataModule
     Private Const TableFragmentRootName As String = "utable-fragment"
+    Private ReadOnly Utf8WithoutBom As New System.Text.UTF8Encoding(False)
+    Private ReadOnly StrictUtf8 As New System.Text.UTF8Encoding(False, True)
+
+    '시간표 파일(.utdata)은 UTF-8로 저장하고, 구버전 CP949 파일을 읽을 수 있다.
+    Public Function ReadTableFile(filePath As String) As String
+        Dim bytes As Byte() = File.ReadAllBytes(filePath)
+
+        Try
+            Dim content As String = StrictUtf8.GetString(bytes)
+
+            'UTF-8 BOM이 있는 파일도 UTF-8로 읽되, 문자열에 BOM 문자를 남기지 않는다.
+            If content.Length > 0 AndAlso content(0) = ChrW(&HFEFF) Then
+                Return content.Substring(1)
+            End If
+
+            Return content
+        Catch ex As System.Text.DecoderFallbackException
+            Return System.Text.Encoding.GetEncoding(949).GetString(bytes)
+        End Try
+    End Function
 
     '시간표 파일은 하위 호환성을 위해 루트 없는 XML fragment로 저장한다.
     '파싱할 때만 임시 루트를 붙여 표준 XML 파서에 전달한다.
@@ -174,13 +194,13 @@ Module DataModule
 
     Public Sub writeTable(data As String)
         Dim normalizedData As String = SerializeTableFragment(ParseTableFragment(data))
-        My.Computer.FileSystem.WriteAllText(TableSaveLocation(False), normalizedData, False, System.Text.Encoding.GetEncoding(949))
+        File.WriteAllText(TableSaveLocation(False), normalizedData, Utf8WithoutBom)
     End Sub
 
     Public Function readTable() As String
         If My.Computer.FileSystem.FileExists(TableSaveLocation(False)) Then
             'My.Settings.defalutTable = OptionSave()
-            Dim data As String = My.Computer.FileSystem.ReadAllText(TableSaveLocation(False), System.Text.Encoding.GetEncoding(949))
+            Dim data As String = ReadTableFile(TableSaveLocation(False))
             Return SerializeTableFragment(ParseTableFragment(data))
         Else
             Return ""
