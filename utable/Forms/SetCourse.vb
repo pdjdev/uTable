@@ -61,27 +61,13 @@ Public Class SetCourse
     Public Sub UpdateColor()
 
         colormode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colormode)
 
-        BackColor = edgeColor(colormode)
-        Panel1.BackColor = mainColor(colormode)
-        Panel1.ForeColor = textColor(colormode)
+        BackColor = theme.Edge
+        Panel1.BackColor = theme.Background
+        Panel1.ForeColor = theme.Text
 
-        ApplyBT.BackColor = buttonColor(colormode)
-        ApplyBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        ApplyBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        ApplyBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-        DeleteBT.BackColor = buttonColor(colormode)
-        DeleteBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        DeleteBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        DeleteBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-        ColorCopyBT.BackColor = buttonColor(colormode)
-        ColorCopyBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        ColorCopyBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        ColorCopyBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-        ColorPasteBT.BackColor = buttonColor(colormode)
-        ColorPasteBT.FlatAppearance.BorderColor = BorderColor(colormode)
-        ColorPasteBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-        ColorPasteBT.FlatAppearance.MouseDownBackColor = BorderColor(colormode)
+        ApplyButtonTheme(theme, ApplyBT, DeleteBT, ColorCopyBT, ColorPasteBT)
 
         Select Case colormode
             Case "Dark"
@@ -90,6 +76,15 @@ Public Class SetCourse
                 CloseBT.Image = My.Resources.closeicon_b
         End Select
 
+    End Sub
+
+    Private Sub ApplyButtonTheme(theme As ThemeColors, ParamArray buttons() As Button)
+        For Each button As Button In buttons
+            button.BackColor = theme.Button
+            button.FlatAppearance.BorderColor = theme.Border
+            button.FlatAppearance.MouseOverBackColor = theme.ButtonHover
+            button.FlatAppearance.MouseDownBackColor = theme.Border
+        Next
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles ColorButton.Click
@@ -394,7 +389,7 @@ Public Class SetCourse
     End Sub
 
     Private Sub CloseBT_MouseEnter(sender As Object, e As EventArgs) Handles CloseBT.MouseEnter
-        CloseBT.BackColor = buttonActiveColor(colormode)
+        CloseBT.BackColor = ThemeColors.FromMode(colormode).ButtonHover
     End Sub
 
     Private Sub CloseBT_MouseLeave(sender As Object, e As EventArgs) Handles CloseBT.MouseLeave

@@ -38,12 +38,13 @@ Public Class DLLDownloader
     Public Sub UpdateColor()
 
         colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
 
-        BackColor = edgeColor(colorMode)
-        TitlePanel.BackColor = tableColor_1(colorMode)
-        TitlePanel.ForeColor = textColor(colorMode)
-        MainLabel.BackColor = mainColor(colorMode)
-        MainLabel.ForeColor = textColor(colorMode)
+        BackColor = theme.Edge
+        TitlePanel.BackColor = theme.TablePrimary
+        TitlePanel.ForeColor = theme.Text
+        MainLabel.BackColor = theme.Background
+        MainLabel.ForeColor = theme.Text
 
     End Sub
     Sub DownloadFiles()

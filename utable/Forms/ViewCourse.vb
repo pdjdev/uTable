@@ -225,14 +225,15 @@ Public Class ViewCourse
 
     Sub UpdateColor()
         colormode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colormode)
 
-        BodyPanel.BackColor = tableColor_1(colormode)
-        SaveBT.BackColor = tableColor_1(colormode)
-        CancelBT.BackColor = tableColor_1(colormode)
-        MemoTB.BackColor = tableColor_1(colormode)
+        BodyPanel.BackColor = theme.TablePrimary
+        SaveBT.BackColor = theme.TablePrimary
+        CancelBT.BackColor = theme.TablePrimary
+        MemoTB.BackColor = theme.TablePrimary
 
-        MainPanel.BackColor = edgeColor(colormode)
-        MemoTB.ForeColor = textColor(colormode)
+        MainPanel.BackColor = theme.Edge
+        MemoTB.ForeColor = theme.Text
     End Sub
 
     Private Sub ViewCourse_Load(sender As Object, e As EventArgs) Handles Me.Load

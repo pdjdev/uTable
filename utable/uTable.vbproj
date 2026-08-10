@@ -299,6 +299,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\GUIModule.vb" />
+    <Compile Include="Modules\ThemeColors.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="UserControls\LoadingSplash.Designer.vb">
       <DependentUpon>LoadingSplash.vb</DependentUpon>
@@ -326,7 +327,9 @@
     <Compile Include="Forms\SetCourse.Designer.vb">
       <DependentUpon>SetCourse.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SetCourse.vb" />
+    <Compile Include="Forms\SetCourse.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UserControls\CellControl.Designer.vb">
       <DependentUpon>CellControl.vb</DependentUpon>
     </Compile>

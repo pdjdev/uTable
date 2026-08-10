@@ -61,7 +61,7 @@ Public Class EverytimeSemesterSelector
     End Sub
 
     Private Sub CloseBT_MouseEnter(sender As Object, e As EventArgs) Handles CloseBT.MouseEnter
-        CloseBT.BackColor = buttonActiveColor(colorMode)
+        CloseBT.BackColor = ThemeColors.FromMode(colorMode).ButtonHover
     End Sub
 
     Private Sub CloseBT_MouseLeave(sender As Object, e As EventArgs) Handles CloseBT.MouseLeave
@@ -75,22 +75,23 @@ Public Class EverytimeSemesterSelector
     Public Sub UpdateColor()
 
         colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
 
-        BackColor = edgeColor(colorMode)
-        Panel1.BackColor = mainColor(colorMode)
-        Panel1.ForeColor = textColor(colorMode)
-        NextBT.ForeColor = textColor(colorMode)
-        Label3.ForeColor = textColor(colorMode)
-        Label4.ForeColor = textColor(colorMode)
-        autoChk.ForeColor = textColor(colorMode)
-        AgreementRTB.BackColor = mainColor(colorMode)
-        AgreementRTB.ForeColor = textColor(colorMode)
-        tipLabel.ForeColor = lightTextColor(colorMode)
+        BackColor = theme.Edge
+        Panel1.BackColor = theme.Background
+        Panel1.ForeColor = theme.Text
+        NextBT.ForeColor = theme.Text
+        Label3.ForeColor = theme.Text
+        Label4.ForeColor = theme.Text
+        autoChk.ForeColor = theme.Text
+        AgreementRTB.BackColor = theme.Background
+        AgreementRTB.ForeColor = theme.Text
+        tipLabel.ForeColor = theme.TextMuted
 
-        NextBT.BackColor = buttonColor(colorMode)
-        NextBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        NextBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        NextBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+        NextBT.BackColor = theme.Button
+        NextBT.FlatAppearance.BorderColor = theme.Border
+        NextBT.FlatAppearance.MouseOverBackColor = theme.ButtonHover
+        NextBT.FlatAppearance.MouseDownBackColor = theme.Border
 
         Select Case colorMode
             Case "Dark"

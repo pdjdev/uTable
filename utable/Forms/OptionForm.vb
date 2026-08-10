@@ -74,7 +74,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub CloseBT_MouseEnter(sender As Object, e As EventArgs) Handles CloseBT.MouseEnter
-        CloseBT.BackColor = buttonActiveColor(colormode)
+        CloseBT.BackColor = ThemeColors.FromMode(colormode).ButtonHover
     End Sub
 
     Private Sub CloseBT_MouseLeave(sender As Object, e As EventArgs) Handles CloseBT.MouseLeave
@@ -252,30 +252,24 @@ Public Class OptionForm
     Public Sub UpdateColor()
 
         colormode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colormode)
 
-        BackColor = edgeColor(colormode)
-        TitlePanel.BackColor = tableColor_1(colormode)
-        TitleLabel.ForeColor = textColor(colormode)
-        MainPanel.BackColor = mainColor(colormode)
-        MainPanel.ForeColor = textColor(colormode)
-        SidePanel.BackColor = buttonActiveColor(colormode)
+        BackColor = theme.Edge
+        TitlePanel.BackColor = theme.TablePrimary
+        TitleLabel.ForeColor = theme.Text
+        MainPanel.BackColor = theme.Background
+        MainPanel.ForeColor = theme.Text
+        SidePanel.BackColor = theme.ButtonHover
 
-        RichTextBox1.BackColor = mainColor(colormode)
-        RichTextBox1.ForeColor = textColor(colormode)
-        WebPageLabel.LinkColor = lightTextColor(colormode)
-        FeedbackLabel.LinkColor = lightTextColor(colormode)
-        VersionLabel.ForeColor = lightTextColor(colormode)
+        RichTextBox1.BackColor = theme.Background
+        RichTextBox1.ForeColor = theme.Text
+        WebPageLabel.LinkColor = theme.TextMuted
+        FeedbackLabel.LinkColor = theme.TextMuted
+        VersionLabel.ForeColor = theme.TextMuted
 
-        ApplyButtonTheme(CustomFontBT)
-        ApplyButtonTheme(FolderBrowBT)
-        ApplyButtonTheme(CheckAndApplyDirSettingBT)
-        ApplyButtonTheme(SaveToFileBT)
-        ApplyButtonTheme(CopyToClipboardBT)
-        ApplyButtonTheme(ImportDataBT)
-        ApplyButtonTheme(UpdateChkButton)
-        ApplyButtonTheme(DoUpdateButton)
-        ApplyButtonTheme(NotificationSoundFileOpenBT)
-        ApplyButtonTheme(NotificationSoundPlayBT)
+        ApplyButtonTheme(theme, CustomFontBT, FolderBrowBT, CheckAndApplyDirSettingBT, SaveToFileBT,
+                         CopyToClipboardBT, ImportDataBT, UpdateChkButton, DoUpdateButton,
+                         NotificationSoundFileOpenBT, NotificationSoundPlayBT)
 
         Select Case colormode
             Case "Dark"
@@ -287,13 +281,15 @@ Public Class OptionForm
         End Select
     End Sub
 
-    Sub ApplyButtonTheme(button As Button)
-        With button
-            .BackColor = buttonColor(colormode)
-            .FlatAppearance.BorderColor = BorderColor(colormode)
-            .FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-            .FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-        End With
+    Sub ApplyButtonTheme(theme As ThemeColors, ParamArray buttons() As Button)
+        For Each button As Button In buttons
+            With button
+                .BackColor = theme.Button
+                .FlatAppearance.BorderColor = theme.Border
+                .FlatAppearance.MouseOverBackColor = theme.ButtonHover
+                .FlatAppearance.MouseDownBackColor = theme.Border
+            End With
+        Next
     End Sub
 
     Public Sub SwitchMode(mode As Integer)
@@ -468,8 +464,9 @@ Public Class OptionForm
                 End If
             End If
 
-            DayLabel.BackColor = activeDayColor(colormode)
-            DayLabel.ForeColor = activeDayTextColor(colormode)
+            Dim theme As ThemeColors = ThemeColors.FromMode(colormode)
+            DayLabel.BackColor = theme.Accent
+            DayLabel.ForeColor = theme.AccentText
 
             DayLabel.Text = Now.Date.ToString("dd") + " "
 

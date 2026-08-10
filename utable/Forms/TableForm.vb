@@ -296,97 +296,24 @@ Public Class TableForm
     Public Sub UpdateColor()
 
         colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
 
-        BackColor = edgeColor(colorMode)
+        BackColor = theme.Edge
+        TopPanel.BackColor = theme.Background
+        MainPanel.BackColor = theme.Background
 
-        TopPanel.BackColor = mainColor(colorMode)
-        MainPanel.BackColor = mainColor(colorMode)
+        ApplyTableTheme(theme)
+        ApplyButtonTheme(theme, RefreshBT, AddCourseBT, MenuBT)
+        TableTitleLabel.ForeColor = theme.Text
 
-        ' ====== 시간표 색상 적용 =====
-
-        MonLabel.BackColor = tableColor_1(colorMode)
-        TueLabel.BackColor = tableColor_2(colorMode)
-        WedLabel.BackColor = tableColor_1(colorMode)
-        ThuLabel.BackColor = tableColor_2(colorMode)
-        FriLabel.BackColor = tableColor_1(colorMode)
-        SatLabel.BackColor = tableColor_2(colorMode)
-        SunLabel.BackColor = tableColor_1(colorMode)
-
-        MonLabel.ForeColor = lightTextColor(colorMode)
-        TueLabel.ForeColor = lightTextColor(colorMode)
-        WedLabel.ForeColor = lightTextColor(colorMode)
-        ThuLabel.ForeColor = lightTextColor(colorMode)
-        FriLabel.ForeColor = lightTextColor(colorMode)
-        SatLabel.ForeColor = lightTextColor(colorMode)
-        SunLabel.ForeColor = lightTextColor(colorMode)
-
-        MonPanel.BackColor = tableColor_1(colorMode)
-        TuePanel.BackColor = tableColor_2(colorMode)
-        WedPanel.BackColor = tableColor_1(colorMode)
-        ThuPanel.BackColor = tableColor_2(colorMode)
-        FriPanel.BackColor = tableColor_1(colorMode)
-        SatPanel.BackColor = tableColor_2(colorMode)
-        SunPanel.BackColor = tableColor_1(colorMode)
-
-        ' ====== 시간표 색상 끝 =====
-
-
-        ' ====== 상단컨트롤 색상 적용 =====
-
-        RefreshBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        AddCourseBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MenuBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-
-        RefreshBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        AddCourseBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MenuBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-
-        RefreshBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        AddCourseBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MenuBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-
-        RefreshBT.ForeColor = textColor(colorMode)
-        AddCourseBT.ForeColor = textColor(colorMode)
-        MenuBT.ForeColor = textColor(colorMode)
-
-        TableTitleLabel.ForeColor = textColor(colorMode)
-
-        ' ====== 상단컨트롤 색상 끝 =====
-
-
-        ' ====== 메모패널 색상 적용 =====
-
-        MemoPanel.BackColor = mainColor(colorMode)
-        MemoPanel.ForeColor = textColor(colorMode)
-        DragSizePanel.BackColor = dragBarColor(colorMode)
-        DragSizePanel.ForeColor = textColor(colorMode)
-        MemoRTB.BackColor = tableColor_2(colorMode)
-        MemoRTB.ForeColor = textColor(colorMode)
-
-        MemoZoomBT1.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MemoZoomBT2.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MemoZoomNumBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MemoMenuBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MemoCloseBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-
-        MemoZoomBT1.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MemoZoomBT2.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MemoZoomNumBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MemoMenuBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MemoCloseBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-
-        MemoZoomBT1.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MemoZoomBT2.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MemoZoomNumBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MemoMenuBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MemoCloseBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-
-        MemoZoomBT1.ForeColor = textColor(colorMode)
-        MemoZoomBT2.ForeColor = textColor(colorMode)
-        MemoZoomNumBT.ForeColor = textColor(colorMode)
-        MemoMenuBT.ForeColor = textColor(colorMode)
-        MemoCloseBT.ForeColor = textColor(colorMode)
-        MemoTitleLabel.ForeColor = activeDayColor(colorMode)
+        MemoPanel.BackColor = theme.Background
+        MemoPanel.ForeColor = theme.Text
+        DragSizePanel.BackColor = theme.DragHandle
+        DragSizePanel.ForeColor = theme.Text
+        MemoRTB.BackColor = theme.TableAlternate
+        MemoRTB.ForeColor = theme.Text
+        ApplyButtonTheme(theme, MemoZoomBT1, MemoZoomBT2, MemoZoomNumBT, MemoMenuBT, MemoCloseBT)
+        MemoTitleLabel.ForeColor = theme.Accent
 
         ' ====== 메모패널 색상 끝 =====
 
@@ -408,71 +335,89 @@ Public Class TableForm
 
         Select Case Now.DayOfWeek
             Case DayOfWeek.Monday
-                MonLabel.BackColor = activeDayColor(colorMode)
-                MonLabel.ForeColor = activeDayTextColor(colorMode)
+                MonLabel.BackColor = theme.Accent
+                MonLabel.ForeColor = theme.AccentText
             Case DayOfWeek.Tuesday
-                TueLabel.BackColor = activeDayColor(colorMode)
-                TueLabel.ForeColor = activeDayTextColor(colorMode)
+                TueLabel.BackColor = theme.Accent
+                TueLabel.ForeColor = theme.AccentText
             Case DayOfWeek.Wednesday
-                WedLabel.BackColor = activeDayColor(colorMode)
-                WedLabel.ForeColor = activeDayTextColor(colorMode)
+                WedLabel.BackColor = theme.Accent
+                WedLabel.ForeColor = theme.AccentText
             Case DayOfWeek.Thursday
-                ThuLabel.BackColor = activeDayColor(colorMode)
-                ThuLabel.ForeColor = activeDayTextColor(colorMode)
+                ThuLabel.BackColor = theme.Accent
+                ThuLabel.ForeColor = theme.AccentText
             Case DayOfWeek.Friday
-                FriLabel.BackColor = activeDayColor(colorMode)
-                FriLabel.ForeColor = activeDayTextColor(colorMode)
+                FriLabel.BackColor = theme.Accent
+                FriLabel.ForeColor = theme.AccentText
         End Select
 
         TimeTable.Refresh()
     End Sub
 
+    Private Sub ApplyTableTheme(theme As ThemeColors)
+        Dim labels() As Label = {MonLabel, TueLabel, WedLabel, ThuLabel, FriLabel, SatLabel, SunLabel}
+        Dim panels() As Panel = {MonPanel, TuePanel, WedPanel, ThuPanel, FriPanel, SatPanel, SunPanel}
+
+        For index As Integer = 0 To labels.Length - 1
+            Dim tableColor As Color = If(index Mod 2 = 0, theme.TablePrimary, theme.TableAlternate)
+            labels(index).BackColor = tableColor
+            labels(index).ForeColor = theme.TextMuted
+            panels(index).BackColor = tableColor
+        Next
+    End Sub
+
+    Private Sub ApplyButtonTheme(theme As ThemeColors, ParamArray buttons() As Button)
+        For Each button As Button In buttons
+            button.FlatAppearance.BorderColor = theme.Border
+            button.FlatAppearance.MouseOverBackColor = theme.ButtonHover
+            button.FlatAppearance.MouseDownBackColor = theme.Border
+            button.ForeColor = theme.Text
+        Next
+    End Sub
+
     Sub updateDateDraw()
 
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+
         '요일 색상 초기화
-        MonLabel.BackColor = tableColor_1(colorMode)
-        TueLabel.BackColor = tableColor_2(colorMode)
-        WedLabel.BackColor = tableColor_1(colorMode)
-        ThuLabel.BackColor = tableColor_2(colorMode)
-        FriLabel.BackColor = tableColor_1(colorMode)
-        SatLabel.BackColor = tableColor_2(colorMode)
-        SunLabel.BackColor = tableColor_1(colorMode)
+        ApplyTableTheme(theme)
 
-        MonLabel.ForeColor = lightTextColor(colorMode)
-        TueLabel.ForeColor = lightTextColor(colorMode)
-        WedLabel.ForeColor = lightTextColor(colorMode)
-        ThuLabel.ForeColor = lightTextColor(colorMode)
-        FriLabel.ForeColor = lightTextColor(colorMode)
-        SatLabel.ForeColor = lightTextColor(colorMode)
-        SunLabel.ForeColor = lightTextColor(colorMode)
 
-        '
+        Dim DoW As String = Nothing
+
         Select Case Now.DayOfWeek
             Case DayOfWeek.Monday
-                MonLabel.BackColor = activeDayColor(colorMode)
-                MonLabel.ForeColor = activeDayTextColor(colorMode)
+                MonLabel.BackColor = theme.Accent
+                MonLabel.ForeColor = theme.AccentText
+                DoW = "(월)"
             Case DayOfWeek.Tuesday
-                TueLabel.BackColor = activeDayColor(colorMode)
-                TueLabel.ForeColor = activeDayTextColor(colorMode)
+                TueLabel.BackColor = theme.Accent
+                TueLabel.ForeColor = theme.AccentText
+                DoW = "(화)"
             Case DayOfWeek.Wednesday
-                WedLabel.BackColor = activeDayColor(colorMode)
-                WedLabel.ForeColor = activeDayTextColor(colorMode)
+                WedLabel.BackColor = theme.Accent
+                WedLabel.ForeColor = theme.AccentText
+                DoW = "(수)"
             Case DayOfWeek.Thursday
-                ThuLabel.BackColor = activeDayColor(colorMode)
-                ThuLabel.ForeColor = activeDayTextColor(colorMode)
+                ThuLabel.BackColor = theme.Accent
+                ThuLabel.ForeColor = theme.AccentText
+                DoW = "(목)"
             Case DayOfWeek.Friday
-                FriLabel.BackColor = activeDayColor(colorMode)
-                FriLabel.ForeColor = activeDayTextColor(colorMode)
+                FriLabel.BackColor = theme.Accent
+                FriLabel.ForeColor = theme.AccentText
+                DoW = "(금)"
             Case DayOfWeek.Saturday
                 If showSaturday Then
-                    SatLabel.BackColor = activeDayColor(colorMode)
-                    SatLabel.ForeColor = activeDayTextColor(colorMode)
+                    SatLabel.BackColor = theme.Accent
+                    SatLabel.ForeColor = theme.AccentText
                 End If
+                DoW = "(토)"
             Case DayOfWeek.Sunday
                 If showSunday Then
-                    SunLabel.BackColor = activeDayColor(colorMode)
-                    SunLabel.ForeColor = activeDayTextColor(colorMode)
+                    SunLabel.BackColor = theme.Accent
+                    SunLabel.ForeColor = theme.AccentText
                 End If
+                DoW = "(일)"
         End Select
 
         Dim fdw As DateTime = DateTime.Today.AddDays(-Weekday(DateTime.Today, FirstDayOfWeek.System) + 2)
@@ -484,7 +429,8 @@ Public Class TableForm
         SatLabel.Text = fdw.AddDays(5).ToString("dd") + " 토요일"
         SunLabel.Text = fdw.AddDays(6).ToString("dd") + " 일요일"
 
-        MemoTitleLabel.Text = DateTime.Now.Year.ToString & "-" & DateTime.Now.Month.ToString & "-" & DateTime.Now.Day.ToString
+        MemoTitleLabel.Text = DateTime.Now.Month.ToString & "-" & DateTime.Now.Day.ToString & " " & DoW
+
     End Sub
 
 #End Region
@@ -690,7 +636,7 @@ Public Class TableForm
     End Sub
 
     Private Sub MinBT_MouseEnter(sender As Object, e As EventArgs) Handles MinBT.MouseEnter
-        MinBT.BackColor = buttonActiveColor(colorMode)
+        MinBT.BackColor = ThemeColors.FromMode(colorMode).ButtonHover
     End Sub
 
     Private Sub MinBT_MouseLeave(sender As Object, e As EventArgs) Handles MinBT.MouseLeave
@@ -712,7 +658,7 @@ Public Class TableForm
     End Sub
 
     Private Sub TitleEditBT_MouseEnter(sender As Object, e As EventArgs) Handles TitleEditBT.MouseEnter
-        TitleEditBT.BackColor = buttonActiveColor(colorMode)
+        TitleEditBT.BackColor = ThemeColors.FromMode(colorMode).ButtonHover
     End Sub
 
     Private Sub TitleEditBT_MouseLeave(sender As Object, e As EventArgs) Handles TitleEditBT.MouseLeave
@@ -772,9 +718,10 @@ Public Class TableForm
         Dim ver = My.Application.Info.Version.ToString.Split(".")
         BT1MenuTitle.Text = "uTable " + ver(0) + "." + ver(1) + "v"
 
-        BT1_menu.BackColor = mainColor(colorMode)
-        BT1MenuTitle.ForeColor = lightTextColor(colorMode)
-        BT1_menu.ForeColor = textColor(colorMode)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+        BT1_menu.BackColor = theme.Background
+        BT1MenuTitle.ForeColor = theme.TextMuted
+        BT1_menu.ForeColor = theme.Text
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
         ClearCheckBoxItem.Visible = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
@@ -822,8 +769,9 @@ Public Class TableForm
     End Sub
 
     Private Sub Tray_menu_Opening(sender As Object, e As CancelEventArgs) Handles Tray_menu.Opening
-        Tray_menu.BackColor = mainColor(colorMode)
-        Tray_menu.ForeColor = textColor(colorMode)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+        Tray_menu.BackColor = theme.Background
+        Tray_menu.ForeColor = theme.Text
     End Sub
 
     Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
@@ -1782,8 +1730,9 @@ Public Class TableForm
     End Sub
 
     Private Sub Memo_menu_Opening(sender As Object, e As CancelEventArgs) Handles Memo_menu.Opening
-        Memo_menu.BackColor = mainColor(colorMode)
-        Memo_menu.ForeColor = textColor(colorMode)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+        Memo_menu.BackColor = theme.Background
+        Memo_menu.ForeColor = theme.Text
 
         MemoDockTopItem.Text = "위쪽"
         MemoDockBottomItem.Text = "아래쪽"
@@ -1925,8 +1874,9 @@ Public Class TableForm
     End Sub
 
     Private Sub MemoRTBMenu_Opening(sender As Object, e As CancelEventArgs) Handles MemoRTBMenu.Opening
-        MemoRTBMenu.BackColor = mainColor(colorMode)
-        MemoRTBMenu.ForeColor = textColor(colorMode)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+        MemoRTBMenu.BackColor = theme.Background
+        MemoRTBMenu.ForeColor = theme.Text
 
         MemoCopyItem.Visible = MemoRTB.SelectedText.Length > 0
         MemoPasteItem.Visible = (Clipboard.ContainsText(TextDataFormat.Rtf) Or Clipboard.ContainsText(TextDataFormat.Text))
