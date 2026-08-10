@@ -1,0 +1,37 @@
+name: Build uTable WinForms
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-utable-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (.NET Framework 4.8)
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build uTable WinForms application
+        run: >
+          msbuild utable/uTable.vbproj
+          /m
+          /restore
+          /p:Configuration=Release
+          /p:Platform=AnyCPU
+          /p:SignAssembly=false
+          /p:RestoreIgnoreFailedSources=true
+          /p:ContinuousIntegrationBuild=true
