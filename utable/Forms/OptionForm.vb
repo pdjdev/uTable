@@ -776,7 +776,7 @@ Public Class OptionForm
             End If
 
             WebBrowser1.Navigate("about:blank") '브라우저 초기화
-            WebBrowser1.Document.Write("<font face=""맑은 고딕"" size=""2"">" + HttpUtility.HtmlDecode(updHtml))
+            WebBrowser1.Document.Write("<font face=""Noto Sans KR"" size=""2"">" + HttpUtility.HtmlDecode(updHtml))
             WebBrowser1.Refresh()
 
             DoUpdateButton.Enabled = updateAvailabe

@@ -53,7 +53,7 @@ Partial Class SetCourse
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label1.Location = New System.Drawing.Point(18, 53)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(47, 17)
@@ -62,7 +62,7 @@ Partial Class SetCourse
         '
         'CourseNameTB
         '
-        Me.CourseNameTB.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CourseNameTB.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.CourseNameTB.Location = New System.Drawing.Point(18, 73)
         Me.CourseNameTB.MaxLength = 1000
         Me.CourseNameTB.Name = "CourseNameTB"
@@ -74,7 +74,7 @@ Partial Class SetCourse
         Me.ApplyBT.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ApplyBT.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.ApplyBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ApplyBT.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ApplyBT.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ApplyBT.Location = New System.Drawing.Point(290, 299)
         Me.ApplyBT.Name = "ApplyBT"
         Me.ApplyBT.Size = New System.Drawing.Size(106, 32)
@@ -84,7 +84,7 @@ Partial Class SetCourse
         '
         'ProfTB
         '
-        Me.ProfTB.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ProfTB.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ProfTB.Location = New System.Drawing.Point(260, 73)
         Me.ProfTB.MaxLength = 1000
         Me.ProfTB.Name = "ProfTB"
@@ -94,7 +94,7 @@ Partial Class SetCourse
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label2.Location = New System.Drawing.Point(257, 53)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(47, 17)
@@ -104,7 +104,7 @@ Partial Class SetCourse
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label3.Location = New System.Drawing.Point(18, 111)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(65, 17)
@@ -114,7 +114,7 @@ Partial Class SetCourse
         'DayCombo
         '
         Me.DayCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.DayCombo.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.DayCombo.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.DayCombo.FormattingEnabled = True
         Me.DayCombo.Items.AddRange(New Object() {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"})
         Me.DayCombo.Location = New System.Drawing.Point(18, 131)
@@ -125,7 +125,7 @@ Partial Class SetCourse
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label4.Location = New System.Drawing.Point(142, 111)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(96, 17)
@@ -135,7 +135,7 @@ Partial Class SetCourse
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label9.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label9.Location = New System.Drawing.Point(269, 111)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(65, 17)
@@ -145,7 +145,7 @@ Partial Class SetCourse
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label10.Location = New System.Drawing.Point(18, 166)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(135, 17)
@@ -154,7 +154,7 @@ Partial Class SetCourse
         '
         'MemoTB
         '
-        Me.MemoTB.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.MemoTB.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.MemoTB.Location = New System.Drawing.Point(18, 186)
         Me.MemoTB.MaxLength = 20000
         Me.MemoTB.Multiline = True
@@ -166,7 +166,7 @@ Partial Class SetCourse
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label11.Location = New System.Drawing.Point(18, 265)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(65, 17)
@@ -192,7 +192,7 @@ Partial Class SetCourse
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label12.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label12.Location = New System.Drawing.Point(18, 289)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(120, 15)
@@ -210,10 +210,10 @@ Partial Class SetCourse
         '
         'StartTimePicker
         '
-        Me.StartTimePicker.CalendarFont = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.StartTimePicker.CalendarFont = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.StartTimePicker.Checked = False
         Me.StartTimePicker.CustomFormat = "tt hh:mm"
-        Me.StartTimePicker.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.StartTimePicker.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.StartTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.StartTimePicker.Location = New System.Drawing.Point(145, 131)
         Me.StartTimePicker.Name = "StartTimePicker"
@@ -224,9 +224,9 @@ Partial Class SetCourse
         '
         'EndTimePicker
         '
-        Me.EndTimePicker.CalendarFont = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.EndTimePicker.CalendarFont = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.EndTimePicker.CustomFormat = "tt hh:mm"
-        Me.EndTimePicker.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.EndTimePicker.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.EndTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.EndTimePicker.Location = New System.Drawing.Point(272, 131)
         Me.EndTimePicker.Name = "EndTimePicker"
@@ -240,7 +240,7 @@ Partial Class SetCourse
         Me.DeleteBT.BackColor = System.Drawing.Color.WhiteSmoke
         Me.DeleteBT.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.DeleteBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.DeleteBT.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.DeleteBT.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.DeleteBT.Location = New System.Drawing.Point(290, 264)
         Me.DeleteBT.Name = "DeleteBT"
         Me.DeleteBT.Size = New System.Drawing.Size(106, 32)
@@ -285,7 +285,7 @@ Partial Class SetCourse
         'ColorPasteBT
         '
         Me.ColorPasteBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ColorPasteBT.Font = New System.Drawing.Font("맑은 고딕", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ColorPasteBT.Font = New System.Drawing.Font("Noto Sans KR", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ColorPasteBT.Location = New System.Drawing.Point(203, 264)
         Me.ColorPasteBT.Name = "ColorPasteBT"
         Me.ColorPasteBT.Size = New System.Drawing.Size(38, 20)
@@ -296,7 +296,7 @@ Partial Class SetCourse
         'ColorCopyBT
         '
         Me.ColorCopyBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ColorCopyBT.Font = New System.Drawing.Font("맑은 고딕", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ColorCopyBT.Font = New System.Drawing.Font("Noto Sans KR", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ColorCopyBT.Location = New System.Drawing.Point(164, 264)
         Me.ColorCopyBT.Name = "ColorCopyBT"
         Me.ColorCopyBT.Size = New System.Drawing.Size(38, 20)
@@ -317,7 +317,7 @@ Partial Class SetCourse
         'TitleLabel
         '
         Me.TitleLabel.AutoSize = True
-        Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕 Semilight", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TitleLabel.Font = New System.Drawing.Font("Noto Sans KR Semilight", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TitleLabel.Location = New System.Drawing.Point(18, 15)
         Me.TitleLabel.Name = "TitleLabel"
         Me.TitleLabel.Size = New System.Drawing.Size(153, 30)
@@ -331,7 +331,7 @@ Partial Class SetCourse
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(416, 351)
         Me.Controls.Add(Me.Panel1)
-        Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Name = "SetCourse"

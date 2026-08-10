@@ -43,7 +43,7 @@ Partial Class ErrorForm
         '
         Me.Label1.AutoSize = True
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(10, 10)
         Me.Label1.Name = "Label1"
@@ -59,7 +59,7 @@ Partial Class ErrorForm
         'Button1
         '
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Button1.Location = New System.Drawing.Point(308, 10)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(121, 41)
@@ -82,7 +82,7 @@ Partial Class ErrorForm
         'Button3
         '
         Me.Button3.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Button3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button3.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Button3.Location = New System.Drawing.Point(10, 10)
         Me.Button3.MinimumSize = New System.Drawing.Size(181, 41)
         Me.Button3.Name = "Button3"
@@ -94,7 +94,7 @@ Partial Class ErrorForm
         'Button2
         '
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Button2.Location = New System.Drawing.Point(212, 10)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(96, 41)
@@ -116,7 +116,7 @@ Partial Class ErrorForm
         'Label2
         '
         Me.Label2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label2.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(10, 36)
         Me.Label2.Name = "Label2"
@@ -139,7 +139,7 @@ Partial Class ErrorForm
         'RichTextBox1
         '
         Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RichTextBox1.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.RichTextBox1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.RichTextBox1.Location = New System.Drawing.Point(10, 22)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
@@ -151,7 +151,7 @@ Partial Class ErrorForm
         '
         Me.Label3.AutoSize = True
         Me.Label3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Gray
         Me.Label3.Location = New System.Drawing.Point(10, 0)
         Me.Label3.Name = "Label3"
@@ -169,7 +169,7 @@ Partial Class ErrorForm
         Me.Controls.Add(Me.Panel3)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
-        Me.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)

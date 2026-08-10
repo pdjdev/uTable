@@ -290,12 +290,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\DataModule.vb" />
-    <Compile Include="Forms\EveryTimeBrowser.Designer.vb">
-      <DependentUpon>EveryTimeBrowser.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\EveryTimeBrowser.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -360,9 +354,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ViewCourse.resx">
       <DependentUpon>ViewCourse.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EveryTimeBrowser.resx">
-      <DependentUpon>EveryTimeBrowser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EverytimeSemesterSelector.resx">
       <DependentUpon>EverytimeSemesterSelector.vb</DependentUpon>

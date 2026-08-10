@@ -44,7 +44,7 @@ Partial Class SettingMenu
         '
         Me.SettingLabel.BackColor = System.Drawing.Color.White
         Me.SettingLabel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SettingLabel.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.SettingLabel.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.SettingLabel.Location = New System.Drawing.Point(3, 0)
         Me.SettingLabel.Name = "SettingLabel"
         Me.SettingLabel.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)

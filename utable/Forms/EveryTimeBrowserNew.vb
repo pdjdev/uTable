@@ -47,10 +47,10 @@ Public Class EveryTimeBrowserNew
 #End Region
 
     Private Sub FadeInEffect(sender As Object, e As EventArgs) Handles MyBase.Shown
-        LoadingSplash1.BackColor = Color.White
-        LoadingSplash1.Location = New Point((Width - LoadingSplash1.Width) / 2, (Height - LoadingSplash1.Height) / 2)
-        LoadingSplash1.highColor = Color.DarkGray
-        LoadingSplash1.lowColor = Color.LightGray
+        'LoadingSplash1.BackColor = Color.White
+        'LoadingSplash1.Location = New Point((Width - LoadingSplash1.Width) / 2, (Height - LoadingSplash1.Height) / 2)
+        'LoadingSplash1.highColor = Color.DarkGray
+        'LoadingSplash1.lowColor = Color.LightGray
 
         Me.Refresh()
         dpivalue = dpicalc(Me, 100)
@@ -92,7 +92,7 @@ Public Class EveryTimeBrowserNew
     Private Sub WebView2_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
         'MsgBox("done!!")
         'source = Await getTableData()
-        LoadingSplash1.Visible = False
+        'LoadingSplash1.Visible = False
 
         If WebView21.Source.ToString.Contains("/timetable") Then
             'Debug.Print("Detected!!" + vbCrLf)
@@ -225,9 +225,9 @@ Public Class EveryTimeBrowserNew
         Return html
     End Function
 
-    Private Sub WebView21_NavigationStarting(sender As Object, e As CoreWebView2NavigationStartingEventArgs) Handles WebView21.NavigationStarting
-        LoadingSplash1.Visible = True
-    End Sub
+    'Private Sub WebView21_NavigationStarting(sender As Object, e As CoreWebView2NavigationStartingEventArgs) Handles WebView21.NavigationStarting
+    '    LoadingSplash1.Visible = True
+    'End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles TSLinkLabel1.LinkClicked
         TopMost = False
