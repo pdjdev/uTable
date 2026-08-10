@@ -1,4 +1,5 @@
 Imports System.Drawing
+Imports System.Windows.Forms
 
 ''' <summary>
 ''' Immutable color palette used by the application's light and dark themes.
@@ -52,4 +53,125 @@ Public NotInheritable Class ThemeColors
     Public Shared Function FromMode(mode As String) As ThemeColors
         Return If(String.Equals(mode, "Dark", System.StringComparison.OrdinalIgnoreCase), Dark, Light)
     End Function
+End Class
+
+''' <summary>
+''' Draws every level of a ToolStrip menu with the active application palette.
+''' Windows' system renderer ignores BackColor/ForeColor on drop-down menus.
+''' </summary>
+Public NotInheritable Class MenuThemeRenderer
+    Inherits ToolStripProfessionalRenderer
+
+    Public Sub New(theme As ThemeColors)
+        MyBase.New(New MenuColorTable(theme))
+    End Sub
+
+    Public Shared Sub Apply(menu As ContextMenuStrip, theme As ThemeColors)
+        Dim renderer As New MenuThemeRenderer(theme)
+        ApplyToStrip(menu, renderer, theme)
+    End Sub
+
+    Private Shared Sub ApplyToStrip(menu As ToolStrip, renderer As ToolStripRenderer, theme As ThemeColors)
+        menu.Renderer = renderer
+        menu.BackColor = theme.Background
+        menu.ForeColor = theme.Text
+
+        For Each item As ToolStripItem In menu.Items
+            item.ForeColor = theme.Text
+
+            Dim menuItem As ToolStripMenuItem = TryCast(item, ToolStripMenuItem)
+            If menuItem IsNot Nothing AndAlso menuItem.HasDropDownItems Then
+                ApplyToStrip(menuItem.DropDown, renderer, theme)
+            End If
+        Next
+    End Sub
+
+    Private NotInheritable Class MenuColorTable
+        Inherits ProfessionalColorTable
+
+        Private ReadOnly theme As ThemeColors
+
+        Public Sub New(theme As ThemeColors)
+            Me.theme = theme
+            UseSystemColors = False
+        End Sub
+
+        Public Overrides ReadOnly Property ToolStripDropDownBackground As Color
+            Get
+                Return theme.Background
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property MenuBorder As Color
+            Get
+                Return theme.Border
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property MenuItemBorder As Color
+            Get
+                Return theme.Border
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property MenuItemSelected As Color
+            Get
+                Return theme.ButtonHover
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property MenuItemSelectedGradientBegin As Color
+            Get
+                Return theme.ButtonHover
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property MenuItemSelectedGradientEnd As Color
+            Get
+                Return theme.ButtonHover
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property MenuItemPressedGradientBegin As Color
+            Get
+                Return theme.Button
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property MenuItemPressedGradientEnd As Color
+            Get
+                Return theme.Button
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property SeparatorDark As Color
+            Get
+                Return theme.ButtonHover
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property SeparatorLight As Color
+            Get
+                Return theme.ButtonHover
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property ImageMarginGradientBegin As Color
+            Get
+                Return theme.Background
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property ImageMarginGradientMiddle As Color
+            Get
+                Return theme.Background
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property ImageMarginGradientEnd As Color
+            Get
+                Return theme.Background
+            End Get
+        End Property
+    End Class
 End Class

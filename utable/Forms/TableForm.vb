@@ -315,6 +315,8 @@ Public Class TableForm
         ApplyButtonTheme(theme, MemoZoomBT1, MemoZoomBT2, MemoZoomNumBT, MemoMenuBT, MemoCloseBT)
         MemoTitleLabel.ForeColor = theme.Accent
 
+        ApplyMenuThemes(theme)
+
         ' ====== 메모패널 색상 끝 =====
 
 
@@ -373,6 +375,13 @@ Public Class TableForm
             button.FlatAppearance.MouseDownBackColor = theme.Border
             button.ForeColor = theme.Text
         Next
+    End Sub
+
+    Private Sub ApplyMenuThemes(theme As ThemeColors)
+        MenuThemeRenderer.Apply(BT1_menu, theme)
+        MenuThemeRenderer.Apply(Tray_menu, theme)
+        MenuThemeRenderer.Apply(Memo_menu, theme)
+        MenuThemeRenderer.Apply(MemoRTBMenu, theme)
     End Sub
 
     Sub updateDateDraw()
@@ -719,9 +728,8 @@ Public Class TableForm
         BT1MenuTitle.Text = "uTable " + ver(0) + "." + ver(1) + "v"
 
         Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
-        BT1_menu.BackColor = theme.Background
+        ApplyMenuThemes(theme)
         BT1MenuTitle.ForeColor = theme.TextMuted
-        BT1_menu.ForeColor = theme.Text
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
         ClearCheckBoxItem.Visible = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
@@ -770,8 +778,7 @@ Public Class TableForm
 
     Private Sub Tray_menu_Opening(sender As Object, e As CancelEventArgs) Handles Tray_menu.Opening
         Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
-        Tray_menu.BackColor = theme.Background
-        Tray_menu.ForeColor = theme.Text
+        ApplyMenuThemes(theme)
     End Sub
 
     Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
@@ -1731,8 +1738,7 @@ Public Class TableForm
 
     Private Sub Memo_menu_Opening(sender As Object, e As CancelEventArgs) Handles Memo_menu.Opening
         Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
-        Memo_menu.BackColor = theme.Background
-        Memo_menu.ForeColor = theme.Text
+        ApplyMenuThemes(theme)
 
         MemoDockTopItem.Text = "위쪽"
         MemoDockBottomItem.Text = "아래쪽"
@@ -1875,8 +1881,7 @@ Public Class TableForm
 
     Private Sub MemoRTBMenu_Opening(sender As Object, e As CancelEventArgs) Handles MemoRTBMenu.Opening
         Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
-        MemoRTBMenu.BackColor = theme.Background
-        MemoRTBMenu.ForeColor = theme.Text
+        ApplyMenuThemes(theme)
 
         MemoCopyItem.Visible = MemoRTB.SelectedText.Length > 0
         MemoPasteItem.Visible = (Clipboard.ContainsText(TextDataFormat.Rtf) Or Clipboard.ContainsText(TextDataFormat.Text))

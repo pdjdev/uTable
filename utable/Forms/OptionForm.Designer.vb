@@ -126,18 +126,18 @@ Partial Class OptionForm
         Me.MSStoreLinkLabel = New System.Windows.Forms.LinkLabel()
         Me.ShadowPanel = New System.Windows.Forms.Panel()
         Me.SidePanel = New System.Windows.Forms.Panel()
-        Me.SettingMenu_Info = New uTable.SettingMenu()
-        Me.SettingMenu_Update = New uTable.SettingMenu()
-        Me.SettingMenu_Notification = New uTable.SettingMenu()
-        Me.SettingMenu_Data = New uTable.SettingMenu()
-        Me.SettingMenu_Table = New uTable.SettingMenu()
-        Me.SettingMenu_Basic = New uTable.SettingMenu()
         Me.ShadowPanel1 = New System.Windows.Forms.Panel()
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.UpdateChecker = New System.ComponentModel.BackgroundWorker()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.SettingMenu_Info = New uTable.SettingMenu()
+        Me.SettingMenu_Update = New uTable.SettingMenu()
+        Me.SettingMenu_Notification = New uTable.SettingMenu()
+        Me.SettingMenu_Data = New uTable.SettingMenu()
+        Me.SettingMenu_Table = New uTable.SettingMenu()
+        Me.SettingMenu_Basic = New uTable.SettingMenu()
         Me.TitlePanel.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainPanel.SuspendLayout()
@@ -176,7 +176,7 @@ Partial Class OptionForm
         'TitleLabel
         '
         Me.TitleLabel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TitleLabel.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TitleLabel.Font = New System.Drawing.Font("Noto Sans KR", 12.0!)
         Me.TitleLabel.Location = New System.Drawing.Point(0, 0)
         Me.TitleLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.TitleLabel.Name = "TitleLabel"
@@ -1401,6 +1401,35 @@ Partial Class OptionForm
         Me.SidePanel.Size = New System.Drawing.Size(185, 359)
         Me.SidePanel.TabIndex = 1
         '
+        'ShadowPanel1
+        '
+        Me.ShadowPanel1.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
+        Me.ShadowPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ShadowPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.ShadowPanel1.Margin = New System.Windows.Forms.Padding(4)
+        Me.ShadowPanel1.Name = "ShadowPanel1"
+        Me.ShadowPanel1.Size = New System.Drawing.Size(185, 12)
+        Me.ShadowPanel1.TabIndex = 0
+        '
+        'FontDialog1
+        '
+        Me.FontDialog1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FontDialog1.ShowEffects = False
+        '
+        'UpdateChecker
+        '
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "utdata"
+        Me.SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
+        Me.SaveFileDialog1.Title = "저장 위치를 선택해 주세요"
+        '
+        'FolderBrowserDialog1
+        '
+        Me.FolderBrowserDialog1.Description = "시간표를 저장할 위치를 선택하세요"
+        '
         'SettingMenu_Info
         '
         Me.SettingMenu_Info.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -1454,35 +1483,6 @@ Partial Class OptionForm
         Me.SettingMenu_Basic.Name = "SettingMenu_Basic"
         Me.SettingMenu_Basic.Size = New System.Drawing.Size(185, 49)
         Me.SettingMenu_Basic.TabIndex = 1
-        '
-        'ShadowPanel1
-        '
-        Me.ShadowPanel1.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
-        Me.ShadowPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.ShadowPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.ShadowPanel1.Margin = New System.Windows.Forms.Padding(4)
-        Me.ShadowPanel1.Name = "ShadowPanel1"
-        Me.ShadowPanel1.Size = New System.Drawing.Size(185, 12)
-        Me.ShadowPanel1.TabIndex = 0
-        '
-        'FontDialog1
-        '
-        Me.FontDialog1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FontDialog1.ShowEffects = False
-        '
-        'UpdateChecker
-        '
-        '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.DefaultExt = "utdata"
-        Me.SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
-        Me.SaveFileDialog1.Title = "저장 위치를 선택해 주세요"
-        '
-        'FolderBrowserDialog1
-        '
-        Me.FolderBrowserDialog1.Description = "시간표를 저장할 위치를 선택하세요"
         '
         'OptionForm
         '
