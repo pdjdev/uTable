@@ -347,10 +347,6 @@ Public Class SetCourse
         touched = False
     End Sub
 
-    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
-        MsgBox(DayCombo.SelectedIndex)
-    End Sub
-
     Private Sub PrevSetCombo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles PrevSetCombo.SelectedIndexChanged
         If Not PrevSetCombo.SelectedIndex = -1 Then
 
@@ -414,11 +410,11 @@ Public Class SetCourse
         Close()
     End Sub
 
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles ColorCopyBT.Click
+    Private Sub ColorCopyBT_Click(sender As Object, e As EventArgs) Handles ColorCopyBT.Click
         Clipboard.SetText(ColorTranslator.ToHtml(ColorButton.BackColor))
     End Sub
 
-    Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles ColorPasteBT.Click
+    Private Sub ColorPasteBT_Click(sender As Object, e As EventArgs) Handles ColorPasteBT.Click
         Try
             ColorButton.BackColor = ColorTranslator.FromHtml(Clipboard.GetText)
             touched = True

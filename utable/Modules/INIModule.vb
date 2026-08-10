@@ -12,7 +12,7 @@ Module INIModule
     Public Function GetDefaultStorageDirectory() As String
         If IsStoreApp Then
             Dim storageDirectory As String = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "uTable")
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "uTable")
             Directory.CreateDirectory(storageDirectory)
             Return storageDirectory
         End If

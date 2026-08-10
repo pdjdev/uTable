@@ -65,7 +65,7 @@ Partial Class SetCourse
         '
         Me.CourseNameTB.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.CourseNameTB.Location = New System.Drawing.Point(22, 91)
-        Me.CourseNameTB.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CourseNameTB.Margin = New System.Windows.Forms.Padding(4)
         Me.CourseNameTB.MaxLength = 1000
         Me.CourseNameTB.Name = "CourseNameTB"
         Me.CourseNameTB.Size = New System.Drawing.Size(295, 31)
@@ -78,7 +78,7 @@ Partial Class SetCourse
         Me.ApplyBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ApplyBT.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ApplyBT.Location = New System.Drawing.Point(362, 374)
-        Me.ApplyBT.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ApplyBT.Margin = New System.Windows.Forms.Padding(4)
         Me.ApplyBT.Name = "ApplyBT"
         Me.ApplyBT.Size = New System.Drawing.Size(132, 40)
         Me.ApplyBT.TabIndex = 8
@@ -89,7 +89,7 @@ Partial Class SetCourse
         '
         Me.ProfTB.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ProfTB.Location = New System.Drawing.Point(325, 91)
-        Me.ProfTB.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ProfTB.Margin = New System.Windows.Forms.Padding(4)
         Me.ProfTB.MaxLength = 1000
         Me.ProfTB.Name = "ProfTB"
         Me.ProfTB.Size = New System.Drawing.Size(169, 31)
@@ -124,7 +124,7 @@ Partial Class SetCourse
         Me.DayCombo.FormattingEnabled = True
         Me.DayCombo.Items.AddRange(New Object() {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"})
         Me.DayCombo.Location = New System.Drawing.Point(22, 164)
-        Me.DayCombo.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DayCombo.Margin = New System.Windows.Forms.Padding(4)
         Me.DayCombo.Name = "DayCombo"
         Me.DayCombo.Size = New System.Drawing.Size(150, 37)
         Me.DayCombo.TabIndex = 3
@@ -166,7 +166,7 @@ Partial Class SetCourse
         '
         Me.MemoTB.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.MemoTB.Location = New System.Drawing.Point(22, 232)
-        Me.MemoTB.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.MemoTB.Margin = New System.Windows.Forms.Padding(4)
         Me.MemoTB.MaxLength = 20000
         Me.MemoTB.Multiline = True
         Me.MemoTB.Name = "MemoTB"
@@ -191,7 +191,7 @@ Partial Class SetCourse
         Me.ColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ColorButton.ForeColor = System.Drawing.Color.Gray
         Me.ColorButton.Location = New System.Drawing.Point(98, 330)
-        Me.ColorButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ColorButton.Margin = New System.Windows.Forms.Padding(4)
         Me.ColorButton.Name = "ColorButton"
         Me.ColorButton.Size = New System.Drawing.Size(94, 25)
         Me.ColorButton.TabIndex = 7
@@ -218,7 +218,7 @@ Partial Class SetCourse
         Me.PrevSetCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.PrevSetCombo.FormattingEnabled = True
         Me.PrevSetCombo.Location = New System.Drawing.Point(26, 384)
-        Me.PrevSetCombo.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PrevSetCombo.Margin = New System.Windows.Forms.Padding(4)
         Me.PrevSetCombo.Name = "PrevSetCombo"
         Me.PrevSetCombo.Size = New System.Drawing.Size(268, 29)
         Me.PrevSetCombo.TabIndex = 9
@@ -231,7 +231,7 @@ Partial Class SetCourse
         Me.StartTimePicker.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.StartTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.StartTimePicker.Location = New System.Drawing.Point(181, 164)
-        Me.StartTimePicker.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.StartTimePicker.Margin = New System.Windows.Forms.Padding(4)
         Me.StartTimePicker.Name = "StartTimePicker"
         Me.StartTimePicker.ShowUpDown = True
         Me.StartTimePicker.Size = New System.Drawing.Size(150, 36)
@@ -245,7 +245,7 @@ Partial Class SetCourse
         Me.EndTimePicker.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.EndTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.EndTimePicker.Location = New System.Drawing.Point(340, 164)
-        Me.EndTimePicker.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.EndTimePicker.Margin = New System.Windows.Forms.Padding(4)
         Me.EndTimePicker.Name = "EndTimePicker"
         Me.EndTimePicker.ShowUpDown = True
         Me.EndTimePicker.Size = New System.Drawing.Size(154, 36)
@@ -259,7 +259,7 @@ Partial Class SetCourse
         Me.DeleteBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.DeleteBT.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.DeleteBT.Location = New System.Drawing.Point(362, 330)
-        Me.DeleteBT.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DeleteBT.Margin = New System.Windows.Forms.Padding(4)
         Me.DeleteBT.Name = "DeleteBT"
         Me.DeleteBT.Size = New System.Drawing.Size(132, 40)
         Me.DeleteBT.TabIndex = 10
@@ -295,9 +295,9 @@ Partial Class SetCourse
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.ForeColor = System.Drawing.Color.Black
         Me.Panel1.Location = New System.Drawing.Point(1, 1)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Padding = New System.Windows.Forms.Padding(19, 19, 19, 19)
+        Me.Panel1.Padding = New System.Windows.Forms.Padding(19)
         Me.Panel1.Size = New System.Drawing.Size(518, 437)
         Me.Panel1.TabIndex = 26
         '
@@ -306,7 +306,7 @@ Partial Class SetCourse
         Me.ColorPasteBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ColorPasteBT.Font = New System.Drawing.Font("Noto Sans KR", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ColorPasteBT.Location = New System.Drawing.Point(244, 330)
-        Me.ColorPasteBT.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ColorPasteBT.Margin = New System.Windows.Forms.Padding(4)
         Me.ColorPasteBT.Name = "ColorPasteBT"
         Me.ColorPasteBT.Size = New System.Drawing.Size(48, 25)
         Me.ColorPasteBT.TabIndex = 29
@@ -318,7 +318,7 @@ Partial Class SetCourse
         Me.ColorCopyBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ColorCopyBT.Font = New System.Drawing.Font("Noto Sans KR", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ColorCopyBT.Location = New System.Drawing.Point(195, 330)
-        Me.ColorCopyBT.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ColorCopyBT.Margin = New System.Windows.Forms.Padding(4)
         Me.ColorCopyBT.Name = "ColorCopyBT"
         Me.ColorCopyBT.Size = New System.Drawing.Size(48, 25)
         Me.ColorCopyBT.TabIndex = 28
@@ -329,7 +329,7 @@ Partial Class SetCourse
         '
         Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
         Me.CloseBT.Location = New System.Drawing.Point(455, 22)
-        Me.CloseBT.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CloseBT.Margin = New System.Windows.Forms.Padding(4)
         Me.CloseBT.Name = "CloseBT"
         Me.CloseBT.Size = New System.Drawing.Size(40, 40)
         Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -340,7 +340,7 @@ Partial Class SetCourse
         '
         Me.TitleLabel.AutoSize = True
         Me.TitleLabel.Font = New System.Drawing.Font("Noto Sans KR", 14.0!)
-        Me.TitleLabel.Location = New System.Drawing.Point(21, 23)
+        Me.TitleLabel.Location = New System.Drawing.Point(20, 22)
         Me.TitleLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.TitleLabel.Name = "TitleLabel"
         Me.TitleLabel.Size = New System.Drawing.Size(163, 35)
@@ -357,7 +357,7 @@ Partial Class SetCourse
         Me.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "SetCourse"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual

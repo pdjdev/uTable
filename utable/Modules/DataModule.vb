@@ -208,7 +208,7 @@ Module DataModule
     End Function
 
     Public Function TableSaveLocation(filenameOnly As Boolean) As String
-        ' 기본 저장소는 INIPath와 동일하다. Store 패키지에서는 LocalAppData\\uTable,
+        ' 기본 저장소는 INIPath와 동일하다. Store 패키지에서는 AppData\\uTable,
         ' 일반/포터블 실행에서는 실행 파일 폴더다.
         Dim finalDir As String = INIPath
         Dim finalName As String = "default.utdata"
