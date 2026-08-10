@@ -1,53 +1,83 @@
-﻿Imports System.Security.Principal
-
 Module WinModule
 
 #Region "시작프로그램설정"
 
-    Dim shortcutname = "\uTable.lnk"
+    Private Const ShortcutName As String = "\uTable.lnk"
+    Private Const AppLaunchCmd As String = "C:\Windows\explorer.exe"
+    Private Const AppCode As String = "shell:appsFolder\49490PBJSoftware.uTable_fv4zvza0919de!App"
+    Private Const ErrorInsufficientBuffer As Integer = 122
+
+    <Runtime.InteropServices.DllImport("kernel32.dll", CharSet:=Runtime.InteropServices.CharSet.Unicode)>
+    Private Function GetCurrentApplicationUserModelId(ByRef applicationUserModelIdLength As UInteger,
+                                                      applicationUserModelId As Text.StringBuilder) As Integer
+    End Function
+
+    ' MSIX/AppX로 실행 중인 프로세스에만 AUMID가 존재한다.
+    Private Function GetCurrentAppUserModelId() As String
+        Try
+            Dim length As UInteger = 0
+            If GetCurrentApplicationUserModelId(length, Nothing) <> ErrorInsufficientBuffer Then Return Nothing
+
+            Dim applicationUserModelId As New Text.StringBuilder(CInt(length))
+            If GetCurrentApplicationUserModelId(length, applicationUserModelId) <> 0 Then Return Nothing
+            Return applicationUserModelId.ToString()
+        Catch ex As EntryPointNotFoundException
+            ' Windows 7 등 패키지 ID API를 지원하지 않는 환경
+            Return Nothing
+        End Try
+    End Function
+
+    Public ReadOnly Property IsStoreApp As Boolean
+        Get
+            Return Not String.IsNullOrEmpty(GetCurrentAppUserModelId())
+        End Get
+    End Property
 
     Public Function checkStartUp() As Boolean
-        Dim destlnk As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & shortcutname
+        Dim destlnk As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
+        If Not IO.File.Exists(destlnk) Then Return False
 
-        If IO.File.Exists(destlnk) Then
-            If GetTargetPath(destlnk) = Application.ExecutablePath Then
-                Return True
-            Else
-                Return False
-            End If
-        Else
-            Return False
-        End If
+        Dim wsh As Object = CreateObject("WScript.Shell")
+        Dim shortcut As Object = wsh.CreateShortcut(destlnk)
+        Dim targetPath As String = CStr(shortcut.TargetPath)
+        Dim arguments As String = CStr(shortcut.Arguments).Trim()
+
+        ' MSIX 바로가기는 Explorer가 AppsFolder 경로를 실행한다.
+        If IsStoreApp AndAlso PathsEqual(targetPath, AppLaunchCmd) AndAlso
+           String.Equals(arguments, AppCode, StringComparison.OrdinalIgnoreCase) Then Return True
+
+        ' 일반 exe 바로가기 및 이전 버전이 남긴 "exe + shell:appsFolder" 형식도 인정한다.
+        If Not PathsEqual(targetPath, Application.ExecutablePath) Then Return False
+        Return String.IsNullOrEmpty(arguments) OrElse arguments.StartsWith("shell:appsFolder\", StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    Private Function PathsEqual(firstPath As String, secondPath As String) As Boolean
+        Return String.Equals(IO.Path.GetFullPath(firstPath).TrimEnd("\"c),
+                             IO.Path.GetFullPath(secondPath).TrimEnd("\"c),
+                             StringComparison.OrdinalIgnoreCase)
     End Function
 
     Sub SetStartup()
-        Dim Path As String
-        Dim identity = WindowsIdentity.GetCurrent()
-        Dim principal = New WindowsPrincipal(identity)
-
-        Path = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & shortcutname
-
+        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
         Dim wsh As Object = CreateObject("WScript.Shell")
+        Dim myShortcut As Object = wsh.CreateShortcut(path)
 
-        Dim MyShortcut
-        MyShortcut = wsh.CreateShortcut(Path)
-        MyShortcut.TargetPath = wsh.ExpandEnvironmentStrings(Application.ExecutablePath)
-        MyShortcut.WindowStyle = 4
-        MyShortcut.Save()
+        If IsStoreApp Then
+            myShortcut.TargetPath = wsh.ExpandEnvironmentStrings(AppLaunchCmd)
+            myShortcut.Arguments = AppCode
+        Else
+            myShortcut.TargetPath = wsh.ExpandEnvironmentStrings(Application.ExecutablePath)
+            myShortcut.Arguments = ""
+        End If
+
+        myShortcut.WindowStyle = 4
+        myShortcut.Save()
     End Sub
 
     Sub RemoveStartup()
-        My.Computer.FileSystem.DeleteFile(Environment.GetFolderPath(Environment.SpecialFolder.Startup) & shortcutname)
+        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
+        If IO.File.Exists(path) Then My.Computer.FileSystem.DeleteFile(path)
     End Sub
-
-    '바로가기 목적지경로 리턴 2
-    Function GetTargetPath(ByVal FileName As String)
-        Dim Obj As Object
-        Obj = CreateObject("WScript.Shell")
-        Dim Shortcut As Object
-        Shortcut = Obj.CreateShortcut(FileName)
-        GetTargetPath = Shortcut.TargetPath
-    End Function
 
 #End Region
 

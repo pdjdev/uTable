@@ -10,14 +10,14 @@
         colormode = cm
 
         If selected Then
-            HighlightPanel.BackColor = FocusedTabColor(colormode)
+            HighlightPanel.BackColor = ThemeColors.FromMode(colormode).TabActive
             SettingLabel.Font = New Font(SettingLabel.Font, FontStyle.Bold)
-            SettingLabel.ForeColor = textColor(colormode)
+            SettingLabel.ForeColor = ThemeColors.FromMode(colormode).Text
             goalColor = OptionForm.MainPanel.BackColor
         Else
             HighlightPanel.BackColor = Color.Transparent
             SettingLabel.Font = New Font(SettingLabel.Font, FontStyle.Regular)
-            SettingLabel.ForeColor = lightTextColor(colormode)
+            SettingLabel.ForeColor = ThemeColors.FromMode(colormode).TextMuted
             goalColor = OptionForm.SidePanel.BackColor
         End If
 

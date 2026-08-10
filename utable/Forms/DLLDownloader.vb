@@ -38,12 +38,13 @@ Public Class DLLDownloader
     Public Sub UpdateColor()
 
         colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
 
-        BackColor = edgeColor(colorMode)
-        TitlePanel.BackColor = tableColor_1(colorMode)
-        TitlePanel.ForeColor = textColor(colorMode)
-        MainLabel.BackColor = mainColor(colorMode)
-        MainLabel.ForeColor = textColor(colorMode)
+        BackColor = theme.Edge
+        TitlePanel.BackColor = theme.TablePrimary
+        TitlePanel.ForeColor = theme.Text
+        MainLabel.BackColor = theme.Background
+        MainLabel.ForeColor = theme.Text
 
     End Sub
     Sub DownloadFiles()
@@ -78,8 +79,8 @@ Public Class DLLDownloader
             EveryTimeBrowserNew.Close()
             EverytimeSemesterSelector.Close()
             EverytimeSemesterSelector.StartPosition = FormStartPosition.Manual
-            EverytimeSemesterSelector.SetDesktopLocation(Form1.Location.X + (Form1.Width - EverytimeSemesterSelector.Width) / 2,
-                                                         Form1.Location.Y + (Form1.Height - EverytimeSemesterSelector.Height) / 2)
+            EverytimeSemesterSelector.SetDesktopLocation(TableForm.Location.X + (TableForm.Width - EverytimeSemesterSelector.Width) / 2,
+                                                         TableForm.Location.Y + (TableForm.Height - EverytimeSemesterSelector.Height) / 2)
             EverytimeSemesterSelector.Show()
             EverytimeSemesterSelector.TopMost = True
             Close()

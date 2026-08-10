@@ -36,19 +36,21 @@ Partial Class SettingMenu
         Me.Panel6.Controls.Add(Me.HighlightPanel)
         Me.Panel6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel6.Location = New System.Drawing.Point(0, 0)
+        Me.Panel6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Panel6.Name = "Panel6"
-        Me.Panel6.Size = New System.Drawing.Size(126, 39)
+        Me.Panel6.Size = New System.Drawing.Size(158, 49)
         Me.Panel6.TabIndex = 2
         '
         'SettingLabel
         '
         Me.SettingLabel.BackColor = System.Drawing.Color.White
         Me.SettingLabel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SettingLabel.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.SettingLabel.Location = New System.Drawing.Point(3, 0)
+        Me.SettingLabel.Font = New System.Drawing.Font("Noto Sans KR", 10.5!)
+        Me.SettingLabel.Location = New System.Drawing.Point(4, 0)
+        Me.SettingLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.SettingLabel.Name = "SettingLabel"
-        Me.SettingLabel.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
-        Me.SettingLabel.Size = New System.Drawing.Size(123, 39)
+        Me.SettingLabel.Padding = New System.Windows.Forms.Padding(12, 0, 0, 0)
+        Me.SettingLabel.Size = New System.Drawing.Size(154, 49)
         Me.SettingLabel.TabIndex = 2
         Me.SettingLabel.Text = "SettingsText"
         Me.SettingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -58,8 +60,9 @@ Partial Class SettingMenu
         Me.HighlightPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.HighlightPanel.Dock = System.Windows.Forms.DockStyle.Left
         Me.HighlightPanel.Location = New System.Drawing.Point(0, 0)
+        Me.HighlightPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.HighlightPanel.Name = "HighlightPanel"
-        Me.HighlightPanel.Size = New System.Drawing.Size(3, 39)
+        Me.HighlightPanel.Size = New System.Drawing.Size(4, 49)
         Me.HighlightPanel.TabIndex = 0
         '
         'ColorTransitionTimer
@@ -68,11 +71,12 @@ Partial Class SettingMenu
         '
         'SettingMenu
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.Panel6)
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "SettingMenu"
-        Me.Size = New System.Drawing.Size(126, 39)
+        Me.Size = New System.Drawing.Size(158, 49)
         Me.Panel6.ResumeLayout(False)
         Me.ResumeLayout(False)
 

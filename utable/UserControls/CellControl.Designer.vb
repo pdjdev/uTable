@@ -42,7 +42,7 @@ Partial Class CellControl
         'TopTimeLabel
         '
         Me.TopTimeLabel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TopTimeLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TopTimeLabel.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TopTimeLabel.Location = New System.Drawing.Point(19, 0)
         Me.TopTimeLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.TopTimeLabel.Name = "TopTimeLabel"
@@ -56,7 +56,7 @@ Partial Class CellControl
         '
         Me.BottomTimeLabel.AutoSize = True
         Me.BottomTimeLabel.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.BottomTimeLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.BottomTimeLabel.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.BottomTimeLabel.Location = New System.Drawing.Point(0, 243)
         Me.BottomTimeLabel.Name = "BottomTimeLabel"
         Me.BottomTimeLabel.Size = New System.Drawing.Size(118, 17)
@@ -79,7 +79,7 @@ Partial Class CellControl
         '
         Me.MemoLabel.AutoSize = True
         Me.MemoLabel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.MemoLabel.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.MemoLabel.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.MemoLabel.Location = New System.Drawing.Point(0, 37)
         Me.MemoLabel.MaximumSize = New System.Drawing.Size(144, 0)
         Me.MemoLabel.Name = "MemoLabel"
@@ -92,7 +92,7 @@ Partial Class CellControl
         '
         Me.ProfLabel.AutoSize = True
         Me.ProfLabel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.ProfLabel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ProfLabel.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ProfLabel.Location = New System.Drawing.Point(0, 20)
         Me.ProfLabel.MaximumSize = New System.Drawing.Size(144, 0)
         Me.ProfLabel.Name = "ProfLabel"
@@ -105,7 +105,7 @@ Partial Class CellControl
         '
         Me.TitleLabel.AutoSize = True
         Me.TitleLabel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TitleLabel.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TitleLabel.Location = New System.Drawing.Point(0, 0)
         Me.TitleLabel.MaximumSize = New System.Drawing.Size(144, 0)
         Me.TitleLabel.Name = "TitleLabel"
@@ -162,7 +162,7 @@ Partial Class CellControl
         Me.Controls.Add(Me.TopPanel)
         Me.Controls.Add(Me.TopNotchPanel)
         Me.DoubleBuffered = True
-        Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ForeColor = System.Drawing.Color.White
         Me.Name = "CellControl"
         Me.Size = New System.Drawing.Size(144, 260)

@@ -61,7 +61,7 @@ Public Class StartupAsk
     End Sub
 
     Private Sub CloseBT_MouseEnter(sender As Object, e As EventArgs) Handles CloseBT.MouseEnter
-        CloseBT.BackColor = buttonActiveColor(colormode)
+        CloseBT.BackColor = ThemeColors.FromMode(colormode).ButtonHover
     End Sub
 
     Private Sub CloseBT_MouseLeave(sender As Object, e As EventArgs) Handles CloseBT.MouseLeave
@@ -75,24 +75,25 @@ Public Class StartupAsk
     Public Sub UpdateColor()
 
         colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
 
-        BackColor = edgeColor(colorMode)
-        Panel1.BackColor = mainColor(colorMode)
-        Panel1.ForeColor = textColor(colorMode)
-        ApplyBT.ForeColor = textColor(colorMode)
-        NoBT.ForeColor = textColor(colorMode)
-        TxtLabel.ForeColor = textColor(colorMode)
-        Label1.ForeColor = lightTextColor(colorMode)
+        BackColor = theme.Edge
+        Panel1.BackColor = theme.Background
+        Panel1.ForeColor = theme.Text
+        ApplyBT.ForeColor = theme.Text
+        NoBT.ForeColor = theme.Text
+        TxtLabel.ForeColor = theme.Text
+        Label1.ForeColor = theme.TextMuted
 
-        ApplyBT.BackColor = buttonColor(colorMode)
-        ApplyBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        ApplyBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        ApplyBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+        ApplyBT.BackColor = theme.Button
+        ApplyBT.FlatAppearance.BorderColor = theme.Border
+        ApplyBT.FlatAppearance.MouseOverBackColor = theme.ButtonHover
+        ApplyBT.FlatAppearance.MouseDownBackColor = theme.Border
 
-        NoBT.BackColor = buttonColor(colorMode)
-        NoBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        NoBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        NoBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
+        NoBT.BackColor = theme.Button
+        NoBT.FlatAppearance.BorderColor = theme.Border
+        NoBT.FlatAppearance.MouseOverBackColor = theme.ButtonHover
+        NoBT.FlatAppearance.MouseDownBackColor = theme.Border
 
         Select Case colorMode
             Case "Dark"

@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 
 Public Class ViewCourse
-    Dim BorderWidth As Integer = Form1.BorderWidth
+    Dim BorderWidth As Integer = TableForm.BorderWidth
     Private _resizeDir As ResizeDirection = ResizeDirection.None
 
     Dim prevData As New List(Of String)
@@ -140,7 +140,7 @@ Public Class ViewCourse
         End If
     End Sub
 
-    Private Sub Form1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles UpperPanel.MouseDown, MainPanel.MouseDown
+    Private Sub TableForm_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles UpperPanel.MouseDown, MainPanel.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left And Me.WindowState <> FormWindowState.Maximized Then
             ResizeForm(resizeDir)
         End If
@@ -181,7 +181,7 @@ Public Class ViewCourse
 
     End Sub
 
-    Private Sub Form1_MouseLeave(sender As Object, e As EventArgs) Handles UpperPanel.MouseLeave, MainPanel.MouseLeave
+    Private Sub TableForm_MouseLeave(sender As Object, e As EventArgs) Handles UpperPanel.MouseLeave, MainPanel.MouseLeave
         Cursor = Cursors.Default
     End Sub
 #End Region
@@ -225,14 +225,15 @@ Public Class ViewCourse
 
     Sub UpdateColor()
         colormode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colormode)
 
-        BodyPanel.BackColor = tableColor_1(colormode)
-        SaveBT.BackColor = tableColor_1(colormode)
-        CancelBT.BackColor = tableColor_1(colormode)
-        MemoTB.BackColor = tableColor_1(colormode)
+        BodyPanel.BackColor = theme.TablePrimary
+        SaveBT.BackColor = theme.TablePrimary
+        CancelBT.BackColor = theme.TablePrimary
+        MemoTB.BackColor = theme.TablePrimary
 
-        MainPanel.BackColor = edgeColor(colormode)
-        MemoTB.ForeColor = textColor(colormode)
+        MainPanel.BackColor = theme.Edge
+        MemoTB.ForeColor = theme.Text
     End Sub
 
     Private Sub ViewCourse_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -248,15 +249,15 @@ Public Class ViewCourse
         UpdateColor()
 
         Dim colorMul As Single = 0.9
-        Dim data = olddata
 
         Try
-            UpperTitleLabel.Text = xmlDecode(getData(data, "name"))
+            Dim course As TableCourse = getTableCourse(olddata)
+            UpperTitleLabel.Text = xmlDecode(course.Name)
             Text = UpperTitleLabel.Text
-            SubTitleLabel.Text = xmlDecode(getData(data, "prof")) + ", "
+            SubTitleLabel.Text = xmlDecode(course.Professor) + ", "
 
-            Dim startt As Integer = getData(data, "start")
-            Dim endt As Integer = getData(data, "end")
+            Dim startt As Integer = Convert.ToInt32(course.Start)
+            Dim endt As Integer = Convert.ToInt32(course.End)
 
             SubTitleLabel.Text += (startt \ 60).ToString + ":"
             If startt Mod 60 = 0 Then
@@ -274,10 +275,10 @@ Public Class ViewCourse
                 SubTitleLabel.Text += (endt Mod 60).ToString("D2")
             End If
 
-            SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(getData(data, "day"))) + "요일"
+            SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(course.Day)) + "요일"
 
-            MemoTB.Text = xmlDecode(getData(data, "memo"))
-            TitlePanel.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
+            MemoTB.Text = xmlDecode(course.Memo)
+            TitlePanel.BackColor = ColorTranslator.FromHtml(course.Color)
 
             Dim c As Color = Color.FromArgb(TitlePanel.BackColor.R * colorMul,
                                         TitlePanel.BackColor.G * colorMul,
@@ -324,51 +325,31 @@ Public Class ViewCourse
     End Sub
 
     Private Sub AdjustText(lblQueue As Label, maxSize As Single)
-        If Not lblQueue.Text = Nothing Then
-            Dim Fit As Boolean = False
-            Dim CurSize As Single
-            Dim SizeStep As Single = 0.1
-            Dim Padding As Integer = 3
+        If String.IsNullOrEmpty(lblQueue.Text) OrElse lblQueue.Width <= 0 OrElse lblQueue.Height <= 0 Then Exit Sub
 
-            Do Until Fit
-                CurSize += SizeStep
-                Dim Fnt As Font = New Font(lblQueue.Font.Name, CurSize)
-                Dim textSize As Size = TextRenderer.MeasureText(lblQueue.Text, Fnt)
+        '0.1pt씩 Font/MeasureText를 반복 생성하던 선형 탐색 대신 이분 탐색을 사용한다.
+        Dim lower As Single = 6.0!
+        Dim upper As Single = maxSize
+        Dim best As Single = lower
 
-                textSize.Height += Padding
-                textSize.Width += Padding
+        For i As Integer = 1 To 7
+            Dim candidate As Single = (lower + upper) / 2
+            Dim fits As Boolean
+            Using testFont As New Font(lblQueue.Font.Name, candidate, lblQueue.Font.Style)
+                Dim textSize As Size = TextRenderer.MeasureText(lblQueue.Text, testFont)
+                fits = textSize.Width + 3 <= lblQueue.Width AndAlso textSize.Height + 3 <= lblQueue.Height
+            End Using
 
-                If textSize.Height >= lblQueue.Height Or textSize.Width >= lblQueue.Width Or lblQueue.Height = 0 Or lblQueue.Width = 0 Then
-                    Fit = True
-                    If textSize.Width > lblQueue.Width Then
-                        CurSize -= SizeStep
-                    End If
-                    If textSize.Height > lblQueue.Height Then
-                        CurSize -= SizeStep
-                    End If
-                End If
-            Loop
-
-            If CurSize > 6 Then
-                'If Not maxSubSize = 0 Or Not maxTitleSize = 0 Then
-
-                If CurSize > maxSize Then
-                    lblQueue.Font = New Font(lblQueue.Font.Name, maxSize)
-                    Application.DoEvents()
-                    Exit Sub
-
-                ElseIf lblQueue Is UpperTitleLabel And CurSize < 9 Then
-                    lblQueue.Font = New Font(lblQueue.Font.Name, 9)
-                    Application.DoEvents()
-                    Exit Sub
-
-                End If
-
-                'End If
-                lblQueue.Font = New Font(lblQueue.Font.Name, CurSize)
-                Application.DoEvents()
+            If fits Then
+                best = candidate
+                lower = candidate
+            Else
+                upper = candidate
             End If
-        End If
+        Next
+
+        If lblQueue Is UpperTitleLabel AndAlso best < 9.0! Then best = 9.0!
+        lblQueue.Font = New Font(lblQueue.Font.Name, best, lblQueue.Font.Style)
     End Sub
 
     Private Sub ViewCourse_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
@@ -382,12 +363,12 @@ Public Class ViewCourse
 
         Dim appearPoint As Point = Location
 
-        If appearPoint.X + SetCourse.Width > Form1.Location.X + Form1.Width Then
-            appearPoint.X = Form1.Location.X + Form1.Width - SetCourse.Width
+        If appearPoint.X + SetCourse.Width > TableForm.Location.X + TableForm.Width Then
+            appearPoint.X = TableForm.Location.X + TableForm.Width - SetCourse.Width
         End If
 
-        If appearPoint.Y + SetCourse.Height > Form1.Location.Y + Form1.Height Then
-            appearPoint.Y = Form1.Location.Y + Form1.Height - SetCourse.Height
+        If appearPoint.Y + SetCourse.Height > TableForm.Location.Y + TableForm.Height Then
+            appearPoint.Y = TableForm.Location.Y + TableForm.Height - SetCourse.Height
         End If
 
         SetCourse.modifyMode = True
@@ -422,24 +403,24 @@ Public Class ViewCourse
             Dim data As String = readTable()
             Dim count As Integer = 0
 
-            For Each s As String In getDatas(data, "course")
+            For Each s As String In getTableDatas(data, "course")
                 '이전설정 이름이 여러개 이미 있을때
-                If getData(s, "name") = getData(olddata, "name") Then count += 1
+                If getTableData(s, "name") = getTableData(olddata, "name") Then count += 1
             Next
 
             If count > 1 Then
                 If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
                     modifyAllCourse(readTable(), MemoTB.Text)
                 Else
-                    Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
+                    Dim newdata As String = olddata.Replace(getTableData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
                     writeTable(readTable.Replace(olddata, newdata))
                 End If
             Else
-                Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
+                Dim newdata As String = olddata.Replace(getTableData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
                 writeTable(readTable.Replace(olddata, newdata))
             End If
 
-            Form1.updateCell()
+            TableForm.updateCell()
 
         Catch ex As Exception
             MsgBox("적용 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
@@ -450,25 +431,25 @@ Public Class ViewCourse
 
     Sub modifyAllCourse(data As String, memo As String)
         'Dim data As String = readTable()
-        Dim olddatas As List(Of String) = multipleMidReturn("<course>", "</course>", data)
+        Dim olddatas As List(Of String) = getTableDatas(data, "course")
         Dim tablename As String = Nothing
 
         If Not data.Contains("<tablename>") Then
             tablename = "이름 없는 시간표"
         Else
-            If getData(data, "tablename") = "" Then
+            If getTableData(data, "tablename") = "" Then
                 tablename = "이름 없는 시간표"
             Else
-                tablename = getData(data, "tablename")
+                tablename = getTableData(data, "tablename")
             End If
         End If
 
         Dim newdata As String = ""
-        Dim oldname As String = getData(olddata, "name")
+        Dim oldname As String = getTableData(olddata, "name")
 
         For Each i In olddatas
             Dim tmp As String = i
-            If getData(i, "name") = oldname Then tmp = tmp.Replace("<memo>" + getData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
+            If getTableData(i, "name") = oldname Then tmp = tmp.Replace("<memo>" + getTableData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
             newdata += "<course>" + tmp + "</course>" + vbCrLf
         Next
 

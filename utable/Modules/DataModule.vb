@@ -1,9 +1,139 @@
 ﻿Imports System.IO
+Imports System.Security
 Imports System.Web
-'Imports System.Text.RegularExpressions
-'Imports System.Xml
+Imports System.Xml
+Imports System.Xml.Linq
+
+Friend Class ReleaseFeedEntry
+    Public Property Title As String
+    Public Property ContentHtml As String
+End Class
+
+'시간표 과목의 메모리 표현 - 값은 기존 함수와 호환되도록 XML-encoded 상태로 보관
+Friend Class TableCourse
+    Public Property RawData As String
+    Public Property Day As String
+    Public Property Name As String
+    Public Property Professor As String
+    Public Property Memo As String
+    Public Property Start As String
+    Public Property [End] As String
+    Public Property Color As String
+    Public Property Checked As String
+
+    Public Function Identity() As String
+        Return Day + "-" + Start + "-" + Name
+    End Function
+End Class
 
 Module DataModule
+    Private Const TableFragmentRootName As String = "utable-fragment"
+    Private ReadOnly Utf8WithoutBom As New System.Text.UTF8Encoding(False)
+    Private ReadOnly StrictUtf8 As New System.Text.UTF8Encoding(False, True)
+
+    '시간표 파일(.utdata)은 UTF-8로 저장하고, 구버전 CP949 파일을 읽을 수 있다.
+    Public Function ReadTableFile(filePath As String) As String
+        Dim bytes As Byte() = File.ReadAllBytes(filePath)
+
+        Try
+            Dim content As String = StrictUtf8.GetString(bytes)
+
+            'UTF-8 BOM이 있는 파일도 UTF-8로 읽되, 문자열에 BOM 문자를 남기지 않는다.
+            If content.Length > 0 AndAlso content(0) = ChrW(&HFEFF) Then
+                Return content.Substring(1)
+            End If
+
+            Return content
+        Catch ex As System.Text.DecoderFallbackException
+            Return System.Text.Encoding.GetEncoding(949).GetString(bytes)
+        End Try
+    End Function
+
+    '시간표 파일은 하위 호환성을 위해 루트 없는 XML fragment로 저장한다.
+    '파싱할 때만 임시 루트를 붙여 표준 XML 파서에 전달한다.
+    Private Function ParseTableFragment(fragment As String) As XDocument
+        If fragment Is Nothing Then fragment = ""
+
+        Dim settings As New XmlReaderSettings With {
+            .DtdProcessing = DtdProcessing.Prohibit,
+            .XmlResolver = Nothing,
+            .IgnoreWhitespace = False
+        }
+
+        Using input As New StringReader("<" + TableFragmentRootName + ">" + fragment + "</" + TableFragmentRootName + ">")
+            Using reader As XmlReader = XmlReader.Create(input, settings)
+                Return XDocument.Load(reader, LoadOptions.PreserveWhitespace)
+            End Using
+        End Using
+    End Function
+
+    Private Function SerializeTableFragment(document As XDocument) As String
+        Return String.Concat(document.Root.Nodes().Select(Function(node) node.ToString(SaveOptions.DisableFormatting))).Trim()
+    End Function
+
+    Private Function GetElementInnerXml(element As XElement) As String
+        Return String.Concat(element.Nodes().Select(Function(node) node.ToString(SaveOptions.DisableFormatting)))
+    End Function
+
+    Private Function GetChildInnerXml(element As XElement, name As String) As String
+        Dim child As XElement = element.Element(name)
+        If child Is Nothing Then Return Nothing
+        Return GetElementInnerXml(child)
+    End Function
+
+    Private Function ToTableCourse(element As XElement) As TableCourse
+        Return New TableCourse With {
+            .RawData = GetElementInnerXml(element).Trim(),
+            .Day = GetChildInnerXml(element, "day"),
+            .Name = GetChildInnerXml(element, "name"),
+            .Professor = GetChildInnerXml(element, "prof"),
+            .Memo = GetChildInnerXml(element, "memo"),
+            .Start = GetChildInnerXml(element, "start"),
+            .End = GetChildInnerXml(element, "end"),
+            .Color = GetChildInnerXml(element, "color"),
+            .Checked = GetChildInnerXml(element, "checked")
+        }
+    End Function
+
+    '전체 시간표 XML은 한 번만 파싱해 과목 목록으로 변환한다.
+    Public Function getTableCourses(datastr As String) As List(Of TableCourse)
+        Dim document As XDocument = ParseTableFragment(datastr)
+        Return document.Root.Elements("course").Select(Function(element) ToTableCourse(element)).ToList()
+    End Function
+
+    'olddata처럼 course 내부 fragment만 가진 기존 화면을 위한 단일 과목 파서.
+    Public Function getTableCourse(datastr As String) As TableCourse
+        Dim document As XDocument = ParseTableFragment("<course>" + datastr + "</course>")
+        Return ToTableCourse(document.Root.Element("course"))
+    End Function
+
+    '시간표 XML fragment에서 최상위 태그의 내용을 추출한다.
+    Public Function getTableData(datastr As String, name As String) As String
+        Dim element As XElement = ParseTableFragment(datastr).Root.Element(name)
+
+        If element Is Nothing Then Return Nothing
+
+        Return GetElementInnerXml(element)
+    End Function
+
+    '시간표 XML fragment에서 최상위 태그 전체를 추출한다.
+    Public Function getTableData_withkeys(datastr As String, name As String) As String
+        Dim element As XElement = ParseTableFragment(datastr).Root.Element(name)
+
+        If element Is Nothing Then Return Nothing
+
+        Return element.ToString(SaveOptions.DisableFormatting)
+    End Function
+
+    '시간표 XML fragment에서 같은 최상위 태그의 내용을 모두 추출한다.
+    Public Function getTableDatas(datastr As String, name As String) As List(Of String)
+        Dim elements = ParseTableFragment(datastr).Root.Elements(name).ToList()
+
+        If elements.Count = 0 Then Return Nothing
+
+        Return elements.Select(Function(element) GetElementInnerXml(element).Trim()).ToList()
+    End Function
+
     'web에서 문자열 가져오는 함수
     Public Function webget(url As String)
         Dim source = New System.Net.WebClient()
@@ -16,20 +146,38 @@ Module DataModule
         Return sourcestr
     End Function
 
-    'xml형식 파일을 전체값에서 따로 추출하는 함수
-    Public Function getData(datastr As String, name As String) As String
-        Return midReturn("<" + name + ">", "</" + name + ">", datastr)
+    Public Function GetLatestReleaseEntry(feedXml As String) As ReleaseFeedEntry
+        If String.IsNullOrWhiteSpace(feedXml) Then
+            Throw New InvalidDataException("릴리스 피드가 비어 있습니다.")
+        End If
 
-    End Function
+        Dim settings As New XmlReaderSettings With {
+            .DtdProcessing = DtdProcessing.Prohibit,
+            .XmlResolver = Nothing
+        }
 
-    Public Function getData_withkeys(datastr As String, name As String) As String
-        Return midReturn_withkeys("<" + name + ">", "</" + name + ">", datastr)
+        Dim document As XDocument
+        Using input As New StringReader(feedXml)
+            Using reader As XmlReader = XmlReader.Create(input, settings)
+                document = XDocument.Load(reader)
+            End Using
+        End Using
 
-    End Function
+        Dim entry = document.Descendants().FirstOrDefault(Function(element) element.Name.LocalName = "entry")
+        If entry Is Nothing Then
+            Throw New InvalidDataException("릴리스 항목을 찾을 수 없습니다.")
+        End If
 
-    Public Function getDatas(datastr As String, name As String) As List(Of String)
-        Return multipleMidReturn("<" + name + ">", "</" + name + ">", datastr)
+        Dim title = entry.Elements().FirstOrDefault(Function(element) element.Name.LocalName = "title")
+        Dim content = entry.Elements().FirstOrDefault(Function(element) element.Name.LocalName = "content")
+        If title Is Nothing OrElse content Is Nothing Then
+            Throw New InvalidDataException("릴리스 항목이 완전하지 않습니다.")
+        End If
 
+        Return New ReleaseFeedEntry With {
+            .Title = title.Value,
+            .ContentHtml = content.Value
+        }
     End Function
 
     'HEX색상값을 RGB로 바꿔주는 함수
@@ -44,60 +192,25 @@ Module DataModule
         Return Color.FromArgb(Red, Green, Blue)
     End Function
 
-    '중간의 문자열을 리턴하는 함수
-    Public Function midReturn(ByVal first As String, ByVal last As String, ByVal total As String) As String
-        If total.Contains(first) Then
-            Dim FirstStart As Long = total.IndexOf(first) + first.Length + 1
-            Return Trim(Mid$(total, FirstStart, total.Substring(FirstStart).IndexOf(last) + 1))
-        Else
-            Return Nothing
-        End If
-    End Function
-
-    '중간의 문자열을 리턴하는 함수
-    Public Function midReturn_withkeys(ByVal first As String, ByVal last As String, ByVal total As String) As String
-        If total.Contains(first) Then
-            Dim FirstStart As Long = total.IndexOf(first) + 1
-            Return Trim(Mid$(total, FirstStart, total.Substring(FirstStart).IndexOf(last) + last.Length + 1))
-        Else
-            Return Nothing
-        End If
-    End Function
-
-    '중간의 문자열을 여러개 List로 리턴하는 함수
-    Public Function multipleMidReturn(ByVal first As String, ByVal last As String, ByRef total As String) As List(Of String)
-        If total.Contains(first) Then
-            Dim tmptotal = total
-            Dim res As New List(Of String)
-
-            While tmptotal.Contains(first) = True
-                Dim FirstStart As Long = tmptotal.IndexOf(first) + first.Length + 1
-                res.Add(Trim(Mid$(tmptotal, FirstStart, tmptotal.Substring(FirstStart).IndexOf(last) + 1)))
-                tmptotal = Mid(tmptotal, FirstStart, tmptotal.Length)
-            End While
-
-            Return res
-        Else
-            Return Nothing
-        End If
-    End Function
-
     Public Sub writeTable(data As String)
-        My.Computer.FileSystem.WriteAllText(TableSaveLocation(False), data, False, System.Text.Encoding.GetEncoding(949))
+        Dim normalizedData As String = SerializeTableFragment(ParseTableFragment(data))
+        File.WriteAllText(TableSaveLocation(False), normalizedData, Utf8WithoutBom)
     End Sub
 
     Public Function readTable() As String
         If My.Computer.FileSystem.FileExists(TableSaveLocation(False)) Then
             'My.Settings.defalutTable = OptionSave()
-            Return My.Computer.FileSystem.ReadAllText(TableSaveLocation(False), System.Text.Encoding.GetEncoding(949))
+            Dim data As String = ReadTableFile(TableSaveLocation(False))
+            Return SerializeTableFragment(ParseTableFragment(data))
         Else
             Return ""
         End If
     End Function
 
     Public Function TableSaveLocation(filenameOnly As Boolean) As String
-        Dim exeFullpath As String = Application.ExecutablePath
-        Dim finalDir As String = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
+        ' 기본 저장소는 INIPath와 동일하다. Store 패키지에서는 AppData\\uTable,
+        ' 일반/포터블 실행에서는 실행 파일 폴더다.
+        Dim finalDir As String = INIPath
         Dim finalName As String = "default.utdata"
 
         '임의 경로 옵션 활성화시
@@ -120,7 +233,7 @@ Module DataModule
         If filenameOnly Then
             Return finalName
         Else
-            Return finalDir + "\" + finalName
+            Return Path.Combine(finalDir, finalName)
         End If
     End Function
 
@@ -146,7 +259,7 @@ Module DataModule
     End Function
 
     Public Function xmlEncode(value As String) As String
-        Return HttpUtility.HtmlEncode(value)
+        Return SecurityElement.Escape(value)
     End Function
 
     Public Function xmlDecode(value As String) As String

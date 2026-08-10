@@ -44,21 +44,18 @@
         'SetCourse.Close()
         ViewCourse.Close()
 
-        If appearPoint.X + ViewCourse.Width > Form1.Location.X + Form1.Width Then
-            appearPoint.X = Form1.Location.X + Form1.Width - ViewCourse.Width
+        If appearPoint.X + ViewCourse.Width > TableForm.Location.X + TableForm.Width Then
+            appearPoint.X = TableForm.Location.X + TableForm.Width - ViewCourse.Width
         End If
 
-        If appearPoint.Y + ViewCourse.Height > Form1.Location.Y + Form1.Height Then
-            appearPoint.Y = Form1.Location.Y + Form1.Height - ViewCourse.Height
+        If appearPoint.Y + ViewCourse.Height > TableForm.Location.Y + TableForm.Height Then
+            appearPoint.Y = TableForm.Location.Y + TableForm.Height - ViewCourse.Height
         End If
 
-        'SetCourse.modifyMode = True
-        For Each s As String In getDatas(readTable(), "course")
-            If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = Name Then
-                ViewCourse.olddata = s
-                Exit For
-            End If
-        Next
+        '셀 생성 시 보관한 원본 과목 데이터를 사용한다. 클릭마다 파일을 읽고 전체 XML을
+        '다시 파싱하던 경로를 제거한다.
+        ViewCourse.olddata = TryCast(Tag, String)
+        If String.IsNullOrEmpty(ViewCourse.olddata) Then Exit Sub
 
         ViewCourse.blacktext = blackText
 
@@ -134,9 +131,9 @@
 
         If Not FadeEffect = "0" Then
             If dayNum Mod 2 = 0 Then
-                BackColor = Form1.MonPanel.BackColor
+                BackColor = TableForm.MonPanel.BackColor
             Else
-                BackColor = Form1.TuePanel.BackColor
+                BackColor = TableForm.TuePanel.BackColor
             End If
 
             deltaColor_R = Int(Math.Abs((Int(goalColor.R) - Int(BackColor.R)) / 10))
@@ -187,9 +184,9 @@
 
             If doExpand Then
                 '확장을 하려는데 아래공간이 모자랄때
-                If Location.Y + fullheight > Form1.TimeTable.Height Then
+                If Location.Y + fullheight > TableForm.TimeTable.Height Then
                     Height = fullheight
-                    Location() = New Point(0, Form1.TimeTable.Height - fullheight)
+                    Location() = New Point(0, TableForm.TimeTable.Height - fullheight)
                 ElseIf defHeight < fullheight Then
                     Height = fullheight
                 End If
@@ -202,7 +199,7 @@
             End If
 
             Location() = New Point(0, defLoc)
-            'If Not Name = "DemoCellControl" Then Form1.DrawTablePattern(dayNum)
+            'If Not Name = "DemoCellControl" Then TableForm.DrawTablePattern(dayNum)
 
         End If
     End Sub
@@ -243,13 +240,13 @@
     Private Sub CheckStateUpdate()
         If checked Then
             If blackText Then
-                If Form1.currentDPI = 96 Then
+                If TableForm.currentDPI = 96 Then
                     ChkBox1.Image = My.Resources.check1_b_96
                 Else
                     ChkBox1.Image = My.Resources.check1_b
                 End If
             Else
-                If Form1.currentDPI = 96 Then
+                If TableForm.currentDPI = 96 Then
                     ChkBox1.Image = My.Resources.check1_w_96
                 Else
                     ChkBox1.Image = My.Resources.check1_w
@@ -258,13 +255,13 @@
             TitleLabel.Font = New Font(TitleLabel.Font.Name, TitleLabel.Font.Size, FontStyle.Strikeout)
         Else
             If blackText Then
-                If Form1.currentDPI = 96 Then
+                If TableForm.currentDPI = 96 Then
                     ChkBox1.Image = My.Resources.check0_b_96
                 Else
                     ChkBox1.Image = My.Resources.check0_b
                 End If
             Else
-                If Form1.currentDPI = 96 Then
+                If TableForm.currentDPI = 96 Then
                     ChkBox1.Image = My.Resources.check0_w_96
                 Else
                     ChkBox1.Image = My.Resources.check0_w
@@ -277,20 +274,14 @@
     Public Sub ModifyCheck(name As String, checked As Boolean)
         Dim data As String = readTable()
 
-        Dim olddata As String = ""
-
-        For Each s As String In getDatas(data, "course")
-            If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = name Then
-                olddata = s
-                Exit For
-            End If
-        Next
+        Dim olddata As String = TryCast(Tag, String)
+        If String.IsNullOrEmpty(olddata) Then Exit Sub
 
         Dim newdata As String = olddata
 
         If Not newdata = "" Then
             If newdata.Contains("<checked>") Then
-                Dim tmp As String = "<checked>" + getData(newdata, "checked") + "</checked>"
+                Dim tmp As String = "<checked>" + getTableData(newdata, "checked") + "</checked>"
                 newdata = newdata.Replace(tmp, "<checked>" + checked.ToString + "</checked>")
             Else 'check 데이터가 없을때
                 newdata += vbTab + "<checked>" + checked.ToString + "</checked>" + vbCrLf
@@ -298,6 +289,7 @@
         End If
 
         writeTable(data.Replace(olddata, newdata))
+        Tag = newdata
     End Sub
 
     Private Sub AniTimer_Tick(sender As Object, e As EventArgs) Handles AniTimer.Tick

@@ -74,7 +74,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub CloseBT_MouseEnter(sender As Object, e As EventArgs) Handles CloseBT.MouseEnter
-        CloseBT.BackColor = buttonActiveColor(colormode)
+        CloseBT.BackColor = ThemeColors.FromMode(colormode).ButtonHover
     End Sub
 
     Private Sub CloseBT_MouseLeave(sender As Object, e As EventArgs) Handles CloseBT.MouseLeave
@@ -82,7 +82,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub CloseBT_Click(sender As Object, e As EventArgs) Handles CloseBT.Click
-        Form1.updateCell()
+        TableForm.updateCell()
         Close()
     End Sub
 
@@ -96,7 +96,7 @@ Public Class OptionForm
             End If
         End If
 
-        If Form1.isStore Then
+        If IsStoreApp Then
             UpdateCtrlPanel.Visible = False
             UpdateCtrlMSStorePanel.Visible = True
             UpdateChkButtonMSStore.Visible = True
@@ -126,7 +126,7 @@ Public Class OptionForm
 
         VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString
 
-        If Form1.isStore Then
+        If IsStoreApp Then
             VersionLabel.Text += " (MS Store)  -  by PBJSoftware 2023"
         Else
             VersionLabel.Text += "   -  by PBJSoftware 2023"
@@ -252,30 +252,24 @@ Public Class OptionForm
     Public Sub UpdateColor()
 
         colormode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colormode)
 
-        BackColor = edgeColor(colormode)
-        TitlePanel.BackColor = tableColor_1(colormode)
-        TitleLabel.ForeColor = textColor(colormode)
-        MainPanel.BackColor = mainColor(colormode)
-        MainPanel.ForeColor = textColor(colormode)
-        SidePanel.BackColor = buttonActiveColor(colormode)
+        BackColor = theme.Edge
+        TitlePanel.BackColor = theme.TablePrimary
+        TitleLabel.ForeColor = theme.Text
+        MainPanel.BackColor = theme.Background
+        MainPanel.ForeColor = theme.Text
+        SidePanel.BackColor = theme.ButtonHover
 
-        RichTextBox1.BackColor = mainColor(colormode)
-        RichTextBox1.ForeColor = textColor(colormode)
-        WebPageLabel.LinkColor = lightTextColor(colormode)
-        FeedbackLabel.LinkColor = lightTextColor(colormode)
-        VersionLabel.ForeColor = lightTextColor(colormode)
+        RichTextBox1.BackColor = theme.Background
+        RichTextBox1.ForeColor = theme.Text
+        WebPageLabel.LinkColor = theme.TextMuted
+        FeedbackLabel.LinkColor = theme.TextMuted
+        VersionLabel.ForeColor = theme.TextMuted
 
-        ApplyButtonTheme(CustomFontBT)
-        ApplyButtonTheme(FolderBrowBT)
-        ApplyButtonTheme(CheckAndApplyDirSettingBT)
-        ApplyButtonTheme(SaveToFileBT)
-        ApplyButtonTheme(CopyToClipboardBT)
-        ApplyButtonTheme(ImportDataBT)
-        ApplyButtonTheme(UpdateChkButton)
-        ApplyButtonTheme(DoUpdateButton)
-        ApplyButtonTheme(NotificationSoundFileOpenBT)
-        ApplyButtonTheme(NotificationSoundPlayBT)
+        ApplyButtonTheme(theme, CustomFontBT, FolderBrowBT, CheckAndApplyDirSettingBT, SaveToFileBT,
+                         CopyToClipboardBT, ImportDataBT, UpdateChkButton, DoUpdateButton,
+                         NotificationSoundFileOpenBT, NotificationSoundPlayBT)
 
         Select Case colormode
             Case "Dark"
@@ -287,13 +281,15 @@ Public Class OptionForm
         End Select
     End Sub
 
-    Sub ApplyButtonTheme(button As Button)
-        With button
-            .BackColor = buttonColor(colormode)
-            .FlatAppearance.BorderColor = BorderColor(colormode)
-            .FlatAppearance.MouseOverBackColor = buttonActiveColor(colormode)
-            .FlatAppearance.MouseDownBackColor = BorderColor(colormode)
-        End With
+    Sub ApplyButtonTheme(theme As ThemeColors, ParamArray buttons() As Button)
+        For Each button As Button In buttons
+            With button
+                .BackColor = theme.Button
+                .FlatAppearance.BorderColor = theme.Border
+                .FlatAppearance.MouseOverBackColor = theme.ButtonHover
+                .FlatAppearance.MouseDownBackColor = theme.Border
+            End With
+        Next
     End Sub
 
     Public Sub SwitchMode(mode As Integer)
@@ -417,8 +413,12 @@ Public Class OptionForm
     End Sub
 
     Private Sub MemoShowChk_CheckedChanged(sender As Object, e As EventArgs) Handles MemoShowChk.CheckedChanged
+        '설정창을 열면서 저장된 체크 상태를 채울 때는 메모를 다시 불러오지 않는다.
+        'MemoContentUpdate가 RichTextBox의 배율을 기본값으로 되돌릴 수 있다.
+        If Not loaded Then Return
+
         ApplySetting("MemoShow", MemoShowChk.Checked)
-        Form1.MemoOptionUpdate()
+        TableForm.MemoOptionUpdate()
     End Sub
 
     Private Sub AutoTextColorChk_CheckedChanged(sender As Object, e As EventArgs) Handles AutoTextColorChk.CheckedChanged
@@ -444,8 +444,8 @@ Public Class OptionForm
 
         '그래서 여기에다가 따로 적용보여주기 새로고침 할것
         If loaded Then
-            Form1.tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
-            Form1.TimeTable.Refresh()
+            TableForm.tablePatternSetting = GetINI("SETTING", "TablePattern", "", ININamePath)
+            TableForm.TimeTable.Refresh()
         End If
 
     End Sub
@@ -468,8 +468,9 @@ Public Class OptionForm
                 End If
             End If
 
-            DayLabel.BackColor = activeDayColor(colormode)
-            DayLabel.ForeColor = activeDayTextColor(colormode)
+            Dim theme As ThemeColors = ThemeColors.FromMode(colormode)
+            DayLabel.BackColor = theme.Accent
+            DayLabel.ForeColor = theme.AccentText
 
             DayLabel.Text = Now.Date.ToString("dd") + " "
 
@@ -543,7 +544,7 @@ Public Class OptionForm
                                             PrevTableArea.BackColor.G * colorMul,
                                             PrevTableArea.BackColor.B * colorMul)
 
-            Dim thickness As Integer = 3 * (Form1.currentDPI / 96)
+            Dim thickness As Integer = 3 * (TableForm.currentDPI / 96)
             Dim p As New Pen(c, thickness)
             Dim g As Graphics = PrevTableArea.CreateGraphics
             p.DashStyle = Drawing2D.DashStyle.Dot
@@ -586,8 +587,8 @@ Public Class OptionForm
             AlwaysHideToTrayChk.Checked = Not AlwaysHideToTrayChk.Checked
             ApplySetting("AlwaysHideToTray", AlwaysHideToTrayChk.Checked)
 
-            Form1.ShowInTaskbar = Not AlwaysHideToTrayChk.Checked
-            Form1.ReopenForm()
+            TableForm.ShowInTaskbar = Not AlwaysHideToTrayChk.Checked
+            TableForm.ReopenForm()
             Me.Close()
         End If
     End Sub
@@ -598,14 +599,14 @@ Public Class OptionForm
 
     Private Sub TopMostChk_CheckedChanged(sender As Object, e As EventArgs) Handles TopMostChk.CheckedChanged
         ApplySetting("TopMost", TopMostChk.Checked)
-        Form1.TopMost = TopMostChk.Checked
+        TableForm.TopMost = TopMostChk.Checked
     End Sub
 
     '바로 적용 보여주기 위해 시간표 새로고침
     Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged,
         AlwaysExpandChk.CheckedChanged, ShowDayChk.CheckedChanged, ShowMemoChk.CheckedChanged, ShowProfChk.CheckedChanged,
         BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged, AutoTextColorChk.CheckedChanged
-        If loaded Then Form1.updateCell()
+        If loaded Then TableForm.updateCell()
     End Sub
 
     Private Sub D_ThemeRbt_CheckedChanged(sender As Object, e As EventArgs) Handles D_ThemeRbt.CheckedChanged
@@ -623,7 +624,7 @@ Public Class OptionForm
         SettingMenu_Info.first = True
 
         If Application.OpenForms().OfType(Of SetCourse).Any Then SetCourse.UpdateColor()
-        Form1.UpdateColor()
+        TableForm.UpdateColor()
         UpdateColor()
 
         SwitchMode(1)
@@ -696,12 +697,12 @@ Public Class OptionForm
 
         Try
             Dim source As String = webget("https://github.com/pdjdev/utable/releases.atom")
-            Dim entry As String = getData(source, "entry")
-            downUrl = "https://github.com/pdjdev/uTable/releases/download/" + getData(entry, "title") + "/uTable.exe"
-            updHtml = midReturn("<content type=""html"">", "</content>", entry)
+            Dim entry As ReleaseFeedEntry = GetLatestReleaseEntry(source)
+            downUrl = "https://github.com/pdjdev/uTable/releases/download/" + entry.Title + "/uTable.exe"
+            updHtml = entry.ContentHtml
 
             'version값 = title에서 문자와 점을 제외한 모든 텍스트 지우기
-            Dim version = From c In getData(entry, "title")
+            Dim version = From c In entry.Title
                           Where Char.IsDigit(c) OrElse c = "."
                           Select num = c.ToString
             newVersion = Join(version.ToArray, "")
@@ -776,7 +777,7 @@ Public Class OptionForm
             End If
 
             WebBrowser1.Navigate("about:blank") '브라우저 초기화
-            WebBrowser1.Document.Write("<font face=""맑은 고딕"" size=""2"">" + HttpUtility.HtmlDecode(updHtml))
+            WebBrowser1.Document.Write("<font face=""Noto Sans KR"" size=""2"">" + HttpUtility.HtmlDecode(updHtml))
             WebBrowser1.Refresh()
 
             DoUpdateButton.Enabled = updateAvailabe
@@ -797,7 +798,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub DoUpdateButton_Click(sender As Object, e As EventArgs) Handles DoUpdateButton.Click
-        If Not Form1.isStore Then
+        If Not IsStoreApp Then
             DoUpdateButton.Enabled = False
 
             If downComplete Then
@@ -906,7 +907,7 @@ Public Class OptionForm
                 MsgBox("시간표를 만들어 주세요.", vbInformation)
             Else
                 Dim title As String = "이름 없는 시간표"
-                If tableData.Contains("<tablename>") Then title = getData(tableData, "tablename")
+                If tableData.Contains("<tablename>") Then title = getTableData(tableData, "tablename")
 
                 SaveFileDialog1.FileName = title
                 SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
@@ -981,7 +982,7 @@ Public Class OptionForm
                 If MsgBox("클립보드에서 시간표 서식을 찾았습니다. 불러오시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
                     Try
                         writeTable(clipboardTxt)
-                        Form1.updateCell()
+                        TableForm.updateCell()
                         Exit Sub
                     Catch ex As Exception
                         MsgBox("시간표 적용 도중 오류가 발생했습니다." + vbCr + ex.Message, vbCritical)
@@ -1024,13 +1025,13 @@ Public Class OptionForm
     Private Sub Table_Setting_FileOk()
         Try
             If TableSaveRbt.Checked Then
-                Dim data As String = My.Computer.FileSystem.ReadAllText(OpenFileDialog1.FileName, System.Text.Encoding.GetEncoding(949))
+                Dim data As String = ReadTableFile(OpenFileDialog1.FileName)
                 If data.Contains("<tablename>") Or data.Contains("<course>") Then
                     writeTable(data)
                 Else
                     MsgBox("올바른 시간표 파일이 아닙니다.", vbCritical)
                 End If
-                Form1.updateCell()
+                TableForm.updateCell()
 
             ElseIf SettingSaveRbt.Checked Then
                 FileIO.FileSystem.CopyFile(OpenFileDialog1.FileName, ININamePath, True)
@@ -1043,7 +1044,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub FolderBrowBT_Click_1(sender As Object, e As EventArgs) Handles FolderBrowBT.Click
-        FolderBrowserDialog1.SelectedPath = exePath
+        FolderBrowserDialog1.SelectedPath = INIPath
         If FolderBrowserDialog1.ShowDialog() = DialogResult.OK Then
             SaveDirectoryTB.Text = FolderBrowserDialog1.SelectedPath
         End If
@@ -1065,7 +1066,7 @@ Public Class OptionForm
 
             If tableData.Contains("<tablename>") Or tableData.Contains("<course>") Then
                 If MsgBox("현재 시간표를 설정한 위치로 복사하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-                    Dim tmpDir As String = exePath
+                    Dim tmpDir As String = INIPath
                     Dim tmpName As String = "default.utdata"
 
                     If Not SaveDirectoryTB.Text = "" Then tmpDir = SaveDirectoryTB.Text

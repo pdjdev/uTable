@@ -32,7 +32,7 @@ Partial Class DLLDownloader
         '
         Me.MainLabel.BackColor = System.Drawing.Color.White
         Me.MainLabel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainLabel.Font = New System.Drawing.Font("맑은 고딕", 10.0!)
+        Me.MainLabel.Font = New System.Drawing.Font("Noto Sans KR", 10.0!)
         Me.MainLabel.Location = New System.Drawing.Point(1, 28)
         Me.MainLabel.Name = "MainLabel"
         Me.MainLabel.Size = New System.Drawing.Size(287, 84)
@@ -53,7 +53,7 @@ Partial Class DLLDownloader
         'TitleLabel
         '
         Me.TitleLabel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.TitleLabel.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold)
         Me.TitleLabel.Location = New System.Drawing.Point(0, 0)
         Me.TitleLabel.Name = "TitleLabel"
         Me.TitleLabel.Padding = New System.Windows.Forms.Padding(8, 0, 0, 0)
@@ -71,7 +71,7 @@ Partial Class DLLDownloader
         Me.ControlBox = False
         Me.Controls.Add(Me.MainLabel)
         Me.Controls.Add(Me.TitlePanel)
-        Me.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)

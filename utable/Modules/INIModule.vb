@@ -4,8 +4,21 @@ Imports System.Text
 
 Module INIModule
     Public ININame As String = "settings.ini"
-    Public INIPath As String = Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf("\"))
-    Public ININamePath As String = Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf("\")) + "\settings.ini"
+    ' Store 패키지는 설치 폴더(WindowsApps)에 쓸 수 없으므로 사용자 데이터 폴더를 사용한다.
+    ' 일반/포터블 실행은 기존 호환성을 위해 실행 파일과 같은 폴더를 기본 저장소로 유지한다.
+    Public ReadOnly INIPath As String = GetDefaultStorageDirectory()
+    Public ReadOnly ININamePath As String = Path.Combine(INIPath, ININame)
+
+    Public Function GetDefaultStorageDirectory() As String
+        If IsStoreApp Then
+            Dim storageDirectory As String = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "uTable")
+            Directory.CreateDirectory(storageDirectory)
+            Return storageDirectory
+        End If
+
+        Return Path.GetDirectoryName(Application.ExecutablePath)
+    End Function
 
 
 #Region "INI 관련 함수들"

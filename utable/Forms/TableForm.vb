@@ -7,18 +7,15 @@ Imports System.Runtime.InteropServices
 ' - 자동저장기능 구현 (5초간 타이핑 대기 후 동기저장)
 ' - rtf가 이상하게 굴면 그냥 rtb대신 tb 넣고 txt파일로 저장
 
-Public Class Form1
+Public Class TableForm
 
 #Region "변수"
-
-    ' ================== 스토어 에디션 여부!!! ==================
-    Public Const isStore = False
-    ' ===========================================================
 
     Dim starttime As Integer = 0
     Dim endtime As Integer = 0
     Dim updated As Boolean = False
     Dim courseData As New List(Of String)
+    Dim courseRecords As New List(Of TableCourse)
 
     '슬라이딩 애니메이션용 변수
     Dim poscount As Integer = 0
@@ -217,7 +214,7 @@ Public Class Form1
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
     End Sub
 
-    Private Sub Form1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
+    Private Sub TableForm_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left And Me.WindowState <> FormWindowState.Maximized Then
             If Not GetINI("SETTING", "WindowLocked", "", ININamePath) = "1" Then
                 'TimeTable.SuspendLayout()
@@ -227,7 +224,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub MainForm_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
+    Private Sub TableForm_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
         'Calculate which direction to resize based on mouse position
 
         If e.Location.X < BorderWidth And e.Location.Y < BorderWidth Then
@@ -260,7 +257,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MainForm_LocationChanged(sender As Object, e As EventArgs) Handles MyBase.LocationChanged, MyBase.SizeChanged
+    Private Sub TableForm_LocationChanged(sender As Object, e As EventArgs) Handles MyBase.LocationChanged, MyBase.SizeChanged
 
         If formshown And Not hiding Then
             SetINI("SETTING", "WindowPosition", Location.X.ToString + "," + Location.Y.ToString, ININamePath)
@@ -277,7 +274,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Form1_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+    Private Sub TableForm_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         Cursor = Cursors.Default
     End Sub
 
@@ -299,97 +296,26 @@ Public Class Form1
     Public Sub UpdateColor()
 
         colorMode = GetINI("SETTING", "ColorMode", "", ININamePath)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
 
-        BackColor = edgeColor(colorMode)
+        BackColor = theme.Edge
+        TopPanel.BackColor = theme.Background
+        MainPanel.BackColor = theme.Background
 
-        TopPanel.BackColor = mainColor(colorMode)
-        MainPanel.BackColor = mainColor(colorMode)
+        ApplyTableTheme(theme)
+        ApplyButtonTheme(theme, RefreshBT, AddCourseBT, MenuBT)
+        TableTitleLabel.ForeColor = theme.Text
 
-        ' ====== 시간표 색상 적용 =====
+        MemoPanel.BackColor = theme.Background
+        MemoPanel.ForeColor = theme.Text
+        DragSizePanel.BackColor = theme.DragHandle
+        DragSizePanel.ForeColor = theme.Text
+        MemoRTB.BackColor = theme.TableAlternate
+        MemoRTB.ForeColor = theme.Text
+        ApplyButtonTheme(theme, MemoZoomBT1, MemoZoomBT2, MemoZoomNumBT, MemoMenuBT, MemoCloseBT)
+        MemoTitleLabel.ForeColor = theme.Accent
 
-        MonLabel.BackColor = tableColor_1(colorMode)
-        TueLabel.BackColor = tableColor_2(colorMode)
-        WedLabel.BackColor = tableColor_1(colorMode)
-        ThuLabel.BackColor = tableColor_2(colorMode)
-        FriLabel.BackColor = tableColor_1(colorMode)
-        SatLabel.BackColor = tableColor_2(colorMode)
-        SunLabel.BackColor = tableColor_1(colorMode)
-
-        MonLabel.ForeColor = lightTextColor(colorMode)
-        TueLabel.ForeColor = lightTextColor(colorMode)
-        WedLabel.ForeColor = lightTextColor(colorMode)
-        ThuLabel.ForeColor = lightTextColor(colorMode)
-        FriLabel.ForeColor = lightTextColor(colorMode)
-        SatLabel.ForeColor = lightTextColor(colorMode)
-        SunLabel.ForeColor = lightTextColor(colorMode)
-
-        MonPanel.BackColor = tableColor_1(colorMode)
-        TuePanel.BackColor = tableColor_2(colorMode)
-        WedPanel.BackColor = tableColor_1(colorMode)
-        ThuPanel.BackColor = tableColor_2(colorMode)
-        FriPanel.BackColor = tableColor_1(colorMode)
-        SatPanel.BackColor = tableColor_2(colorMode)
-        SunPanel.BackColor = tableColor_1(colorMode)
-
-        ' ====== 시간표 색상 끝 =====
-
-
-        ' ====== 상단컨트롤 색상 적용 =====
-
-        RefreshBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        AddCourseBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MenuBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-
-        RefreshBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        AddCourseBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MenuBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-
-        RefreshBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        AddCourseBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MenuBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-
-        RefreshBT.ForeColor = textColor(colorMode)
-        AddCourseBT.ForeColor = textColor(colorMode)
-        MenuBT.ForeColor = textColor(colorMode)
-
-        TableTitleLabel.ForeColor = textColor(colorMode)
-
-        ' ====== 상단컨트롤 색상 끝 =====
-
-
-        ' ====== 메모패널 색상 적용 =====
-
-        MemoPanel.BackColor = mainColor(colorMode)
-        MemoPanel.ForeColor = textColor(colorMode)
-        DragSizePanel.BackColor = dragBarColor(colorMode)
-        DragSizePanel.ForeColor = textColor(colorMode)
-        MemoRTB.BackColor = tableColor_2(colorMode)
-        MemoRTB.ForeColor = textColor(colorMode)
-
-        MemoZoomBT1.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MemoZoomBT2.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MemoZoomNumBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MemoMenuBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-        MemoCloseBT.FlatAppearance.BorderColor = BorderColor(colorMode)
-
-        MemoZoomBT1.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MemoZoomBT2.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MemoZoomNumBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MemoMenuBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-        MemoCloseBT.FlatAppearance.MouseOverBackColor = buttonActiveColor(colorMode)
-
-        MemoZoomBT1.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MemoZoomBT2.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MemoZoomNumBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MemoMenuBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-        MemoCloseBT.FlatAppearance.MouseDownBackColor = BorderColor(colorMode)
-
-        MemoZoomBT1.ForeColor = textColor(colorMode)
-        MemoZoomBT2.ForeColor = textColor(colorMode)
-        MemoZoomNumBT.ForeColor = textColor(colorMode)
-        MemoMenuBT.ForeColor = textColor(colorMode)
-        MemoCloseBT.ForeColor = textColor(colorMode)
-        MemoTitleLabel.ForeColor = activeDayColor(colorMode)
+        ApplyMenuThemes(theme)
 
         ' ====== 메모패널 색상 끝 =====
 
@@ -411,71 +337,96 @@ Public Class Form1
 
         Select Case Now.DayOfWeek
             Case DayOfWeek.Monday
-                MonLabel.BackColor = activeDayColor(colorMode)
-                MonLabel.ForeColor = activeDayTextColor(colorMode)
+                MonLabel.BackColor = theme.Accent
+                MonLabel.ForeColor = theme.AccentText
             Case DayOfWeek.Tuesday
-                TueLabel.BackColor = activeDayColor(colorMode)
-                TueLabel.ForeColor = activeDayTextColor(colorMode)
+                TueLabel.BackColor = theme.Accent
+                TueLabel.ForeColor = theme.AccentText
             Case DayOfWeek.Wednesday
-                WedLabel.BackColor = activeDayColor(colorMode)
-                WedLabel.ForeColor = activeDayTextColor(colorMode)
+                WedLabel.BackColor = theme.Accent
+                WedLabel.ForeColor = theme.AccentText
             Case DayOfWeek.Thursday
-                ThuLabel.BackColor = activeDayColor(colorMode)
-                ThuLabel.ForeColor = activeDayTextColor(colorMode)
+                ThuLabel.BackColor = theme.Accent
+                ThuLabel.ForeColor = theme.AccentText
             Case DayOfWeek.Friday
-                FriLabel.BackColor = activeDayColor(colorMode)
-                FriLabel.ForeColor = activeDayTextColor(colorMode)
+                FriLabel.BackColor = theme.Accent
+                FriLabel.ForeColor = theme.AccentText
         End Select
 
         TimeTable.Refresh()
     End Sub
 
+    Private Sub ApplyTableTheme(theme As ThemeColors)
+        Dim labels() As Label = {MonLabel, TueLabel, WedLabel, ThuLabel, FriLabel, SatLabel, SunLabel}
+        Dim panels() As Panel = {MonPanel, TuePanel, WedPanel, ThuPanel, FriPanel, SatPanel, SunPanel}
+
+        For index As Integer = 0 To labels.Length - 1
+            Dim tableColor As Color = If(index Mod 2 = 0, theme.TablePrimary, theme.TableAlternate)
+            labels(index).BackColor = tableColor
+            labels(index).ForeColor = theme.TextMuted
+            panels(index).BackColor = tableColor
+        Next
+    End Sub
+
+    Private Sub ApplyButtonTheme(theme As ThemeColors, ParamArray buttons() As Button)
+        For Each button As Button In buttons
+            button.FlatAppearance.BorderColor = theme.Border
+            button.FlatAppearance.MouseOverBackColor = theme.ButtonHover
+            button.FlatAppearance.MouseDownBackColor = theme.Border
+            button.ForeColor = theme.Text
+        Next
+    End Sub
+
+    Private Sub ApplyMenuThemes(theme As ThemeColors)
+        MenuThemeRenderer.Apply(BT1_menu, theme)
+        MenuThemeRenderer.Apply(Tray_menu, theme)
+        MenuThemeRenderer.Apply(Memo_menu, theme)
+        MenuThemeRenderer.Apply(MemoRTBMenu, theme)
+    End Sub
+
     Sub updateDateDraw()
 
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+
         '요일 색상 초기화
-        MonLabel.BackColor = tableColor_1(colorMode)
-        TueLabel.BackColor = tableColor_2(colorMode)
-        WedLabel.BackColor = tableColor_1(colorMode)
-        ThuLabel.BackColor = tableColor_2(colorMode)
-        FriLabel.BackColor = tableColor_1(colorMode)
-        SatLabel.BackColor = tableColor_2(colorMode)
-        SunLabel.BackColor = tableColor_1(colorMode)
+        ApplyTableTheme(theme)
 
-        MonLabel.ForeColor = lightTextColor(colorMode)
-        TueLabel.ForeColor = lightTextColor(colorMode)
-        WedLabel.ForeColor = lightTextColor(colorMode)
-        ThuLabel.ForeColor = lightTextColor(colorMode)
-        FriLabel.ForeColor = lightTextColor(colorMode)
-        SatLabel.ForeColor = lightTextColor(colorMode)
-        SunLabel.ForeColor = lightTextColor(colorMode)
 
-        '
+        Dim DoW As String = Nothing
+
         Select Case Now.DayOfWeek
             Case DayOfWeek.Monday
-                MonLabel.BackColor = activeDayColor(colorMode)
-                MonLabel.ForeColor = activeDayTextColor(colorMode)
+                MonLabel.BackColor = theme.Accent
+                MonLabel.ForeColor = theme.AccentText
+                DoW = "(월)"
             Case DayOfWeek.Tuesday
-                TueLabel.BackColor = activeDayColor(colorMode)
-                TueLabel.ForeColor = activeDayTextColor(colorMode)
+                TueLabel.BackColor = theme.Accent
+                TueLabel.ForeColor = theme.AccentText
+                DoW = "(화)"
             Case DayOfWeek.Wednesday
-                WedLabel.BackColor = activeDayColor(colorMode)
-                WedLabel.ForeColor = activeDayTextColor(colorMode)
+                WedLabel.BackColor = theme.Accent
+                WedLabel.ForeColor = theme.AccentText
+                DoW = "(수)"
             Case DayOfWeek.Thursday
-                ThuLabel.BackColor = activeDayColor(colorMode)
-                ThuLabel.ForeColor = activeDayTextColor(colorMode)
+                ThuLabel.BackColor = theme.Accent
+                ThuLabel.ForeColor = theme.AccentText
+                DoW = "(목)"
             Case DayOfWeek.Friday
-                FriLabel.BackColor = activeDayColor(colorMode)
-                FriLabel.ForeColor = activeDayTextColor(colorMode)
+                FriLabel.BackColor = theme.Accent
+                FriLabel.ForeColor = theme.AccentText
+                DoW = "(금)"
             Case DayOfWeek.Saturday
                 If showSaturday Then
-                    SatLabel.BackColor = activeDayColor(colorMode)
-                    SatLabel.ForeColor = activeDayTextColor(colorMode)
+                    SatLabel.BackColor = theme.Accent
+                    SatLabel.ForeColor = theme.AccentText
                 End If
+                DoW = "(토)"
             Case DayOfWeek.Sunday
                 If showSunday Then
-                    SunLabel.BackColor = activeDayColor(colorMode)
-                    SunLabel.ForeColor = activeDayTextColor(colorMode)
+                    SunLabel.BackColor = theme.Accent
+                    SunLabel.ForeColor = theme.AccentText
                 End If
+                DoW = "(일)"
         End Select
 
         Dim fdw As DateTime = DateTime.Today.AddDays(-Weekday(DateTime.Today, FirstDayOfWeek.System) + 2)
@@ -487,14 +438,15 @@ Public Class Form1
         SatLabel.Text = fdw.AddDays(5).ToString("dd") + " 토요일"
         SunLabel.Text = fdw.AddDays(6).ToString("dd") + " 일요일"
 
-        MemoTitleLabel.Text = DateTime.Now.Year.ToString & "-" & DateTime.Now.Month.ToString & "-" & DateTime.Now.Day.ToString
+        MemoTitleLabel.Text = DateTime.Now.Month.ToString & "-" & DateTime.Now.Day.ToString & " " & DoW
+
     End Sub
 
 #End Region
 
 #Region "앱 주요 이벤트 (Load, Shown)"
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub TableForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         For Each scrn In Screen.AllScreens
             If scrn.DeviceName = GetINI("SETTING", "WindowDisplay", "", ININamePath) Then
@@ -593,7 +545,7 @@ Public Class Form1
     End Sub
 
 
-    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+    Private Sub TableForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         formshown = True
         Refresh()
 
@@ -693,7 +645,7 @@ Public Class Form1
     End Sub
 
     Private Sub MinBT_MouseEnter(sender As Object, e As EventArgs) Handles MinBT.MouseEnter
-        MinBT.BackColor = buttonActiveColor(colorMode)
+        MinBT.BackColor = ThemeColors.FromMode(colorMode).ButtonHover
     End Sub
 
     Private Sub MinBT_MouseLeave(sender As Object, e As EventArgs) Handles MinBT.MouseLeave
@@ -715,7 +667,7 @@ Public Class Form1
     End Sub
 
     Private Sub TitleEditBT_MouseEnter(sender As Object, e As EventArgs) Handles TitleEditBT.MouseEnter
-        TitleEditBT.BackColor = buttonActiveColor(colorMode)
+        TitleEditBT.BackColor = ThemeColors.FromMode(colorMode).ButtonHover
     End Sub
 
     Private Sub TitleEditBT_MouseLeave(sender As Object, e As EventArgs) Handles TitleEditBT.MouseLeave
@@ -775,9 +727,9 @@ Public Class Form1
         Dim ver = My.Application.Info.Version.ToString.Split(".")
         BT1MenuTitle.Text = "uTable " + ver(0) + "." + ver(1) + "v"
 
-        BT1_menu.BackColor = mainColor(colorMode)
-        BT1MenuTitle.ForeColor = lightTextColor(colorMode)
-        BT1_menu.ForeColor = textColor(colorMode)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+        ApplyMenuThemes(theme)
+        BT1MenuTitle.ForeColor = theme.TextMuted
 
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
         ClearCheckBoxItem.Visible = Not (GetINI("SETTING", "ShowChkBox", "", ININamePath) = "0")
@@ -825,8 +777,8 @@ Public Class Form1
     End Sub
 
     Private Sub Tray_menu_Opening(sender As Object, e As CancelEventArgs) Handles Tray_menu.Opening
-        Tray_menu.BackColor = mainColor(colorMode)
-        Tray_menu.ForeColor = textColor(colorMode)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+        ApplyMenuThemes(theme)
     End Sub
 
     Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
@@ -864,7 +816,7 @@ Public Class Form1
         ' DLL 존재 여부 체크 (스토어에디션은 X)
         Dim DLLOK = False
 
-        If Not isStore Then
+        If Not IsStoreApp Then
 
 
             Dim exeFullpath As String = Application.ExecutablePath
@@ -904,9 +856,9 @@ Public Class Form1
 
     Private Sub AllColorSetItem_Click(sender As Object, e As EventArgs) Handles AllColorSetItem.Click
         If ColorDialog1.ShowDialog() = DialogResult.OK Then
-            Dim tmp As String = ""
+            Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
             For Each s As String In courseData
-                s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ColorDialog1.Color))
+                s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ColorDialog1.Color))
                 tmp += "<course>" + s + "</course>" + vbCrLf
             Next
             writeTable(tmp)
@@ -915,10 +867,10 @@ Public Class Form1
     End Sub
 
     Private Sub AllDarkerItem_Click(sender As Object, e As EventArgs) Handles AllDarkerItem.Click
-        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
+        Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
         For Each s As String In courseData
-            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
-            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
+            Dim oldColor As Color = ColorTranslator.FromHtml(getTableData(s, "color"))
+            s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
             tmp += "<course>" + s + "</course>" + vbCrLf
         Next
         writeTable(tmp)
@@ -926,10 +878,10 @@ Public Class Form1
     End Sub
 
     Private Sub AllBrighterItem_Click(sender As Object, e As EventArgs) Handles AllBrighterItem.Click
-        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
+        Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
         For Each s As String In courseData
-            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
-            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
+            Dim oldColor As Color = ColorTranslator.FromHtml(getTableData(s, "color"))
+            s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
             tmp += "<course>" + s + "</course>" + vbCrLf
         Next
         writeTable(tmp)
@@ -957,6 +909,7 @@ Public Class Form1
 #Region "시간표 셀 관리"
 
     Public Sub updateCell()
+        SuspendCourseLayouts()
         Try
 
             'CellControl 설정 변수 업데이트
@@ -976,13 +929,13 @@ Public Class Form1
             showSunday = False
 
             '구성요소 초기화
-            MonPanel.Controls.Clear()
-            TuePanel.Controls.Clear()
-            WedPanel.Controls.Clear()
-            ThuPanel.Controls.Clear()
-            FriPanel.Controls.Clear()
-            SatPanel.Controls.Clear()
-            SunPanel.Controls.Clear()
+            ClearCourseCells(MonPanel)
+            ClearCourseCells(TuePanel)
+            ClearCourseCells(WedPanel)
+            ClearCourseCells(ThuPanel)
+            ClearCourseCells(FriPanel)
+            ClearCourseCells(SatPanel)
+            ClearCourseCells(SunPanel)
             updated = False
 
             Dim data = readTable()
@@ -990,21 +943,23 @@ Public Class Form1
             Dim max As Integer = 0
 
             If data.Contains("<tablename>") Then
-                TableTitleLabel.Text = xmlDecode(getData(data, "tablename"))
+                TableTitleLabel.Text = xmlDecode(getTableData(data, "tablename"))
             Else
                 TableTitleLabel.Text = "이름 없는 시간표"
             End If
 
             Text = TableTitleLabel.Text
             courseData.Clear()
+            courseRecords.Clear()
 
             If data.Contains("<course>") Then
-                courseData = getDatas(data, "course")
+                courseRecords = getTableCourses(data)
+                courseData = courseRecords.Select(Function(course) course.RawData).ToList()
 
                 '최대, 최소계산
-                For Each s As String In courseData
-                    If Convert.ToInt16(getData(s, "start")) < min Then min = Convert.ToInt16(getData(s, "start"))
-                    If Convert.ToInt16(getData(s, "end")) > max Then max = Convert.ToInt16(getData(s, "end"))
+                For Each course As TableCourse In courseRecords
+                    If Convert.ToInt16(course.Start) < min Then min = Convert.ToInt16(course.Start)
+                    If Convert.ToInt16(course.End) > max Then max = Convert.ToInt16(course.End)
                 Next
 
                 starttime = min
@@ -1017,20 +972,14 @@ Public Class Form1
 
                 '셀계산
                 '여기서 xmldecode 하니까 꼭 눈여겨두자
-                For Each s As String In courseData
-                    addCell(Convert.ToInt16(getData(s, "start")),
-                            Convert.ToInt16(getData(s, "end")),
-                            getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"),
-                            xmlDecode(getData(s, "name")),
-                            xmlDecode(getData(s, "prof")),
-                            xmlDecode(getData(s, "memo")),
-                            ColorTranslator.FromHtml(getData(s, "color")),
-                            Convert.ToInt16(getData(s, "day")),
-                            getData(s, "checked"))
+                For Each course As TableCourse In courseRecords
+                    addCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity(),
+                            xmlDecode(course.Name), xmlDecode(course.Professor), xmlDecode(course.Memo),
+                            ColorTranslator.FromHtml(course.Color), Convert.ToInt16(course.Day), course.Checked, course.RawData)
 
-                    If Convert.ToInt16(getData(s, "day")) = 5 Then '토요일 추가시
+                    If Convert.ToInt16(course.Day) = 5 Then '토요일 추가시
                         showSaturday = True
-                    ElseIf Convert.ToInt16(getData(s, "day")) = 6 Then '일요일 추가시
+                    ElseIf Convert.ToInt16(course.Day) = 6 Then '일요일 추가시
                         showSunday = True
                     End If
                 Next
@@ -1082,9 +1031,8 @@ Public Class Form1
                 TimeTable.ColumnStyles(6).Width = 0
             End If
 
-            For Each s As String In courseData
-                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
-                           getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
+            For Each course As TableCourse In courseRecords
+                resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity())
             Next
 
         Catch ex As Exception
@@ -1093,13 +1041,36 @@ Public Class Form1
                    + "시간표의 값이 올바르지 않거나, 값이 손상되었을 수 있습니다." + vbCr _
                    + "문제가 지속되면 시간표(" + TableSaveLocation(True) + ")를 지우고 다시 만들어 주세요.", vbCritical)
 
+        Finally
+            ResumeCourseLayouts()
         End Try
 
         prevTime = Nothing
         TimeTable.Visible = True
     End Sub
 
-    Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String)
+    Private Sub ClearCourseCells(panel As Panel)
+        For Each control As Control In panel.Controls.Cast(Of Control).ToArray()
+            panel.Controls.Remove(control)
+            control.Dispose()
+        Next
+    End Sub
+
+    Private Sub SuspendCourseLayouts()
+        TimeTable.SuspendLayout()
+        For Each panel As Panel In {MonPanel, TuePanel, WedPanel, ThuPanel, FriPanel, SatPanel, SunPanel}
+            panel.SuspendLayout()
+        Next
+    End Sub
+
+    Private Sub ResumeCourseLayouts()
+        For Each panel As Panel In {MonPanel, TuePanel, WedPanel, ThuPanel, FriPanel, SatPanel, SunPanel}
+            panel.ResumeLayout(False)
+        Next
+        TimeTable.ResumeLayout(True)
+    End Sub
+
+    Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String, rawData As String)
 
         Dim timelength As Integer = endtime - starttime
         Dim part As Double = (endt - startt) / timelength
@@ -1141,7 +1112,7 @@ Public Class Form1
 
         cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
         'MsgBox(((startt - starttime) / timelength) * Panel1.Height)
-        cell.Width = MonPanel.Width
+        cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
         cell.Height = part * MonPanel.Height
         cell.defHeight = part * MonPanel.Height
         cell.dayNum = day
@@ -1171,6 +1142,7 @@ Public Class Form1
         cell.ProfLabel.Text = prof
         cell.MemoLabel.Text = memo
         cell.Name = name
+        cell.Tag = rawData
 
         cell.checked = (checked = "True")
     End Sub
@@ -1183,7 +1155,7 @@ Public Class Form1
         cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
         cell.defLoc = ((startt - starttime) / timelength) * MonPanel.Height
         'MsgBox(((startt - starttime) / timelength) * Panel1.Height)
-        cell.Width = MonPanel.Width
+        cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
         cell.Height = part * MonPanel.Height
         cell.defHeight = part * MonPanel.Height
 
@@ -1207,7 +1179,7 @@ Public Class Form1
             Try
                 Dim data As String = readTable()
                 If data.Contains("<tablename>") Then
-                    Dim oldtitle As String = getData(data, "tablename")
+                    Dim oldtitle As String = getTableData(data, "tablename")
                     data = data.Replace("<tablename>" + oldtitle + "</tablename>", "<tablename>" + xmlEncode(newtitle) + "</tablename>")
                     writeTable(data)
                 Else
@@ -1235,14 +1207,22 @@ Public Class Form1
 
         If updated Then
 
-            For Each s As String In courseData
-                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
-                           getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
+            For Each course As TableCourse In courseRecords
+                resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity())
             Next
 
             TimeTable.Visible = True
 
         End If
+    End Sub
+
+    Private Sub TimeTable_Layout(sender As Object, e As System.Windows.Forms.LayoutEventArgs) Handles TimeTable.Layout
+        If Not updated Then Exit Sub
+
+        For Each course As TableCourse In courseRecords
+            Dim cell As CellControl = TimeTable.Controls.Find(course.Identity(), True).First
+            cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
+        Next
     End Sub
 
     Private Sub TablePanel_Paint(sender As Object, e As PaintEventArgs) Handles MonPanel.Paint, TuePanel.Paint, WedPanel.Paint,
@@ -1384,7 +1364,7 @@ Public Class Form1
 
             If courseData.Count > 0 Then
                 For Each s As String In courseData
-                    Dim tmp As String = getData(s, "day")
+                    Dim tmp As String = getTableData(s, "day")
                     Dim day As String = ""
 
                     Select Case Today.DayOfWeek
@@ -1416,25 +1396,25 @@ Public Class Form1
 
                 If dayData.Count > 0 Then
                     For Each s In dayData
-                        Dim targetTime As Integer = Convert.ToInt16(getData(s, "start"))
+                        Dim targetTime As Integer = Convert.ToInt16(getTableData(s, "start"))
 
                         If targetTime < currentTime Then Continue For
 
                         '수업 시간 됐을때
                         If targetTime = currentTime Then
-                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-0"
+                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-0"
 
                             '수업 시작이 5분 이하 남았고 5분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("5") And (targetTime - currentTime) <= 5 Then
-                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-5"
+                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-5"
 
                             '수업 시작이 15분 이하 남았고 15분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("15") And (targetTime - currentTime) <= 15 Then
-                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-15"
+                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-15"
 
                             '수업 시작이 30분 이하 남았고 30분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("30") And (targetTime - currentTime) <= 30 Then
-                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-30"
+                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-30"
 
                         Else
                             Continue For
@@ -1446,7 +1426,7 @@ Public Class Form1
                         ' 1. 이미 보낸 똑같은 알람
                         ' 2. 무시 조건에 해당하는 수업 (ex. memo에 (알림 무시) 포함)
 
-                        Dim memo As String = getData(s, "memo")
+                        Dim memo As String = getTableData(s, "memo")
 
                         If prevNotificationName = notificationName Then
                             Continue For
@@ -1482,8 +1462,8 @@ Public Class Form1
                             End Try
                         End If
 
-                        NotifyIcon1.ShowBalloonTip(9999, xmlDecode(getData(s, "name")) _
-                                                   + " (" + xmlDecode(getData(s, "prof")) + ")", message, ToolTipIcon.None)
+                        NotifyIcon1.ShowBalloonTip(9999, xmlDecode(getTableData(s, "name")) _
+                                                   + " (" + xmlDecode(getTableData(s, "prof")) + ")", message, ToolTipIcon.None)
                     Next
 
                 End If
@@ -1500,7 +1480,7 @@ Public Class Form1
 
             If courseData.Count > 0 Then
                 For Each s As String In courseData
-                    Dim tmp As String = getData(s, "day")
+                    Dim tmp As String = getTableData(s, "day")
                     Dim day As String = ""
 
                     Select Case Today.DayOfWeek
@@ -1530,8 +1510,8 @@ Public Class Form1
                     Dim time As New List(Of Integer)
 
                     For Each s In dayData
-                        courses.Add(xmlDecode(getData(s, "name")) + " (" + xmlDecode(getData(s, "prof")) + ")")
-                        time.Add(Convert.ToInt16(getData(s, "start")))
+                        courses.Add(xmlDecode(getTableData(s, "name")) + " (" + xmlDecode(getTableData(s, "prof")) + ")")
+                        time.Add(Convert.ToInt16(getTableData(s, "start")))
                     Next
 
                     '표시 순서를 시작 시간 오름차순으로 정렬
@@ -1676,12 +1656,17 @@ Public Class Form1
 
     Public Sub MemoContentUpdate()
         Try
-            Dim content As String = IO.File.ReadAllText(INIPath + "\memo.rtf", System.Text.Encoding.GetEncoding(949))
+            Dim memoPath As String = IO.Path.Combine(INIPath, "memo.rtf")
             Dim zoomft As String = GetINI("SETTING", "MemoZoom", "", ININamePath)
-            MemoRTB.Rtf = content
+            Dim savedZoom As Double
+            Dim hasSavedZoom As Boolean = Double.TryParse(zoomft, savedZoom)
 
-            If Not zoomft = "" Then
-                MemoRTB.ZoomFactor = Convert.ToDouble(zoomft)
+            If IO.File.Exists(memoPath) Then
+                MemoRTB.LoadFile(memoPath, RichTextBoxStreamType.RichText)
+            End If
+
+            If hasSavedZoom Then
+                MemoRTB.ZoomFactor = savedZoom
                 UpdateMemoZoomFactor()
             End If
 
@@ -1754,8 +1739,8 @@ Public Class Form1
     End Sub
 
     Private Sub Memo_menu_Opening(sender As Object, e As CancelEventArgs) Handles Memo_menu.Opening
-        Memo_menu.BackColor = mainColor(colorMode)
-        Memo_menu.ForeColor = textColor(colorMode)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+        ApplyMenuThemes(theme)
 
         MemoDockTopItem.Text = "위쪽"
         MemoDockBottomItem.Text = "아래쪽"
@@ -1853,7 +1838,7 @@ Public Class Form1
         ' === 저장 작업 시작 ===
         If GetINI("SETTING", "MemoShow", "", ININamePath) = "1" Then
             Try
-                IO.File.WriteAllText(INIPath + "\memo.rtf", MemoRTB.Rtf, System.Text.Encoding.GetEncoding(949))
+                MemoRTB.SaveFile(IO.Path.Combine(INIPath, "memo.rtf"), RichTextBoxStreamType.RichText)
             Catch ex As Exception
                 MemoSavingLabel.Text = "저장 실패 (" + ex.Message + ")"
             End Try
@@ -1897,8 +1882,8 @@ Public Class Form1
     End Sub
 
     Private Sub MemoRTBMenu_Opening(sender As Object, e As CancelEventArgs) Handles MemoRTBMenu.Opening
-        MemoRTBMenu.BackColor = mainColor(colorMode)
-        MemoRTBMenu.ForeColor = textColor(colorMode)
+        Dim theme As ThemeColors = ThemeColors.FromMode(colorMode)
+        ApplyMenuThemes(theme)
 
         MemoCopyItem.Visible = MemoRTB.SelectedText.Length > 0
         MemoPasteItem.Visible = (Clipboard.ContainsText(TextDataFormat.Rtf) Or Clipboard.ContainsText(TextDataFormat.Text))

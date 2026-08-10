@@ -56,7 +56,7 @@ Partial Class EverytimeSemesterSelector
         Me.NextBT.Dock = System.Windows.Forms.DockStyle.Right
         Me.NextBT.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.NextBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.NextBT.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.NextBT.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.NextBT.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.NextBT.Location = New System.Drawing.Point(260, 10)
         Me.NextBT.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -106,7 +106,7 @@ Partial Class EverytimeSemesterSelector
         'tipLabel
         '
         Me.tipLabel.AutoSize = True
-        Me.tipLabel.Font = New System.Drawing.Font("맑은 고딕", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.tipLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.tipLabel.ForeColor = System.Drawing.Color.Gray
         Me.tipLabel.Location = New System.Drawing.Point(3, 100)
         Me.tipLabel.Name = "tipLabel"
@@ -129,7 +129,7 @@ Partial Class EverytimeSemesterSelector
         'semesterCombo
         '
         Me.semesterCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.semesterCombo.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.semesterCombo.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.semesterCombo.FormattingEnabled = True
         Me.semesterCombo.Items.AddRange(New Object() {"1학기", "여름학기", "2학기", "겨울학기"})
         Me.semesterCombo.Location = New System.Drawing.Point(115, 39)
@@ -140,7 +140,7 @@ Partial Class EverytimeSemesterSelector
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label3.Location = New System.Drawing.Point(1, 9)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(310, 20)
@@ -149,7 +149,7 @@ Partial Class EverytimeSemesterSelector
         '
         'yearUpd
         '
-        Me.yearUpd.Font = New System.Drawing.Font("맑은 고딕", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.yearUpd.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.yearUpd.Location = New System.Drawing.Point(5, 40)
         Me.yearUpd.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         Me.yearUpd.Minimum = New Decimal(New Integer() {2010, 0, 0, 0})
@@ -161,7 +161,7 @@ Partial Class EverytimeSemesterSelector
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Noto Sans KR", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label4.Location = New System.Drawing.Point(83, 41)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(26, 21)
@@ -194,7 +194,7 @@ Partial Class EverytimeSemesterSelector
         'Label1
         '
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label1.Location = New System.Drawing.Point(0, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
@@ -226,7 +226,7 @@ Partial Class EverytimeSemesterSelector
         'TitleLabel
         '
         Me.TitleLabel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TitleLabel.Font = New System.Drawing.Font("맑은 고딕 Semilight", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TitleLabel.Font = New System.Drawing.Font("Noto Sans KR Semilight", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.TitleLabel.Location = New System.Drawing.Point(0, 0)
         Me.TitleLabel.Name = "TitleLabel"
         Me.TitleLabel.Size = New System.Drawing.Size(326, 32)
@@ -252,7 +252,7 @@ Partial Class EverytimeSemesterSelector
         Me.BackColor = System.Drawing.Color.LightGray
         Me.ClientSize = New System.Drawing.Size(390, 226)
         Me.Controls.Add(Me.Panel1)
-        Me.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
