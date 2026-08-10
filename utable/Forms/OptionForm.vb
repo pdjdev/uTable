@@ -1043,7 +1043,7 @@ Public Class OptionForm
     End Sub
 
     Private Sub FolderBrowBT_Click_1(sender As Object, e As EventArgs) Handles FolderBrowBT.Click
-        FolderBrowserDialog1.SelectedPath = exePath
+        FolderBrowserDialog1.SelectedPath = INIPath
         If FolderBrowserDialog1.ShowDialog() = DialogResult.OK Then
             SaveDirectoryTB.Text = FolderBrowserDialog1.SelectedPath
         End If
@@ -1065,7 +1065,7 @@ Public Class OptionForm
 
             If tableData.Contains("<tablename>") Or tableData.Contains("<course>") Then
                 If MsgBox("현재 시간표를 설정한 위치로 복사하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-                    Dim tmpDir As String = exePath
+                    Dim tmpDir As String = INIPath
                     Dim tmpName As String = "default.utdata"
 
                     If Not SaveDirectoryTB.Text = "" Then tmpDir = SaveDirectoryTB.Text

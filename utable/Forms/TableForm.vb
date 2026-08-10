@@ -1701,7 +1701,7 @@ Public Class TableForm
 
     Public Sub MemoContentUpdate()
         Try
-            Dim content As String = IO.File.ReadAllText(INIPath + "\memo.rtf", System.Text.Encoding.GetEncoding(949))
+            Dim content As String = IO.File.ReadAllText(IO.Path.Combine(INIPath, "memo.rtf"), System.Text.Encoding.GetEncoding(949))
             Dim zoomft As String = GetINI("SETTING", "MemoZoom", "", ININamePath)
             MemoRTB.Rtf = content
 
@@ -1878,7 +1878,7 @@ Public Class TableForm
         ' === 저장 작업 시작 ===
         If GetINI("SETTING", "MemoShow", "", ININamePath) = "1" Then
             Try
-                IO.File.WriteAllText(INIPath + "\memo.rtf", MemoRTB.Rtf, System.Text.Encoding.GetEncoding(949))
+                IO.File.WriteAllText(IO.Path.Combine(INIPath, "memo.rtf"), MemoRTB.Rtf, System.Text.Encoding.GetEncoding(949))
             Catch ex As Exception
                 MemoSavingLabel.Text = "저장 실패 (" + ex.Message + ")"
             End Try

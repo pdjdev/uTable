@@ -778,7 +778,7 @@ Partial Class TableForm
         Me.MemoTitleLabel.Location = New System.Drawing.Point(149, 2)
         Me.MemoTitleLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.MemoTitleLabel.Name = "MemoTitleLabel"
-        Me.MemoTitleLabel.Size = New System.Drawing.Size(726, 27)
+        Me.MemoTitleLabel.Size = New System.Drawing.Size(734, 27)
         Me.MemoTitleLabel.TabIndex = 35
         Me.MemoTitleLabel.Text = "MemoTitle"
         Me.MemoTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -788,10 +788,10 @@ Partial Class TableForm
         Me.MemoSavingLabel.Dock = System.Windows.Forms.DockStyle.Right
         Me.MemoSavingLabel.Font = New System.Drawing.Font("Noto Sans KR", 7.0!)
         Me.MemoSavingLabel.ForeColor = System.Drawing.Color.DeepSkyBlue
-        Me.MemoSavingLabel.Location = New System.Drawing.Point(875, 2)
+        Me.MemoSavingLabel.Location = New System.Drawing.Point(883, 2)
         Me.MemoSavingLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.MemoSavingLabel.Name = "MemoSavingLabel"
-        Me.MemoSavingLabel.Size = New System.Drawing.Size(115, 27)
+        Me.MemoSavingLabel.Size = New System.Drawing.Size(107, 27)
         Me.MemoSavingLabel.TabIndex = 8
         Me.MemoSavingLabel.Text = "변경사항 저장중..."
         Me.MemoSavingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight

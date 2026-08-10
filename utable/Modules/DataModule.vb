@@ -188,8 +188,9 @@ Module DataModule
     End Function
 
     Public Function TableSaveLocation(filenameOnly As Boolean) As String
-        Dim exeFullpath As String = Application.ExecutablePath
-        Dim finalDir As String = exeFullpath.Substring(0, exeFullpath.LastIndexOf("\"))
+        ' 기본 저장소는 INIPath와 동일하다. Store 패키지에서는 LocalAppData\\uTable,
+        ' 일반/포터블 실행에서는 실행 파일 폴더다.
+        Dim finalDir As String = INIPath
         Dim finalName As String = "default.utdata"
 
         '임의 경로 옵션 활성화시
@@ -212,7 +213,7 @@ Module DataModule
         If filenameOnly Then
             Return finalName
         Else
-            Return finalDir + "\" + finalName
+            Return Path.Combine(finalDir, finalName)
         End If
     End Function
 
