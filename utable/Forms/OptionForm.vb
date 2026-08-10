@@ -696,12 +696,12 @@ Public Class OptionForm
 
         Try
             Dim source As String = webget("https://github.com/pdjdev/utable/releases.atom")
-            Dim entry As String = getData(source, "entry")
-            downUrl = "https://github.com/pdjdev/uTable/releases/download/" + getData(entry, "title") + "/uTable.exe"
-            updHtml = midReturn("<content type=""html"">", "</content>", entry)
+            Dim entry As ReleaseFeedEntry = GetLatestReleaseEntry(source)
+            downUrl = "https://github.com/pdjdev/uTable/releases/download/" + entry.Title + "/uTable.exe"
+            updHtml = entry.ContentHtml
 
             'version값 = title에서 문자와 점을 제외한 모든 텍스트 지우기
-            Dim version = From c In getData(entry, "title")
+            Dim version = From c In entry.Title
                           Where Char.IsDigit(c) OrElse c = "."
                           Select num = c.ToString
             newVersion = Join(version.ToArray, "")
@@ -906,7 +906,7 @@ Public Class OptionForm
                 MsgBox("시간표를 만들어 주세요.", vbInformation)
             Else
                 Dim title As String = "이름 없는 시간표"
-                If tableData.Contains("<tablename>") Then title = getData(tableData, "tablename")
+                If tableData.Contains("<tablename>") Then title = getTableData(tableData, "tablename")
 
                 SaveFileDialog1.FileName = title
                 SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"

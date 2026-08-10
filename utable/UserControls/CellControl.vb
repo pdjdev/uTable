@@ -53,8 +53,8 @@
         End If
 
         'SetCourse.modifyMode = True
-        For Each s As String In getDatas(readTable(), "course")
-            If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = Name Then
+        For Each s As String In getTableDatas(readTable(), "course")
+            If getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") = Name Then
                 ViewCourse.olddata = s
                 Exit For
             End If
@@ -279,8 +279,8 @@
 
         Dim olddata As String = ""
 
-        For Each s As String In getDatas(data, "course")
-            If getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") = name Then
+        For Each s As String In getTableDatas(data, "course")
+            If getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") = name Then
                 olddata = s
                 Exit For
             End If
@@ -290,7 +290,7 @@
 
         If Not newdata = "" Then
             If newdata.Contains("<checked>") Then
-                Dim tmp As String = "<checked>" + getData(newdata, "checked") + "</checked>"
+                Dim tmp As String = "<checked>" + getTableData(newdata, "checked") + "</checked>"
                 newdata = newdata.Replace(tmp, "<checked>" + checked.ToString + "</checked>")
             Else 'check 데이터가 없을때
                 newdata += vbTab + "<checked>" + checked.ToString + "</checked>" + vbCrLf

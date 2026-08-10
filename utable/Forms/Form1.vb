@@ -904,9 +904,9 @@ Public Class Form1
 
     Private Sub AllColorSetItem_Click(sender As Object, e As EventArgs) Handles AllColorSetItem.Click
         If ColorDialog1.ShowDialog() = DialogResult.OK Then
-            Dim tmp As String = ""
+            Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
             For Each s As String In courseData
-                s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ColorDialog1.Color))
+                s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ColorDialog1.Color))
                 tmp += "<course>" + s + "</course>" + vbCrLf
             Next
             writeTable(tmp)
@@ -915,10 +915,10 @@ Public Class Form1
     End Sub
 
     Private Sub AllDarkerItem_Click(sender As Object, e As EventArgs) Handles AllDarkerItem.Click
-        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
+        Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
         For Each s As String In courseData
-            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
-            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
+            Dim oldColor As Color = ColorTranslator.FromHtml(getTableData(s, "color"))
+            s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
             tmp += "<course>" + s + "</course>" + vbCrLf
         Next
         writeTable(tmp)
@@ -926,10 +926,10 @@ Public Class Form1
     End Sub
 
     Private Sub AllBrighterItem_Click(sender As Object, e As EventArgs) Handles AllBrighterItem.Click
-        Dim tmp As String = "<tablename>" + TableTitleLabel.Text + "</tablename>" + vbCrLf
+        Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
         For Each s As String In courseData
-            Dim oldColor As Color = ColorTranslator.FromHtml(getData(s, "color"))
-            s = s.Replace(getData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
+            Dim oldColor As Color = ColorTranslator.FromHtml(getTableData(s, "color"))
+            s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
             tmp += "<course>" + s + "</course>" + vbCrLf
         Next
         writeTable(tmp)
@@ -990,7 +990,7 @@ Public Class Form1
             Dim max As Integer = 0
 
             If data.Contains("<tablename>") Then
-                TableTitleLabel.Text = xmlDecode(getData(data, "tablename"))
+                TableTitleLabel.Text = xmlDecode(getTableData(data, "tablename"))
             Else
                 TableTitleLabel.Text = "이름 없는 시간표"
             End If
@@ -999,12 +999,12 @@ Public Class Form1
             courseData.Clear()
 
             If data.Contains("<course>") Then
-                courseData = getDatas(data, "course")
+                courseData = getTableDatas(data, "course")
 
                 '최대, 최소계산
                 For Each s As String In courseData
-                    If Convert.ToInt16(getData(s, "start")) < min Then min = Convert.ToInt16(getData(s, "start"))
-                    If Convert.ToInt16(getData(s, "end")) > max Then max = Convert.ToInt16(getData(s, "end"))
+                    If Convert.ToInt16(getTableData(s, "start")) < min Then min = Convert.ToInt16(getTableData(s, "start"))
+                    If Convert.ToInt16(getTableData(s, "end")) > max Then max = Convert.ToInt16(getTableData(s, "end"))
                 Next
 
                 starttime = min
@@ -1018,19 +1018,19 @@ Public Class Form1
                 '셀계산
                 '여기서 xmldecode 하니까 꼭 눈여겨두자
                 For Each s As String In courseData
-                    addCell(Convert.ToInt16(getData(s, "start")),
-                            Convert.ToInt16(getData(s, "end")),
-                            getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"),
-                            xmlDecode(getData(s, "name")),
-                            xmlDecode(getData(s, "prof")),
-                            xmlDecode(getData(s, "memo")),
-                            ColorTranslator.FromHtml(getData(s, "color")),
-                            Convert.ToInt16(getData(s, "day")),
-                            getData(s, "checked"))
+                    addCell(Convert.ToInt16(getTableData(s, "start")),
+                            Convert.ToInt16(getTableData(s, "end")),
+                            getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name"),
+                            xmlDecode(getTableData(s, "name")),
+                            xmlDecode(getTableData(s, "prof")),
+                            xmlDecode(getTableData(s, "memo")),
+                            ColorTranslator.FromHtml(getTableData(s, "color")),
+                            Convert.ToInt16(getTableData(s, "day")),
+                            getTableData(s, "checked"))
 
-                    If Convert.ToInt16(getData(s, "day")) = 5 Then '토요일 추가시
+                    If Convert.ToInt16(getTableData(s, "day")) = 5 Then '토요일 추가시
                         showSaturday = True
-                    ElseIf Convert.ToInt16(getData(s, "day")) = 6 Then '일요일 추가시
+                    ElseIf Convert.ToInt16(getTableData(s, "day")) = 6 Then '일요일 추가시
                         showSunday = True
                     End If
                 Next
@@ -1083,8 +1083,8 @@ Public Class Form1
             End If
 
             For Each s As String In courseData
-                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
-                           getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
+                resizeCell(Convert.ToInt16(getTableData(s, "start")), Convert.ToInt16(getTableData(s, "end")),
+                           getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name"))
             Next
 
         Catch ex As Exception
@@ -1207,7 +1207,7 @@ Public Class Form1
             Try
                 Dim data As String = readTable()
                 If data.Contains("<tablename>") Then
-                    Dim oldtitle As String = getData(data, "tablename")
+                    Dim oldtitle As String = getTableData(data, "tablename")
                     data = data.Replace("<tablename>" + oldtitle + "</tablename>", "<tablename>" + xmlEncode(newtitle) + "</tablename>")
                     writeTable(data)
                 Else
@@ -1236,8 +1236,8 @@ Public Class Form1
         If updated Then
 
             For Each s As String In courseData
-                resizeCell(Convert.ToInt16(getData(s, "start")), Convert.ToInt16(getData(s, "end")),
-                           getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name"))
+                resizeCell(Convert.ToInt16(getTableData(s, "start")), Convert.ToInt16(getTableData(s, "end")),
+                           getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name"))
             Next
 
             TimeTable.Visible = True
@@ -1384,7 +1384,7 @@ Public Class Form1
 
             If courseData.Count > 0 Then
                 For Each s As String In courseData
-                    Dim tmp As String = getData(s, "day")
+                    Dim tmp As String = getTableData(s, "day")
                     Dim day As String = ""
 
                     Select Case Today.DayOfWeek
@@ -1416,25 +1416,25 @@ Public Class Form1
 
                 If dayData.Count > 0 Then
                     For Each s In dayData
-                        Dim targetTime As Integer = Convert.ToInt16(getData(s, "start"))
+                        Dim targetTime As Integer = Convert.ToInt16(getTableData(s, "start"))
 
                         If targetTime < currentTime Then Continue For
 
                         '수업 시간 됐을때
                         If targetTime = currentTime Then
-                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-0"
+                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-0"
 
                             '수업 시작이 5분 이하 남았고 5분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("5") And (targetTime - currentTime) <= 5 Then
-                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-5"
+                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-5"
 
                             '수업 시작이 15분 이하 남았고 15분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("15") And (targetTime - currentTime) <= 15 Then
-                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-15"
+                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-15"
 
                             '수업 시작이 30분 이하 남았고 30분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("30") And (targetTime - currentTime) <= 30 Then
-                            notificationName = getData(s, "day") + "-" + getData(s, "start") + "-" + getData(s, "name") + "-30"
+                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-30"
 
                         Else
                             Continue For
@@ -1446,7 +1446,7 @@ Public Class Form1
                         ' 1. 이미 보낸 똑같은 알람
                         ' 2. 무시 조건에 해당하는 수업 (ex. memo에 (알림 무시) 포함)
 
-                        Dim memo As String = getData(s, "memo")
+                        Dim memo As String = getTableData(s, "memo")
 
                         If prevNotificationName = notificationName Then
                             Continue For
@@ -1482,8 +1482,8 @@ Public Class Form1
                             End Try
                         End If
 
-                        NotifyIcon1.ShowBalloonTip(9999, xmlDecode(getData(s, "name")) _
-                                                   + " (" + xmlDecode(getData(s, "prof")) + ")", message, ToolTipIcon.None)
+                        NotifyIcon1.ShowBalloonTip(9999, xmlDecode(getTableData(s, "name")) _
+                                                   + " (" + xmlDecode(getTableData(s, "prof")) + ")", message, ToolTipIcon.None)
                     Next
 
                 End If
@@ -1500,7 +1500,7 @@ Public Class Form1
 
             If courseData.Count > 0 Then
                 For Each s As String In courseData
-                    Dim tmp As String = getData(s, "day")
+                    Dim tmp As String = getTableData(s, "day")
                     Dim day As String = ""
 
                     Select Case Today.DayOfWeek
@@ -1530,8 +1530,8 @@ Public Class Form1
                     Dim time As New List(Of Integer)
 
                     For Each s In dayData
-                        courses.Add(xmlDecode(getData(s, "name")) + " (" + xmlDecode(getData(s, "prof")) + ")")
-                        time.Add(Convert.ToInt16(getData(s, "start")))
+                        courses.Add(xmlDecode(getTableData(s, "name")) + " (" + xmlDecode(getTableData(s, "prof")) + ")")
+                        time.Add(Convert.ToInt16(getTableData(s, "start")))
                     Next
 
                     '표시 순서를 시작 시간 오름차순으로 정렬

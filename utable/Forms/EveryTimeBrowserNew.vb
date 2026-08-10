@@ -1,12 +1,21 @@
 ﻿Imports System.Runtime.InteropServices
-Imports System.Text.RegularExpressions
+Imports System.Web.Script.Serialization
 Imports Microsoft.Web.WebView2.Core
+
+Public Class EverytimeCourse
+    Public Property Day As Integer
+    Public Property Name As String
+    Public Property Professor As String
+    Public Property Memo As String
+    Public Property Start As Integer
+    Public Property Duration As Integer
+    Public Property ColorNumber As Integer
+End Class
 
 Public Class EveryTimeBrowserNew
     Dim colorMode As String = Nothing '시간표 채울때 색상에 맞추도록
     Public targetUrl As String
     Dim webdone As Boolean = False
-    Dim source As String
 
     Dim dpivalue As Integer = 100
     Dim trialCount As Integer = 0
@@ -91,7 +100,6 @@ Public Class EveryTimeBrowserNew
 
     Private Sub WebView2_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
         'MsgBox("done!!")
-        'source = Await getTableData()
         'LoadingSplash1.Visible = False
 
         If WebView21.Source.ToString.Contains("/timetable") Then
@@ -117,83 +125,33 @@ Public Class EveryTimeBrowserNew
 
     Private Async Sub TableChecker_Tick(sender As Object, e As EventArgs) Handles TableChecker.Tick
 
-        Dim source As String = Await getTableData()
+        Dim courses As List(Of EverytimeCourse) = Await GetCoursesFromPage()
         Dim tabledata As String = ""
 
-        Debug.Print(vbCrLf + source)
-
-        If source.Contains("class=""subject") Then
+        If courses.Count > 0 Then
 
             TableChecker.Stop()
 
-            Dim day As Integer = 0
-            Dim tables As List(Of String) = multipleMidReturn("<div class=""cols""", "<div class=""grids"">", source)
+            For Each course As EverytimeCourse In courses
+                If course.Day > 6 Then Continue For
 
-            For Each s As String In tables
-
-                If s.Contains("<div") Then
-                    Dim courses As List(Of String) = multipleMidReturn("<div", "</div>", s)
-
-                    For Each c As String In courses
-
-                        Dim name As String = midReturn("<h3>", "</h3>", c)
-                        Dim start As Integer = Convert.ToInt16(midReturn("top:", ";", c).Replace("px", ""))
-                        Dim len As Integer = Convert.ToInt16(midReturn("height:", ";", c).Replace("px", "")) - 1
-                        Dim prof As String = getData(c, "em")
-                        Dim memo As String = getData(c, "span")
-                        Dim color As New Color
-
-                        '컬러 추출
-                        Select Case midReturn("subject color", """", c)
-                            Case "1"
-                                color = color.FromArgb(240, 134, 118)
-                            Case "2"
-                                color = color.FromArgb(251, 171, 102)
-                            Case "3"
-                                color = color.FromArgb(236, 195, 105)
-                            Case "4"
-                                color = color.FromArgb(167, 202, 112)
-                            Case "5"
-                                color = color.FromArgb(118, 203, 136)
-                            Case "6"
-                                color = color.FromArgb(125, 209, 193)
-                            Case "7"
-                                color = color.FromArgb(122, 165, 233)
-                            Case "8"
-                                color = color.FromArgb(61, 103, 173)
-                            Case "9"
-                                color = color.FromArgb(159, 134, 225)
-                            Case Else
-                                color = color.DarkGray
-                        End Select
-
-                        '다크 모드로 설정되었을시 어둡게 설정하기
-                        If colorMode = "Dark" Then
-                            color = ControlPaint.Dark(color, 0.2)
-                        End If
-
-                        tabledata += "<course>" + vbCrLf
-                        tabledata += vbTab + "<day>" + day.ToString + "</day>" + vbCrLf
-                        tabledata += vbTab + "<name>" + name + "</name>" + vbCrLf
-                        tabledata += vbTab + "<prof>" + prof + "</prof>" + vbCrLf
-                        tabledata += vbTab + "<memo>" + memo + "</memo>" + vbCrLf
-                        tabledata += vbTab + "<start>" + start.ToString + "</start>" + vbCrLf
-                        tabledata += vbTab + "<end>" + (start + len).ToString + "</end>" + vbCrLf
-                        tabledata += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
-                        tabledata += "</course>" + vbCrLf
-
-                    Next
+                Dim color As Color = GetCourseColor(course.ColorNumber)
+                If colorMode = "Dark" Then
+                    color = ControlPaint.Dark(color, 0.2)
                 End If
 
-                day += 1
-
-                If day > 6 Then
-                    Exit For
-                End If
-
+                tabledata += "<course>" + vbCrLf
+                tabledata += vbTab + "<day>" + course.Day.ToString + "</day>" + vbCrLf
+                tabledata += vbTab + "<name>" + xmlEncode(course.Name) + "</name>" + vbCrLf
+                tabledata += vbTab + "<prof>" + xmlEncode(course.Professor) + "</prof>" + vbCrLf
+                tabledata += vbTab + "<memo>" + xmlEncode(course.Memo) + "</memo>" + vbCrLf
+                tabledata += vbTab + "<start>" + course.Start.ToString + "</start>" + vbCrLf
+                tabledata += vbTab + "<end>" + (course.Start + course.Duration).ToString + "</end>" + vbCrLf
+                tabledata += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
+                tabledata += "</course>" + vbCrLf
             Next
 
-            Threading.Thread.Sleep(3000)
+            Await Task.Delay(3000)
             WebView21.Source = New Uri("https://everytime.kr/user/logout")
 
             If MsgBox("불러오기가 완료되었습니다. 바로 적용하시겠습니까?" + vbCr + "기존 시간표는 지워집니다!",
@@ -217,12 +175,52 @@ Public Class EveryTimeBrowserNew
 
     End Sub
 
-    Private Async Function getTableData() As Task(Of String)
-        Dim html = Await WebView21.ExecuteScriptAsync("document.querySelector('table.tablebody').innerHTML")
-        html = Regex.Unescape(html)
-        html = html.Remove(0, 1)
-        html = html.Remove(html.Length - 1, 1)
-        Return html
+    Private Async Function GetCoursesFromPage() As Task(Of List(Of EverytimeCourse))
+        Dim script As String = "(() => {" _
+            + "const table = document.querySelector('table.tablebody');" _
+            + "if (!table) return [];" _
+            + "const courses = [];" _
+            + "Array.from(table.querySelectorAll('.cols')).forEach((column, day) => {" _
+            + "Array.from(column.querySelectorAll('.subject')).forEach(subject => {" _
+            + "const getText = selector => { const node = subject.querySelector(selector); return node ? node.textContent.trim() : ''; };" _
+            + "const start = parseFloat(subject.style.top || getComputedStyle(subject).top);" _
+            + "const height = parseFloat(subject.style.height || getComputedStyle(subject).height);" _
+            + "const colorClass = Array.from(subject.classList).find(className => /^color\d+$/.test(className));" _
+            + "if (!Number.isFinite(start) || !Number.isFinite(height)) return;" _
+            + "courses.push({day: day, name: getText('h3'), professor: getText('em'), memo: getText('span'), start: Math.round(start), duration: Math.max(0, Math.round(height) - 1), colorNumber: colorClass ? Number(colorClass.substring(5)) : 0});" _
+            + "});" _
+            + "});" _
+            + "return courses;" _
+            + "})()"
+
+        Dim json As String = Await WebView21.ExecuteScriptAsync(script)
+        Dim serializer As New JavaScriptSerializer()
+        Return serializer.Deserialize(Of List(Of EverytimeCourse))(json)
+    End Function
+
+    Private Function GetCourseColor(colorNumber As Integer) As Color
+        Select Case colorNumber
+            Case 1
+                Return Color.FromArgb(240, 134, 118)
+            Case 2
+                Return Color.FromArgb(251, 171, 102)
+            Case 3
+                Return Color.FromArgb(236, 195, 105)
+            Case 4
+                Return Color.FromArgb(167, 202, 112)
+            Case 5
+                Return Color.FromArgb(118, 203, 136)
+            Case 6
+                Return Color.FromArgb(125, 209, 193)
+            Case 7
+                Return Color.FromArgb(122, 165, 233)
+            Case 8
+                Return Color.FromArgb(61, 103, 173)
+            Case 9
+                Return Color.FromArgb(159, 134, 225)
+            Case Else
+                Return Color.DarkGray
+        End Select
     End Function
 
     'Private Sub WebView21_NavigationStarting(sender As Object, e As CoreWebView2NavigationStartingEventArgs) Handles WebView21.NavigationStarting

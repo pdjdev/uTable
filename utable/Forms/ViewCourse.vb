@@ -251,12 +251,12 @@ Public Class ViewCourse
         Dim data = olddata
 
         Try
-            UpperTitleLabel.Text = xmlDecode(getData(data, "name"))
+            UpperTitleLabel.Text = xmlDecode(getTableData(data, "name"))
             Text = UpperTitleLabel.Text
-            SubTitleLabel.Text = xmlDecode(getData(data, "prof")) + ", "
+            SubTitleLabel.Text = xmlDecode(getTableData(data, "prof")) + ", "
 
-            Dim startt As Integer = getData(data, "start")
-            Dim endt As Integer = getData(data, "end")
+            Dim startt As Integer = getTableData(data, "start")
+            Dim endt As Integer = getTableData(data, "end")
 
             SubTitleLabel.Text += (startt \ 60).ToString + ":"
             If startt Mod 60 = 0 Then
@@ -274,10 +274,10 @@ Public Class ViewCourse
                 SubTitleLabel.Text += (endt Mod 60).ToString("D2")
             End If
 
-            SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(getData(data, "day"))) + "요일"
+            SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(getTableData(data, "day"))) + "요일"
 
-            MemoTB.Text = xmlDecode(getData(data, "memo"))
-            TitlePanel.BackColor = ColorTranslator.FromHtml(getData(data, "color"))
+            MemoTB.Text = xmlDecode(getTableData(data, "memo"))
+            TitlePanel.BackColor = ColorTranslator.FromHtml(getTableData(data, "color"))
 
             Dim c As Color = Color.FromArgb(TitlePanel.BackColor.R * colorMul,
                                         TitlePanel.BackColor.G * colorMul,
@@ -422,20 +422,20 @@ Public Class ViewCourse
             Dim data As String = readTable()
             Dim count As Integer = 0
 
-            For Each s As String In getDatas(data, "course")
+            For Each s As String In getTableDatas(data, "course")
                 '이전설정 이름이 여러개 이미 있을때
-                If getData(s, "name") = getData(olddata, "name") Then count += 1
+                If getTableData(s, "name") = getTableData(olddata, "name") Then count += 1
             Next
 
             If count > 1 Then
                 If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
                     modifyAllCourse(readTable(), MemoTB.Text)
                 Else
-                    Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
+                    Dim newdata As String = olddata.Replace(getTableData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
                     writeTable(readTable.Replace(olddata, newdata))
                 End If
             Else
-                Dim newdata As String = olddata.Replace(getData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
+                Dim newdata As String = olddata.Replace(getTableData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
                 writeTable(readTable.Replace(olddata, newdata))
             End If
 
@@ -450,25 +450,25 @@ Public Class ViewCourse
 
     Sub modifyAllCourse(data As String, memo As String)
         'Dim data As String = readTable()
-        Dim olddatas As List(Of String) = multipleMidReturn("<course>", "</course>", data)
+        Dim olddatas As List(Of String) = getTableDatas(data, "course")
         Dim tablename As String = Nothing
 
         If Not data.Contains("<tablename>") Then
             tablename = "이름 없는 시간표"
         Else
-            If getData(data, "tablename") = "" Then
+            If getTableData(data, "tablename") = "" Then
                 tablename = "이름 없는 시간표"
             Else
-                tablename = getData(data, "tablename")
+                tablename = getTableData(data, "tablename")
             End If
         End If
 
         Dim newdata As String = ""
-        Dim oldname As String = getData(olddata, "name")
+        Dim oldname As String = getTableData(olddata, "name")
 
         For Each i In olddatas
             Dim tmp As String = i
-            If getData(i, "name") = oldname Then tmp = tmp.Replace("<memo>" + getData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
+            If getTableData(i, "name") = oldname Then tmp = tmp.Replace("<memo>" + getTableData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
             newdata += "<course>" + tmp + "</course>" + vbCrLf
         Next
 
