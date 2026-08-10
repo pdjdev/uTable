@@ -72,6 +72,16 @@ Public Class TableForm
 
 #Region "Aero 그림자 효과 (Vista이상)"
 
+    '테두리는 숨긴 채 WS_MINIMIZEBOX만 다시 추가하여 작업 표시줄 버튼으로 최소화/복원 구현
+    Protected Overrides ReadOnly Property CreateParams As CreateParams
+        Get
+            Const WS_MINIMIZEBOX As Integer = &H20000
+            Dim nativeParams As CreateParams = MyBase.CreateParams
+            nativeParams.Style = nativeParams.Style Or WS_MINIMIZEBOX
+            Return nativeParams
+        End Get
+    End Property
+
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
         CreateDropShadow(Me)
         MyBase.OnHandleCreated(e)
