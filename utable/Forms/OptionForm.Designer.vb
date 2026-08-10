@@ -201,11 +201,11 @@ Partial Class OptionForm
         'MainPanel
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
-        Me.MainPanel.Controls.Add(Me.TabPage_Info)
         Me.MainPanel.Controls.Add(Me.TapPage_Notification)
-        Me.MainPanel.Controls.Add(Me.TabPage_Basic)
-        Me.MainPanel.Controls.Add(Me.TabPage_Table)
         Me.MainPanel.Controls.Add(Me.TabPage_Data)
+        Me.MainPanel.Controls.Add(Me.TabPage_Table)
+        Me.MainPanel.Controls.Add(Me.TabPage_Basic)
+        Me.MainPanel.Controls.Add(Me.TabPage_Info)
         Me.MainPanel.Controls.Add(Me.TabPage_Update)
         Me.MainPanel.Controls.Add(Me.ShadowPanel)
         Me.MainPanel.Controls.Add(Me.SidePanel)
@@ -300,7 +300,7 @@ Partial Class OptionForm
         'TodaysCourseNotifyChk
         '
         Me.TodaysCourseNotifyChk.AutoSize = True
-        Me.TodaysCourseNotifyChk.Location = New System.Drawing.Point(26, 266)
+        Me.TodaysCourseNotifyChk.Location = New System.Drawing.Point(26, 257)
         Me.TodaysCourseNotifyChk.Margin = New System.Windows.Forms.Padding(4)
         Me.TodaysCourseNotifyChk.Name = "TodaysCourseNotifyChk"
         Me.TodaysCourseNotifyChk.Size = New System.Drawing.Size(290, 25)
@@ -321,7 +321,7 @@ Partial Class OptionForm
         Me.CourseNotifyPanel.Controls.Add(Me.Notify_5min_Chk)
         Me.CourseNotifyPanel.Controls.Add(Me.Notify_15min_Chk)
         Me.CourseNotifyPanel.Controls.Add(Me.Notify_30min_Chk)
-        Me.CourseNotifyPanel.Location = New System.Drawing.Point(16, 92)
+        Me.CourseNotifyPanel.Location = New System.Drawing.Point(16, 82)
         Me.CourseNotifyPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.CourseNotifyPanel.Name = "CourseNotifyPanel"
         Me.CourseNotifyPanel.Size = New System.Drawing.Size(519, 165)
@@ -450,7 +450,7 @@ Partial Class OptionForm
         '
         Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label21.Location = New System.Drawing.Point(21, 25)
+        Me.Label21.Location = New System.Drawing.Point(21, 15)
         Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(85, 27)
@@ -460,7 +460,7 @@ Partial Class OptionForm
         'CourseNotifyChk
         '
         Me.CourseNotifyChk.AutoSize = True
-        Me.CourseNotifyChk.Location = New System.Drawing.Point(28, 68)
+        Me.CourseNotifyChk.Location = New System.Drawing.Point(28, 58)
         Me.CourseNotifyChk.Margin = New System.Windows.Forms.Padding(4)
         Me.CourseNotifyChk.Name = "CourseNotifyChk"
         Me.CourseNotifyChk.Size = New System.Drawing.Size(138, 25)
@@ -494,7 +494,7 @@ Partial Class OptionForm
         '
         Me.AlwaysHideToTrayChk.AutoCheck = False
         Me.AlwaysHideToTrayChk.AutoSize = True
-        Me.AlwaysHideToTrayChk.Location = New System.Drawing.Point(29, 298)
+        Me.AlwaysHideToTrayChk.Location = New System.Drawing.Point(29, 288)
         Me.AlwaysHideToTrayChk.Margin = New System.Windows.Forms.Padding(4)
         Me.AlwaysHideToTrayChk.Name = "AlwaysHideToTrayChk"
         Me.AlwaysHideToTrayChk.Size = New System.Drawing.Size(212, 25)
@@ -505,7 +505,7 @@ Partial Class OptionForm
         'TopMostChk
         '
         Me.TopMostChk.AutoSize = True
-        Me.TopMostChk.Location = New System.Drawing.Point(324, 214)
+        Me.TopMostChk.Location = New System.Drawing.Point(324, 204)
         Me.TopMostChk.Margin = New System.Windows.Forms.Padding(4)
         Me.TopMostChk.Name = "TopMostChk"
         Me.TopMostChk.Size = New System.Drawing.Size(124, 25)
@@ -516,7 +516,7 @@ Partial Class OptionForm
         'HideToTrayChk
         '
         Me.HideToTrayChk.AutoSize = True
-        Me.HideToTrayChk.Location = New System.Drawing.Point(29, 270)
+        Me.HideToTrayChk.Location = New System.Drawing.Point(29, 260)
         Me.HideToTrayChk.Margin = New System.Windows.Forms.Padding(4)
         Me.HideToTrayChk.Name = "HideToTrayChk"
         Me.HideToTrayChk.Size = New System.Drawing.Size(244, 25)
@@ -528,7 +528,7 @@ Partial Class OptionForm
         '
         Me.Panel1.Controls.Add(Me.D_ThemeRbt)
         Me.Panel1.Controls.Add(Me.W_ThemeRbt)
-        Me.Panel1.Location = New System.Drawing.Point(351, 50)
+        Me.Panel1.Location = New System.Drawing.Point(351, 40)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(159, 66)
@@ -562,7 +562,7 @@ Partial Class OptionForm
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label3.Location = New System.Drawing.Point(346, 25)
+        Me.Label3.Location = New System.Drawing.Point(346, 15)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(85, 27)
@@ -572,7 +572,7 @@ Partial Class OptionForm
         'FadeEffectChk
         '
         Me.FadeEffectChk.AutoSize = True
-        Me.FadeEffectChk.Location = New System.Drawing.Point(29, 242)
+        Me.FadeEffectChk.Location = New System.Drawing.Point(29, 232)
         Me.FadeEffectChk.Margin = New System.Windows.Forms.Padding(4)
         Me.FadeEffectChk.Name = "FadeEffectChk"
         Me.FadeEffectChk.Size = New System.Drawing.Size(232, 25)
@@ -583,7 +583,7 @@ Partial Class OptionForm
         'MinStartChk
         '
         Me.MinStartChk.AutoSize = True
-        Me.MinStartChk.Location = New System.Drawing.Point(29, 88)
+        Me.MinStartChk.Location = New System.Drawing.Point(29, 78)
         Me.MinStartChk.Margin = New System.Windows.Forms.Padding(4)
         Me.MinStartChk.Name = "MinStartChk"
         Me.MinStartChk.Size = New System.Drawing.Size(170, 25)
@@ -595,7 +595,7 @@ Partial Class OptionForm
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label7.Location = New System.Drawing.Point(21, 180)
+        Me.Label7.Location = New System.Drawing.Point(21, 170)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(85, 27)
@@ -605,7 +605,7 @@ Partial Class OptionForm
         'SnapToEdgeChk
         '
         Me.SnapToEdgeChk.AutoSize = True
-        Me.SnapToEdgeChk.Location = New System.Drawing.Point(29, 215)
+        Me.SnapToEdgeChk.Location = New System.Drawing.Point(29, 205)
         Me.SnapToEdgeChk.Margin = New System.Windows.Forms.Padding(4)
         Me.SnapToEdgeChk.Name = "SnapToEdgeChk"
         Me.SnapToEdgeChk.Size = New System.Drawing.Size(244, 25)
@@ -618,7 +618,7 @@ Partial Class OptionForm
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Gray
-        Me.Label2.Location = New System.Drawing.Point(25, 121)
+        Me.Label2.Location = New System.Drawing.Point(25, 111)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(277, 42)
@@ -629,7 +629,7 @@ Partial Class OptionForm
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label1.Location = New System.Drawing.Point(21, 25)
+        Me.Label1.Location = New System.Drawing.Point(21, 15)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(85, 27)
@@ -639,7 +639,7 @@ Partial Class OptionForm
         'StartupChk
         '
         Me.StartupChk.AutoSize = True
-        Me.StartupChk.Location = New System.Drawing.Point(29, 60)
+        Me.StartupChk.Location = New System.Drawing.Point(29, 50)
         Me.StartupChk.Margin = New System.Windows.Forms.Padding(4)
         Me.StartupChk.Name = "StartupChk"
         Me.StartupChk.Size = New System.Drawing.Size(268, 25)
@@ -681,7 +681,7 @@ Partial Class OptionForm
         Me.FixStartTimePicker.CustomFormat = "tt hh:mm"
         Me.FixStartTimePicker.Enabled = False
         Me.FixStartTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.FixStartTimePicker.Location = New System.Drawing.Point(218, 84)
+        Me.FixStartTimePicker.Location = New System.Drawing.Point(218, 74)
         Me.FixStartTimePicker.Margin = New System.Windows.Forms.Padding(4)
         Me.FixStartTimePicker.Name = "FixStartTimePicker"
         Me.FixStartTimePicker.ShowUpDown = True
@@ -692,7 +692,7 @@ Partial Class OptionForm
         'FixStartTimeChk
         '
         Me.FixStartTimeChk.AutoSize = True
-        Me.FixStartTimeChk.Location = New System.Drawing.Point(219, 60)
+        Me.FixStartTimeChk.Location = New System.Drawing.Point(219, 50)
         Me.FixStartTimeChk.Margin = New System.Windows.Forms.Padding(4)
         Me.FixStartTimeChk.Name = "FixStartTimeChk"
         Me.FixStartTimeChk.Size = New System.Drawing.Size(124, 25)
@@ -703,7 +703,7 @@ Partial Class OptionForm
         'MemoShowChk
         '
         Me.MemoShowChk.AutoSize = True
-        Me.MemoShowChk.Location = New System.Drawing.Point(29, 146)
+        Me.MemoShowChk.Location = New System.Drawing.Point(29, 136)
         Me.MemoShowChk.Margin = New System.Windows.Forms.Padding(4)
         Me.MemoShowChk.Name = "MemoShowChk"
         Me.MemoShowChk.Size = New System.Drawing.Size(106, 25)
@@ -714,7 +714,7 @@ Partial Class OptionForm
         'AutoTextColorChk
         '
         Me.AutoTextColorChk.AutoSize = True
-        Me.AutoTextColorChk.Location = New System.Drawing.Point(29, 228)
+        Me.AutoTextColorChk.Location = New System.Drawing.Point(29, 218)
         Me.AutoTextColorChk.Margin = New System.Windows.Forms.Padding(4)
         Me.AutoTextColorChk.Name = "AutoTextColorChk"
         Me.AutoTextColorChk.Size = New System.Drawing.Size(142, 25)
@@ -725,7 +725,7 @@ Partial Class OptionForm
         'ShowLinePatternChk
         '
         Me.ShowLinePatternChk.AutoSize = True
-        Me.ShowLinePatternChk.Location = New System.Drawing.Point(152, 146)
+        Me.ShowLinePatternChk.Location = New System.Drawing.Point(152, 136)
         Me.ShowLinePatternChk.Margin = New System.Windows.Forms.Padding(4)
         Me.ShowLinePatternChk.Name = "ShowLinePatternChk"
         Me.ShowLinePatternChk.Size = New System.Drawing.Size(142, 25)
@@ -736,7 +736,7 @@ Partial Class OptionForm
         'ShowChkBoxChk
         '
         Me.ShowChkBoxChk.AutoSize = True
-        Me.ShowChkBoxChk.Location = New System.Drawing.Point(236, 118)
+        Me.ShowChkBoxChk.Location = New System.Drawing.Point(236, 108)
         Me.ShowChkBoxChk.Margin = New System.Windows.Forms.Padding(4)
         Me.ShowChkBoxChk.Name = "ShowChkBoxChk"
         Me.ShowChkBoxChk.Size = New System.Drawing.Size(88, 25)
@@ -748,7 +748,7 @@ Partial Class OptionForm
         '
         Me.PrevTablePanel.Controls.Add(Me.PrevTableArea)
         Me.PrevTablePanel.Controls.Add(Me.DayLabel)
-        Me.PrevTablePanel.Location = New System.Drawing.Point(369, 25)
+        Me.PrevTablePanel.Location = New System.Drawing.Point(369, 15)
         Me.PrevTablePanel.Margin = New System.Windows.Forms.Padding(4)
         Me.PrevTablePanel.Name = "PrevTablePanel"
         Me.PrevTablePanel.Size = New System.Drawing.Size(154, 154)
@@ -780,7 +780,7 @@ Partial Class OptionForm
         'ApplyAllGUIFontsChk
         '
         Me.ApplyAllGUIFontsChk.AutoSize = True
-        Me.ApplyAllGUIFontsChk.Location = New System.Drawing.Point(29, 288)
+        Me.ApplyAllGUIFontsChk.Location = New System.Drawing.Point(29, 278)
         Me.ApplyAllGUIFontsChk.Margin = New System.Windows.Forms.Padding(4)
         Me.ApplyAllGUIFontsChk.Name = "ApplyAllGUIFontsChk"
         Me.ApplyAllGUIFontsChk.Size = New System.Drawing.Size(135, 25)
@@ -793,7 +793,7 @@ Partial Class OptionForm
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Gray
-        Me.Label8.Location = New System.Drawing.Point(28, 318)
+        Me.Label8.Location = New System.Drawing.Point(28, 308)
         Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(422, 20)
@@ -803,7 +803,7 @@ Partial Class OptionForm
         'ShowProfChk
         '
         Me.ShowProfChk.AutoSize = True
-        Me.ShowProfChk.Location = New System.Drawing.Point(94, 119)
+        Me.ShowProfChk.Location = New System.Drawing.Point(94, 109)
         Me.ShowProfChk.Margin = New System.Windows.Forms.Padding(4)
         Me.ShowProfChk.Name = "ShowProfChk"
         Me.ShowProfChk.Size = New System.Drawing.Size(74, 25)
@@ -814,7 +814,7 @@ Partial Class OptionForm
         'FontPrevLabel
         '
         Me.FontPrevLabel.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FontPrevLabel.Location = New System.Drawing.Point(289, 256)
+        Me.FontPrevLabel.Location = New System.Drawing.Point(289, 246)
         Me.FontPrevLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.FontPrevLabel.Name = "FontPrevLabel"
         Me.FontPrevLabel.Size = New System.Drawing.Size(209, 25)
@@ -826,7 +826,7 @@ Partial Class OptionForm
         '
         Me.CustomFontBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CustomFontBT.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CustomFontBT.Location = New System.Drawing.Point(289, 285)
+        Me.CustomFontBT.Location = New System.Drawing.Point(289, 275)
         Me.CustomFontBT.Margin = New System.Windows.Forms.Padding(4)
         Me.CustomFontBT.Name = "CustomFontBT"
         Me.CustomFontBT.Size = New System.Drawing.Size(209, 28)
@@ -837,7 +837,7 @@ Partial Class OptionForm
         'ShowMemoChk
         '
         Me.ShowMemoChk.AutoSize = True
-        Me.ShowMemoChk.Location = New System.Drawing.Point(172, 119)
+        Me.ShowMemoChk.Location = New System.Drawing.Point(172, 109)
         Me.ShowMemoChk.Margin = New System.Windows.Forms.Padding(4)
         Me.ShowMemoChk.Name = "ShowMemoChk"
         Me.ShowMemoChk.Size = New System.Drawing.Size(60, 25)
@@ -848,7 +848,7 @@ Partial Class OptionForm
         'ShowDayChk
         '
         Me.ShowDayChk.AutoSize = True
-        Me.ShowDayChk.Location = New System.Drawing.Point(29, 119)
+        Me.ShowDayChk.Location = New System.Drawing.Point(29, 109)
         Me.ShowDayChk.Margin = New System.Windows.Forms.Padding(4)
         Me.ShowDayChk.Name = "ShowDayChk"
         Me.ShowDayChk.Size = New System.Drawing.Size(60, 25)
@@ -859,7 +859,7 @@ Partial Class OptionForm
         'CustomFontChk
         '
         Me.CustomFontChk.AutoSize = True
-        Me.CustomFontChk.Location = New System.Drawing.Point(29, 260)
+        Me.CustomFontChk.Location = New System.Drawing.Point(29, 250)
         Me.CustomFontChk.Margin = New System.Windows.Forms.Padding(4)
         Me.CustomFontChk.Name = "CustomFontChk"
         Me.CustomFontChk.Size = New System.Drawing.Size(170, 25)
@@ -871,7 +871,7 @@ Partial Class OptionForm
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label5.Location = New System.Drawing.Point(21, 191)
+        Me.Label5.Location = New System.Drawing.Point(21, 181)
         Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(102, 27)
@@ -881,7 +881,7 @@ Partial Class OptionForm
         'BlackTextChk
         '
         Me.BlackTextChk.AutoSize = True
-        Me.BlackTextChk.Location = New System.Drawing.Point(216, 228)
+        Me.BlackTextChk.Location = New System.Drawing.Point(216, 218)
         Me.BlackTextChk.Margin = New System.Windows.Forms.Padding(4)
         Me.BlackTextChk.Name = "BlackTextChk"
         Me.BlackTextChk.Size = New System.Drawing.Size(134, 25)
@@ -892,7 +892,7 @@ Partial Class OptionForm
         'AlwaysExpandChk
         '
         Me.AlwaysExpandChk.AutoSize = True
-        Me.AlwaysExpandChk.Location = New System.Drawing.Point(29, 89)
+        Me.AlwaysExpandChk.Location = New System.Drawing.Point(29, 79)
         Me.AlwaysExpandChk.Margin = New System.Windows.Forms.Padding(4)
         Me.AlwaysExpandChk.Name = "AlwaysExpandChk"
         Me.AlwaysExpandChk.Size = New System.Drawing.Size(110, 25)
@@ -904,7 +904,7 @@ Partial Class OptionForm
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label4.Location = New System.Drawing.Point(21, 25)
+        Me.Label4.Location = New System.Drawing.Point(21, 15)
         Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(85, 27)
@@ -914,7 +914,7 @@ Partial Class OptionForm
         'ExpandCellChk
         '
         Me.ExpandCellChk.AutoSize = True
-        Me.ExpandCellChk.Location = New System.Drawing.Point(29, 60)
+        Me.ExpandCellChk.Location = New System.Drawing.Point(29, 50)
         Me.ExpandCellChk.Margin = New System.Windows.Forms.Padding(4)
         Me.ExpandCellChk.Name = "ExpandCellChk"
         Me.ExpandCellChk.Size = New System.Drawing.Size(170, 25)
@@ -944,7 +944,7 @@ Partial Class OptionForm
         Me.Panel6.Controls.Add(Me.ImportDataBT)
         Me.Panel6.Controls.Add(Me.SaveToFileBT)
         Me.Panel6.Controls.Add(Me.CopyToClipboardBT)
-        Me.Panel6.Location = New System.Drawing.Point(16, 249)
+        Me.Panel6.Location = New System.Drawing.Point(16, 239)
         Me.Panel6.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel6.Name = "Panel6"
         Me.Panel6.Size = New System.Drawing.Size(506, 81)
@@ -1014,7 +1014,7 @@ Partial Class OptionForm
         '
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label17.Location = New System.Drawing.Point(21, 220)
+        Me.Label17.Location = New System.Drawing.Point(21, 210)
         Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(157, 27)
@@ -1025,7 +1025,7 @@ Partial Class OptionForm
         '
         Me.Label16.Font = New System.Drawing.Font("Noto Sans KR", 8.0!)
         Me.Label16.ForeColor = System.Drawing.Color.Gray
-        Me.Label16.Location = New System.Drawing.Point(22, 155)
+        Me.Label16.Location = New System.Drawing.Point(22, 145)
         Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(504, 58)
@@ -1041,7 +1041,7 @@ Partial Class OptionForm
         Me.CustomDirPanel.Controls.Add(Me.SaveNameTB)
         Me.CustomDirPanel.Controls.Add(Me.FolderBrowBT)
         Me.CustomDirPanel.Controls.Add(Me.SaveDirectoryTB)
-        Me.CustomDirPanel.Location = New System.Drawing.Point(16, 89)
+        Me.CustomDirPanel.Location = New System.Drawing.Point(16, 79)
         Me.CustomDirPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.CustomDirPanel.Name = "CustomDirPanel"
         Me.CustomDirPanel.Size = New System.Drawing.Size(506, 62)
@@ -1112,7 +1112,7 @@ Partial Class OptionForm
         'CustomSaveDirChk
         '
         Me.CustomSaveDirChk.AutoSize = True
-        Me.CustomSaveDirChk.Location = New System.Drawing.Point(29, 60)
+        Me.CustomSaveDirChk.Location = New System.Drawing.Point(29, 50)
         Me.CustomSaveDirChk.Margin = New System.Windows.Forms.Padding(4)
         Me.CustomSaveDirChk.Name = "CustomSaveDirChk"
         Me.CustomSaveDirChk.Size = New System.Drawing.Size(251, 25)
@@ -1124,7 +1124,7 @@ Partial Class OptionForm
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label13.Location = New System.Drawing.Point(21, 25)
+        Me.Label13.Location = New System.Drawing.Point(21, 15)
         Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(180, 27)

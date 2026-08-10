@@ -489,7 +489,7 @@ Partial Class TableForm
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
-        Me.BT1_menu.Size = New System.Drawing.Size(202, 402)
+        Me.BT1_menu.Size = New System.Drawing.Size(202, 374)
         '
         'BT1MenuTitle
         '
@@ -819,10 +819,10 @@ Partial Class TableForm
         Me.MemoZoomBT2.Dock = System.Windows.Forms.DockStyle.Left
         Me.MemoZoomBT2.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.MemoZoomBT2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.MemoZoomBT2.Font = New System.Drawing.Font("Noto Sans KR", 8.0!)
+        Me.MemoZoomBT2.Font = New System.Drawing.Font("맑은 고딕", 8.0!)
         Me.MemoZoomBT2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.MemoZoomBT2.Location = New System.Drawing.Point(123, 2)
-        Me.MemoZoomBT2.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.MemoZoomBT2.Margin = New System.Windows.Forms.Padding(0)
         Me.MemoZoomBT2.Name = "MemoZoomBT2"
         Me.MemoZoomBT2.Size = New System.Drawing.Size(26, 27)
         Me.MemoZoomBT2.TabIndex = 7
@@ -835,10 +835,10 @@ Partial Class TableForm
         Me.MemoZoomNumBT.Dock = System.Windows.Forms.DockStyle.Left
         Me.MemoZoomNumBT.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.MemoZoomNumBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.MemoZoomNumBT.Font = New System.Drawing.Font("Noto Sans KR", 8.0!)
+        Me.MemoZoomNumBT.Font = New System.Drawing.Font("맑은 고딕", 8.0!)
         Me.MemoZoomNumBT.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.MemoZoomNumBT.Location = New System.Drawing.Point(54, 2)
-        Me.MemoZoomNumBT.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.MemoZoomNumBT.Margin = New System.Windows.Forms.Padding(0)
         Me.MemoZoomNumBT.Name = "MemoZoomNumBT"
         Me.MemoZoomNumBT.Size = New System.Drawing.Size(69, 27)
         Me.MemoZoomNumBT.TabIndex = 6
@@ -851,10 +851,10 @@ Partial Class TableForm
         Me.MemoZoomBT1.Dock = System.Windows.Forms.DockStyle.Left
         Me.MemoZoomBT1.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.MemoZoomBT1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.MemoZoomBT1.Font = New System.Drawing.Font("Noto Sans KR", 8.0!)
+        Me.MemoZoomBT1.Font = New System.Drawing.Font("맑은 고딕", 8.0!)
         Me.MemoZoomBT1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.MemoZoomBT1.Location = New System.Drawing.Point(28, 2)
-        Me.MemoZoomBT1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.MemoZoomBT1.Margin = New System.Windows.Forms.Padding(0)
         Me.MemoZoomBT1.Name = "MemoZoomBT1"
         Me.MemoZoomBT1.Size = New System.Drawing.Size(26, 27)
         Me.MemoZoomBT1.TabIndex = 5

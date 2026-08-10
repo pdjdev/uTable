@@ -1658,13 +1658,15 @@ Public Class TableForm
         Try
             Dim memoPath As String = IO.Path.Combine(INIPath, "memo.rtf")
             Dim zoomft As String = GetINI("SETTING", "MemoZoom", "", ININamePath)
+            Dim savedZoom As Double
+            Dim hasSavedZoom As Boolean = Double.TryParse(zoomft, savedZoom)
 
             If IO.File.Exists(memoPath) Then
                 MemoRTB.LoadFile(memoPath, RichTextBoxStreamType.RichText)
             End If
 
-            If Not zoomft = "" Then
-                MemoRTB.ZoomFactor = Convert.ToDouble(zoomft)
+            If hasSavedZoom Then
+                MemoRTB.ZoomFactor = savedZoom
                 UpdateMemoZoomFactor()
             End If
 

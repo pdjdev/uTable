@@ -2,16 +2,6 @@
 Imports System.Web.Script.Serialization
 Imports Microsoft.Web.WebView2.Core
 
-Public Class EverytimeCourse
-    Public Property Day As Integer
-    Public Property Name As String
-    Public Property Professor As String
-    Public Property Memo As String
-    Public Property Start As Integer
-    Public Property Duration As Integer
-    Public Property ColorNumber As Integer
-End Class
-
 Public Class EveryTimeBrowserNew
     Dim colorMode As String = Nothing '시간표 채울때 색상에 맞추도록
     Public targetUrl As String
@@ -231,4 +221,13 @@ Public Class EveryTimeBrowserNew
         TopMost = False
         Process.Start("https://utable.sw.pbj.kr/everytime-troubleshooting")
     End Sub
+End Class
+Public Class EverytimeCourse
+    Public Property Day As Integer
+    Public Property Name As String
+    Public Property Professor As String
+    Public Property Memo As String
+    Public Property Start As Integer
+    Public Property Duration As Integer
+    Public Property ColorNumber As Integer
 End Class

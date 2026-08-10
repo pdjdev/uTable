@@ -413,6 +413,10 @@ Public Class OptionForm
     End Sub
 
     Private Sub MemoShowChk_CheckedChanged(sender As Object, e As EventArgs) Handles MemoShowChk.CheckedChanged
+        '설정창을 열면서 저장된 체크 상태를 채울 때는 메모를 다시 불러오지 않는다.
+        'MemoContentUpdate가 RichTextBox의 배율을 기본값으로 되돌릴 수 있다.
+        If Not loaded Then Return
+
         ApplySetting("MemoShow", MemoShowChk.Checked)
         TableForm.MemoOptionUpdate()
     End Sub
