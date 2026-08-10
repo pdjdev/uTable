@@ -3,6 +3,15 @@
 
 ![screenshot](image.png)
 
+
+## 다운로드
+
+<a href="https://get.microsoft.com/installer/download/9nv0p4lcc9ms?referrer=appbadge" target="_self" >
+	<img src="https://get.microsoft.com/images/ko%20dark.svg" width="200"/>
+</a>
+
+또는 [GitHub 릴리즈 페이지](https://github.com/pdjdev/uTable/releases)
+
 ## 주요 기능
 * 간단하게 사용할 수 있는 데스크탑용 시간표 프로그램
 * 강의실, 진도 등 강의별 메모 기능 탑재
