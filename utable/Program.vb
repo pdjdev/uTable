@@ -3,6 +3,6 @@
     Public Sub Main()
         Application.EnableVisualStyles()
         Application.SetCompatibleTextRenderingDefault(False)
-        Application.Run(New MainForm())
+        Application.Run(New TableForm())
     End Sub
 End Module

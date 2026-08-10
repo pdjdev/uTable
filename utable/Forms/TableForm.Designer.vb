@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class MainForm
+Partial Class TableForm
     Inherits System.Windows.Forms.Form
 
     'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
@@ -958,7 +958,7 @@ Partial Class MainForm
         '
         Me.MemoAutoSaveAniTimer.Interval = 30
         '
-        'MainForm
+        'TableForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -972,7 +972,7 @@ Partial Class MainForm
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.MinimumSize = New System.Drawing.Size(625, 500)
-        Me.Name = "MainForm"
+        Me.Name = "TableForm"
         Me.Padding = New System.Windows.Forms.Padding(5)
         Me.Text = "uTable"
         Me.TransparencyKey = System.Drawing.Color.Fuchsia

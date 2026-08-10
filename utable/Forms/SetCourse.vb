@@ -315,7 +315,7 @@ Public Class SetCourse
 
         If Not modifyMode Then
             SaveCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
-            MainForm.updateCell()
+            TableForm.updateCell()
             'MsgBox("추가되었습니다.", vbInformation)
         Else
             '수정 모드일때
@@ -329,18 +329,18 @@ Public Class SetCourse
                 If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업 또한 모두 바꾸시겠습니까? (시간, 요일 제외)", vbQuestion + vbYesNo) = vbYes Then
                     modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
                     modifyAllCourse(CourseNameTB.Text, ProfTB.Text, MemoTB.Text, ColorButton.BackColor)
-                    MainForm.updateCell()
+                    TableForm.updateCell()
                     'MsgBox("수정되었습니다.", vbInformation)
                     Close()
                 Else
                     modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
-                    MainForm.updateCell()
+                    TableForm.updateCell()
                     'MsgBox("수정되었습니다.", vbInformation)
                     Close()
                 End If
             Else
                 modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
-                MainForm.updateCell()
+                TableForm.updateCell()
                 'MsgBox("수정되었습니다.", vbInformation)
                 Close()
             End If
@@ -387,7 +387,7 @@ Public Class SetCourse
     Private Sub DeleteBT_Click(sender As Object, e As EventArgs) Handles DeleteBT.Click
         If MsgBox("정말로 지우시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
             writeTable(readTable().Replace(vbCrLf + "<course>" + olddata + "</course>", Nothing))
-            MainForm.updateCell()
+            TableForm.updateCell()
             Close()
         End If
 

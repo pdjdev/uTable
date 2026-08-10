@@ -44,12 +44,12 @@
         'SetCourse.Close()
         ViewCourse.Close()
 
-        If appearPoint.X + ViewCourse.Width > MainForm.Location.X + MainForm.Width Then
-            appearPoint.X = MainForm.Location.X + MainForm.Width - ViewCourse.Width
+        If appearPoint.X + ViewCourse.Width > TableForm.Location.X + TableForm.Width Then
+            appearPoint.X = TableForm.Location.X + TableForm.Width - ViewCourse.Width
         End If
 
-        If appearPoint.Y + ViewCourse.Height > MainForm.Location.Y + MainForm.Height Then
-            appearPoint.Y = MainForm.Location.Y + MainForm.Height - ViewCourse.Height
+        If appearPoint.Y + ViewCourse.Height > TableForm.Location.Y + TableForm.Height Then
+            appearPoint.Y = TableForm.Location.Y + TableForm.Height - ViewCourse.Height
         End If
 
         '셀 생성 시 보관한 원본 과목 데이터를 사용한다. 클릭마다 파일을 읽고 전체 XML을
@@ -131,9 +131,9 @@
 
         If Not FadeEffect = "0" Then
             If dayNum Mod 2 = 0 Then
-                BackColor = MainForm.MonPanel.BackColor
+                BackColor = TableForm.MonPanel.BackColor
             Else
-                BackColor = MainForm.TuePanel.BackColor
+                BackColor = TableForm.TuePanel.BackColor
             End If
 
             deltaColor_R = Int(Math.Abs((Int(goalColor.R) - Int(BackColor.R)) / 10))
@@ -184,9 +184,9 @@
 
             If doExpand Then
                 '확장을 하려는데 아래공간이 모자랄때
-                If Location.Y + fullheight > MainForm.TimeTable.Height Then
+                If Location.Y + fullheight > TableForm.TimeTable.Height Then
                     Height = fullheight
-                    Location() = New Point(0, MainForm.TimeTable.Height - fullheight)
+                    Location() = New Point(0, TableForm.TimeTable.Height - fullheight)
                 ElseIf defHeight < fullheight Then
                     Height = fullheight
                 End If
@@ -199,7 +199,7 @@
             End If
 
             Location() = New Point(0, defLoc)
-            'If Not Name = "DemoCellControl" Then MainForm.DrawTablePattern(dayNum)
+            'If Not Name = "DemoCellControl" Then TableForm.DrawTablePattern(dayNum)
 
         End If
     End Sub
@@ -240,13 +240,13 @@
     Private Sub CheckStateUpdate()
         If checked Then
             If blackText Then
-                If MainForm.currentDPI = 96 Then
+                If TableForm.currentDPI = 96 Then
                     ChkBox1.Image = My.Resources.check1_b_96
                 Else
                     ChkBox1.Image = My.Resources.check1_b
                 End If
             Else
-                If MainForm.currentDPI = 96 Then
+                If TableForm.currentDPI = 96 Then
                     ChkBox1.Image = My.Resources.check1_w_96
                 Else
                     ChkBox1.Image = My.Resources.check1_w
@@ -255,13 +255,13 @@
             TitleLabel.Font = New Font(TitleLabel.Font.Name, TitleLabel.Font.Size, FontStyle.Strikeout)
         Else
             If blackText Then
-                If MainForm.currentDPI = 96 Then
+                If TableForm.currentDPI = 96 Then
                     ChkBox1.Image = My.Resources.check0_b_96
                 Else
                     ChkBox1.Image = My.Resources.check0_b
                 End If
             Else
-                If MainForm.currentDPI = 96 Then
+                If TableForm.currentDPI = 96 Then
                     ChkBox1.Image = My.Resources.check0_w_96
                 Else
                     ChkBox1.Image = My.Resources.check0_w

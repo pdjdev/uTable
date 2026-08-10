@@ -7,13 +7,9 @@ Imports System.Runtime.InteropServices
 ' - 자동저장기능 구현 (5초간 타이핑 대기 후 동기저장)
 ' - rtf가 이상하게 굴면 그냥 rtb대신 tb 넣고 txt파일로 저장
 
-Public Class MainForm
+Public Class TableForm
 
 #Region "변수"
-
-    ' ================== 스토어 에디션 여부!!! ==================
-    Public Const isStore = False
-    ' ===========================================================
 
     Dim starttime As Integer = 0
     Dim endtime As Integer = 0
@@ -218,7 +214,7 @@ Public Class MainForm
         snaptoedge = (GetINI("SETTING", "SnapToEdge", "", ININamePath) = "1")
     End Sub
 
-    Private Sub MainForm_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
+    Private Sub TableForm_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left And Me.WindowState <> FormWindowState.Maximized Then
             If Not GetINI("SETTING", "WindowLocked", "", ININamePath) = "1" Then
                 'TimeTable.SuspendLayout()
@@ -228,7 +224,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub MainForm_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
+    Private Sub TableForm_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
         'Calculate which direction to resize based on mouse position
 
         If e.Location.X < BorderWidth And e.Location.Y < BorderWidth Then
@@ -261,7 +257,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub MainForm_LocationChanged(sender As Object, e As EventArgs) Handles MyBase.LocationChanged, MyBase.SizeChanged
+    Private Sub TableForm_LocationChanged(sender As Object, e As EventArgs) Handles MyBase.LocationChanged, MyBase.SizeChanged
 
         If formshown And Not hiding Then
             SetINI("SETTING", "WindowPosition", Location.X.ToString + "," + Location.Y.ToString, ININamePath)
@@ -278,7 +274,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub MainForm_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
+    Private Sub TableForm_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
         Cursor = Cursors.Default
     End Sub
 
@@ -495,7 +491,7 @@ Public Class MainForm
 
 #Region "앱 주요 이벤트 (Load, Shown)"
 
-    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub TableForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         For Each scrn In Screen.AllScreens
             If scrn.DeviceName = GetINI("SETTING", "WindowDisplay", "", ININamePath) Then
@@ -594,7 +590,7 @@ Public Class MainForm
     End Sub
 
 
-    Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+    Private Sub TableForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         formshown = True
         Refresh()
 
@@ -865,7 +861,7 @@ Public Class MainForm
         ' DLL 존재 여부 체크 (스토어에디션은 X)
         Dim DLLOK = False
 
-        If Not isStore Then
+        If Not IsStoreApp Then
 
 
             Dim exeFullpath As String = Application.ExecutablePath
@@ -1161,7 +1157,7 @@ Public Class MainForm
 
         cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
         'MsgBox(((startt - starttime) / timelength) * Panel1.Height)
-        cell.Width = MonPanel.Width
+        cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
         cell.Height = part * MonPanel.Height
         cell.defHeight = part * MonPanel.Height
         cell.dayNum = day
@@ -1204,7 +1200,7 @@ Public Class MainForm
         cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
         cell.defLoc = ((startt - starttime) / timelength) * MonPanel.Height
         'MsgBox(((startt - starttime) / timelength) * Panel1.Height)
-        cell.Width = MonPanel.Width
+        cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
         cell.Height = part * MonPanel.Height
         cell.defHeight = part * MonPanel.Height
 
@@ -1263,6 +1259,15 @@ Public Class MainForm
             TimeTable.Visible = True
 
         End If
+    End Sub
+
+    Private Sub TimeTable_Layout(sender As Object, e As System.Windows.Forms.LayoutEventArgs) Handles TimeTable.Layout
+        If Not updated Then Exit Sub
+
+        For Each course As TableCourse In courseRecords
+            Dim cell As CellControl = TimeTable.Controls.Find(course.Identity(), True).First
+            cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
+        Next
     End Sub
 
     Private Sub TablePanel_Paint(sender As Object, e As PaintEventArgs) Handles MonPanel.Paint, TuePanel.Paint, WedPanel.Paint,

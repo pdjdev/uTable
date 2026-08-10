@@ -16,11 +16,11 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            MainForm.NotifyIcon1.Visible = False
+            Global.uTable.TableForm.NotifyIcon1.Visible = False
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
-            MainForm.ReopenForm()
+            Global.uTable.TableForm.ReopenForm()
         End Sub
     End Class
 End Namespace

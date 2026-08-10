@@ -62,7 +62,7 @@ Partial Class ErrorForm
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Button1.Location = New System.Drawing.Point(386, 12)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(4)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(151, 52)
         Me.Button1.TabIndex = 1
@@ -76,9 +76,9 @@ Partial Class ErrorForm
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 379)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Padding = New System.Windows.Forms.Padding(12, 12, 12, 12)
+        Me.Panel1.Padding = New System.Windows.Forms.Padding(12)
         Me.Panel1.Size = New System.Drawing.Size(549, 76)
         Me.Panel1.TabIndex = 3
         '
@@ -87,7 +87,7 @@ Partial Class ErrorForm
         Me.Button3.Dock = System.Windows.Forms.DockStyle.Left
         Me.Button3.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Button3.Location = New System.Drawing.Point(12, 12)
-        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(4)
         Me.Button3.MinimumSize = New System.Drawing.Size(226, 51)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(226, 52)
@@ -100,7 +100,7 @@ Partial Class ErrorForm
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button2.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Button2.Location = New System.Drawing.Point(266, 12)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(4)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(120, 52)
         Me.Button2.TabIndex = 2
@@ -113,9 +113,9 @@ Partial Class ErrorForm
         Me.Panel2.Controls.Add(Me.Label1)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Padding = New System.Windows.Forms.Padding(12, 12, 12, 12)
+        Me.Panel2.Padding = New System.Windows.Forms.Padding(12)
         Me.Panel2.Size = New System.Drawing.Size(549, 88)
         Me.Panel2.TabIndex = 4
         '
@@ -138,7 +138,7 @@ Partial Class ErrorForm
         Me.Panel3.Controls.Add(Me.Label3)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel3.Location = New System.Drawing.Point(0, 88)
-        Me.Panel3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel3.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Padding = New System.Windows.Forms.Padding(12, 0, 12, 0)
         Me.Panel3.Size = New System.Drawing.Size(549, 291)
@@ -149,7 +149,7 @@ Partial Class ErrorForm
         Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RichTextBox1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.RichTextBox1.Location = New System.Drawing.Point(12, 31)
-        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.ReadOnly = True
         Me.RichTextBox1.Size = New System.Drawing.Size(525, 260)
