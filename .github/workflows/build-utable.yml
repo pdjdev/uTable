@@ -25,6 +25,12 @@ jobs:
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: Set up NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore uTable.sln -NonInteractive
+
       - name: Build uTable WinForms application
         run: >
           msbuild utable/uTable.vbproj
