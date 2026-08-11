@@ -9,6 +9,10 @@ Namespace My
     ' NetworkAvailabilityChanged: 네트워크가 연결되거나 연결이 끊어질 때 발생합니다.
     Partial Friend Class MyApplication
 
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            MigrateStoreStartupShortcut()
+        End Sub
+
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             e.ExitApplication = False
             ErrorForm.RichTextBox1.Text = e.Exception.Message + vbCr + "=====" + vbCr + DateTime.Now.ToString + vbCr + vbCr + e.Exception.ToString

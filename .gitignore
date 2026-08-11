@@ -339,4 +339,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-uTablePackage/
+uTablePackage/*
+!uTablePackage/
+!uTablePackage/Package.appxmanifest
