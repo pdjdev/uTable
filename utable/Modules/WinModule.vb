@@ -2,7 +2,7 @@ Module WinModule
 
 #Region "시작프로그램설정"
 
-    Private Const ShortcutName As String = "\uTable.lnk"
+    Private Const ShortcutFileName As String = "uTable.lnk"
     Private Const AppLaunchCmd As String = "C:\Windows\explorer.exe"
     Private Const AppCode As String = "shell:appsFolder\49490PBJSoftware.uTable_fv4zvza0919de!App"
     Private Const StoreAliasName As String = "uTable.exe"
@@ -44,36 +44,52 @@ Module WinModule
         End Get
     End Property
 
-    Public Function checkStartUp() As Boolean
-        Dim destlnk As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
-        If Not IO.File.Exists(destlnk) Then Return False
+    Private ReadOnly Property StartupShortcutPath As String
+        Get
+            Return IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.Startup),
+                ShortcutFileName)
+        End Get
+    End Property
 
+    Public Function checkStartUp() As Boolean
+        If Not IO.File.Exists(StartupShortcutPath) Then Return False
+
+        Dim targetPath As String = Nothing
+        Dim arguments As String = Nothing
+        If Not TryReadStartupShortcut(targetPath, arguments) Then Return False
+
+        If IsStoreApp Then
+            Return PathsEqual(targetPath, StoreAliasPath) AndAlso String.IsNullOrEmpty(arguments)
+        End If
+
+        If Not PathsEqual(targetPath, Application.ExecutablePath) Then Return False
+        Return String.IsNullOrEmpty(arguments)
+    End Function
+
+    Private Function TryReadStartupShortcut(ByRef targetPath As String, ByRef arguments As String) As Boolean
         Try
             Dim wsh As Object = CreateObject("WScript.Shell")
-            Dim shortcut As Object = wsh.CreateShortcut(destlnk)
-            Dim targetPath As String = CStr(shortcut.TargetPath)
-            Dim arguments As String = CStr(shortcut.Arguments).Trim()
-
-            If IsStoreApp Then
-                Return PathsEqual(targetPath, StoreAliasPath) AndAlso String.IsNullOrEmpty(arguments)
-            End If
-
-            ' 일반 exe 바로가기 및 이전 버전이 남긴 "exe + shell:appsFolder" 형식도 인정한다.
-            If Not PathsEqual(targetPath, Application.ExecutablePath) Then Return False
-            Return String.IsNullOrEmpty(arguments) OrElse arguments.StartsWith("shell:appsFolder\", StringComparison.OrdinalIgnoreCase)
+            Dim shortcut As Object = wsh.CreateShortcut(StartupShortcutPath)
+            targetPath = CStr(shortcut.TargetPath)
+            arguments = CStr(shortcut.Arguments).Trim()
+            Return True
         Catch
             Return False
         End Try
     End Function
 
     Private Function PathsEqual(firstPath As String, secondPath As String) As Boolean
-        Return String.Equals(IO.Path.GetFullPath(firstPath).TrimEnd("\"c),
-                             IO.Path.GetFullPath(secondPath).TrimEnd("\"c),
-                             StringComparison.OrdinalIgnoreCase)
+        Try
+            Return String.Equals(IO.Path.GetFullPath(firstPath).TrimEnd("\"c),
+                                 IO.Path.GetFullPath(secondPath).TrimEnd("\"c),
+                                 StringComparison.OrdinalIgnoreCase)
+        Catch
+            Return False
+        End Try
     End Function
 
     Sub SetStartup()
-        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
         Dim targetPath As String
 
         If IsStoreApp Then
@@ -86,7 +102,7 @@ Module WinModule
         End If
 
         Dim wsh As Object = CreateObject("WScript.Shell")
-        Dim myShortcut As Object = wsh.CreateShortcut(path)
+        Dim myShortcut As Object = wsh.CreateShortcut(StartupShortcutPath)
         myShortcut.TargetPath = targetPath
         myShortcut.Arguments = ""
         myShortcut.WorkingDirectory = IO.Path.GetDirectoryName(targetPath)
@@ -96,28 +112,24 @@ Module WinModule
 
     Public Sub MigrateStoreStartupShortcut()
         If Not IsStoreApp Then Return
+        If Not IO.File.Exists(StartupShortcutPath) Then Return
 
-        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
-        If Not IO.File.Exists(path) Then Return
+        Dim targetPath As String = Nothing
+        Dim arguments As String = Nothing
+        If Not TryReadStartupShortcut(targetPath, arguments) Then Return
 
-        Try
-            Dim wsh As Object = CreateObject("WScript.Shell")
-            Dim shortcut As Object = wsh.CreateShortcut(path)
-            Dim targetPath As String = CStr(shortcut.TargetPath)
-            Dim arguments As String = CStr(shortcut.Arguments).Trim()
-
-            If PathsEqual(targetPath, AppLaunchCmd) AndAlso
-               String.Equals(arguments, AppCode, StringComparison.OrdinalIgnoreCase) Then
+        If PathsEqual(targetPath, AppLaunchCmd) AndAlso
+           String.Equals(arguments, AppCode, StringComparison.OrdinalIgnoreCase) Then
+            Try
                 SetStartup()
-            End If
-        Catch
-            ' 기존 바로가기를 읽거나 교체하지 못해도 앱 실행은 계속한다.
-        End Try
+            Catch
+                ' 기존 바로가기를 교체하지 못해도 앱 실행은 계속한다.
+            End Try
+        End If
     End Sub
 
     Sub RemoveStartup()
-        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
-        If IO.File.Exists(path) Then My.Computer.FileSystem.DeleteFile(path)
+        If IO.File.Exists(StartupShortcutPath) Then My.Computer.FileSystem.DeleteFile(StartupShortcutPath)
     End Sub
 
 #End Region
