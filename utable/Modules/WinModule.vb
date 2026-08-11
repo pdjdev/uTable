@@ -5,6 +5,7 @@ Module WinModule
     Private Const ShortcutName As String = "\uTable.lnk"
     Private Const AppLaunchCmd As String = "C:\Windows\explorer.exe"
     Private Const AppCode As String = "shell:appsFolder\49490PBJSoftware.uTable_fv4zvza0919de!App"
+    Private Const StoreAliasName As String = "uTable.exe"
     Private Const ErrorInsufficientBuffer As Integer = 122
 
     <Runtime.InteropServices.DllImport("kernel32.dll", CharSet:=Runtime.InteropServices.CharSet.Unicode)>
@@ -33,22 +34,36 @@ Module WinModule
         End Get
     End Property
 
+    Private ReadOnly Property StoreAliasPath As String
+        Get
+            Return IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Microsoft",
+                "WindowsApps",
+                StoreAliasName)
+        End Get
+    End Property
+
     Public Function checkStartUp() As Boolean
         Dim destlnk As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
         If Not IO.File.Exists(destlnk) Then Return False
 
-        Dim wsh As Object = CreateObject("WScript.Shell")
-        Dim shortcut As Object = wsh.CreateShortcut(destlnk)
-        Dim targetPath As String = CStr(shortcut.TargetPath)
-        Dim arguments As String = CStr(shortcut.Arguments).Trim()
+        Try
+            Dim wsh As Object = CreateObject("WScript.Shell")
+            Dim shortcut As Object = wsh.CreateShortcut(destlnk)
+            Dim targetPath As String = CStr(shortcut.TargetPath)
+            Dim arguments As String = CStr(shortcut.Arguments).Trim()
 
-        ' MSIX 바로가기는 Explorer가 AppsFolder 경로를 실행한다.
-        If IsStoreApp AndAlso PathsEqual(targetPath, AppLaunchCmd) AndAlso
-           String.Equals(arguments, AppCode, StringComparison.OrdinalIgnoreCase) Then Return True
+            If IsStoreApp Then
+                Return PathsEqual(targetPath, StoreAliasPath) AndAlso String.IsNullOrEmpty(arguments)
+            End If
 
-        ' 일반 exe 바로가기 및 이전 버전이 남긴 "exe + shell:appsFolder" 형식도 인정한다.
-        If Not PathsEqual(targetPath, Application.ExecutablePath) Then Return False
-        Return String.IsNullOrEmpty(arguments) OrElse arguments.StartsWith("shell:appsFolder\", StringComparison.OrdinalIgnoreCase)
+            ' 일반 exe 바로가기 및 이전 버전이 남긴 "exe + shell:appsFolder" 형식도 인정한다.
+            If Not PathsEqual(targetPath, Application.ExecutablePath) Then Return False
+            Return String.IsNullOrEmpty(arguments) OrElse arguments.StartsWith("shell:appsFolder\", StringComparison.OrdinalIgnoreCase)
+        Catch
+            Return False
+        End Try
     End Function
 
     Private Function PathsEqual(firstPath As String, secondPath As String) As Boolean
@@ -59,19 +74,45 @@ Module WinModule
 
     Sub SetStartup()
         Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
-        Dim wsh As Object = CreateObject("WScript.Shell")
-        Dim myShortcut As Object = wsh.CreateShortcut(path)
+        Dim targetPath As String
 
         If IsStoreApp Then
-            myShortcut.TargetPath = wsh.ExpandEnvironmentStrings(AppLaunchCmd)
-            myShortcut.Arguments = AppCode
+            targetPath = StoreAliasPath
+            If Not IO.File.Exists(targetPath) Then
+                Throw New InvalidOperationException("uTable 앱 실행 별칭을 찾을 수 없습니다: " & targetPath)
+            End If
         Else
-            myShortcut.TargetPath = wsh.ExpandEnvironmentStrings(Application.ExecutablePath)
-            myShortcut.Arguments = ""
+            targetPath = Application.ExecutablePath
         End If
 
+        Dim wsh As Object = CreateObject("WScript.Shell")
+        Dim myShortcut As Object = wsh.CreateShortcut(path)
+        myShortcut.TargetPath = targetPath
+        myShortcut.Arguments = ""
+        myShortcut.WorkingDirectory = IO.Path.GetDirectoryName(targetPath)
         myShortcut.WindowStyle = 4
         myShortcut.Save()
+    End Sub
+
+    Public Sub MigrateStoreStartupShortcut()
+        If Not IsStoreApp Then Return
+
+        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup) & ShortcutName
+        If Not IO.File.Exists(path) Then Return
+
+        Try
+            Dim wsh As Object = CreateObject("WScript.Shell")
+            Dim shortcut As Object = wsh.CreateShortcut(path)
+            Dim targetPath As String = CStr(shortcut.TargetPath)
+            Dim arguments As String = CStr(shortcut.Arguments).Trim()
+
+            If PathsEqual(targetPath, AppLaunchCmd) AndAlso
+               String.Equals(arguments, AppCode, StringComparison.OrdinalIgnoreCase) Then
+                SetStartup()
+            End If
+        Catch
+            ' 기존 바로가기를 읽거나 교체하지 못해도 앱 실행은 계속한다.
+        End Try
     End Sub
 
     Sub RemoveStartup()
