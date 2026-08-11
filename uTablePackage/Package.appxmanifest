@@ -25,9 +25,6 @@
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <desktop:Extension Category="windows.startupTask" Executable="uTable\uTable.exe" EntryPoint="Windows.FullTrustApplication">
-          <desktop:StartupTask TaskId="uTableStartup" Enabled="false" DisplayName="uTable" />
-        </desktop:Extension>
         <uap3:Extension Category="windows.appExecutionAlias" Executable="uTable\uTable.exe" EntryPoint="Windows.FullTrustApplication">
           <uap3:AppExecutionAlias>
             <desktop:ExecutionAlias Alias="uTable.exe" />
