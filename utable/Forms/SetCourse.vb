@@ -377,7 +377,14 @@ Public Class SetCourse
 
     Private Sub DeleteBT_Click(sender As Object, e As EventArgs) Handles DeleteBT.Click
         If MsgBox("정말로 지우시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-            writeTable(readTable().Replace(vbCrLf + "<course>" + olddata + "</course>", Nothing))
+            Dim updatedData As String = Nothing
+
+            If Not TryRemoveTableCourse(readTable(), olddata, updatedData) Then
+                MsgBox("삭제할 수업을 현재 시간표에서 찾지 못했습니다. 시간표를 새로고침한 후 다시 시도해 주세요.", vbExclamation)
+                Exit Sub
+            End If
+
+            writeTable(updatedData)
             TableForm.updateCell()
             Close()
         End If
