@@ -298,12 +298,6 @@
     <Compile Include="Modules\GUIModule.vb" />
     <Compile Include="Modules\ThemeColors.vb" />
     <Compile Include="Program.vb" />
-    <Compile Include="UserControls\LoadingSplash.Designer.vb">
-      <DependentUpon>LoadingSplash.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\LoadingSplash.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -330,9 +324,7 @@
     <Compile Include="UserControls\CellControl.Designer.vb">
       <DependentUpon>CellControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CellControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="UserControls\CellControl.vb" />
     <Compile Include="Modules\WinModule.vb" />
     <Compile Include="UserControls\SettingMenu.Designer.vb">
       <DependentUpon>SettingMenu.vb</DependentUpon>
@@ -366,9 +358,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StartupAsk.resx">
       <DependentUpon>StartupAsk.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\LoadingSplash.resx">
-      <DependentUpon>LoadingSplash.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

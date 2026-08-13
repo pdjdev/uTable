@@ -72,6 +72,16 @@ Public Class TableForm
 
 #Region "Aero 그림자 효과 (Vista이상)"
 
+    '테두리는 숨긴 채 WS_MINIMIZEBOX만 다시 추가하여 작업 표시줄 버튼으로 최소화/복원 구현
+    Protected Overrides ReadOnly Property CreateParams As CreateParams
+        Get
+            Const WS_MINIMIZEBOX As Integer = &H20000
+            Dim nativeParams As CreateParams = MyBase.CreateParams
+            nativeParams.Style = nativeParams.Style Or WS_MINIMIZEBOX
+            Return nativeParams
+        End Get
+    End Property
+
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
         CreateDropShadow(Me)
         MyBase.OnHandleCreated(e)
@@ -824,8 +834,10 @@ Public Class TableForm
 
             If Not (My.Computer.FileSystem.FileExists(finalDir + "\Microsoft.Web.WebView2.Core.dll") And
            My.Computer.FileSystem.FileExists(finalDir + "\Microsoft.Web.WebView2.WinForms.dll") And
-           My.Computer.FileSystem.FileExists(finalDir + "\WebView2Loader.dll")) Then
-                If MsgBox("에브리타임 시간표를 불러오기 위해서는 추가적인 다운로드(0.6MB)가 필요합니다. 파일은 uTable이 실행된 위치에 저장됩니다." _
+           My.Computer.FileSystem.FileExists(finalDir + "\runtimes\win-x86\native\WebView2Loader.dll") And
+           My.Computer.FileSystem.FileExists(finalDir + "\runtimes\win-x64\native\WebView2Loader.dll") And
+           My.Computer.FileSystem.FileExists(finalDir + "\runtimes\win-arm64\native\WebView2Loader.dll")) Then
+                If MsgBox("에브리타임 시간표를 불러오기 위해서는 추가적인 다운로드(약 3MB)가 필요합니다. 파일은 uTable이 실행된 위치에 저장됩니다." _
                    + vbCr + vbCr + "'확인'을 누르면 다운로드 및 불러오기 작업이 진행되며, '취소'를 누르면 작업이 중단됩니다.", vbOKCancel + vbInformation, "다운로드 필요") = vbOK Then
                     DLLDownloader.ShowDialog(Me)
                 End If
