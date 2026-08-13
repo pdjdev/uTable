@@ -127,9 +127,9 @@ Public Class OptionForm
         VersionLabel.Text = "유테이블 v" + GetAppVersion.ToString
 
         If IsStoreApp Then
-            VersionLabel.Text += " (MS Store)  -  by PBJSoftware 2023"
+            VersionLabel.Text += " (MS Store)  -  by PBJSoftware 2026"
         Else
-            VersionLabel.Text += "   -  by PBJSoftware 2023"
+            VersionLabel.Text += "   -  by PBJSoftware 2026"
         End If
 
         SwitchMode(1)

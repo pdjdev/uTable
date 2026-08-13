@@ -14,7 +14,7 @@ Option Explicit On
 Imports System
 
 Namespace My.Resources
-    
+
     '이 클래스는 ResGen 또는 Visual Studio와 같은 도구를 통해 StronglyTypedResourceBuilder
     '클래스에서 자동으로 생성되었습니다.
     '멤버를 추가하거나 제거하려면 .ResX 파일을 편집한 다음 /str 옵션을 사용하여 ResGen을
@@ -22,20 +22,20 @@ Namespace My.Resources
     '''<summary>
     '''  지역화된 문자열 등을 찾기 위한 강력한 형식의 리소스 클래스입니다.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0"),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0"),
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+     Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),
+     Global.Microsoft.VisualBasic.HideModuleNameAttribute()>
     Friend Module Resources
-        
+
         Private resourceMan As Global.System.Resources.ResourceManager
-        
+
         Private resourceCulture As Global.System.Globalization.CultureInfo
-        
+
         '''<summary>
         '''  이 클래스에서 사용하는 캐시된 ResourceManager 인스턴스를 반환합니다.
         '''</summary>
-        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
+        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>
         Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
@@ -45,268 +45,268 @@ Namespace My.Resources
                 Return resourceMan
             End Get
         End Property
-        
+
         '''<summary>
         '''  이 강력한 형식의 리소스 클래스를 사용하여 모든 리소스 조회에 대해 현재 스레드의 CurrentUICulture 속성을
         '''  재정의합니다.
         '''</summary>
-        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
+        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>
         Friend Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return resourceCulture
             End Get
             Set
-                resourceCulture = value
+                resourceCulture = Value
             End Set
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property bt_edit_b() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("bt_edit_b", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property bt_edit_w() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("bt_edit_w", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property bt_titleapply() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("bt_titleapply", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property bt_titleedit() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("bt_titleedit", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property check0_b() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("check0_b", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property check0_b_96() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("check0_b_96", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property check0_w() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("check0_w", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property check0_w_96() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("check0_w_96", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property check1_b() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("check1_b", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property check1_b_96() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("check1_b_96", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property check1_w() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("check1_w", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property check1_w_96() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("check1_w_96", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property closeicon_b() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("closeicon_b", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property closeicon_b2() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("closeicon_b2", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property closeicon_w() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("closeicon_w", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property menuicon_b() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("menuicon_b", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property menuicon_w() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("menuicon_w", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property minicon_b() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("minicon_b", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property minicon_w() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("minicon_w", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property msstore_logo() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("msstore_logo", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property ptable_icon() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("ptable_icon", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
+                Return CType(obj, System.Drawing.Icon)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property shadow1() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("shadow1", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property uTable_banner() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("uTable_banner", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property uTable_banner_dark() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("uTable_banner_dark", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
-        
+
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
         Friend ReadOnly Property utable_icon() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("utable_icon", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return CType(obj, System.Drawing.Bitmap)
             End Get
         End Property
     End Module

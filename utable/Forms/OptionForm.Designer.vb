@@ -27,11 +27,6 @@ Partial Class OptionForm
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.MainPanel = New System.Windows.Forms.Panel()
-        Me.TabPage_Info = New System.Windows.Forms.Panel()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-        Me.VersionLabel = New System.Windows.Forms.Label()
-        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
-        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.TapPage_Notification = New System.Windows.Forms.Panel()
         Me.TodaysCourseNotifyChk = New System.Windows.Forms.CheckBox()
         Me.CourseNotifyPanel = New System.Windows.Forms.Panel()
@@ -48,21 +43,24 @@ Partial Class OptionForm
         Me.Notify_30min_Chk = New System.Windows.Forms.CheckBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.CourseNotifyChk = New System.Windows.Forms.CheckBox()
-        Me.TabPage_Basic = New System.Windows.Forms.Panel()
-        Me.AlwaysHideToTrayChk = New System.Windows.Forms.CheckBox()
-        Me.TopMostChk = New System.Windows.Forms.CheckBox()
-        Me.HideToTrayChk = New System.Windows.Forms.CheckBox()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.D_ThemeRbt = New System.Windows.Forms.RadioButton()
-        Me.W_ThemeRbt = New System.Windows.Forms.RadioButton()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.FadeEffectChk = New System.Windows.Forms.CheckBox()
-        Me.MinStartChk = New System.Windows.Forms.CheckBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.SnapToEdgeChk = New System.Windows.Forms.CheckBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.StartupChk = New System.Windows.Forms.CheckBox()
+        Me.TabPage_Data = New System.Windows.Forms.Panel()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.SettingSaveRbt = New System.Windows.Forms.RadioButton()
+        Me.TableSaveRbt = New System.Windows.Forms.RadioButton()
+        Me.ImportDataBT = New System.Windows.Forms.Button()
+        Me.SaveToFileBT = New System.Windows.Forms.Button()
+        Me.CopyToClipboardBT = New System.Windows.Forms.Button()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.CustomDirPanel = New System.Windows.Forms.Panel()
+        Me.CheckAndApplyDirSettingBT = New System.Windows.Forms.Button()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.SaveNameTB = New System.Windows.Forms.TextBox()
+        Me.FolderBrowBT = New System.Windows.Forms.Button()
+        Me.SaveDirectoryTB = New System.Windows.Forms.TextBox()
+        Me.CustomSaveDirChk = New System.Windows.Forms.CheckBox()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.TabPage_Table = New System.Windows.Forms.Panel()
         Me.FixStartTimePicker = New System.Windows.Forms.DateTimePicker()
         Me.FixStartTimeChk = New System.Windows.Forms.CheckBox()
@@ -86,24 +84,26 @@ Partial Class OptionForm
         Me.AlwaysExpandChk = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ExpandCellChk = New System.Windows.Forms.CheckBox()
-        Me.TabPage_Data = New System.Windows.Forms.Panel()
-        Me.Panel6 = New System.Windows.Forms.Panel()
-        Me.SettingSaveRbt = New System.Windows.Forms.RadioButton()
-        Me.TableSaveRbt = New System.Windows.Forms.RadioButton()
-        Me.ImportDataBT = New System.Windows.Forms.Button()
-        Me.SaveToFileBT = New System.Windows.Forms.Button()
-        Me.CopyToClipboardBT = New System.Windows.Forms.Button()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.CustomDirPanel = New System.Windows.Forms.Panel()
-        Me.CheckAndApplyDirSettingBT = New System.Windows.Forms.Button()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.SaveNameTB = New System.Windows.Forms.TextBox()
-        Me.FolderBrowBT = New System.Windows.Forms.Button()
-        Me.SaveDirectoryTB = New System.Windows.Forms.TextBox()
-        Me.CustomSaveDirChk = New System.Windows.Forms.CheckBox()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.TabPage_Basic = New System.Windows.Forms.Panel()
+        Me.AlwaysHideToTrayChk = New System.Windows.Forms.CheckBox()
+        Me.TopMostChk = New System.Windows.Forms.CheckBox()
+        Me.HideToTrayChk = New System.Windows.Forms.CheckBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.D_ThemeRbt = New System.Windows.Forms.RadioButton()
+        Me.W_ThemeRbt = New System.Windows.Forms.RadioButton()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.FadeEffectChk = New System.Windows.Forms.CheckBox()
+        Me.MinStartChk = New System.Windows.Forms.CheckBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.SnapToEdgeChk = New System.Windows.Forms.CheckBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.StartupChk = New System.Windows.Forms.CheckBox()
+        Me.TabPage_Info = New System.Windows.Forms.Panel()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.VersionLabel = New System.Windows.Forms.Label()
+        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
+        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.TabPage_Update = New System.Windows.Forms.Panel()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
@@ -126,32 +126,32 @@ Partial Class OptionForm
         Me.MSStoreLinkLabel = New System.Windows.Forms.LinkLabel()
         Me.ShadowPanel = New System.Windows.Forms.Panel()
         Me.SidePanel = New System.Windows.Forms.Panel()
-        Me.ShadowPanel1 = New System.Windows.Forms.Panel()
-        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
-        Me.UpdateChecker = New System.ComponentModel.BackgroundWorker()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.SettingMenu_Info = New uTable.SettingMenu()
         Me.SettingMenu_Update = New uTable.SettingMenu()
         Me.SettingMenu_Notification = New uTable.SettingMenu()
         Me.SettingMenu_Data = New uTable.SettingMenu()
         Me.SettingMenu_Table = New uTable.SettingMenu()
         Me.SettingMenu_Basic = New uTable.SettingMenu()
+        Me.ShadowPanel1 = New System.Windows.Forms.Panel()
+        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
+        Me.UpdateChecker = New System.ComponentModel.BackgroundWorker()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.TitlePanel.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainPanel.SuspendLayout()
-        Me.TabPage_Info.SuspendLayout()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TapPage_Notification.SuspendLayout()
         Me.CourseNotifyPanel.SuspendLayout()
-        Me.TabPage_Basic.SuspendLayout()
-        Me.Panel1.SuspendLayout()
-        Me.TabPage_Table.SuspendLayout()
-        Me.PrevTablePanel.SuspendLayout()
         Me.TabPage_Data.SuspendLayout()
         Me.Panel6.SuspendLayout()
         Me.CustomDirPanel.SuspendLayout()
+        Me.TabPage_Table.SuspendLayout()
+        Me.PrevTablePanel.SuspendLayout()
+        Me.TabPage_Basic.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.TabPage_Info.SuspendLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage_Update.SuspendLayout()
         Me.Panel4.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -201,12 +201,12 @@ Partial Class OptionForm
         'MainPanel
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
-        Me.MainPanel.Controls.Add(Me.TapPage_Notification)
-        Me.MainPanel.Controls.Add(Me.TabPage_Data)
-        Me.MainPanel.Controls.Add(Me.TabPage_Table)
         Me.MainPanel.Controls.Add(Me.TabPage_Basic)
-        Me.MainPanel.Controls.Add(Me.TabPage_Info)
+        Me.MainPanel.Controls.Add(Me.TabPage_Table)
+        Me.MainPanel.Controls.Add(Me.TabPage_Data)
+        Me.MainPanel.Controls.Add(Me.TapPage_Notification)
         Me.MainPanel.Controls.Add(Me.TabPage_Update)
+        Me.MainPanel.Controls.Add(Me.TabPage_Info)
         Me.MainPanel.Controls.Add(Me.ShadowPanel)
         Me.MainPanel.Controls.Add(Me.SidePanel)
         Me.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill
@@ -215,74 +215,6 @@ Partial Class OptionForm
         Me.MainPanel.Name = "MainPanel"
         Me.MainPanel.Size = New System.Drawing.Size(737, 359)
         Me.MainPanel.TabIndex = 1
-        '
-        'TabPage_Info
-        '
-        Me.TabPage_Info.Controls.Add(Me.RichTextBox1)
-        Me.TabPage_Info.Controls.Add(Me.VersionLabel)
-        Me.TabPage_Info.Controls.Add(Me.FeedbackLabel)
-        Me.TabPage_Info.Controls.Add(Me.BannerPictureBox)
-        Me.TabPage_Info.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage_Info.Location = New System.Drawing.Point(185, 12)
-        Me.TabPage_Info.Margin = New System.Windows.Forms.Padding(4)
-        Me.TabPage_Info.Name = "TabPage_Info"
-        Me.TabPage_Info.Padding = New System.Windows.Forms.Padding(12)
-        Me.TabPage_Info.Size = New System.Drawing.Size(552, 347)
-        Me.TabPage_Info.TabIndex = 14
-        '
-        'RichTextBox1
-        '
-        Me.RichTextBox1.BackColor = System.Drawing.Color.White
-        Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RichTextBox1.ForeColor = System.Drawing.Color.Black
-        Me.RichTextBox1.Location = New System.Drawing.Point(12, 115)
-        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(4)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(528, 200)
-        Me.RichTextBox1.TabIndex = 3
-        Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
-        '
-        'VersionLabel
-        '
-        Me.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.VersionLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.VersionLabel.Location = New System.Drawing.Point(12, 84)
-        Me.VersionLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.VersionLabel.Name = "VersionLabel"
-        Me.VersionLabel.Size = New System.Drawing.Size(528, 31)
-        Me.VersionLabel.TabIndex = 7
-        Me.VersionLabel.Text = "VersionLabel"
-        Me.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'FeedbackLabel
-        '
-        Me.FeedbackLabel.AutoSize = True
-        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.FeedbackLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.FeedbackLabel.Location = New System.Drawing.Point(12, 315)
-        Me.FeedbackLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(525, 0)
-        Me.FeedbackLabel.Name = "FeedbackLabel"
-        Me.FeedbackLabel.Size = New System.Drawing.Size(525, 20)
-        Me.FeedbackLabel.TabIndex = 6
-        Me.FeedbackLabel.TabStop = True
-        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
-        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'BannerPictureBox
-        '
-        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
-        Me.BannerPictureBox.Image = Global.uTable.My.Resources.Resources.uTable_banner
-        Me.BannerPictureBox.Location = New System.Drawing.Point(12, 12)
-        Me.BannerPictureBox.Margin = New System.Windows.Forms.Padding(4)
-        Me.BannerPictureBox.Name = "BannerPictureBox"
-        Me.BannerPictureBox.Size = New System.Drawing.Size(528, 72)
-        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.BannerPictureBox.TabIndex = 4
-        Me.BannerPictureBox.TabStop = False
         '
         'TapPage_Notification
         '
@@ -469,183 +401,214 @@ Partial Class OptionForm
         Me.CourseNotifyChk.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.CourseNotifyChk.UseVisualStyleBackColor = True
         '
-        'TabPage_Basic
+        'TabPage_Data
         '
-        Me.TabPage_Basic.Controls.Add(Me.AlwaysHideToTrayChk)
-        Me.TabPage_Basic.Controls.Add(Me.TopMostChk)
-        Me.TabPage_Basic.Controls.Add(Me.HideToTrayChk)
-        Me.TabPage_Basic.Controls.Add(Me.Panel1)
-        Me.TabPage_Basic.Controls.Add(Me.Label3)
-        Me.TabPage_Basic.Controls.Add(Me.FadeEffectChk)
-        Me.TabPage_Basic.Controls.Add(Me.MinStartChk)
-        Me.TabPage_Basic.Controls.Add(Me.Label7)
-        Me.TabPage_Basic.Controls.Add(Me.SnapToEdgeChk)
-        Me.TabPage_Basic.Controls.Add(Me.Label2)
-        Me.TabPage_Basic.Controls.Add(Me.Label1)
-        Me.TabPage_Basic.Controls.Add(Me.StartupChk)
-        Me.TabPage_Basic.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage_Basic.Location = New System.Drawing.Point(185, 12)
-        Me.TabPage_Basic.Margin = New System.Windows.Forms.Padding(4)
-        Me.TabPage_Basic.Name = "TabPage_Basic"
-        Me.TabPage_Basic.Size = New System.Drawing.Size(552, 347)
-        Me.TabPage_Basic.TabIndex = 3
+        Me.TabPage_Data.Controls.Add(Me.Panel6)
+        Me.TabPage_Data.Controls.Add(Me.Label17)
+        Me.TabPage_Data.Controls.Add(Me.Label16)
+        Me.TabPage_Data.Controls.Add(Me.CustomDirPanel)
+        Me.TabPage_Data.Controls.Add(Me.CustomSaveDirChk)
+        Me.TabPage_Data.Controls.Add(Me.Label13)
+        Me.TabPage_Data.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage_Data.Location = New System.Drawing.Point(185, 12)
+        Me.TabPage_Data.Margin = New System.Windows.Forms.Padding(4)
+        Me.TabPage_Data.Name = "TabPage_Data"
+        Me.TabPage_Data.Size = New System.Drawing.Size(552, 347)
+        Me.TabPage_Data.TabIndex = 15
         '
-        'AlwaysHideToTrayChk
+        'Panel6
         '
-        Me.AlwaysHideToTrayChk.AutoCheck = False
-        Me.AlwaysHideToTrayChk.AutoSize = True
-        Me.AlwaysHideToTrayChk.Location = New System.Drawing.Point(29, 288)
-        Me.AlwaysHideToTrayChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.AlwaysHideToTrayChk.Name = "AlwaysHideToTrayChk"
-        Me.AlwaysHideToTrayChk.Size = New System.Drawing.Size(212, 25)
-        Me.AlwaysHideToTrayChk.TabIndex = 14
-        Me.AlwaysHideToTrayChk.Text = "항상 작업 표시줄에서 숨기기"
-        Me.AlwaysHideToTrayChk.UseVisualStyleBackColor = True
+        Me.Panel6.Controls.Add(Me.SettingSaveRbt)
+        Me.Panel6.Controls.Add(Me.TableSaveRbt)
+        Me.Panel6.Controls.Add(Me.ImportDataBT)
+        Me.Panel6.Controls.Add(Me.SaveToFileBT)
+        Me.Panel6.Controls.Add(Me.CopyToClipboardBT)
+        Me.Panel6.Location = New System.Drawing.Point(16, 239)
+        Me.Panel6.Margin = New System.Windows.Forms.Padding(4)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(506, 81)
+        Me.Panel6.TabIndex = 26
         '
-        'TopMostChk
+        'SettingSaveRbt
         '
-        Me.TopMostChk.AutoSize = True
-        Me.TopMostChk.Location = New System.Drawing.Point(324, 204)
-        Me.TopMostChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.TopMostChk.Name = "TopMostChk"
-        Me.TopMostChk.Size = New System.Drawing.Size(124, 25)
-        Me.TopMostChk.TabIndex = 13
-        Me.TopMostChk.Text = "항상 위에 표시"
-        Me.TopMostChk.UseVisualStyleBackColor = True
+        Me.SettingSaveRbt.AutoSize = True
+        Me.SettingSaveRbt.Location = New System.Drawing.Point(101, 4)
+        Me.SettingSaveRbt.Margin = New System.Windows.Forms.Padding(4)
+        Me.SettingSaveRbt.Name = "SettingSaveRbt"
+        Me.SettingSaveRbt.Size = New System.Drawing.Size(119, 25)
+        Me.SettingSaveRbt.TabIndex = 27
+        Me.SettingSaveRbt.Text = "프로그램 설정"
+        Me.SettingSaveRbt.UseVisualStyleBackColor = True
         '
-        'HideToTrayChk
+        'TableSaveRbt
         '
-        Me.HideToTrayChk.AutoSize = True
-        Me.HideToTrayChk.Location = New System.Drawing.Point(29, 260)
-        Me.HideToTrayChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.HideToTrayChk.Name = "HideToTrayChk"
-        Me.HideToTrayChk.Size = New System.Drawing.Size(244, 25)
-        Me.HideToTrayChk.TabIndex = 12
-        Me.HideToTrayChk.Text = "최소화 시 작업 표시줄에서 숨기기"
-        Me.HideToTrayChk.UseVisualStyleBackColor = True
+        Me.TableSaveRbt.AutoSize = True
+        Me.TableSaveRbt.Checked = True
+        Me.TableSaveRbt.Location = New System.Drawing.Point(12, 4)
+        Me.TableSaveRbt.Margin = New System.Windows.Forms.Padding(4)
+        Me.TableSaveRbt.Name = "TableSaveRbt"
+        Me.TableSaveRbt.Size = New System.Drawing.Size(73, 25)
+        Me.TableSaveRbt.TabIndex = 26
+        Me.TableSaveRbt.TabStop = True
+        Me.TableSaveRbt.Text = "시간표"
+        Me.TableSaveRbt.UseVisualStyleBackColor = True
         '
-        'Panel1
+        'ImportDataBT
         '
-        Me.Panel1.Controls.Add(Me.D_ThemeRbt)
-        Me.Panel1.Controls.Add(Me.W_ThemeRbt)
-        Me.Panel1.Location = New System.Drawing.Point(351, 40)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(4)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(159, 66)
-        Me.Panel1.TabIndex = 11
+        Me.ImportDataBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ImportDataBT.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.ImportDataBT.Location = New System.Drawing.Point(279, 32)
+        Me.ImportDataBT.Margin = New System.Windows.Forms.Padding(4)
+        Me.ImportDataBT.Name = "ImportDataBT"
+        Me.ImportDataBT.Size = New System.Drawing.Size(205, 31)
+        Me.ImportDataBT.TabIndex = 25
+        Me.ImportDataBT.Text = "클립보드/파일 불러오기, 적용"
+        Me.ImportDataBT.UseVisualStyleBackColor = True
         '
-        'D_ThemeRbt
+        'SaveToFileBT
         '
-        Me.D_ThemeRbt.AutoSize = True
-        Me.D_ThemeRbt.Location = New System.Drawing.Point(4, 35)
-        Me.D_ThemeRbt.Margin = New System.Windows.Forms.Padding(4)
-        Me.D_ThemeRbt.Name = "D_ThemeRbt"
-        Me.D_ThemeRbt.Size = New System.Drawing.Size(59, 25)
-        Me.D_ThemeRbt.TabIndex = 1
-        Me.D_ThemeRbt.TabStop = True
-        Me.D_ThemeRbt.Text = "다크"
-        Me.D_ThemeRbt.UseVisualStyleBackColor = True
+        Me.SaveToFileBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.SaveToFileBT.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.SaveToFileBT.Location = New System.Drawing.Point(12, 32)
+        Me.SaveToFileBT.Margin = New System.Windows.Forms.Padding(4)
+        Me.SaveToFileBT.Name = "SaveToFileBT"
+        Me.SaveToFileBT.Size = New System.Drawing.Size(128, 31)
+        Me.SaveToFileBT.TabIndex = 23
+        Me.SaveToFileBT.Text = "파일로 저장"
+        Me.SaveToFileBT.UseVisualStyleBackColor = True
         '
-        'W_ThemeRbt
+        'CopyToClipboardBT
         '
-        Me.W_ThemeRbt.AutoSize = True
-        Me.W_ThemeRbt.Location = New System.Drawing.Point(4, 9)
-        Me.W_ThemeRbt.Margin = New System.Windows.Forms.Padding(4)
-        Me.W_ThemeRbt.Name = "W_ThemeRbt"
-        Me.W_ThemeRbt.Size = New System.Drawing.Size(115, 25)
-        Me.W_ThemeRbt.TabIndex = 0
-        Me.W_ThemeRbt.TabStop = True
-        Me.W_ThemeRbt.Text = "화이트 (기본)"
-        Me.W_ThemeRbt.UseVisualStyleBackColor = True
+        Me.CopyToClipboardBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.CopyToClipboardBT.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CopyToClipboardBT.Location = New System.Drawing.Point(146, 32)
+        Me.CopyToClipboardBT.Margin = New System.Windows.Forms.Padding(4)
+        Me.CopyToClipboardBT.Name = "CopyToClipboardBT"
+        Me.CopyToClipboardBT.Size = New System.Drawing.Size(122, 31)
+        Me.CopyToClipboardBT.TabIndex = 24
+        Me.CopyToClipboardBT.Text = "클립보드에 복사"
+        Me.CopyToClipboardBT.UseVisualStyleBackColor = True
         '
-        'Label3
+        'Label17
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label3.Location = New System.Drawing.Point(346, 15)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(85, 27)
-        Me.Label3.TabIndex = 10
-        Me.Label3.Text = "테마 선택"
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label17.Location = New System.Drawing.Point(21, 210)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(157, 27)
+        Me.Label17.TabIndex = 22
+        Me.Label17.Text = "내보내기, 불러오기"
         '
-        'FadeEffectChk
+        'Label16
         '
-        Me.FadeEffectChk.AutoSize = True
-        Me.FadeEffectChk.Location = New System.Drawing.Point(29, 232)
-        Me.FadeEffectChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.FadeEffectChk.Name = "FadeEffectChk"
-        Me.FadeEffectChk.Size = New System.Drawing.Size(232, 25)
-        Me.FadeEffectChk.TabIndex = 9
-        Me.FadeEffectChk.Text = "페이드 인/아웃 애니메이션 적용"
-        Me.FadeEffectChk.UseVisualStyleBackColor = True
+        Me.Label16.Font = New System.Drawing.Font("Noto Sans KR", 8.0!)
+        Me.Label16.ForeColor = System.Drawing.Color.Gray
+        Me.Label16.Location = New System.Drawing.Point(22, 145)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(504, 58)
+        Me.Label16.TabIndex = 21
+        Me.Label16.Text = "경고: uTable 실행 경로에 설정 파일(settings.ini)이 없는 경우 설정값이 초기화되어 시간표를 불러올 수 없으며, 다른 컴퓨터 환경" &
+    "에서 불러오는 데 실패할 수 있습니다."
         '
-        'MinStartChk
+        'CustomDirPanel
         '
-        Me.MinStartChk.AutoSize = True
-        Me.MinStartChk.Location = New System.Drawing.Point(29, 78)
-        Me.MinStartChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.MinStartChk.Name = "MinStartChk"
-        Me.MinStartChk.Size = New System.Drawing.Size(170, 25)
-        Me.MinStartChk.TabIndex = 8
-        Me.MinStartChk.Text = "최소화 된 상태로 시작"
-        Me.MinStartChk.UseVisualStyleBackColor = True
+        Me.CustomDirPanel.Controls.Add(Me.CheckAndApplyDirSettingBT)
+        Me.CustomDirPanel.Controls.Add(Me.Label15)
+        Me.CustomDirPanel.Controls.Add(Me.Label14)
+        Me.CustomDirPanel.Controls.Add(Me.SaveNameTB)
+        Me.CustomDirPanel.Controls.Add(Me.FolderBrowBT)
+        Me.CustomDirPanel.Controls.Add(Me.SaveDirectoryTB)
+        Me.CustomDirPanel.Location = New System.Drawing.Point(16, 79)
+        Me.CustomDirPanel.Margin = New System.Windows.Forms.Padding(4)
+        Me.CustomDirPanel.Name = "CustomDirPanel"
+        Me.CustomDirPanel.Size = New System.Drawing.Size(506, 62)
+        Me.CustomDirPanel.TabIndex = 20
         '
-        'Label7
+        'CheckAndApplyDirSettingBT
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label7.Location = New System.Drawing.Point(21, 170)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(85, 27)
-        Me.Label7.TabIndex = 7
-        Me.Label7.Text = "모양 설정"
+        Me.CheckAndApplyDirSettingBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.CheckAndApplyDirSettingBT.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.CheckAndApplyDirSettingBT.Location = New System.Drawing.Point(385, 4)
+        Me.CheckAndApplyDirSettingBT.Margin = New System.Windows.Forms.Padding(4)
+        Me.CheckAndApplyDirSettingBT.Name = "CheckAndApplyDirSettingBT"
+        Me.CheckAndApplyDirSettingBT.Size = New System.Drawing.Size(115, 51)
+        Me.CheckAndApplyDirSettingBT.TabIndex = 22
+        Me.CheckAndApplyDirSettingBT.Text = "설정 적용"
+        Me.CheckAndApplyDirSettingBT.UseVisualStyleBackColor = True
         '
-        'SnapToEdgeChk
+        'Label15
         '
-        Me.SnapToEdgeChk.AutoSize = True
-        Me.SnapToEdgeChk.Location = New System.Drawing.Point(29, 205)
-        Me.SnapToEdgeChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.SnapToEdgeChk.Name = "SnapToEdgeChk"
-        Me.SnapToEdgeChk.Size = New System.Drawing.Size(244, 25)
-        Me.SnapToEdgeChk.TabIndex = 6
-        Me.SnapToEdgeChk.Text = "화면 모서리에 자동으로 붙게 하기"
-        Me.SnapToEdgeChk.UseVisualStyleBackColor = True
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label15.Location = New System.Drawing.Point(8, 6)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(155, 20)
+        Me.Label15.TabIndex = 21
+        Me.Label15.Text = "저장 위치 (빈 칸: 기본값)"
         '
-        'Label2
+        'Label14
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.Gray
-        Me.Label2.Location = New System.Drawing.Point(25, 111)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(277, 42)
-        Me.Label2.TabIndex = 5
-        Me.Label2.Text = "※ 실행 파일(.exe)의 위치가 변경되는 경우" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "    다시 설정하셔야 합니다."
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label14.Location = New System.Drawing.Point(234, 6)
+        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(48, 20)
+        Me.Label14.TabIndex = 20
+        Me.Label14.Text = "파일명"
         '
-        'Label1
+        'SaveNameTB
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label1.Location = New System.Drawing.Point(21, 15)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(85, 27)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "시작 설정"
+        Me.SaveNameTB.Location = New System.Drawing.Point(238, 26)
+        Me.SaveNameTB.Margin = New System.Windows.Forms.Padding(4)
+        Me.SaveNameTB.Name = "SaveNameTB"
+        Me.SaveNameTB.Size = New System.Drawing.Size(139, 29)
+        Me.SaveNameTB.TabIndex = 19
         '
-        'StartupChk
+        'FolderBrowBT
         '
-        Me.StartupChk.AutoSize = True
-        Me.StartupChk.Location = New System.Drawing.Point(29, 50)
-        Me.StartupChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.StartupChk.Name = "StartupChk"
-        Me.StartupChk.Size = New System.Drawing.Size(268, 25)
-        Me.StartupChk.TabIndex = 3
-        Me.StartupChk.Text = "Windows 시작 시 같이 프로그램 실행"
-        Me.StartupChk.UseVisualStyleBackColor = True
+        Me.FolderBrowBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.FolderBrowBT.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FolderBrowBT.Location = New System.Drawing.Point(184, 26)
+        Me.FolderBrowBT.Margin = New System.Windows.Forms.Padding(4)
+        Me.FolderBrowBT.Name = "FolderBrowBT"
+        Me.FolderBrowBT.Size = New System.Drawing.Size(41, 29)
+        Me.FolderBrowBT.TabIndex = 18
+        Me.FolderBrowBT.Text = "..."
+        Me.FolderBrowBT.UseVisualStyleBackColor = True
+        '
+        'SaveDirectoryTB
+        '
+        Me.SaveDirectoryTB.Location = New System.Drawing.Point(11, 26)
+        Me.SaveDirectoryTB.Margin = New System.Windows.Forms.Padding(4)
+        Me.SaveDirectoryTB.Name = "SaveDirectoryTB"
+        Me.SaveDirectoryTB.Size = New System.Drawing.Size(164, 29)
+        Me.SaveDirectoryTB.TabIndex = 14
+        '
+        'CustomSaveDirChk
+        '
+        Me.CustomSaveDirChk.AutoSize = True
+        Me.CustomSaveDirChk.Location = New System.Drawing.Point(29, 50)
+        Me.CustomSaveDirChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.CustomSaveDirChk.Name = "CustomSaveDirChk"
+        Me.CustomSaveDirChk.Size = New System.Drawing.Size(251, 25)
+        Me.CustomSaveDirChk.TabIndex = 13
+        Me.CustomSaveDirChk.Text = "사용자 지정 저장 위치, 파일명 사용"
+        Me.CustomSaveDirChk.UseVisualStyleBackColor = True
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label13.Location = New System.Drawing.Point(21, 15)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(180, 27)
+        Me.Label13.TabIndex = 12
+        Me.Label13.Text = "시간표 저장 위치 설정"
         '
         'TabPage_Table
         '
@@ -922,214 +885,251 @@ Partial Class OptionForm
         Me.ExpandCellChk.Text = "마우스 올리면 표 확장"
         Me.ExpandCellChk.UseVisualStyleBackColor = True
         '
-        'TabPage_Data
+        'TabPage_Basic
         '
-        Me.TabPage_Data.Controls.Add(Me.Panel6)
-        Me.TabPage_Data.Controls.Add(Me.Label17)
-        Me.TabPage_Data.Controls.Add(Me.Label16)
-        Me.TabPage_Data.Controls.Add(Me.CustomDirPanel)
-        Me.TabPage_Data.Controls.Add(Me.CustomSaveDirChk)
-        Me.TabPage_Data.Controls.Add(Me.Label13)
-        Me.TabPage_Data.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage_Data.Location = New System.Drawing.Point(185, 12)
-        Me.TabPage_Data.Margin = New System.Windows.Forms.Padding(4)
-        Me.TabPage_Data.Name = "TabPage_Data"
-        Me.TabPage_Data.Size = New System.Drawing.Size(552, 347)
-        Me.TabPage_Data.TabIndex = 15
+        Me.TabPage_Basic.Controls.Add(Me.AlwaysHideToTrayChk)
+        Me.TabPage_Basic.Controls.Add(Me.TopMostChk)
+        Me.TabPage_Basic.Controls.Add(Me.HideToTrayChk)
+        Me.TabPage_Basic.Controls.Add(Me.Panel1)
+        Me.TabPage_Basic.Controls.Add(Me.Label3)
+        Me.TabPage_Basic.Controls.Add(Me.FadeEffectChk)
+        Me.TabPage_Basic.Controls.Add(Me.MinStartChk)
+        Me.TabPage_Basic.Controls.Add(Me.Label7)
+        Me.TabPage_Basic.Controls.Add(Me.SnapToEdgeChk)
+        Me.TabPage_Basic.Controls.Add(Me.Label2)
+        Me.TabPage_Basic.Controls.Add(Me.Label1)
+        Me.TabPage_Basic.Controls.Add(Me.StartupChk)
+        Me.TabPage_Basic.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage_Basic.Location = New System.Drawing.Point(185, 12)
+        Me.TabPage_Basic.Margin = New System.Windows.Forms.Padding(4)
+        Me.TabPage_Basic.Name = "TabPage_Basic"
+        Me.TabPage_Basic.Size = New System.Drawing.Size(552, 347)
+        Me.TabPage_Basic.TabIndex = 3
         '
-        'Panel6
+        'AlwaysHideToTrayChk
         '
-        Me.Panel6.Controls.Add(Me.SettingSaveRbt)
-        Me.Panel6.Controls.Add(Me.TableSaveRbt)
-        Me.Panel6.Controls.Add(Me.ImportDataBT)
-        Me.Panel6.Controls.Add(Me.SaveToFileBT)
-        Me.Panel6.Controls.Add(Me.CopyToClipboardBT)
-        Me.Panel6.Location = New System.Drawing.Point(16, 239)
-        Me.Panel6.Margin = New System.Windows.Forms.Padding(4)
-        Me.Panel6.Name = "Panel6"
-        Me.Panel6.Size = New System.Drawing.Size(506, 81)
-        Me.Panel6.TabIndex = 26
+        Me.AlwaysHideToTrayChk.AutoCheck = False
+        Me.AlwaysHideToTrayChk.AutoSize = True
+        Me.AlwaysHideToTrayChk.Location = New System.Drawing.Point(29, 288)
+        Me.AlwaysHideToTrayChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.AlwaysHideToTrayChk.Name = "AlwaysHideToTrayChk"
+        Me.AlwaysHideToTrayChk.Size = New System.Drawing.Size(212, 25)
+        Me.AlwaysHideToTrayChk.TabIndex = 14
+        Me.AlwaysHideToTrayChk.Text = "항상 작업 표시줄에서 숨기기"
+        Me.AlwaysHideToTrayChk.UseVisualStyleBackColor = True
         '
-        'SettingSaveRbt
+        'TopMostChk
         '
-        Me.SettingSaveRbt.AutoSize = True
-        Me.SettingSaveRbt.Location = New System.Drawing.Point(101, 4)
-        Me.SettingSaveRbt.Margin = New System.Windows.Forms.Padding(4)
-        Me.SettingSaveRbt.Name = "SettingSaveRbt"
-        Me.SettingSaveRbt.Size = New System.Drawing.Size(119, 25)
-        Me.SettingSaveRbt.TabIndex = 27
-        Me.SettingSaveRbt.Text = "프로그램 설정"
-        Me.SettingSaveRbt.UseVisualStyleBackColor = True
+        Me.TopMostChk.AutoSize = True
+        Me.TopMostChk.Location = New System.Drawing.Point(324, 204)
+        Me.TopMostChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.TopMostChk.Name = "TopMostChk"
+        Me.TopMostChk.Size = New System.Drawing.Size(124, 25)
+        Me.TopMostChk.TabIndex = 13
+        Me.TopMostChk.Text = "항상 위에 표시"
+        Me.TopMostChk.UseVisualStyleBackColor = True
         '
-        'TableSaveRbt
+        'HideToTrayChk
         '
-        Me.TableSaveRbt.AutoSize = True
-        Me.TableSaveRbt.Checked = True
-        Me.TableSaveRbt.Location = New System.Drawing.Point(12, 4)
-        Me.TableSaveRbt.Margin = New System.Windows.Forms.Padding(4)
-        Me.TableSaveRbt.Name = "TableSaveRbt"
-        Me.TableSaveRbt.Size = New System.Drawing.Size(73, 25)
-        Me.TableSaveRbt.TabIndex = 26
-        Me.TableSaveRbt.TabStop = True
-        Me.TableSaveRbt.Text = "시간표"
-        Me.TableSaveRbt.UseVisualStyleBackColor = True
+        Me.HideToTrayChk.AutoSize = True
+        Me.HideToTrayChk.Location = New System.Drawing.Point(29, 260)
+        Me.HideToTrayChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.HideToTrayChk.Name = "HideToTrayChk"
+        Me.HideToTrayChk.Size = New System.Drawing.Size(244, 25)
+        Me.HideToTrayChk.TabIndex = 12
+        Me.HideToTrayChk.Text = "최소화 시 작업 표시줄에서 숨기기"
+        Me.HideToTrayChk.UseVisualStyleBackColor = True
         '
-        'ImportDataBT
+        'Panel1
         '
-        Me.ImportDataBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ImportDataBT.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.ImportDataBT.Location = New System.Drawing.Point(279, 32)
-        Me.ImportDataBT.Margin = New System.Windows.Forms.Padding(4)
-        Me.ImportDataBT.Name = "ImportDataBT"
-        Me.ImportDataBT.Size = New System.Drawing.Size(205, 31)
-        Me.ImportDataBT.TabIndex = 25
-        Me.ImportDataBT.Text = "클립보드/파일 불러오기, 적용"
-        Me.ImportDataBT.UseVisualStyleBackColor = True
+        Me.Panel1.Controls.Add(Me.D_ThemeRbt)
+        Me.Panel1.Controls.Add(Me.W_ThemeRbt)
+        Me.Panel1.Location = New System.Drawing.Point(351, 40)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(4)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(159, 66)
+        Me.Panel1.TabIndex = 11
         '
-        'SaveToFileBT
+        'D_ThemeRbt
         '
-        Me.SaveToFileBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.SaveToFileBT.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.SaveToFileBT.Location = New System.Drawing.Point(12, 32)
-        Me.SaveToFileBT.Margin = New System.Windows.Forms.Padding(4)
-        Me.SaveToFileBT.Name = "SaveToFileBT"
-        Me.SaveToFileBT.Size = New System.Drawing.Size(128, 31)
-        Me.SaveToFileBT.TabIndex = 23
-        Me.SaveToFileBT.Text = "파일로 저장"
-        Me.SaveToFileBT.UseVisualStyleBackColor = True
+        Me.D_ThemeRbt.AutoSize = True
+        Me.D_ThemeRbt.Location = New System.Drawing.Point(4, 35)
+        Me.D_ThemeRbt.Margin = New System.Windows.Forms.Padding(4)
+        Me.D_ThemeRbt.Name = "D_ThemeRbt"
+        Me.D_ThemeRbt.Size = New System.Drawing.Size(59, 25)
+        Me.D_ThemeRbt.TabIndex = 1
+        Me.D_ThemeRbt.TabStop = True
+        Me.D_ThemeRbt.Text = "다크"
+        Me.D_ThemeRbt.UseVisualStyleBackColor = True
         '
-        'CopyToClipboardBT
+        'W_ThemeRbt
         '
-        Me.CopyToClipboardBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CopyToClipboardBT.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CopyToClipboardBT.Location = New System.Drawing.Point(146, 32)
-        Me.CopyToClipboardBT.Margin = New System.Windows.Forms.Padding(4)
-        Me.CopyToClipboardBT.Name = "CopyToClipboardBT"
-        Me.CopyToClipboardBT.Size = New System.Drawing.Size(122, 31)
-        Me.CopyToClipboardBT.TabIndex = 24
-        Me.CopyToClipboardBT.Text = "클립보드에 복사"
-        Me.CopyToClipboardBT.UseVisualStyleBackColor = True
+        Me.W_ThemeRbt.AutoSize = True
+        Me.W_ThemeRbt.Location = New System.Drawing.Point(4, 9)
+        Me.W_ThemeRbt.Margin = New System.Windows.Forms.Padding(4)
+        Me.W_ThemeRbt.Name = "W_ThemeRbt"
+        Me.W_ThemeRbt.Size = New System.Drawing.Size(115, 25)
+        Me.W_ThemeRbt.TabIndex = 0
+        Me.W_ThemeRbt.TabStop = True
+        Me.W_ThemeRbt.Text = "화이트 (기본)"
+        Me.W_ThemeRbt.UseVisualStyleBackColor = True
         '
-        'Label17
+        'Label3
         '
-        Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label17.Location = New System.Drawing.Point(21, 210)
-        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(157, 27)
-        Me.Label17.TabIndex = 22
-        Me.Label17.Text = "내보내기, 불러오기"
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label3.Location = New System.Drawing.Point(346, 15)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(85, 27)
+        Me.Label3.TabIndex = 10
+        Me.Label3.Text = "테마 선택"
         '
-        'Label16
+        'FadeEffectChk
         '
-        Me.Label16.Font = New System.Drawing.Font("Noto Sans KR", 8.0!)
-        Me.Label16.ForeColor = System.Drawing.Color.Gray
-        Me.Label16.Location = New System.Drawing.Point(22, 145)
-        Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(504, 58)
-        Me.Label16.TabIndex = 21
-        Me.Label16.Text = "경고: uTable 실행 경로에 설정 파일(settings.ini)이 없는 경우 설정값이 초기화되어 시간표를 불러올 수 없으며, 다른 컴퓨터 환경" &
-    "에서 불러오는 데 실패할 수 있습니다."
+        Me.FadeEffectChk.AutoSize = True
+        Me.FadeEffectChk.Location = New System.Drawing.Point(29, 232)
+        Me.FadeEffectChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.FadeEffectChk.Name = "FadeEffectChk"
+        Me.FadeEffectChk.Size = New System.Drawing.Size(232, 25)
+        Me.FadeEffectChk.TabIndex = 9
+        Me.FadeEffectChk.Text = "페이드 인/아웃 애니메이션 적용"
+        Me.FadeEffectChk.UseVisualStyleBackColor = True
         '
-        'CustomDirPanel
+        'MinStartChk
         '
-        Me.CustomDirPanel.Controls.Add(Me.CheckAndApplyDirSettingBT)
-        Me.CustomDirPanel.Controls.Add(Me.Label15)
-        Me.CustomDirPanel.Controls.Add(Me.Label14)
-        Me.CustomDirPanel.Controls.Add(Me.SaveNameTB)
-        Me.CustomDirPanel.Controls.Add(Me.FolderBrowBT)
-        Me.CustomDirPanel.Controls.Add(Me.SaveDirectoryTB)
-        Me.CustomDirPanel.Location = New System.Drawing.Point(16, 79)
-        Me.CustomDirPanel.Margin = New System.Windows.Forms.Padding(4)
-        Me.CustomDirPanel.Name = "CustomDirPanel"
-        Me.CustomDirPanel.Size = New System.Drawing.Size(506, 62)
-        Me.CustomDirPanel.TabIndex = 20
+        Me.MinStartChk.AutoSize = True
+        Me.MinStartChk.Location = New System.Drawing.Point(29, 78)
+        Me.MinStartChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.MinStartChk.Name = "MinStartChk"
+        Me.MinStartChk.Size = New System.Drawing.Size(170, 25)
+        Me.MinStartChk.TabIndex = 8
+        Me.MinStartChk.Text = "최소화 된 상태로 시작"
+        Me.MinStartChk.UseVisualStyleBackColor = True
         '
-        'CheckAndApplyDirSettingBT
+        'Label7
         '
-        Me.CheckAndApplyDirSettingBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CheckAndApplyDirSettingBT.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.CheckAndApplyDirSettingBT.Location = New System.Drawing.Point(385, 4)
-        Me.CheckAndApplyDirSettingBT.Margin = New System.Windows.Forms.Padding(4)
-        Me.CheckAndApplyDirSettingBT.Name = "CheckAndApplyDirSettingBT"
-        Me.CheckAndApplyDirSettingBT.Size = New System.Drawing.Size(115, 51)
-        Me.CheckAndApplyDirSettingBT.TabIndex = 22
-        Me.CheckAndApplyDirSettingBT.Text = "설정 적용"
-        Me.CheckAndApplyDirSettingBT.UseVisualStyleBackColor = True
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label7.Location = New System.Drawing.Point(21, 170)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(85, 27)
+        Me.Label7.TabIndex = 7
+        Me.Label7.Text = "모양 설정"
         '
-        'Label15
+        'SnapToEdgeChk
         '
-        Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label15.Location = New System.Drawing.Point(8, 6)
-        Me.Label15.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(155, 20)
-        Me.Label15.TabIndex = 21
-        Me.Label15.Text = "저장 위치 (빈 칸: 기본값)"
+        Me.SnapToEdgeChk.AutoSize = True
+        Me.SnapToEdgeChk.Location = New System.Drawing.Point(29, 205)
+        Me.SnapToEdgeChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.SnapToEdgeChk.Name = "SnapToEdgeChk"
+        Me.SnapToEdgeChk.Size = New System.Drawing.Size(244, 25)
+        Me.SnapToEdgeChk.TabIndex = 6
+        Me.SnapToEdgeChk.Text = "화면 모서리에 자동으로 붙게 하기"
+        Me.SnapToEdgeChk.UseVisualStyleBackColor = True
         '
-        'Label14
+        'Label2
         '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label14.Location = New System.Drawing.Point(234, 6)
-        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(48, 20)
-        Me.Label14.TabIndex = 20
-        Me.Label14.Text = "파일명"
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.Gray
+        Me.Label2.Location = New System.Drawing.Point(25, 111)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(277, 42)
+        Me.Label2.TabIndex = 5
+        Me.Label2.Text = "※ 실행 파일(.exe)의 위치가 변경되는 경우" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "    다시 설정하셔야 합니다."
         '
-        'SaveNameTB
+        'Label1
         '
-        Me.SaveNameTB.Location = New System.Drawing.Point(238, 26)
-        Me.SaveNameTB.Margin = New System.Windows.Forms.Padding(4)
-        Me.SaveNameTB.Name = "SaveNameTB"
-        Me.SaveNameTB.Size = New System.Drawing.Size(139, 29)
-        Me.SaveNameTB.TabIndex = 19
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Location = New System.Drawing.Point(21, 15)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(85, 27)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "시작 설정"
         '
-        'FolderBrowBT
+        'StartupChk
         '
-        Me.FolderBrowBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.FolderBrowBT.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FolderBrowBT.Location = New System.Drawing.Point(184, 26)
-        Me.FolderBrowBT.Margin = New System.Windows.Forms.Padding(4)
-        Me.FolderBrowBT.Name = "FolderBrowBT"
-        Me.FolderBrowBT.Size = New System.Drawing.Size(41, 29)
-        Me.FolderBrowBT.TabIndex = 18
-        Me.FolderBrowBT.Text = "..."
-        Me.FolderBrowBT.UseVisualStyleBackColor = True
+        Me.StartupChk.AutoSize = True
+        Me.StartupChk.Location = New System.Drawing.Point(29, 50)
+        Me.StartupChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.StartupChk.Name = "StartupChk"
+        Me.StartupChk.Size = New System.Drawing.Size(268, 25)
+        Me.StartupChk.TabIndex = 3
+        Me.StartupChk.Text = "Windows 시작 시 같이 프로그램 실행"
+        Me.StartupChk.UseVisualStyleBackColor = True
         '
-        'SaveDirectoryTB
+        'TabPage_Info
         '
-        Me.SaveDirectoryTB.Location = New System.Drawing.Point(11, 26)
-        Me.SaveDirectoryTB.Margin = New System.Windows.Forms.Padding(4)
-        Me.SaveDirectoryTB.Name = "SaveDirectoryTB"
-        Me.SaveDirectoryTB.Size = New System.Drawing.Size(164, 29)
-        Me.SaveDirectoryTB.TabIndex = 14
+        Me.TabPage_Info.Controls.Add(Me.RichTextBox1)
+        Me.TabPage_Info.Controls.Add(Me.VersionLabel)
+        Me.TabPage_Info.Controls.Add(Me.FeedbackLabel)
+        Me.TabPage_Info.Controls.Add(Me.BannerPictureBox)
+        Me.TabPage_Info.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage_Info.Location = New System.Drawing.Point(185, 12)
+        Me.TabPage_Info.Margin = New System.Windows.Forms.Padding(4)
+        Me.TabPage_Info.Name = "TabPage_Info"
+        Me.TabPage_Info.Padding = New System.Windows.Forms.Padding(12)
+        Me.TabPage_Info.Size = New System.Drawing.Size(552, 347)
+        Me.TabPage_Info.TabIndex = 14
         '
-        'CustomSaveDirChk
+        'RichTextBox1
         '
-        Me.CustomSaveDirChk.AutoSize = True
-        Me.CustomSaveDirChk.Location = New System.Drawing.Point(29, 50)
-        Me.CustomSaveDirChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.CustomSaveDirChk.Name = "CustomSaveDirChk"
-        Me.CustomSaveDirChk.Size = New System.Drawing.Size(251, 25)
-        Me.CustomSaveDirChk.TabIndex = 13
-        Me.CustomSaveDirChk.Text = "사용자 지정 저장 위치, 파일명 사용"
-        Me.CustomSaveDirChk.UseVisualStyleBackColor = True
+        Me.RichTextBox1.BackColor = System.Drawing.Color.White
+        Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RichTextBox1.ForeColor = System.Drawing.Color.Black
+        Me.RichTextBox1.Location = New System.Drawing.Point(12, 115)
+        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(4)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.ReadOnly = True
+        Me.RichTextBox1.Size = New System.Drawing.Size(528, 200)
+        Me.RichTextBox1.TabIndex = 3
+        Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
         '
-        'Label13
+        'VersionLabel
         '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label13.Location = New System.Drawing.Point(21, 15)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(180, 27)
-        Me.Label13.TabIndex = 12
-        Me.Label13.Text = "시간표 저장 위치 설정"
+        Me.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.VersionLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.VersionLabel.Location = New System.Drawing.Point(12, 84)
+        Me.VersionLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.VersionLabel.Name = "VersionLabel"
+        Me.VersionLabel.Size = New System.Drawing.Size(528, 31)
+        Me.VersionLabel.TabIndex = 7
+        Me.VersionLabel.Text = "VersionLabel"
+        Me.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'FeedbackLabel
+        '
+        Me.FeedbackLabel.AutoSize = True
+        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.FeedbackLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.FeedbackLabel.Location = New System.Drawing.Point(12, 315)
+        Me.FeedbackLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(525, 0)
+        Me.FeedbackLabel.Name = "FeedbackLabel"
+        Me.FeedbackLabel.Size = New System.Drawing.Size(525, 20)
+        Me.FeedbackLabel.TabIndex = 6
+        Me.FeedbackLabel.TabStop = True
+        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
+        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'BannerPictureBox
+        '
+        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
+        Me.BannerPictureBox.Image = Global.uTable.My.Resources.Resources.uTable_banner
+        Me.BannerPictureBox.Location = New System.Drawing.Point(12, 12)
+        Me.BannerPictureBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.BannerPictureBox.Name = "BannerPictureBox"
+        Me.BannerPictureBox.Size = New System.Drawing.Size(528, 72)
+        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.BannerPictureBox.TabIndex = 4
+        Me.BannerPictureBox.TabStop = False
         '
         'TabPage_Update
         '
@@ -1194,12 +1194,12 @@ Partial Class OptionForm
         '
         Me.UpdateChkButtonMSStore.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.UpdateChkButtonMSStore.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.UpdateChkButtonMSStore.Location = New System.Drawing.Point(431, 11)
+        Me.UpdateChkButtonMSStore.Location = New System.Drawing.Point(428, 11)
         Me.UpdateChkButtonMSStore.Margin = New System.Windows.Forms.Padding(4)
         Me.UpdateChkButtonMSStore.Name = "UpdateChkButtonMSStore"
-        Me.UpdateChkButtonMSStore.Size = New System.Drawing.Size(95, 56)
+        Me.UpdateChkButtonMSStore.Size = New System.Drawing.Size(98, 56)
         Me.UpdateChkButtonMSStore.TabIndex = 22
-        Me.UpdateChkButtonMSStore.Text = "업데이트 확인"
+        Me.UpdateChkButtonMSStore.Text = "업데이트" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "확인"
         Me.UpdateChkButtonMSStore.UseVisualStyleBackColor = True
         '
         'Label6
@@ -1401,35 +1401,6 @@ Partial Class OptionForm
         Me.SidePanel.Size = New System.Drawing.Size(185, 359)
         Me.SidePanel.TabIndex = 1
         '
-        'ShadowPanel1
-        '
-        Me.ShadowPanel1.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
-        Me.ShadowPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.ShadowPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.ShadowPanel1.Margin = New System.Windows.Forms.Padding(4)
-        Me.ShadowPanel1.Name = "ShadowPanel1"
-        Me.ShadowPanel1.Size = New System.Drawing.Size(185, 12)
-        Me.ShadowPanel1.TabIndex = 0
-        '
-        'FontDialog1
-        '
-        Me.FontDialog1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FontDialog1.ShowEffects = False
-        '
-        'UpdateChecker
-        '
-        '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.DefaultExt = "utdata"
-        Me.SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
-        Me.SaveFileDialog1.Title = "저장 위치를 선택해 주세요"
-        '
-        'FolderBrowserDialog1
-        '
-        Me.FolderBrowserDialog1.Description = "시간표를 저장할 위치를 선택하세요"
-        '
         'SettingMenu_Info
         '
         Me.SettingMenu_Info.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -1484,6 +1455,35 @@ Partial Class OptionForm
         Me.SettingMenu_Basic.Size = New System.Drawing.Size(185, 49)
         Me.SettingMenu_Basic.TabIndex = 1
         '
+        'ShadowPanel1
+        '
+        Me.ShadowPanel1.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
+        Me.ShadowPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ShadowPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.ShadowPanel1.Margin = New System.Windows.Forms.Padding(4)
+        Me.ShadowPanel1.Name = "ShadowPanel1"
+        Me.ShadowPanel1.Size = New System.Drawing.Size(185, 12)
+        Me.ShadowPanel1.TabIndex = 0
+        '
+        'FontDialog1
+        '
+        Me.FontDialog1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FontDialog1.ShowEffects = False
+        '
+        'UpdateChecker
+        '
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "utdata"
+        Me.SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
+        Me.SaveFileDialog1.Title = "저장 위치를 선택해 주세요"
+        '
+        'FolderBrowserDialog1
+        '
+        Me.FolderBrowserDialog1.Description = "시간표를 저장할 위치를 선택하세요"
+        '
         'OptionForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
@@ -1506,26 +1506,26 @@ Partial Class OptionForm
         Me.TitlePanel.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainPanel.ResumeLayout(False)
-        Me.TabPage_Info.ResumeLayout(False)
-        Me.TabPage_Info.PerformLayout()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TapPage_Notification.ResumeLayout(False)
         Me.TapPage_Notification.PerformLayout()
         Me.CourseNotifyPanel.ResumeLayout(False)
         Me.CourseNotifyPanel.PerformLayout()
-        Me.TabPage_Basic.ResumeLayout(False)
-        Me.TabPage_Basic.PerformLayout()
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
-        Me.TabPage_Table.ResumeLayout(False)
-        Me.TabPage_Table.PerformLayout()
-        Me.PrevTablePanel.ResumeLayout(False)
         Me.TabPage_Data.ResumeLayout(False)
         Me.TabPage_Data.PerformLayout()
         Me.Panel6.ResumeLayout(False)
         Me.Panel6.PerformLayout()
         Me.CustomDirPanel.ResumeLayout(False)
         Me.CustomDirPanel.PerformLayout()
+        Me.TabPage_Table.ResumeLayout(False)
+        Me.TabPage_Table.PerformLayout()
+        Me.PrevTablePanel.ResumeLayout(False)
+        Me.TabPage_Basic.ResumeLayout(False)
+        Me.TabPage_Basic.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.TabPage_Info.ResumeLayout(False)
+        Me.TabPage_Info.PerformLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage_Update.ResumeLayout(False)
         Me.Panel4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
