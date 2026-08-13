@@ -81,6 +81,11 @@ Module DataModule
         Return GetElementInnerXml(child)
     End Function
 
+    'course 바로 아래의 서식용 공백은 비교에서 제외하되, 각 필드의 내용은 보존한다.
+    Private Function GetCourseComparisonData(element As XElement) As String
+        Return String.Concat(element.Elements().Select(Function(child) child.ToString(SaveOptions.DisableFormatting)))
+    End Function
+
     Private Function ToTableCourse(element As XElement) As TableCourse
         Return New TableCourse With {
             .RawData = GetElementInnerXml(element).Trim(),
@@ -101,7 +106,26 @@ Module DataModule
         Return document.Root.Elements("course").Select(Function(element) ToTableCourse(element)).ToList()
     End Function
 
-    'olddata처럼 course 내부 fragment만 가진 기존 화면을 위한 단일 과목 파서.
+    '표시 중인 과목의 원본 fragment와 일치하는 course 요소를 XML 구조에서 제거한다.
+    '문자열 치환과 달리 줄바꿈이나 들여쓰기 형식에 영향을 받지 않는다.
+    Public Function TryRemoveTableCourse(datastr As String, rawCourseData As String, ByRef result As String) As Boolean
+        Dim document As XDocument = ParseTableFragment(datastr)
+        Dim rawCourse As XElement = ParseTableFragment("<course>" + rawCourseData + "</course>").Root.Element("course")
+        Dim targetData As String = GetCourseComparisonData(rawCourse)
+        Dim target As XElement = document.Root.Elements("course").FirstOrDefault(
+            Function(element) GetCourseComparisonData(element) = targetData)
+
+        If target Is Nothing Then
+            result = datastr
+            Return False
+        End If
+
+        target.Remove()
+        result = SerializeTableFragment(document)
+        Return True
+    End Function
+
+    'olddata처럼 course 내부 fragment만 가진 기존 화면을 위한 단일 과목 파서
     Public Function getTableCourse(datastr As String) As TableCourse
         Dim document As XDocument = ParseTableFragment("<course>" + datastr + "</course>")
         Return ToTableCourse(document.Root.Element("course"))
