@@ -24,13 +24,13 @@ Partial Class EveryTimeBrowserNew
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.TableChecker = New System.Windows.Forms.Timer(Me.components)
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.TopPanel = New System.Windows.Forms.Panel()
         Me.WebView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.TSLinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Panel1.SuspendLayout()
+        Me.TopPanel.SuspendLayout()
         CType(Me.WebView21, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -40,17 +40,17 @@ Partial Class EveryTimeBrowserNew
         '
         Me.TableChecker.Interval = 500
         '
-        'Panel1
+        'TopPanel
         '
-        Me.Panel1.BackColor = System.Drawing.Color.White
-        Me.Panel1.Controls.Add(Me.WebView21)
-        Me.Panel1.Controls.Add(Me.Panel2)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(1, 1)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(502, 684)
-        Me.Panel1.TabIndex = 1
+        Me.TopPanel.BackColor = System.Drawing.Color.White
+        Me.TopPanel.Controls.Add(Me.WebView21)
+        Me.TopPanel.Controls.Add(Me.Panel2)
+        Me.TopPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TopPanel.Location = New System.Drawing.Point(1, 1)
+        Me.TopPanel.Margin = New System.Windows.Forms.Padding(4)
+        Me.TopPanel.Name = "TopPanel"
+        Me.TopPanel.Size = New System.Drawing.Size(502, 684)
+        Me.TopPanel.TabIndex = 1
         '
         'WebView21
         '
@@ -59,7 +59,7 @@ Partial Class EveryTimeBrowserNew
         Me.WebView21.DefaultBackgroundColor = System.Drawing.Color.White
         Me.WebView21.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WebView21.Location = New System.Drawing.Point(0, 80)
-        Me.WebView21.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.WebView21.Margin = New System.Windows.Forms.Padding(4)
         Me.WebView21.Name = "WebView21"
         Me.WebView21.Size = New System.Drawing.Size(502, 604)
         Me.WebView21.TabIndex = 30
@@ -67,18 +67,20 @@ Partial Class EveryTimeBrowserNew
         '
         'Panel2
         '
+        Me.Panel2.BackColor = System.Drawing.Color.Transparent
         Me.Panel2.Controls.Add(Me.TSLinkLabel1)
         Me.Panel2.Controls.Add(Me.CloseBT)
         Me.Panel2.Controls.Add(Me.Label1)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(502, 80)
         Me.Panel2.TabIndex = 33
         '
         'TSLinkLabel1
         '
+        Me.TSLinkLabel1.BackColor = System.Drawing.Color.Transparent
         Me.TSLinkLabel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.TSLinkLabel1.LinkColor = System.Drawing.Color.Maroon
         Me.TSLinkLabel1.Location = New System.Drawing.Point(0, 41)
@@ -93,10 +95,10 @@ Partial Class EveryTimeBrowserNew
         'CloseBT
         '
         Me.CloseBT.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CloseBT.BackColor = System.Drawing.Color.White
+        Me.CloseBT.BackColor = System.Drawing.Color.Transparent
         Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_b
         Me.CloseBT.Location = New System.Drawing.Point(461, 4)
-        Me.CloseBT.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CloseBT.Margin = New System.Windows.Forms.Padding(4)
         Me.CloseBT.Name = "CloseBT"
         Me.CloseBT.Size = New System.Drawing.Size(38, 38)
         Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -105,7 +107,7 @@ Partial Class EveryTimeBrowserNew
         '
         'Label1
         '
-        Me.Label1.BackColor = System.Drawing.Color.White
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Label1.Font = New System.Drawing.Font("Noto Sans KR", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Gray
@@ -123,18 +125,18 @@ Partial Class EveryTimeBrowserNew
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.Gray
         Me.ClientSize = New System.Drawing.Size(504, 686)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.TopPanel)
         Me.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "EveryTimeBrowserNew"
         Me.Padding = New System.Windows.Forms.Padding(1)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "에브리타임 시간표 불러오기"
         Me.TopMost = True
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
-        Me.Panel1.ResumeLayout(False)
+        Me.TopPanel.ResumeLayout(False)
         CType(Me.WebView21, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
@@ -142,7 +144,7 @@ Partial Class EveryTimeBrowserNew
 
     End Sub
     Friend WithEvents TableChecker As Timer
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents TopPanel As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents CloseBT As PictureBox
     Friend WithEvents WebView21 As Microsoft.Web.WebView2.WinForms.WebView2

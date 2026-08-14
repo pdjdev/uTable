@@ -275,9 +275,32 @@ Public Class OptionForm
             Case "Dark"
                 BannerPictureBox.Image = My.Resources.uTable_banner_dark
                 CloseBT.Image = My.Resources.closeicon_w
+
+                ' 옵션 컨트롤 내에 있는 모든 체크박스, 라디오버튼에 다크 모드 테마 적용
+                For Each chk As CheckBox In GetAll(Me, GetType(CheckBox))
+                    SetWindowTheme(chk.Handle, "DarkMode_Explorer", Nothing)
+                Next
+
+                For Each rdo As RadioButton In GetAll(Me, GetType(RadioButton))
+                    SetWindowTheme(rdo.Handle, "DarkMode_Explorer", Nothing)
+                Next
+
+                SetWindowTheme(RichTextBox1.Handle, "DarkMode_Explorer", Nothing)
+
             Case Else
                 BannerPictureBox.Image = My.Resources.uTable_banner
                 CloseBT.Image = My.Resources.closeicon_b
+
+                For Each chk As CheckBox In GetAll(Me, GetType(CheckBox))
+                    SetWindowTheme(chk.Handle, "Explorer", Nothing)
+                Next
+
+                For Each rdo As RadioButton In GetAll(Me, GetType(RadioButton))
+                    SetWindowTheme(rdo.Handle, "Explorer", Nothing)
+                Next
+
+                SetWindowTheme(RichTextBox1.Handle, "Explorer", Nothing)
+
         End Select
     End Sub
 

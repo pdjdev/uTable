@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports Microsoft.Win32
 
 Module GUIModule
 
@@ -255,6 +256,30 @@ Module GUIModule
 
         Return aControl.CreateGraphics.MeasureString(aControl.Text, aControl.Font)
 
+    End Function
+#End Region
+
+
+#Region "라이트/다크 Win32 호출모듈"
+    <DllImport("uxtheme.dll", CharSet:=CharSet.Unicode)>
+    Public Function SetWindowTheme(
+        hWnd As IntPtr,
+        pszSubAppName As String,
+        pszSubIdList As String
+    ) As Integer
+    End Function
+    Public Function IsWindowsDarkMode() As Boolean
+        Using key = Registry.CurrentUser.OpenSubKey(
+            "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize")
+
+            If key Is Nothing Then Return False
+
+            Dim value = key.GetValue("AppsUseLightTheme")
+
+            If value Is Nothing Then Return False
+
+            Return Convert.ToInt32(value) = 0
+        End Using
     End Function
 #End Region
 
