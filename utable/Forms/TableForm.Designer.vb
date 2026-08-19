@@ -24,13 +24,13 @@ Partial Class TableForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.TimeTable = New System.Windows.Forms.TableLayoutPanel()
-        Me.SunPanel = New System.Windows.Forms.Panel()
-        Me.SatPanel = New System.Windows.Forms.Panel()
-        Me.FriPanel = New System.Windows.Forms.Panel()
-        Me.ThuPanel = New System.Windows.Forms.Panel()
-        Me.WedPanel = New System.Windows.Forms.Panel()
-        Me.TuePanel = New System.Windows.Forms.Panel()
-        Me.MonPanel = New System.Windows.Forms.Panel()
+        Me.SunPanel = New uTable.CompositedTablePanel()
+        Me.SatPanel = New uTable.CompositedTablePanel()
+        Me.FriPanel = New uTable.CompositedTablePanel()
+        Me.ThuPanel = New uTable.CompositedTablePanel()
+        Me.WedPanel = New uTable.CompositedTablePanel()
+        Me.TuePanel = New uTable.CompositedTablePanel()
+        Me.MonPanel = New uTable.CompositedTablePanel()
         Me.TopPanel = New System.Windows.Forms.Panel()
         Me.TitleEditBT = New System.Windows.Forms.PictureBox()
         Me.TableTitleLabel = New System.Windows.Forms.Label()
@@ -487,7 +487,6 @@ Partial Class TableForm
         Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ClearCheckBoxItem, Me.ChangeThemeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator2, Me.TopMostItem, Me.SnapToEdgeItem, Me.ShowMemoItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
         Me.BT1_menu.Name = "BT1_menu"
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
         Me.BT1_menu.Size = New System.Drawing.Size(202, 374)
         '
@@ -1003,11 +1002,11 @@ Partial Class TableForm
     Friend WithEvents TueLabel As Label
     Friend WithEvents RefreshBT As Button
     Friend WithEvents MainPanel As Panel
-    Friend WithEvents FriPanel As Panel
-    Friend WithEvents ThuPanel As Panel
-    Friend WithEvents WedPanel As Panel
-    Friend WithEvents TuePanel As Panel
-    Friend WithEvents MonPanel As Panel
+    Friend WithEvents FriPanel As CompositedTablePanel
+    Friend WithEvents ThuPanel As CompositedTablePanel
+    Friend WithEvents WedPanel As CompositedTablePanel
+    Friend WithEvents TuePanel As CompositedTablePanel
+    Friend WithEvents MonPanel As CompositedTablePanel
     Friend WithEvents MinBT As PictureBox
     Friend WithEvents TableTitleLabel As Label
     Friend WithEvents TitleEditBT As PictureBox
@@ -1030,8 +1029,8 @@ Partial Class TableForm
     Friend WithEvents hideani As Timer
     Friend WithEvents ExitItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
-    Friend WithEvents SunPanel As Panel
-    Friend WithEvents SatPanel As Panel
+    Friend WithEvents SunPanel As CompositedTablePanel
+    Friend WithEvents SatPanel As CompositedTablePanel
     Friend WithEvents SunLabel As Label
     Friend WithEvents SatLabel As Label
     Friend WithEvents ColorSettingItem As ToolStripMenuItem

@@ -16,6 +16,9 @@ Public Class TableForm
     Dim updated As Boolean = False
     Dim courseData As New List(Of String)
     Dim courseRecords As New List(Of TableCourse)
+    Private ReadOnly cellsByCourse As New Dictionary(Of TableCourse, CellControl)
+    Private courseLayoutQueued As Boolean = False
+    Private WithEvents courseFadeTimer As New Timer With {.Interval = 30}
 
     '슬라이딩 애니메이션용 변수
     Dim poscount As Integer = 0
@@ -45,6 +48,7 @@ Public Class TableForm
     Public _BlackText As String = ""
     Public _AlwaysExpand As String = ""
     Public ExpandCell As String = ""
+    Public ExpandAnimation As String = ""
     Public ShowMemo As String = ""
     Public ShowProf As String = ""
     Public _ShowChkBox As String = ""
@@ -146,7 +150,7 @@ Public Class TableForm
         Set(ByVal value As ResizeDirection)
             _resizeDir = value
 
-            'Change cursor
+            '커서 변경
             Select Case value
                 Case ResizeDirection.Left
                     Me.Cursor = Cursors.SizeWE
@@ -235,7 +239,7 @@ Public Class TableForm
     End Sub
 
     Private Sub TableForm_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
-        'Calculate which direction to resize based on mouse position
+        '마우스 위치를 기준으로 크기를 조정할 방향을 계산
 
         If e.Location.X < BorderWidth And e.Location.Y < BorderWidth Then
             resizeDir = ResizeDirection.TopLeft
@@ -921,6 +925,7 @@ Public Class TableForm
 #Region "시간표 셀 관리"
 
     Public Sub updateCell()
+        courseFadeTimer.Stop()
         SuspendCourseLayouts()
         Try
 
@@ -932,6 +937,11 @@ Public Class TableForm
             _BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
             _AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
             ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
+            ExpandAnimation = GetINI("SETTING", "ExpandAnimation", "", ININamePath)
+            If String.IsNullOrEmpty(ExpandAnimation) Then
+                ExpandAnimation = "1"
+                SetINI("SETTING", "ExpandAnimation", ExpandAnimation, ININamePath)
+            End If
             ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
             ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
             _ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
@@ -948,6 +958,7 @@ Public Class TableForm
             ClearCourseCells(FriPanel)
             ClearCourseCells(SatPanel)
             ClearCourseCells(SunPanel)
+            cellsByCourse.Clear()
             updated = False
 
             Dim data = readTable()
@@ -985,9 +996,10 @@ Public Class TableForm
                 '셀계산
                 '여기서 xmldecode 하니까 꼭 눈여겨두자
                 For Each course As TableCourse In courseRecords
-                    addCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity(),
-                            xmlDecode(course.Name), xmlDecode(course.Professor), xmlDecode(course.Memo),
-                            ColorTranslator.FromHtml(course.Color), Convert.ToInt16(course.Day), course.Checked, course.RawData)
+                    Dim cell = addCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity(),
+                                       xmlDecode(course.Name), xmlDecode(course.Professor), xmlDecode(course.Memo),
+                                       ColorTranslator.FromHtml(course.Color), Convert.ToInt16(course.Day), course.Checked, course.RawData)
+                    cellsByCourse.Add(course, cell)
 
                     If Convert.ToInt16(course.Day) = 5 Then '토요일 추가시
                         showSaturday = True
@@ -1043,9 +1055,7 @@ Public Class TableForm
                 TimeTable.ColumnStyles(6).Width = 0
             End If
 
-            For Each course As TableCourse In courseRecords
-                resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity())
-            Next
+            UpdateCourseBounds()
 
         Catch ex As Exception
 
@@ -1082,7 +1092,7 @@ Public Class TableForm
         TimeTable.ResumeLayout(True)
     End Sub
 
-    Sub addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String, rawData As String)
+    Private Function addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String, rawData As String) As CellControl
 
         Dim timelength As Integer = endtime - starttime
         Dim part As Double = (endt - startt) / timelength
@@ -1091,6 +1101,7 @@ Public Class TableForm
         cell.ForeColor = Color.White
         'cell.BackColor = color
         cell.goalColor = color
+        AddHandler cell.FadeStarted, AddressOf CellFadeStarted
 
         With cell
             .FadeEffect = FadeEffect
@@ -1100,78 +1111,121 @@ Public Class TableForm
             ._BlackText = _BlackText
             ._AlwaysExpand = _AlwaysExpand
             .ExpandCell = ExpandCell
+            .ExpandAnimation = ExpandAnimation
             .ShowMemo = ShowMemo
             .ShowProf = ShowProf
             ._ShowChkBox = _ShowChkBox
+            .UsesSharedFadeClock = True
         End With
 
+        Dim parentPanel As Panel = Nothing
         Select Case day
             Case 0
-                MonPanel.Controls.Add(cell)
+                parentPanel = MonPanel
             Case 1
-                TuePanel.Controls.Add(cell)
+                parentPanel = TuePanel
             Case 2
-                WedPanel.Controls.Add(cell)
+                parentPanel = WedPanel
             Case 3
-                ThuPanel.Controls.Add(cell)
+                parentPanel = ThuPanel
             Case 4
-                FriPanel.Controls.Add(cell)
+                parentPanel = FriPanel
             Case 5
-                SatPanel.Controls.Add(cell)
+                parentPanel = SatPanel
             Case 6
-                SunPanel.Controls.Add(cell)
+                parentPanel = SunPanel
         End Select
 
-        cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
+        cell.Location = New Point(0, ((startt - starttime) / timelength) * parentPanel.Height)
         'MsgBox(((startt - starttime) / timelength) * Panel1.Height)
-        cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
-        cell.Height = part * MonPanel.Height
-        cell.defHeight = part * MonPanel.Height
+        cell.Width = parentPanel.ClientSize.Width
+        cell.Height = part * parentPanel.Height
+        cell.defHeight = part * parentPanel.Height
+        cell.defLoc = cell.Location.Y
         cell.dayNum = day
 
         'MsgBox(part * Panel1.Height)
 
-        cell.TopTimeLabel.Text = (startt \ 60).ToString + ":"
+        cell.StartText = (startt \ 60).ToString + ":"
         If startt Mod 60 = 0 Then
-            cell.TopTimeLabel.Text += "00"
+            cell.StartText += "00"
         Else
-            cell.TopTimeLabel.Text += (startt Mod 60).ToString("D2")
+            cell.StartText += (startt Mod 60).ToString("D2")
         End If
 
-        cell.BottomTimeLabel.Text = (endt \ 60).ToString + ":"
+        cell.EndText = (endt \ 60).ToString + ":"
 
         If endt Mod 60 = 0 Then
-            cell.BottomTimeLabel.Text += "00"
+            cell.EndText += "00"
         Else
-            cell.BottomTimeLabel.Text += (endt Mod 60).ToString("D2")
+            cell.EndText += (endt Mod 60).ToString("D2")
         End If
 
         If title.Length > 100 Then title = Mid(title, 1, 100) + "..."
         If prof.Length > 50 Then prof = Mid(prof, 1, 50) + "..."
         If memo.Length > 2000 Then memo = Mid(memo, 1, 2000) + "..."
 
-        cell.TitleLabel.Text = title
-        cell.ProfLabel.Text = prof
-        cell.MemoLabel.Text = memo
+        cell.CourseTitle = title
+        cell.ProfessorText = prof
+        cell.MemoText = memo
         cell.Name = name
         cell.Tag = rawData
 
         cell.checked = (checked = "True")
-    End Sub
+        parentPanel.Controls.Add(cell)
+        Return cell
+    End Function
 
-    Sub resizeCell(startt As Integer, endt As Integer, name As String)
+    Private Sub resizeCell(startt As Integer, endt As Integer, cell As CellControl)
         Dim timelength As Integer = endtime - starttime
-        Dim part As Double = (endt - startt) / timelength
-        Dim cell As CellControl = TimeTable.Controls.Find(name, True).First
+        If timelength <= 0 OrElse cell Is Nothing OrElse cell.Parent Is Nothing Then Exit Sub
 
-        cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
-        cell.defLoc = ((startt - starttime) / timelength) * MonPanel.Height
-        'MsgBox(((startt - starttime) / timelength) * Panel1.Height)
-        cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
-        cell.Height = part * MonPanel.Height
-        cell.defHeight = part * MonPanel.Height
+        Dim part As Double = (endt - startt) / timelength
+        Dim parentPanel As Panel = DirectCast(cell.Parent, Panel)
+
+        cell.Location = New Point(0, CInt(((startt - starttime) / timelength) * parentPanel.ClientSize.Height))
+        cell.defLoc = CInt(((startt - starttime) / timelength) * parentPanel.ClientSize.Height)
+        cell.Width = parentPanel.ClientSize.Width
+        cell.Height = CInt(part * parentPanel.ClientSize.Height)
+        cell.defHeight = CInt(part * parentPanel.ClientSize.Height)
 
         If cell.alwaysExpand Then cell.ForceExpand()
+    End Sub
+
+    Private Sub UpdateCourseBounds()
+        If Not updated Then Exit Sub
+
+        For Each course As TableCourse In courseRecords
+            Dim cell As CellControl = Nothing
+            If cellsByCourse.TryGetValue(course, cell) Then
+                resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), cell)
+            End If
+        Next
+    End Sub
+
+    Private Sub QueueCourseBoundsUpdate()
+        If Not updated OrElse courseLayoutQueued OrElse IsDisposed OrElse Disposing Then Exit Sub
+
+        courseLayoutQueued = True
+        BeginInvoke(New MethodInvoker(
+            Sub()
+                courseLayoutQueued = False
+                UpdateCourseBounds()
+            End Sub))
+    End Sub
+
+    Private Sub CellFadeStarted(sender As Object, e As EventArgs)
+        If Not courseFadeTimer.Enabled Then courseFadeTimer.Start()
+    End Sub
+
+    Private Sub courseFadeTimer_Tick(sender As Object, e As EventArgs) Handles courseFadeTimer.Tick
+        Dim hasActiveFade As Boolean = False
+
+        For Each cell As CellControl In cellsByCourse.Values
+            If cell.AdvanceFade() Then hasActiveFade = True
+        Next
+
+        If Not hasActiveFade Then courseFadeTimer.Stop()
     End Sub
 
 #End Region
@@ -1206,7 +1260,8 @@ Public Class TableForm
             TableTitleLabel.Visible = True
             RenameTitleTextBox.Visible = False
             TitleEditBT.Image = My.Resources.bt_titleedit
-            updateCell()
+            TableTitleLabel.Text = newtitle
+            Text = newtitle
         End If
     End Sub
 
@@ -1217,24 +1272,11 @@ Public Class TableForm
     Private Sub TimeTable_SizeChanged(sender As Object, e As EventArgs) Handles TimeTable.SizeChanged
         'TimeTable.ResumeLayout()
 
-        If updated Then
-
-            For Each course As TableCourse In courseRecords
-                resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity())
-            Next
-
-            TimeTable.Visible = True
-
-        End If
+        QueueCourseBoundsUpdate()
     End Sub
 
     Private Sub TimeTable_Layout(sender As Object, e As System.Windows.Forms.LayoutEventArgs) Handles TimeTable.Layout
-        If Not updated Then Exit Sub
-
-        For Each course As TableCourse In courseRecords
-            Dim cell As CellControl = TimeTable.Controls.Find(course.Identity(), True).First
-            cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
-        Next
+        QueueCourseBoundsUpdate()
     End Sub
 
     Private Sub TablePanel_Paint(sender As Object, e As PaintEventArgs) Handles MonPanel.Paint, TuePanel.Paint, WedPanel.Paint,
@@ -1252,25 +1294,24 @@ Public Class TableForm
         Dim timeLength As Integer = endtime - starttime
         If Not timeLength > 0 Then Exit Sub
 
-        Dim panelHeight As Integer = MonPanel.Height
-        Dim panelWidth As Integer = MonPanel.Width
+        Dim panelHeight As Integer = panel.ClientSize.Height
+        Dim panelWidth As Integer = panel.ClientSize.Width
         Dim minLengh As Double = 1 / timeLength * panelHeight
 
         'Dim left As Integer = starttime Mod 60
-        Dim thickness As Integer = 3 * (currentDPI / 96)
+        Dim thickness As Integer = Math.Max(1, CInt(Math.Round(3 * currentDPI / 96.0)))
 
         Dim colorMul As Single = 0.9
         If colorMode = "Dark" Then
             colorMul = 1.35
         End If
 
-        Dim c As Color = Color.FromArgb(panel.BackColor.R * colorMul,
-                                        panel.BackColor.G * colorMul,
-                                        panel.BackColor.B * colorMul)
+        Dim c As Color = Color.FromArgb(Math.Min(255, CInt(panel.BackColor.R * colorMul)),
+                                        Math.Min(255, CInt(panel.BackColor.G * colorMul)),
+                                        Math.Min(255, CInt(panel.BackColor.B * colorMul)))
 
-        Dim g As Graphics = panel.CreateGraphics
+        Dim g As Graphics = e.Graphics
         g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-        g.Clear(panel.BackColor)
 
 
         'Win11용 코더라운딩
@@ -1288,39 +1329,33 @@ Public Class TableForm
         End If
 
         If showRnd Then
-            Dim edgeBrush = New SolidBrush(BackColor)
-            Dim backBrush = New SolidBrush(panel.BackColor)
             Dim rndSize = Convert.ToInt16(Me.RndSize * (currentDPI / 96))
 
-            If isLeft Then
-                '좌측
-                g.FillRectangle(edgeBrush, 0, panel.Height - rndSize, rndSize, rndSize)
-                g.FillEllipse(backBrush, 0, panel.Height - rndSize * 2, rndSize * 2, rndSize * 2)
-            Else
-                '우측
-                g.FillRectangle(edgeBrush, panel.Width - rndSize, panel.Height - rndSize, rndSize, rndSize)
-                g.FillEllipse(backBrush, panel.Width - rndSize * 2, panel.Height - rndSize * 2, rndSize * 2, rndSize * 2)
-            End If
+            Using edgeBrush As New SolidBrush(BackColor), backBrush As New SolidBrush(panel.BackColor)
+                If isLeft Then
+                    '좌측
+                    g.FillRectangle(edgeBrush, 0, panel.Height - rndSize, rndSize, rndSize)
+                    g.FillEllipse(backBrush, 0, panel.Height - rndSize * 2, rndSize * 2, rndSize * 2)
+                Else
+                    '우측
+                    g.FillRectangle(edgeBrush, panel.Width - rndSize, panel.Height - rndSize, rndSize, rndSize)
+                    g.FillEllipse(backBrush, panel.Width - rndSize * 2, panel.Height - rndSize * 2, rndSize * 2, rndSize * 2)
+                End If
+            End Using
         End If
 
 
         ' 점선 표시
         If Not tablePatternSetting = "None" Then
 
-            Dim p As New Pen(c, thickness)
-            'Dim g As Graphics = panel.CreateGraphics
+            Using p As New Pen(c, thickness)
+                p.DashStyle = Drawing2D.DashStyle.Dot
 
-            p.DashStyle = Drawing2D.DashStyle.Dot
-
-            For j As Integer = starttime To endtime
-                If j > 0 And j Mod 60 = 0 Then
+                For j As Integer = ((starttime + 59) \ 60) * 60 To endtime Step 60
                     Dim pos As Double = (j - starttime) * minLengh + thickness / 2
                     g.DrawLine(p, New Point(0, pos), New Point(panelWidth, pos))
-                End If
-            Next
-
-            g.Dispose()
-            p.Dispose()
+                Next
+            End Using
         End If
 
     End Sub

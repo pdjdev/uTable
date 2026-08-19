@@ -58,7 +58,7 @@ Partial Class ViewCourse
         Me.BodyPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.BodyPanel.ForeColor = System.Drawing.Color.Black
         Me.BodyPanel.Location = New System.Drawing.Point(4, 0)
-        Me.BodyPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.BodyPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.BodyPanel.Name = "BodyPanel"
         Me.BodyPanel.Size = New System.Drawing.Size(314, 206)
         Me.BodyPanel.TabIndex = 27
@@ -69,7 +69,7 @@ Partial Class ViewCourse
         Me.Panel4.Controls.Add(Me.TableLayoutPanel2)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel4.Location = New System.Drawing.Point(0, 12)
-        Me.Panel4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel4.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel4.Name = "Panel4"
         Me.Panel4.Padding = New System.Windows.Forms.Padding(9, 0, 9, 0)
         Me.Panel4.Size = New System.Drawing.Size(314, 194)
@@ -81,7 +81,7 @@ Partial Class ViewCourse
         Me.MemoTB.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MemoTB.Font = New System.Drawing.Font("Noto Sans KR", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.MemoTB.Location = New System.Drawing.Point(9, 0)
-        Me.MemoTB.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.MemoTB.Margin = New System.Windows.Forms.Padding(4)
         Me.MemoTB.Name = "MemoTB"
         Me.MemoTB.Size = New System.Drawing.Size(296, 153)
         Me.MemoTB.TabIndex = 2
@@ -96,7 +96,7 @@ Partial Class ViewCourse
         Me.TableLayoutPanel2.Controls.Add(Me.CancelBT, 0, 0)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(9, 153)
-        Me.TableLayoutPanel2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TableLayoutPanel2.Margin = New System.Windows.Forms.Padding(4)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -141,7 +141,7 @@ Partial Class ViewCourse
         Me.ShadowPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ShadowPanel.Dock = System.Windows.Forms.DockStyle.Top
         Me.ShadowPanel.Location = New System.Drawing.Point(0, 0)
-        Me.ShadowPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ShadowPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.ShadowPanel.Name = "ShadowPanel"
         Me.ShadowPanel.Size = New System.Drawing.Size(314, 12)
         Me.ShadowPanel.TabIndex = 3
@@ -153,7 +153,7 @@ Partial Class ViewCourse
         Me.TitlePanel.Controls.Add(Me.Panel3)
         Me.TitlePanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TitlePanel.Location = New System.Drawing.Point(4, 4)
-        Me.TitlePanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TitlePanel.Margin = New System.Windows.Forms.Padding(4)
         Me.TitlePanel.Name = "TitlePanel"
         Me.TitlePanel.Size = New System.Drawing.Size(314, 66)
         Me.TitlePanel.TabIndex = 0
@@ -166,7 +166,7 @@ Partial Class ViewCourse
         Me.TableLayoutPanel1.Controls.Add(Me.UpperTitleLabel, 0, 0)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(4)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 2
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.37736!))
@@ -207,7 +207,7 @@ Partial Class ViewCourse
         Me.Panel3.Controls.Add(Me.CloseBT)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Right
         Me.Panel3.Location = New System.Drawing.Point(259, 0)
-        Me.Panel3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel3.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(55, 66)
         Me.Panel3.TabIndex = 0
@@ -217,7 +217,7 @@ Partial Class ViewCourse
         Me.EditBT.Dock = System.Windows.Forms.DockStyle.Fill
         Me.EditBT.Image = Global.uTable.My.Resources.Resources.bt_edit_w
         Me.EditBT.Location = New System.Drawing.Point(0, 35)
-        Me.EditBT.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.EditBT.Margin = New System.Windows.Forms.Padding(4)
         Me.EditBT.Name = "EditBT"
         Me.EditBT.Size = New System.Drawing.Size(55, 31)
         Me.EditBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -229,7 +229,7 @@ Partial Class ViewCourse
         Me.CloseBT.Dock = System.Windows.Forms.DockStyle.Top
         Me.CloseBT.Image = Global.uTable.My.Resources.Resources.closeicon_w
         Me.CloseBT.Location = New System.Drawing.Point(0, 0)
-        Me.CloseBT.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CloseBT.Margin = New System.Windows.Forms.Padding(4)
         Me.CloseBT.Name = "CloseBT"
         Me.CloseBT.Size = New System.Drawing.Size(55, 35)
         Me.CloseBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -242,7 +242,7 @@ Partial Class ViewCourse
         Me.UpperPanel.Controls.Add(Me.TitlePanel)
         Me.UpperPanel.Dock = System.Windows.Forms.DockStyle.Top
         Me.UpperPanel.Location = New System.Drawing.Point(0, 0)
-        Me.UpperPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.UpperPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.UpperPanel.Name = "UpperPanel"
         Me.UpperPanel.Padding = New System.Windows.Forms.Padding(4, 4, 4, 0)
         Me.UpperPanel.Size = New System.Drawing.Size(322, 70)
@@ -254,7 +254,7 @@ Partial Class ViewCourse
         Me.MainPanel.Controls.Add(Me.BodyPanel)
         Me.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainPanel.Location = New System.Drawing.Point(0, 70)
-        Me.MainPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.MainPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.MainPanel.Name = "MainPanel"
         Me.MainPanel.Padding = New System.Windows.Forms.Padding(4, 0, 4, 4)
         Me.MainPanel.Size = New System.Drawing.Size(322, 210)
@@ -271,7 +271,7 @@ Partial Class ViewCourse
         Me.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = Global.uTable.My.Resources.Resources.ptable_icon
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MinimumSize = New System.Drawing.Size(188, 150)
         Me.Name = "ViewCourse"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
