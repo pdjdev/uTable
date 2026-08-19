@@ -79,6 +79,17 @@ Public NotInheritable Class MenuThemeRenderer
         For Each item As ToolStripItem In menu.Items
             item.ForeColor = theme.Text
 
+            'ToolStripComboBox는 호스트 항목과 실제 ComboBox의 색상이 별도로 관리된다.
+            '호스트의 ForeColor만 변경하면 다크 모드에서 드롭다운은 흰 배경을 유지해
+            '목록 글자가 보이지 않게 된다.
+            Dim comboBoxItem As ToolStripComboBox = TryCast(item, ToolStripComboBox)
+            If comboBoxItem IsNot Nothing Then
+                comboBoxItem.BackColor = theme.Background
+                comboBoxItem.ForeColor = theme.Text
+                comboBoxItem.ComboBox.BackColor = theme.Background
+                comboBoxItem.ComboBox.ForeColor = theme.Text
+            End If
+
             Dim menuItem As ToolStripMenuItem = TryCast(item, ToolStripMenuItem)
             If menuItem IsNot Nothing AndAlso menuItem.HasDropDownItems Then
                 ApplyToStrip(menuItem.DropDown, renderer, theme)

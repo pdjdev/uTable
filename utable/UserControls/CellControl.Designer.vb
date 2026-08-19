@@ -5,7 +5,12 @@ Partial Class CellControl
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
-            If disposing Then DisposeRenderFonts()
+            If disposing Then
+                hoverAnimationTimer.Stop()
+                RemoveHandler hoverAnimationTimer.Tick, AddressOf HoverAnimationTimer_Tick
+                hoverAnimationTimer.Dispose()
+                DisposeRenderFonts()
+            End If
         Finally
             MyBase.Dispose(disposing)
         End Try

@@ -1,4 +1,5 @@
 Imports System.Drawing.Text
+Imports System.Drawing.Imaging
 Imports System.Diagnostics
 
 Public Class CellControl
@@ -67,6 +68,12 @@ Public Class CellControl
     Private deltaColor_R As Integer = 1
     Private deltaColor_G As Integer = 1
     Private deltaColor_B As Integer = 1
+    Private goalTextColor As Color = Color.Empty
+    Private deltaTextColor_R As Integer = 1
+    Private deltaTextColor_G As Integer = 1
+    Private deltaTextColor_B As Integer = 1
+    Private checkBoxFadeAlpha As Byte = 255
+    Private checkBoxFadeAlphaStep As Integer = 26
     Private titleBounds As Rectangle = Rectangle.Empty
     Private titleHoverBounds As Rectangle = Rectangle.Empty
 
@@ -263,8 +270,12 @@ Public Class CellControl
             BringToFront()
         End If
 
-        If doExpand AndAlso Not alwaysExpand Then
-            Dim targetBounds As Rectangle = If(hovered, GetExpandedBounds(), GetDefaultBounds())
+        If doExpand OrElse alwaysExpand Then
+            '항상 확장 상태도 평소에는 실제 시작 시간(defLoc)을 유지하고,
+            '호버 중에만 시간표 하단을 넘는 경우 위쪽으로 이동한다.
+            Dim targetBounds As Rectangle = If(hovered,
+                                               GetExpandedBounds(),
+                                               If(alwaysExpand, GetAlwaysExpandedBounds(), GetDefaultBounds()))
             If doExpandAnimation Then
                 StartHoverAnimation(targetBounds)
             Else
@@ -299,6 +310,11 @@ Public Class CellControl
         Return New Rectangle(0, targetY, defaultBounds.Width, fullHeight)
     End Function
 
+    Private Function GetAlwaysExpandedBounds() As Rectangle
+        Dim defaultBounds As Rectangle = GetDefaultBounds()
+        Return New Rectangle(0, defaultBounds.Y, defaultBounds.Width, Math.Max(defaultBounds.Height, GetRequiredHeight()))
+    End Function
+
     Private Sub StartHoverAnimation(targetBounds As Rectangle)
         If Bounds = targetBounds Then
             hoverAnimationTimer.Stop()
@@ -316,12 +332,14 @@ Public Class CellControl
         'Smoothstep: 양 끝에서 속도가 0이 되는 ease-in-out 보간
         Dim easedProgress As Double = progress * progress * (3.0 - 2.0 * progress)
         Dim previousBounds As Rectangle = Bounds
+        Dim nextBounds As Rectangle = InterpolateBounds(hoverAnimationStartBounds, hoverAnimationTargetBounds, easedProgress)
 
-        Bounds = InterpolateBounds(hoverAnimationStartBounds, hoverAnimationTargetBounds, easedProgress)
-        
-        Invalidate()
-        If Parent IsNot Nothing Then
-            Parent.Invalidate(Rectangle.Union(previousBounds, Bounds), True)
+        If previousBounds <> nextBounds Then
+            Bounds = nextBounds
+            Invalidate()
+            If Parent IsNot Nothing Then
+                Parent.Invalidate(Rectangle.Union(previousBounds, nextBounds), True)
+            End If
         End If
 
         If progress >= 1.0 Then
@@ -342,8 +360,14 @@ Public Class CellControl
 
     Public Sub ForceExpand()
         hoverAnimationTimer.Stop()
-        Dim fullHeight As Integer = GetRequiredHeight()
-        If Height < fullHeight Then Height = fullHeight
+        Dim expandedBounds As Rectangle = GetAlwaysExpandedBounds()
+        If Bounds <> expandedBounds Then
+            Dim previousBounds As Rectangle = Bounds
+            Bounds = expandedBounds
+            If Parent IsNot Nothing Then
+                Parent.Invalidate(Rectangle.Union(previousBounds, Bounds), True)
+            End If
+        End If
     End Sub
 
     Protected Overrides Sub OnHandleDestroyed(e As EventArgs)
@@ -447,7 +471,17 @@ Public Class CellControl
             image = If(blackText, If(TableForm.currentDPI = 96, My.Resources.check0_b_96, My.Resources.check0_b), If(TableForm.currentDPI = 96, My.Resources.check0_w_96, My.Resources.check0_w))
         End If
 
-        graphics.DrawImage(image, bounds)
+        If checkBoxFadeAlpha = 255 Then
+            graphics.DrawImage(image, bounds)
+            Return
+        End If
+
+        Using imageAttributes As New ImageAttributes()
+            Dim colorMatrix As New ColorMatrix()
+            colorMatrix.Matrix33 = checkBoxFadeAlpha / 255.0F
+            imageAttributes.SetColorMatrix(colorMatrix)
+            graphics.DrawImage(image, bounds, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttributes)
+        End Using
     End Sub
 
     Public Sub ModifyCheck(name As String, value As Boolean)
@@ -468,9 +502,19 @@ Public Class CellControl
     End Sub
 
     Private Sub BeginFade()
-        deltaColor_R = CInt(Math.Abs((CInt(goalColor.R) - CInt(BackColor.R)) / 10))
-        deltaColor_G = CInt(Math.Abs((CInt(goalColor.G) - CInt(BackColor.G)) / 10))
-        deltaColor_B = CInt(Math.Abs((CInt(goalColor.B) - CInt(BackColor.B)) / 10))
+        deltaColor_R = CalculateFadeStep(BackColor.R, goalColor.R)
+        deltaColor_G = CalculateFadeStep(BackColor.G, goalColor.G)
+        deltaColor_B = CalculateFadeStep(BackColor.B, goalColor.B)
+
+        '텍스트는 초기 배경색에서 최종 글자색으로 함께 전환한다.
+        goalTextColor = If(blackText, Color.Black, Color.White)
+        ForeColor = BackColor
+        deltaTextColor_R = CalculateFadeStep(ForeColor.R, goalTextColor.R)
+        deltaTextColor_G = CalculateFadeStep(ForeColor.G, goalTextColor.G)
+        deltaTextColor_B = CalculateFadeStep(ForeColor.B, goalTextColor.B)
+        checkBoxFadeAlpha = 0
+        checkBoxFadeAlphaStep = CInt(Math.Ceiling(255 / 10.0))
+
         fadeInProgress = True
         RaiseEvent FadeStarted(Me, EventArgs.Empty)
     End Sub
@@ -481,16 +525,48 @@ Public Class CellControl
         Dim red As Byte = MoveToward(BackColor.R, goalColor.R, deltaColor_R)
         Dim green As Byte = MoveToward(BackColor.G, goalColor.G, deltaColor_G)
         Dim blue As Byte = MoveToward(BackColor.B, goalColor.B, deltaColor_B)
-        BackColor = Color.FromArgb(red, green, blue)
+        Dim nextBackColor As Color = Color.FromArgb(red, green, blue)
+        Dim backgroundChanged As Boolean = (BackColor.ToArgb() <> nextBackColor.ToArgb())
+        If backgroundChanged Then BackColor = nextBackColor
 
-        If goalColor = BackColor Then fadeInProgress = False
+        Dim textRed As Byte = MoveToward(ForeColor.R, goalTextColor.R, deltaTextColor_R)
+        Dim textGreen As Byte = MoveToward(ForeColor.G, goalTextColor.G, deltaTextColor_G)
+        Dim textBlue As Byte = MoveToward(ForeColor.B, goalTextColor.B, deltaTextColor_B)
+        Dim nextForeColor As Color = Color.FromArgb(textRed, textGreen, textBlue)
+        Dim textChanged As Boolean = (ForeColor.ToArgb() <> nextForeColor.ToArgb())
+        If textChanged Then ForeColor = nextForeColor
+
+        Dim previousCheckBoxFadeAlpha As Byte = checkBoxFadeAlpha
+        checkBoxFadeAlpha = CByte(Math.Min(255, CInt(checkBoxFadeAlpha) + checkBoxFadeAlphaStep))
+
+        Dim backgroundComplete As Boolean = (red = goalColor.R AndAlso green = goalColor.G AndAlso blue = goalColor.B)
+        Dim textComplete As Boolean = (textRed = goalTextColor.R AndAlso textGreen = goalTextColor.G AndAlso textBlue = goalTextColor.B)
+        fadeInProgress = Not (backgroundComplete AndAlso textComplete AndAlso checkBoxFadeAlpha = 255)
+
+        'BackColor/ForeColor 변경은 컨트롤 자체를 무효화한다. 체크박스 알파만 바뀐 경우만 직접 요청한다.
+        If Not backgroundChanged AndAlso
+           Not textChanged AndAlso
+           previousCheckBoxFadeAlpha <> checkBoxFadeAlpha Then
+            Invalidate()
+        End If
         Return fadeInProgress
     End Function
 
+    Private Shared Function CalculateFadeStep(currentValue As Byte, targetValue As Byte) As Integer
+        Dim distance As Integer = Math.Abs(CInt(targetValue) - CInt(currentValue))
+        If distance = 0 Then Return 0
+        Return Math.Max(1, CInt(Math.Ceiling(distance / 10.0)))
+    End Function
+
     Private Function MoveToward(currentValue As Byte, targetValue As Byte, delta As Integer) As Byte
-        If targetValue - delta > currentValue Then Return CByte(currentValue + delta)
-        If targetValue + delta < currentValue Then Return CByte(currentValue - delta)
-        Return targetValue
+        If currentValue = targetValue Then Return targetValue
+
+        '잘못된 호출에서 delta가 0이어도 애니메이션이 영원히 멈춰 있지 않게 한다.
+        Dim safeDelta As Integer = Math.Max(1, delta)
+        If currentValue < targetValue Then
+            Return CByte(Math.Min(CInt(targetValue), CInt(currentValue) + safeDelta))
+        End If
+        Return CByte(Math.Max(CInt(targetValue), CInt(currentValue) - safeDelta))
     End Function
 
     Private Function ScaleValue(value As Integer) As Integer
