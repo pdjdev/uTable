@@ -487,7 +487,6 @@ Partial Class TableForm
         Me.BT1_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT1MenuTitle, Me.ToolStripSeparator4, Me.ClearCheckBoxItem, Me.ChangeThemeItem, Me.ColorSettingItem, Me.OpacitySelectItem, Me.GetFromETItem, Me.ToolStripSeparator2, Me.TopMostItem, Me.SnapToEdgeItem, Me.ShowMemoItem, Me.ToolStripSeparator1, Me.OptionItem, Me.ExitItem})
         Me.BT1_menu.Name = "BT1_menu"
         Me.BT1_menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.BT1_menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.BT1_menu.ShowImageMargin = False
         Me.BT1_menu.Size = New System.Drawing.Size(202, 374)
         '

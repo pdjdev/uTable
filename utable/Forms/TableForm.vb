@@ -18,7 +18,7 @@ Public Class TableForm
     Dim courseRecords As New List(Of TableCourse)
     Private ReadOnly cellsByCourse As New Dictionary(Of TableCourse, CellControl)
     Private courseLayoutQueued As Boolean = False
-    Private WithEvents courseFadeTimer As New Timer With {.Interval = 10}
+    Private WithEvents courseFadeTimer As New Timer With {.Interval = 30}
 
     '슬라이딩 애니메이션용 변수
     Dim poscount As Integer = 0

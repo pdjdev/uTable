@@ -29,13 +29,13 @@ Public Class CellControl
 
     Private ReadOnly Property HorizontalPadding As Integer
         Get
-            Return ScaleValue(2)
+            Return ScaleValue(3)
         End Get
     End Property
 
     Private ReadOnly Property VerticalPadding As Integer
         Get
-            Return ScaleValue(3)
+            Return ScaleValue(0)
         End Get
     End Property
 
@@ -47,7 +47,7 @@ Public Class CellControl
 
     Private ReadOnly Property CheckSize As Integer
         Get
-            Return ScaleValue(19)
+            Return ScaleValue(20)
         End Get
     End Property
 
