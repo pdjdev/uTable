@@ -21,6 +21,7 @@ Public Class CellControl
     Public _BlackText As String = ""
     Public _AlwaysExpand As String = ""
     Public ExpandCell As String = ""
+    Public ExpandAnimation As String = ""
     Public ShowMemo As String = ""
     Public ShowProf As String = ""
     Public _ShowChkBox As String = ""
@@ -53,6 +54,7 @@ Public Class CellControl
     End Property
 
     Private doExpand As Boolean = True
+    Private doExpandAnimation As Boolean = True
     Private showChkBox As Boolean = True
     Private showMemoText As Boolean = True
     Private showProfessor As Boolean = True
@@ -96,6 +98,7 @@ Public Class CellControl
         ForeColor = If(blackText, Color.Black, Color.White)
         alwaysExpand = (_AlwaysExpand = "1")
         doExpand = Not (ExpandCell = "0")
+        doExpandAnimation = Not (ExpandAnimation = "0")
         showMemoText = Not (ShowMemo = "0")
         showProfessor = Not (ShowProf = "0")
         showChkBox = Not (_ShowChkBox = "0")
@@ -261,7 +264,17 @@ Public Class CellControl
         End If
 
         If doExpand AndAlso Not alwaysExpand Then
-            StartHoverAnimation(If(hovered, GetExpandedBounds(), GetDefaultBounds()))
+            Dim targetBounds As Rectangle = If(hovered, GetExpandedBounds(), GetDefaultBounds())
+            If doExpandAnimation Then
+                StartHoverAnimation(targetBounds)
+            Else
+                hoverAnimationTimer.Stop()
+                Dim previousBounds As Rectangle = Bounds
+                Bounds = targetBounds
+                If Parent IsNot Nothing Then
+                    Parent.Invalidate(Rectangle.Union(previousBounds, Bounds), True)
+                End If
+            End If
         End If
 
         Invalidate()

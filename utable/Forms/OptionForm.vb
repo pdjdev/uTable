@@ -158,6 +158,9 @@ Public Class OptionForm
         '표확장 기본값 = 1
         ExpandCellChk.Checked = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
 
+        '확장/축소 애니메이션 기본값 = 1
+        ExpandAnimationChk.Checked = Not (GetINI("SETTING", "ExpandAnimation", "", ININamePath) = "0")
+
         '고정시작시간 기본값 = 0
         FixStartTimeChk.Checked = (GetINI("SETTING", "FixStartTime", "", ININamePath) = "1")
 
@@ -408,6 +411,10 @@ Public Class OptionForm
         ApplySetting("ExpandCell", ExpandCellChk.Checked)
     End Sub
 
+    Private Sub ExpandAnimationChk_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandAnimationChk.CheckedChanged
+        ApplySetting("ExpandAnimation", ExpandAnimationChk.Checked)
+    End Sub
+
     Private Sub FixStartTimeChk_CheckedChanged(sender As Object, e As EventArgs) Handles FixStartTimeChk.CheckedChanged
         ApplySetting("FixStartTime", FixStartTimeChk.Checked)
         FixStartTimePicker.Enabled = FixStartTimeChk.Checked
@@ -473,7 +480,7 @@ Public Class OptionForm
 
     End Sub
 
-    Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
+    Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, ExpandAnimationChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
         ShowDayChk.CheckedChanged, ShowProfChk.CheckedChanged, ShowMemoChk.CheckedChanged, BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged,
         ShowLinePatternChk.CheckedChanged, AutoTextColorChk.CheckedChanged
         PrevUpdate()
@@ -545,6 +552,7 @@ Public Class OptionForm
             ._BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
             ._AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
             .ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
+            .ExpandAnimation = GetINI("SETTING", "ExpandAnimation", "", ININamePath)
             .ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
             .ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
             ._ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
@@ -626,7 +634,7 @@ Public Class OptionForm
     End Sub
 
     '바로 적용 보여주기 위해 시간표 새로고침
-    Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged,
+    Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, ExpandAnimationChk.CheckedChanged,
         AlwaysExpandChk.CheckedChanged, ShowDayChk.CheckedChanged, ShowMemoChk.CheckedChanged, ShowProfChk.CheckedChanged,
         BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged, AutoTextColorChk.CheckedChanged
         If loaded Then TableForm.updateCell()

@@ -48,6 +48,7 @@ Public Class TableForm
     Public _BlackText As String = ""
     Public _AlwaysExpand As String = ""
     Public ExpandCell As String = ""
+    Public ExpandAnimation As String = ""
     Public ShowMemo As String = ""
     Public ShowProf As String = ""
     Public _ShowChkBox As String = ""
@@ -936,6 +937,11 @@ Public Class TableForm
             _BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
             _AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
             ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
+            ExpandAnimation = GetINI("SETTING", "ExpandAnimation", "", ININamePath)
+            If String.IsNullOrEmpty(ExpandAnimation) Then
+                ExpandAnimation = "1"
+                SetINI("SETTING", "ExpandAnimation", ExpandAnimation, ININamePath)
+            End If
             ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
             ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
             _ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
@@ -1105,6 +1111,7 @@ Public Class TableForm
             ._BlackText = _BlackText
             ._AlwaysExpand = _AlwaysExpand
             .ExpandCell = ExpandCell
+            .ExpandAnimation = ExpandAnimation
             .ShowMemo = ShowMemo
             .ShowProf = ShowProf
             ._ShowChkBox = _ShowChkBox

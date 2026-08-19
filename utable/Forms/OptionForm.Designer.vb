@@ -62,6 +62,7 @@ Partial Class OptionForm
         Me.CustomFontChk = New System.Windows.Forms.CheckBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.BlackTextChk = New System.Windows.Forms.CheckBox()
+        Me.ExpandAnimationChk = New System.Windows.Forms.CheckBox()
         Me.AlwaysExpandChk = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ExpandCellChk = New System.Windows.Forms.CheckBox()
@@ -413,6 +414,7 @@ Partial Class OptionForm
         Me.TabPage_Table.Controls.Add(Me.CustomFontChk)
         Me.TabPage_Table.Controls.Add(Me.Label5)
         Me.TabPage_Table.Controls.Add(Me.BlackTextChk)
+        Me.TabPage_Table.Controls.Add(Me.ExpandAnimationChk)
         Me.TabPage_Table.Controls.Add(Me.AlwaysExpandChk)
         Me.TabPage_Table.Controls.Add(Me.Label4)
         Me.TabPage_Table.Controls.Add(Me.ExpandCellChk)
@@ -498,7 +500,7 @@ Partial Class OptionForm
         Me.PrevTablePanel.Location = New System.Drawing.Point(369, 15)
         Me.PrevTablePanel.Margin = New System.Windows.Forms.Padding(4)
         Me.PrevTablePanel.Name = "PrevTablePanel"
-        Me.PrevTablePanel.Size = New System.Drawing.Size(154, 154)
+        Me.PrevTablePanel.Size = New System.Drawing.Size(154, 190)
         Me.PrevTablePanel.TabIndex = 23
         '
         'PrevTableArea
@@ -507,7 +509,7 @@ Partial Class OptionForm
         Me.PrevTableArea.Location = New System.Drawing.Point(0, 31)
         Me.PrevTableArea.Margin = New System.Windows.Forms.Padding(4)
         Me.PrevTableArea.Name = "PrevTableArea"
-        Me.PrevTableArea.Size = New System.Drawing.Size(154, 123)
+        Me.PrevTableArea.Size = New System.Drawing.Size(154, 159)
         Me.PrevTableArea.TabIndex = 24
         '
         'DayLabel
@@ -628,13 +630,24 @@ Partial Class OptionForm
         'BlackTextChk
         '
         Me.BlackTextChk.AutoSize = True
-        Me.BlackTextChk.Location = New System.Drawing.Point(216, 218)
+        Me.BlackTextChk.Location = New System.Drawing.Point(200, 218)
         Me.BlackTextChk.Margin = New System.Windows.Forms.Padding(4)
         Me.BlackTextChk.Name = "BlackTextChk"
         Me.BlackTextChk.Size = New System.Drawing.Size(134, 25)
         Me.BlackTextChk.TabIndex = 12
         Me.BlackTextChk.Text = "색 반전 (검은색)"
         Me.BlackTextChk.UseVisualStyleBackColor = True
+        '
+        'ExpandAnimationChk
+        '
+        Me.ExpandAnimationChk.AutoSize = True
+        Me.ExpandAnimationChk.Location = New System.Drawing.Point(361, 218)
+        Me.ExpandAnimationChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.ExpandAnimationChk.Name = "ExpandAnimationChk"
+        Me.ExpandAnimationChk.Size = New System.Drawing.Size(168, 25)
+        Me.ExpandAnimationChk.TabIndex = 30
+        Me.ExpandAnimationChk.Text = "확장/축소 애니메이션"
+        Me.ExpandAnimationChk.UseVisualStyleBackColor = True
         '
         'AlwaysExpandChk
         '
@@ -1572,6 +1585,7 @@ Partial Class OptionForm
     Friend WithEvents CustomFontChk As CheckBox
     Friend WithEvents Label5 As Label
     Friend WithEvents BlackTextChk As CheckBox
+    Friend WithEvents ExpandAnimationChk As CheckBox
     Friend WithEvents AlwaysExpandChk As CheckBox
     Friend WithEvents Label4 As Label
     Friend WithEvents ExpandCellChk As CheckBox
