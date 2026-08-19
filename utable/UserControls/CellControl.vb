@@ -153,6 +153,16 @@ Public Class CellControl
             DrawWrappedText(e.Graphics, MemoText, memoFont, memoBounds)
         End If
 
+        Dim backdropHeight As Integer = ScaleValue(40)
+        Dim backdropTop As Integer = Math.Max(NotchHeight, ClientSize.Height - backdropHeight)
+        Dim backdropTrim As Integer = Math.Min(ScaleValue(2), Math.Max(0, ClientSize.Height - backdropTop - 1))
+        Dim endTimeBackdrop As New Rectangle(0,
+                                              backdropTop + backdropTrim,
+                                              ClientSize.Width,
+                                              Math.Max(1, ClientSize.Height - backdropTop - backdropTrim))
+
+        DrawEndTimeBackdrop(e.Graphics, endTimeBackdrop)
+
         Using rightFormat As New StringFormat(StringFormatFlags.NoWrap), textBrush As New SolidBrush(ForeColor)
             rightFormat.Alignment = StringAlignment.Far
             rightFormat.LineAlignment = StringAlignment.Far
@@ -307,6 +317,29 @@ Public Class CellControl
             textFormat.Trimming = StringTrimming.EllipsisCharacter
             graphics.DrawString(value, fontToDraw, textBrush, bounds, textFormat)
         End Using
+    End Sub
+
+    Private Sub DrawEndTimeBackdrop(graphics As Graphics, bounds As Rectangle)
+        If bounds.Width <= 0 OrElse bounds.Height <= 0 Then Return
+
+        Dim lastRow As Integer = Math.Max(1, bounds.Height - 1)
+        For row As Integer = 0 To bounds.Height - 1
+            Dim progress As Double = row / CDbl(lastRow)
+            Dim alpha As Integer
+            If progress <= 0.05 Then
+                alpha = 0
+            ElseIf progress < 1.0 Then
+                alpha = CInt(Math.Round(255 * ((progress - 0.05) / 0.95)))
+            Else
+                alpha = 255
+            End If
+
+            If alpha = 0 Then Continue For
+
+            Using backdropBrush As New SolidBrush(Color.FromArgb(alpha, BackColor))
+                graphics.FillRectangle(backdropBrush, bounds.X, bounds.Y + row, bounds.Width, 1)
+            End Using
+        Next
     End Sub
 
     Private Sub DrawCheckBox(graphics As Graphics, bounds As Rectangle)
