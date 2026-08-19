@@ -531,12 +531,12 @@ Public Class OptionForm
             .Height = PrevTableArea.Height * 0.6
             .defHeight = PrevTableArea.Height * 0.6
 
-            .TopTimeLabel.Text = "12:27"
-            .BottomTimeLabel.Text = "13:27"
+            .StartText = "12:27"
+            .EndText = "13:27"
 
-            .TitleLabel.Text = "수업명"
-            .ProfLabel.Text = names(rnd.Next(0, names.Count)) + " 교수님"
-            .MemoLabel.Text = "메모 내용"
+            .CourseTitle = "수업명"
+            .ProfessorText = names(rnd.Next(0, names.Count)) + " 교수님"
+            .MemoText = "메모 내용"
 
             .FadeEffect = GetINI("SETTING", "FadeEffect", "", ININamePath)
             .CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)

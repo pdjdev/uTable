@@ -1108,60 +1108,63 @@ Public Class TableForm
             .ShowMemo = ShowMemo
             .ShowProf = ShowProf
             ._ShowChkBox = _ShowChkBox
+            .UsesSharedFadeClock = True
         End With
 
+        Dim parentPanel As Panel = Nothing
         Select Case day
             Case 0
-                MonPanel.Controls.Add(cell)
+                parentPanel = MonPanel
             Case 1
-                TuePanel.Controls.Add(cell)
+                parentPanel = TuePanel
             Case 2
-                WedPanel.Controls.Add(cell)
+                parentPanel = WedPanel
             Case 3
-                ThuPanel.Controls.Add(cell)
+                parentPanel = ThuPanel
             Case 4
-                FriPanel.Controls.Add(cell)
+                parentPanel = FriPanel
             Case 5
-                SatPanel.Controls.Add(cell)
+                parentPanel = SatPanel
             Case 6
-                SunPanel.Controls.Add(cell)
+                parentPanel = SunPanel
         End Select
 
-        cell.Location = New Point(0, ((startt - starttime) / timelength) * MonPanel.Height)
+        cell.Location = New Point(0, ((startt - starttime) / timelength) * parentPanel.Height)
         'MsgBox(((startt - starttime) / timelength) * Panel1.Height)
-        cell.Width = DirectCast(cell.Parent, Panel).ClientSize.Width
-        cell.Height = part * MonPanel.Height
-        cell.defHeight = part * MonPanel.Height
+        cell.Width = parentPanel.ClientSize.Width
+        cell.Height = part * parentPanel.Height
+        cell.defHeight = part * parentPanel.Height
         cell.dayNum = day
 
         'MsgBox(part * Panel1.Height)
 
-        cell.TopTimeLabel.Text = (startt \ 60).ToString + ":"
+        cell.StartText = (startt \ 60).ToString + ":"
         If startt Mod 60 = 0 Then
-            cell.TopTimeLabel.Text += "00"
+            cell.StartText += "00"
         Else
-            cell.TopTimeLabel.Text += (startt Mod 60).ToString("D2")
+            cell.StartText += (startt Mod 60).ToString("D2")
         End If
 
-        cell.BottomTimeLabel.Text = (endt \ 60).ToString + ":"
+        cell.EndText = (endt \ 60).ToString + ":"
 
         If endt Mod 60 = 0 Then
-            cell.BottomTimeLabel.Text += "00"
+            cell.EndText += "00"
         Else
-            cell.BottomTimeLabel.Text += (endt Mod 60).ToString("D2")
+            cell.EndText += (endt Mod 60).ToString("D2")
         End If
 
         If title.Length > 100 Then title = Mid(title, 1, 100) + "..."
         If prof.Length > 50 Then prof = Mid(prof, 1, 50) + "..."
         If memo.Length > 2000 Then memo = Mid(memo, 1, 2000) + "..."
 
-        cell.TitleLabel.Text = title
-        cell.ProfLabel.Text = prof
-        cell.MemoLabel.Text = memo
+        cell.CourseTitle = title
+        cell.ProfessorText = prof
+        cell.MemoText = memo
         cell.Name = name
         cell.Tag = rawData
 
         cell.checked = (checked = "True")
+        parentPanel.Controls.Add(cell)
         Return cell
     End Function
 
