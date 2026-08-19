@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Windows.Forms
 
 ''' <summary>
-''' Immutable color palette used by the application's light and dark themes.
+''' 애플리케이션의 라이트 테마와 다크 테마에서 사용하는 색상 팔레트
 ''' </summary>
 Public NotInheritable Class ThemeColors
     Public Shared ReadOnly Light As New ThemeColors(
@@ -56,8 +56,8 @@ Public NotInheritable Class ThemeColors
 End Class
 
 ''' <summary>
-''' Draws every level of a ToolStrip menu with the active application palette.
-''' Windows' system renderer ignores BackColor/ForeColor on drop-down menus.
+''' 활성 애플리케이션 팔레트를 사용하여 ToolStrip 메뉴의 모든 계층을 그립니다
+''' Windows 시스템 렌더러는 드롭다운 메뉴의 BackColor/ForeColor를 무시합니다
 ''' </summary>
 Public NotInheritable Class MenuThemeRenderer
     Inherits ToolStripProfessionalRenderer

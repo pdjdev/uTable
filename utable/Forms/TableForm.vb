@@ -149,7 +149,7 @@ Public Class TableForm
         Set(ByVal value As ResizeDirection)
             _resizeDir = value
 
-            'Change cursor
+            '커서 변경
             Select Case value
                 Case ResizeDirection.Left
                     Me.Cursor = Cursors.SizeWE
@@ -238,7 +238,7 @@ Public Class TableForm
     End Sub
 
     Private Sub TableForm_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseMove
-        'Calculate which direction to resize based on mouse position
+        '마우스 위치를 기준으로 크기를 조정할 방향을 계산
 
         If e.Location.X < BorderWidth And e.Location.Y < BorderWidth Then
             resizeDir = ResizeDirection.TopLeft

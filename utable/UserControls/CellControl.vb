@@ -116,7 +116,7 @@ Public Class CellControl
         If ClientSize.Width <= 0 OrElse ClientSize.Height <= 0 Then Return
 
         EnsureRenderFonts()
-        'ClearType sub-pixels become distorted when this control is composed off-screen.
+        'ClearType 대신 가독성 좋은 AntiAliasGridFit 사용
         e.Graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
 
         Using notchBrush As New SolidBrush(ControlPaint.Light(BackColor, 0.3))
@@ -139,7 +139,7 @@ Public Class CellControl
         End Using
 
         y += Math.Max(CheckSize, timeFont.Height) + VerticalPadding
-        titleBounds = New Rectangle(HorizontalPadding, y, contentWidth, MeasureTextHeight(CourseTitle, titleFont, contentWidth))
+        titleBounds = New Rectangle(HorizontalPadding, y, contentWidth, MeasureTextHeight(e.Graphics, CourseTitle, titleFont, contentWidth))
         titleHoverBounds = titleBounds
 
         If titleHovered Then
@@ -152,13 +152,13 @@ Public Class CellControl
         y += titleBounds.Height
 
         If showProfessor AndAlso Not String.IsNullOrEmpty(ProfessorText) Then
-            Dim professorBounds As New Rectangle(HorizontalPadding, y, contentWidth, MeasureTextHeight(ProfessorText, bodyFont, contentWidth))
+            Dim professorBounds As New Rectangle(HorizontalPadding, y, contentWidth, MeasureTextHeight(e.Graphics, ProfessorText, bodyFont, contentWidth))
             DrawWrappedText(e.Graphics, ProfessorText, bodyFont, professorBounds)
             y += professorBounds.Height
         End If
 
         If showMemoText AndAlso Not String.IsNullOrEmpty(MemoText) Then
-            Dim memoBounds As New Rectangle(HorizontalPadding, y, contentWidth, MeasureTextHeight(MemoText, memoFont, contentWidth))
+            Dim memoBounds As New Rectangle(HorizontalPadding, y, contentWidth, MeasureTextHeight(e.Graphics, MemoText, memoFont, contentWidth))
             DrawWrappedText(e.Graphics, MemoText, memoFont, memoBounds)
         End If
 
@@ -197,8 +197,8 @@ Public Class CellControl
     Protected Overrides Sub OnMouseLeave(e As EventArgs)
         MyBase.OnMouseLeave(e)
 
-        'Moving an upward-expanding cell can cause WinForms to raise MouseLeave even
-        'though the pointer is still inside its newly calculated bounds.
+        '위쪽으로 확장되는 셀을 이동하면 새로 계산된 영역 안에 포인터가 있어도
+        'WinForms가 MouseLeave를 발생시킬 수 있음
         If ClientRectangle.Contains(PointToClient(Cursor.Position)) Then Return
 
         checkHovered = False
@@ -300,12 +300,12 @@ Public Class CellControl
 
     Private Sub HoverAnimationTimer_Tick(sender As Object, e As EventArgs)
         Dim progress As Double = Math.Min(1.0, hoverAnimationClock.Elapsed.TotalMilliseconds / HoverAnimationDurationMilliseconds)
-        'Smoothstep: ease-in-out with zero speed at both ends.
+        'Smoothstep: 양 끝에서 속도가 0이 되는 ease-in-out 보간
         Dim easedProgress As Double = progress * progress * (3.0 - 2.0 * progress)
         Dim previousBounds As Rectangle = Bounds
 
         Bounds = InterpolateBounds(hoverAnimationStartBounds, hoverAnimationTargetBounds, easedProgress)
-        'Resizing otherwise repaints only the newly exposed area, leaving text from prior frames behind.
+        
         Invalidate()
         If Parent IsNot Nothing Then
             Parent.Invalidate(Rectangle.Union(previousBounds, Bounds), True)
@@ -364,25 +364,38 @@ Public Class CellControl
         EnsureRenderFonts()
         Dim contentWidth As Integer = Math.Max(1, ClientSize.Width - HorizontalPadding * 2)
         Dim result As Integer = NotchHeight + VerticalPadding + Math.Max(CheckSize, timeFont.Height) + VerticalPadding
-        result += MeasureTextHeight(CourseTitle, titleFont, contentWidth)
-        If showProfessor Then result += MeasureTextHeight(ProfessorText, bodyFont, contentWidth)
-        If showMemoText Then result += MeasureTextHeight(MemoText, memoFont, contentWidth)
+
+        Using graphics As Graphics = CreateGraphics()
+            result += MeasureTextHeight(graphics, CourseTitle, titleFont, contentWidth)
+            If showProfessor Then result += MeasureTextHeight(graphics, ProfessorText, bodyFont, contentWidth)
+            If showMemoText Then result += MeasureTextHeight(graphics, MemoText, memoFont, contentWidth)
+        End Using
+
         result += timeFont.Height + VerticalPadding
         Return result
     End Function
 
-    Private Function MeasureTextHeight(value As String, fontToMeasure As Font, width As Integer) As Integer
+    Private Function MeasureTextHeight(graphics As Graphics, value As String, fontToMeasure As Font, width As Integer) As Integer
         If String.IsNullOrEmpty(value) Then Return 0
-        Return TextRenderer.MeasureText(value, fontToMeasure, New Size(Math.Max(1, width), Integer.MaxValue), TextFormatFlags.WordBreak Or TextFormatFlags.NoPadding).Height
+
+        Using textFormat As StringFormat = CreateWrappedTextFormat()
+            Return CInt(Math.Ceiling(graphics.MeasureString(value, fontToMeasure, Math.Max(1, width), textFormat).Height))
+        End Using
     End Function
 
     Private Sub DrawWrappedText(graphics As Graphics, value As String, fontToDraw As Font, bounds As Rectangle)
         If String.IsNullOrEmpty(value) OrElse bounds.Height <= 0 Then Return
-        Using textBrush As New SolidBrush(ForeColor), textFormat As New StringFormat()
-            textFormat.Trimming = StringTrimming.EllipsisCharacter
+
+        Using textBrush As New SolidBrush(ForeColor), textFormat As StringFormat = CreateWrappedTextFormat()
             graphics.DrawString(value, fontToDraw, textBrush, bounds, textFormat)
         End Using
     End Sub
+
+    Private Shared Function CreateWrappedTextFormat() As StringFormat
+        Dim textFormat As New StringFormat()
+        textFormat.Trimming = StringTrimming.EllipsisCharacter
+        Return textFormat
+    End Function
 
     Private Sub DrawEndTimeBackdrop(graphics As Graphics, bounds As Rectangle)
         If bounds.Width <= 0 OrElse bounds.Height <= 0 Then Return

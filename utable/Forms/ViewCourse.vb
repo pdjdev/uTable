@@ -9,8 +9,13 @@ Public Class ViewCourse
     Dim listcount As Integer = 0
     Dim colormode As String = Nothing
 
-    Dim maxTitleSize As Single = 15.0!
+    Dim maxTitleSize As Single = 14.0!
     Dim maxSubSize As Single = 9.0!
+    Private Const MinimumTitleSize As Single = 11.0!
+    Private Const TitleEllipsis As String = "..."
+
+    '창 크기가 바뀌면 원본 제목을 기준으로 다시 맞춘다.
+    Private courseTitle As String = String.Empty
 
     Public olddata As String = Nothing
     Public blacktext As Boolean = False
@@ -68,7 +73,7 @@ Public Class ViewCourse
         Set(ByVal value As ResizeDirection)
             _resizeDir = value
 
-            'Change cursor
+            '커서를 변경한다
             Select Case value
                 Case ResizeDirection.Left
                     Me.Cursor = Cursors.SizeWE
@@ -252,8 +257,9 @@ Public Class ViewCourse
 
         Try
             Dim course As TableCourse = getTableCourse(olddata)
-            UpperTitleLabel.Text = xmlDecode(course.Name)
-            Text = UpperTitleLabel.Text
+            courseTitle = NormalizeCourseTitle(xmlDecode(course.Name))
+            Text = courseTitle
+            UpperTitleLabel.Text = courseTitle
             SubTitleLabel.Text = xmlDecode(course.Professor) + ", "
 
             Dim startt As Integer = Convert.ToInt32(course.Start)
@@ -313,7 +319,7 @@ Public Class ViewCourse
 
         End Try
 
-        AdjustText(UpperTitleLabel, maxTitleSize)
+        LayoutCourseTitle()
         AdjustText(SubTitleLabel, maxSubSize)
 
         '글꼴이 자꾸 시스템 기본값으로 바뀌는것을 방지
@@ -324,11 +330,31 @@ Public Class ViewCourse
 
     End Sub
 
-    Private Sub AdjustText(lblQueue As Label, maxSize As Single)
+    Private Function NormalizeCourseTitle(value As String) As String
+        If String.IsNullOrWhiteSpace(value) Then Return String.Empty
+
+        Return value.Replace(vbCrLf, " ").Replace(vbCr, " ").Replace(vbLf, " ").Trim()
+    End Function
+
+    Private Sub LayoutCourseTitle()
+        If UpperTitleLabel.Width <= 0 OrElse UpperTitleLabel.Height <= 0 Then Exit Sub
+
+        UpperTitleLabel.Text = courseTitle
+        If String.IsNullOrEmpty(courseTitle) Then Exit Sub
+
+        AdjustText(UpperTitleLabel, maxTitleSize, MinimumTitleSize)
+        Dim shortened As String = courseTitle
+        While shortened.Length > 0 AndAlso Not TextFits(UpperTitleLabel, UpperTitleLabel.Text, UpperTitleLabel.Font)
+            shortened = shortened.Substring(0, Math.Max(0, shortened.Length - 1)).TrimEnd()
+            UpperTitleLabel.Text = shortened + TitleEllipsis
+        End While
+    End Sub
+
+    Private Sub AdjustText(lblQueue As Label, maxSize As Single, Optional minimumSize As Single = 6.0!)
         If String.IsNullOrEmpty(lblQueue.Text) OrElse lblQueue.Width <= 0 OrElse lblQueue.Height <= 0 Then Exit Sub
 
         '0.1pt씩 Font/MeasureText를 반복 생성하던 선형 탐색 대신 이분 탐색을 사용한다.
-        Dim lower As Single = 6.0!
+        Dim lower As Single = minimumSize
         Dim upper As Single = maxSize
         Dim best As Single = lower
 
@@ -336,8 +362,7 @@ Public Class ViewCourse
             Dim candidate As Single = (lower + upper) / 2
             Dim fits As Boolean
             Using testFont As New Font(lblQueue.Font.Name, candidate, lblQueue.Font.Style)
-                Dim textSize As Size = TextRenderer.MeasureText(lblQueue.Text, testFont)
-                fits = textSize.Width + 3 <= lblQueue.Width AndAlso textSize.Height + 3 <= lblQueue.Height
+                fits = TextFits(lblQueue, lblQueue.Text, testFont)
             End Using
 
             If fits Then
@@ -348,12 +373,17 @@ Public Class ViewCourse
             End If
         Next
 
-        If lblQueue Is UpperTitleLabel AndAlso best < 9.0! Then best = 9.0!
         lblQueue.Font = New Font(lblQueue.Font.Name, best, lblQueue.Font.Style)
     End Sub
 
+    Private Function TextFits(label As Label, value As String, fontToMeasure As Font) As Boolean
+        Dim textSize As Size = TextRenderer.MeasureText(value, fontToMeasure)
+        Return textSize.Width + 3 <= label.ClientSize.Width - label.Padding.Horizontal AndAlso
+               textSize.Height + 3 <= label.ClientSize.Height - label.Padding.Vertical
+    End Function
+
     Private Sub ViewCourse_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
-        AdjustText(UpperTitleLabel, maxTitleSize)
+        LayoutCourseTitle()
         AdjustText(SubTitleLabel, maxSubSize)
 
     End Sub

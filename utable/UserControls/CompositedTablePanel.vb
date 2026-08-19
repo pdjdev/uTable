@@ -11,7 +11,7 @@ Public Class CompositedTablePanel
     Protected Overrides ReadOnly Property CreateParams As CreateParams
         Get
             Dim parameters As CreateParams = MyBase.CreateParams
-            'Compose the grid and every course cell off-screen before presenting a frame.
+            '화면에 프레임을 표시하기 전에 격자와 모든 과목 셀을 오프스크린에서 합성한다
             parameters.ExStyle = parameters.ExStyle Or WsExComposited
             Return parameters
         End Get
