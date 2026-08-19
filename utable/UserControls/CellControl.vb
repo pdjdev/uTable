@@ -263,8 +263,12 @@ Public Class CellControl
             BringToFront()
         End If
 
-        If doExpand AndAlso Not alwaysExpand Then
-            Dim targetBounds As Rectangle = If(hovered, GetExpandedBounds(), GetDefaultBounds())
+        If doExpand OrElse alwaysExpand Then
+            '항상 확장 상태도 평소에는 실제 시작 시간(defLoc)을 유지하고,
+            '호버 중에만 시간표 하단을 넘는 경우 위쪽으로 이동한다.
+            Dim targetBounds As Rectangle = If(hovered,
+                                               GetExpandedBounds(),
+                                               If(alwaysExpand, GetAlwaysExpandedBounds(), GetDefaultBounds()))
             If doExpandAnimation Then
                 StartHoverAnimation(targetBounds)
             Else
@@ -297,6 +301,11 @@ Public Class CellControl
         End If
 
         Return New Rectangle(0, targetY, defaultBounds.Width, fullHeight)
+    End Function
+
+    Private Function GetAlwaysExpandedBounds() As Rectangle
+        Dim defaultBounds As Rectangle = GetDefaultBounds()
+        Return New Rectangle(0, defaultBounds.Y, defaultBounds.Width, Math.Max(defaultBounds.Height, GetRequiredHeight()))
     End Function
 
     Private Sub StartHoverAnimation(targetBounds As Rectangle)
@@ -342,8 +351,14 @@ Public Class CellControl
 
     Public Sub ForceExpand()
         hoverAnimationTimer.Stop()
-        Dim fullHeight As Integer = GetRequiredHeight()
-        If Height < fullHeight Then Height = fullHeight
+        Dim expandedBounds As Rectangle = GetAlwaysExpandedBounds()
+        If Bounds <> expandedBounds Then
+            Dim previousBounds As Rectangle = Bounds
+            Bounds = expandedBounds
+            If Parent IsNot Nothing Then
+                Parent.Invalidate(Rectangle.Union(previousBounds, Bounds), True)
+            End If
+        End If
     End Sub
 
     Protected Overrides Sub OnHandleDestroyed(e As EventArgs)
