@@ -30,10 +30,8 @@ Partial Class CellControl
         Me.ProfLabel = New System.Windows.Forms.Label()
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.TopNotchPanel = New System.Windows.Forms.Panel()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.TopPanel = New System.Windows.Forms.Panel()
         Me.ChkBox1 = New System.Windows.Forms.PictureBox()
-        Me.AniTimer = New System.Windows.Forms.Timer(Me.components)
         Me.Panel1.SuspendLayout()
         Me.TopPanel.SuspendLayout()
         CType(Me.ChkBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -127,11 +125,6 @@ Partial Class CellControl
         Me.TopNotchPanel.Size = New System.Drawing.Size(180, 2)
         Me.TopNotchPanel.TabIndex = 3
         '
-        'Timer1
-        '
-        Me.Timer1.Enabled = True
-        Me.Timer1.Interval = 150
-        '
         'TopPanel
         '
         Me.TopPanel.Controls.Add(Me.TopTimeLabel)
@@ -154,10 +147,6 @@ Partial Class CellControl
         Me.ChkBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.ChkBox1.TabIndex = 3
         Me.ChkBox1.TabStop = False
-        '
-        'AniTimer
-        '
-        Me.AniTimer.Interval = 10
         '
         'CellControl
         '
@@ -190,8 +179,6 @@ Partial Class CellControl
     Friend WithEvents ProfLabel As Label
     Friend WithEvents TitleLabel As Label
     Friend WithEvents TopNotchPanel As Panel
-    Friend WithEvents Timer1 As Timer
     Friend WithEvents TopPanel As Panel
     Friend WithEvents ChkBox1 As PictureBox
-    Friend WithEvents AniTimer As Timer
 End Class

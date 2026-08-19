@@ -9,7 +9,6 @@
     Dim blackText As Boolean = False
 
     Dim hovered As Boolean = False
-    Dim prev_hove As Boolean = False
 
     '설정값
     Public FadeEffect As String = ""
@@ -27,7 +26,9 @@
     Dim deltaColor_R As Integer = 1
     Dim deltaColor_G As Integer = 1
     Dim deltaColor_B As Integer = 1
+    Dim fadeInProgress As Boolean = False
     Public goalColor As Color = Nothing
+    Public Event FadeStarted As EventHandler
 
     Private Sub UserControl1_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         TitleLabel.MaximumSize() = New Size(Width, 0)
@@ -63,14 +64,16 @@
         ViewCourse.Show()
     End Sub
 
-    Private Sub TopTimeLabel_MouseEnter(sender As Object, e As EventArgs) Handles TopTimeLabel.MouseEnter,
-        TitleLabel.MouseEnter, ProfLabel.MouseEnter, Panel1.MouseEnter, MemoLabel.MouseEnter, BottomTimeLabel.MouseEnter
-        hovered = True
+    Private Sub TopTimeLabel_MouseEnter(sender As Object, e As EventArgs) Handles MyBase.MouseEnter, TopTimeLabel.MouseEnter,
+        TitleLabel.MouseEnter, ProfLabel.MouseEnter, Panel1.MouseEnter, MemoLabel.MouseEnter, BottomTimeLabel.MouseEnter,
+        ChkBox1.MouseEnter, TopNotchPanel.MouseEnter
+        SetHovered(True)
     End Sub
 
-    Private Sub CellControl_MouseLeave(sender As Object, e As EventArgs) Handles TopTimeLabel.MouseLeave,
-        TitleLabel.MouseLeave, ProfLabel.MouseLeave, Panel1.MouseLeave, MemoLabel.MouseLeave, BottomTimeLabel.MouseLeave
-        hovered = False
+    Private Sub CellControl_MouseLeave(sender As Object, e As EventArgs) Handles MyBase.MouseLeave, TopTimeLabel.MouseLeave,
+        TitleLabel.MouseLeave, ProfLabel.MouseLeave, Panel1.MouseLeave, MemoLabel.MouseLeave, BottomTimeLabel.MouseLeave,
+        ChkBox1.MouseLeave, TopNotchPanel.MouseLeave
+        If Not RectangleToScreen(ClientRectangle).Contains(Cursor.Position) Then SetHovered(False)
     End Sub
 
     Private Sub TitleLabel_MouseEnter(sender As Object, e As EventArgs) Handles TitleLabel.MouseEnter
@@ -136,11 +139,7 @@
                 BackColor = TableForm.TuePanel.BackColor
             End If
 
-            deltaColor_R = Int(Math.Abs((Int(goalColor.R) - Int(BackColor.R)) / 10))
-            deltaColor_G = Int(Math.Abs((Int(goalColor.G) - Int(BackColor.G)) / 10))
-            deltaColor_B = Int(Math.Abs((Int(goalColor.B) - Int(BackColor.B)) / 10))
-
-            AniTimer.Start()
+            BeginFade()
 
         Else
             BackColor = goalColor
@@ -167,13 +166,9 @@
     '    TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
     'End Sub
 
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-
-        If prev_hove = hovered Then
-            Exit Sub
-        Else
-            prev_hove = hovered
-        End If
+    Private Sub SetHovered(value As Boolean)
+        If hovered = value Then Exit Sub
+        hovered = value
 
         If hovered Then
             Dim fullheight As Integer = TopTimeLabel.Height + TitleLabel.Height + BottomTimeLabel.Height
@@ -292,7 +287,16 @@
         Tag = newdata
     End Sub
 
-    Private Sub AniTimer_Tick(sender As Object, e As EventArgs) Handles AniTimer.Tick
+    Private Sub BeginFade()
+        deltaColor_R = CInt(Math.Abs((CInt(goalColor.R) - CInt(BackColor.R)) / 10))
+        deltaColor_G = CInt(Math.Abs((CInt(goalColor.G) - CInt(BackColor.G)) / 10))
+        deltaColor_B = CInt(Math.Abs((CInt(goalColor.B) - CInt(BackColor.B)) / 10))
+        fadeInProgress = True
+        RaiseEvent FadeStarted(Me, EventArgs.Empty)
+    End Sub
+
+    Public Function AdvanceFade() As Boolean
+        If Not fadeInProgress Then Return False
 
         Dim R As Byte = BackColor.R
         Dim G As Byte = BackColor.G
@@ -326,9 +330,11 @@
         TopNotchPanel.BackColor = ControlPaint.Light(BackColor, 0.3)
 
         If goalColor = BackColor Then
-            AniTimer.Stop()
+            fadeInProgress = False
         End If
-    End Sub
+
+        Return fadeInProgress
+    End Function
 
     Private Sub TopPanel_Paint(sender As Object, e As PaintEventArgs) Handles TopPanel.Paint
 
