@@ -1134,6 +1134,7 @@ Public Class TableForm
         cell.Width = parentPanel.ClientSize.Width
         cell.Height = part * parentPanel.Height
         cell.defHeight = part * parentPanel.Height
+        cell.defLoc = cell.Location.Y
         cell.dayNum = day
 
         'MsgBox(part * Panel1.Height)

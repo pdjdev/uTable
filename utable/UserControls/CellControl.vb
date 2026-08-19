@@ -1,4 +1,5 @@
 Imports System.Drawing.Text
+Imports System.Diagnostics
 
 Public Class CellControl
     Public defHeight As Integer = 0
@@ -67,6 +68,12 @@ Public Class CellControl
     Private titleBounds As Rectangle = Rectangle.Empty
     Private titleHoverBounds As Rectangle = Rectangle.Empty
 
+    Private Const HoverAnimationDurationMilliseconds As Integer = 180
+    Private ReadOnly hoverAnimationTimer As New Timer With {.Interval = 15}
+    Private ReadOnly hoverAnimationClock As New Stopwatch()
+    Private hoverAnimationStartBounds As Rectangle
+    Private hoverAnimationTargetBounds As Rectangle
+
     Private timeFont As Font
     Private titleFont As Font
     Private titleStrikeoutFont As Font
@@ -75,7 +82,8 @@ Public Class CellControl
 
     Public Sub New()
         InitializeComponent()
-        SetStyle(ControlStyles.UserPaint Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer, True)
+        SetStyle(ControlStyles.UserPaint Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.ResizeRedraw, True)
+        AddHandler hoverAnimationTimer.Tick, AddressOf HoverAnimationTimer_Tick
     End Sub
 
     Private Sub CellControl_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -241,36 +249,87 @@ Public Class CellControl
     Private Sub SetHovered(value As Boolean)
         If hovered = value Then Return
         hovered = value
-        Dim previousBounds As Rectangle = Bounds
 
         If hovered Then
             BringToFront()
-            If doExpand Then
-                Dim fullHeight As Integer = GetRequiredHeight()
-                Dim parentHeight As Integer = If(Parent Is Nothing, Height, Parent.ClientSize.Height)
+        End If
 
-                If Location.Y + fullHeight > parentHeight Then
-                    Height = fullHeight
-                    Location = New Point(0, Math.Max(0, parentHeight - fullHeight))
-                ElseIf defHeight < fullHeight Then
-                    Height = fullHeight
-                End If
-            End If
-        Else
-            If doExpand AndAlso Not alwaysExpand Then Height = defHeight
-            Location = New Point(0, defLoc)
+        If doExpand AndAlso Not alwaysExpand Then
+            StartHoverAnimation(If(hovered, GetExpandedBounds(), GetDefaultBounds()))
         End If
 
         Invalidate()
-        If Parent IsNot Nothing AndAlso previousBounds <> Bounds Then
-            Parent.Invalidate(previousBounds)
-            Parent.Invalidate(Bounds)
+    End Sub
+
+    Private Function GetDefaultBounds() As Rectangle
+        Return New Rectangle(0, defLoc, Width, defHeight)
+    End Function
+
+    Private Function GetExpandedBounds() As Rectangle
+        Dim fullHeight As Integer = GetRequiredHeight()
+        Dim defaultBounds As Rectangle = GetDefaultBounds()
+
+        If defaultBounds.Height >= fullHeight Then Return defaultBounds
+
+        Dim parentHeight As Integer = If(Parent Is Nothing, defaultBounds.Bottom, Parent.ClientSize.Height)
+        Dim targetY As Integer = defaultBounds.Y
+        If defaultBounds.Bottom - defaultBounds.Height + fullHeight > parentHeight Then
+            targetY = Math.Max(0, parentHeight - fullHeight)
+        End If
+
+        Return New Rectangle(0, targetY, defaultBounds.Width, fullHeight)
+    End Function
+
+    Private Sub StartHoverAnimation(targetBounds As Rectangle)
+        If Bounds = targetBounds Then
+            hoverAnimationTimer.Stop()
+            Return
+        End If
+
+        hoverAnimationStartBounds = Bounds
+        hoverAnimationTargetBounds = targetBounds
+        hoverAnimationClock.Restart()
+        hoverAnimationTimer.Start()
+    End Sub
+
+    Private Sub HoverAnimationTimer_Tick(sender As Object, e As EventArgs)
+        Dim progress As Double = Math.Min(1.0, hoverAnimationClock.Elapsed.TotalMilliseconds / HoverAnimationDurationMilliseconds)
+        'Smoothstep: ease-in-out with zero speed at both ends.
+        Dim easedProgress As Double = progress * progress * (3.0 - 2.0 * progress)
+        Dim previousBounds As Rectangle = Bounds
+
+        Bounds = InterpolateBounds(hoverAnimationStartBounds, hoverAnimationTargetBounds, easedProgress)
+        'Resizing otherwise repaints only the newly exposed area, leaving text from prior frames behind.
+        Invalidate()
+        If Parent IsNot Nothing Then
+            Parent.Invalidate(Rectangle.Union(previousBounds, Bounds))
+        End If
+
+        If progress >= 1.0 Then
+            hoverAnimationTimer.Stop()
         End If
     End Sub
 
+    Private Function InterpolateBounds(fromBounds As Rectangle, toBounds As Rectangle, progress As Double) As Rectangle
+        Return New Rectangle(InterpolateValue(fromBounds.X, toBounds.X, progress),
+                             InterpolateValue(fromBounds.Y, toBounds.Y, progress),
+                             InterpolateValue(fromBounds.Width, toBounds.Width, progress),
+                             InterpolateValue(fromBounds.Height, toBounds.Height, progress))
+    End Function
+
+    Private Function InterpolateValue(fromValue As Integer, toValue As Integer, progress As Double) As Integer
+        Return CInt(Math.Round(fromValue + (toValue - fromValue) * progress))
+    End Function
+
     Public Sub ForceExpand()
+        hoverAnimationTimer.Stop()
         Dim fullHeight As Integer = GetRequiredHeight()
         If Height < fullHeight Then Height = fullHeight
+    End Sub
+
+    Protected Overrides Sub OnHandleDestroyed(e As EventArgs)
+        hoverAnimationTimer.Stop()
+        MyBase.OnHandleDestroyed(e)
     End Sub
 
     Private Sub ToggleCheck()
