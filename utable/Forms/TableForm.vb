@@ -17,6 +17,7 @@ Public Class TableForm
     Dim courseData As New List(Of String)
     Dim courseRecords As New List(Of TableCourse)
     Private ReadOnly cellsByCourse As New Dictionary(Of TableCourse, CellControl)
+    Private ReadOnly fadingCells As New HashSet(Of CellControl)
     Private courseLayoutQueued As Boolean = False
     Private WithEvents courseFadeTimer As New Timer With {.Interval = 30}
 
@@ -926,6 +927,7 @@ Public Class TableForm
 
     Public Sub updateCell()
         courseFadeTimer.Stop()
+        fadingCells.Clear()
         SuspendCourseLayouts()
         Try
 
@@ -1215,17 +1217,29 @@ Public Class TableForm
     End Sub
 
     Private Sub CellFadeStarted(sender As Object, e As EventArgs)
+        Dim cell As CellControl = TryCast(sender, CellControl)
+        If cell Is Nothing OrElse cell.IsDisposed Then Exit Sub
+
+        fadingCells.Add(cell)
         If Not courseFadeTimer.Enabled Then courseFadeTimer.Start()
     End Sub
 
     Private Sub courseFadeTimer_Tick(sender As Object, e As EventArgs) Handles courseFadeTimer.Tick
-        Dim hasActiveFade As Boolean = False
+        If fadingCells.Count = 0 Then
+            courseFadeTimer.Stop()
+            Exit Sub
+        End If
 
-        For Each cell As CellControl In cellsByCourse.Values
-            If cell.AdvanceFade() Then hasActiveFade = True
+        Dim completedCells As New List(Of CellControl)
+        For Each cell As CellControl In fadingCells
+            If cell.IsDisposed OrElse Not cell.AdvanceFade() Then completedCells.Add(cell)
         Next
 
-        If Not hasActiveFade Then courseFadeTimer.Stop()
+        For Each cell As CellControl In completedCells
+            fadingCells.Remove(cell)
+        Next
+
+        If fadingCells.Count = 0 Then courseFadeTimer.Stop()
     End Sub
 
 #End Region
