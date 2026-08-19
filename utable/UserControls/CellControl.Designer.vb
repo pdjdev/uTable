@@ -71,7 +71,7 @@ Partial Class CellControl
         Me.Panel1.Controls.Add(Me.TitleLabel)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 26)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(180, 274)
         Me.Panel1.TabIndex = 2
@@ -122,7 +122,7 @@ Partial Class CellControl
         '
         Me.TopNotchPanel.Dock = System.Windows.Forms.DockStyle.Top
         Me.TopNotchPanel.Location = New System.Drawing.Point(0, 0)
-        Me.TopNotchPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TopNotchPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.TopNotchPanel.Name = "TopNotchPanel"
         Me.TopNotchPanel.Size = New System.Drawing.Size(180, 2)
         Me.TopNotchPanel.TabIndex = 3
@@ -138,7 +138,7 @@ Partial Class CellControl
         Me.TopPanel.Controls.Add(Me.ChkBox1)
         Me.TopPanel.Dock = System.Windows.Forms.DockStyle.Top
         Me.TopPanel.Location = New System.Drawing.Point(0, 2)
-        Me.TopPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TopPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.TopPanel.Name = "TopPanel"
         Me.TopPanel.Size = New System.Drawing.Size(180, 24)
         Me.TopPanel.TabIndex = 3
@@ -148,7 +148,7 @@ Partial Class CellControl
         Me.ChkBox1.Dock = System.Windows.Forms.DockStyle.Left
         Me.ChkBox1.Image = Global.uTable.My.Resources.Resources.check1_w_96
         Me.ChkBox1.Location = New System.Drawing.Point(0, 0)
-        Me.ChkBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ChkBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.ChkBox1.Name = "ChkBox1"
         Me.ChkBox1.Size = New System.Drawing.Size(24, 24)
         Me.ChkBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -171,7 +171,7 @@ Partial Class CellControl
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
         Me.ForeColor = System.Drawing.Color.White
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "CellControl"
         Me.Size = New System.Drawing.Size(180, 325)
         Me.Panel1.ResumeLayout(False)

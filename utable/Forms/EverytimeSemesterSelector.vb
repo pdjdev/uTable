@@ -96,8 +96,32 @@ Public Class EverytimeSemesterSelector
         Select Case colorMode
             Case "Dark"
                 CloseBT.Image = My.Resources.closeicon_w
+
+                ' 옵션 컨트롤 내에 있는 모든 체크박스, 라디오버튼에 다크 모드 테마 적용
+                For Each chk As CheckBox In GetAll(Me, GetType(CheckBox))
+                    SetWindowTheme(chk.Handle, "DarkMode_Explorer", Nothing)
+                Next
+
+                For Each rdo As RadioButton In GetAll(Me, GetType(RadioButton))
+                    SetWindowTheme(rdo.Handle, "DarkMode_Explorer", Nothing)
+                Next
+
+                SetWindowTheme(AgreementRTB.Handle, "DarkMode_Explorer", Nothing)
+                AgreementRTB.BackColor = Color.FromArgb(30, 30, 30)
+
             Case Else
                 CloseBT.Image = My.Resources.closeicon_b
+
+                ' 옵션 컨트롤 내에 있는 모든 체크박스, 라디오버튼에 다크 모드 테마 적용
+                For Each chk As CheckBox In GetAll(Me, GetType(CheckBox))
+                    SetWindowTheme(chk.Handle, "Explorer", Nothing)
+                Next
+
+                For Each rdo As RadioButton In GetAll(Me, GetType(RadioButton))
+                    SetWindowTheme(rdo.Handle, "Explorer", Nothing)
+                Next
+
+                SetWindowTheme(AgreementRTB.Handle, "Explorer", Nothing)
         End Select
     End Sub
 

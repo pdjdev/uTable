@@ -27,27 +27,6 @@ Partial Class OptionForm
         Me.TitleLabel = New System.Windows.Forms.Label()
         Me.CloseBT = New System.Windows.Forms.PictureBox()
         Me.MainPanel = New System.Windows.Forms.Panel()
-        Me.TabPage_Info = New System.Windows.Forms.Panel()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-        Me.VersionLabel = New System.Windows.Forms.Label()
-        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
-        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
-        Me.TapPage_Notification = New System.Windows.Forms.Panel()
-        Me.TodaysCourseNotifyChk = New System.Windows.Forms.CheckBox()
-        Me.CourseNotifyPanel = New System.Windows.Forms.Panel()
-        Me.NotificationSoundPlayBT = New System.Windows.Forms.Button()
-        Me.NotificationSoundFileOpenBT = New System.Windows.Forms.Button()
-        Me.NotificationSoundLocationTB = New System.Windows.Forms.TextBox()
-        Me.NotifySoundChk = New System.Windows.Forms.CheckBox()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Notify_5min_Chk = New System.Windows.Forms.CheckBox()
-        Me.Notify_15min_Chk = New System.Windows.Forms.CheckBox()
-        Me.Notify_30min_Chk = New System.Windows.Forms.CheckBox()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.CourseNotifyChk = New System.Windows.Forms.CheckBox()
         Me.TabPage_Basic = New System.Windows.Forms.Panel()
         Me.AlwaysHideToTrayChk = New System.Windows.Forms.CheckBox()
         Me.TopMostChk = New System.Windows.Forms.CheckBox()
@@ -104,6 +83,22 @@ Partial Class OptionForm
         Me.SaveDirectoryTB = New System.Windows.Forms.TextBox()
         Me.CustomSaveDirChk = New System.Windows.Forms.CheckBox()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.TapPage_Notification = New System.Windows.Forms.Panel()
+        Me.TodaysCourseNotifyChk = New System.Windows.Forms.CheckBox()
+        Me.CourseNotifyPanel = New System.Windows.Forms.Panel()
+        Me.NotificationSoundPlayBT = New System.Windows.Forms.Button()
+        Me.NotificationSoundFileOpenBT = New System.Windows.Forms.Button()
+        Me.NotificationSoundLocationTB = New System.Windows.Forms.TextBox()
+        Me.NotifySoundChk = New System.Windows.Forms.CheckBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.Notify_5min_Chk = New System.Windows.Forms.CheckBox()
+        Me.Notify_15min_Chk = New System.Windows.Forms.CheckBox()
+        Me.Notify_30min_Chk = New System.Windows.Forms.CheckBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.CourseNotifyChk = New System.Windows.Forms.CheckBox()
         Me.TabPage_Update = New System.Windows.Forms.Panel()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
@@ -124,27 +119,28 @@ Partial Class OptionForm
         Me.Label23 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.MSStoreLinkLabel = New System.Windows.Forms.LinkLabel()
+        Me.TabPage_Info = New System.Windows.Forms.Panel()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.VersionLabel = New System.Windows.Forms.Label()
+        Me.FeedbackLabel = New System.Windows.Forms.LinkLabel()
+        Me.BannerPictureBox = New System.Windows.Forms.PictureBox()
         Me.ShadowPanel = New System.Windows.Forms.Panel()
         Me.SidePanel = New System.Windows.Forms.Panel()
-        Me.ShadowPanel1 = New System.Windows.Forms.Panel()
-        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
-        Me.UpdateChecker = New System.ComponentModel.BackgroundWorker()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.SettingMenu_Info = New uTable.SettingMenu()
         Me.SettingMenu_Update = New uTable.SettingMenu()
         Me.SettingMenu_Notification = New uTable.SettingMenu()
         Me.SettingMenu_Data = New uTable.SettingMenu()
         Me.SettingMenu_Table = New uTable.SettingMenu()
         Me.SettingMenu_Basic = New uTable.SettingMenu()
+        Me.ShadowPanel1 = New System.Windows.Forms.Panel()
+        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
+        Me.UpdateChecker = New System.ComponentModel.BackgroundWorker()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.TitlePanel.SuspendLayout()
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainPanel.SuspendLayout()
-        Me.TabPage_Info.SuspendLayout()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TapPage_Notification.SuspendLayout()
-        Me.CourseNotifyPanel.SuspendLayout()
         Me.TabPage_Basic.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TabPage_Table.SuspendLayout()
@@ -152,12 +148,16 @@ Partial Class OptionForm
         Me.TabPage_Data.SuspendLayout()
         Me.Panel6.SuspendLayout()
         Me.CustomDirPanel.SuspendLayout()
+        Me.TapPage_Notification.SuspendLayout()
+        Me.CourseNotifyPanel.SuspendLayout()
         Me.TabPage_Update.SuspendLayout()
         Me.Panel4.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.UpdateCtrlPanel.SuspendLayout()
         Me.UpdateCtrlMSStorePanel.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage_Info.SuspendLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SidePanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -201,12 +201,12 @@ Partial Class OptionForm
         'MainPanel
         '
         Me.MainPanel.BackColor = System.Drawing.Color.White
-        Me.MainPanel.Controls.Add(Me.TapPage_Notification)
-        Me.MainPanel.Controls.Add(Me.TabPage_Data)
-        Me.MainPanel.Controls.Add(Me.TabPage_Table)
         Me.MainPanel.Controls.Add(Me.TabPage_Basic)
-        Me.MainPanel.Controls.Add(Me.TabPage_Info)
+        Me.MainPanel.Controls.Add(Me.TabPage_Table)
+        Me.MainPanel.Controls.Add(Me.TabPage_Data)
+        Me.MainPanel.Controls.Add(Me.TapPage_Notification)
         Me.MainPanel.Controls.Add(Me.TabPage_Update)
+        Me.MainPanel.Controls.Add(Me.TabPage_Info)
         Me.MainPanel.Controls.Add(Me.ShadowPanel)
         Me.MainPanel.Controls.Add(Me.SidePanel)
         Me.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill
@@ -215,259 +215,6 @@ Partial Class OptionForm
         Me.MainPanel.Name = "MainPanel"
         Me.MainPanel.Size = New System.Drawing.Size(737, 359)
         Me.MainPanel.TabIndex = 1
-        '
-        'TabPage_Info
-        '
-        Me.TabPage_Info.Controls.Add(Me.RichTextBox1)
-        Me.TabPage_Info.Controls.Add(Me.VersionLabel)
-        Me.TabPage_Info.Controls.Add(Me.FeedbackLabel)
-        Me.TabPage_Info.Controls.Add(Me.BannerPictureBox)
-        Me.TabPage_Info.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabPage_Info.Location = New System.Drawing.Point(185, 12)
-        Me.TabPage_Info.Margin = New System.Windows.Forms.Padding(4)
-        Me.TabPage_Info.Name = "TabPage_Info"
-        Me.TabPage_Info.Padding = New System.Windows.Forms.Padding(12)
-        Me.TabPage_Info.Size = New System.Drawing.Size(552, 347)
-        Me.TabPage_Info.TabIndex = 14
-        '
-        'RichTextBox1
-        '
-        Me.RichTextBox1.BackColor = System.Drawing.Color.White
-        Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RichTextBox1.ForeColor = System.Drawing.Color.Black
-        Me.RichTextBox1.Location = New System.Drawing.Point(12, 115)
-        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(4)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(528, 200)
-        Me.RichTextBox1.TabIndex = 3
-        Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
-        '
-        'VersionLabel
-        '
-        Me.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.VersionLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.VersionLabel.Location = New System.Drawing.Point(12, 84)
-        Me.VersionLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.VersionLabel.Name = "VersionLabel"
-        Me.VersionLabel.Size = New System.Drawing.Size(528, 31)
-        Me.VersionLabel.TabIndex = 7
-        Me.VersionLabel.Text = "VersionLabel"
-        Me.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'FeedbackLabel
-        '
-        Me.FeedbackLabel.AutoSize = True
-        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.FeedbackLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.FeedbackLabel.Location = New System.Drawing.Point(12, 315)
-        Me.FeedbackLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(525, 0)
-        Me.FeedbackLabel.Name = "FeedbackLabel"
-        Me.FeedbackLabel.Size = New System.Drawing.Size(525, 20)
-        Me.FeedbackLabel.TabIndex = 6
-        Me.FeedbackLabel.TabStop = True
-        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
-        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'BannerPictureBox
-        '
-        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
-        Me.BannerPictureBox.Image = Global.uTable.My.Resources.Resources.uTable_banner
-        Me.BannerPictureBox.Location = New System.Drawing.Point(12, 12)
-        Me.BannerPictureBox.Margin = New System.Windows.Forms.Padding(4)
-        Me.BannerPictureBox.Name = "BannerPictureBox"
-        Me.BannerPictureBox.Size = New System.Drawing.Size(528, 72)
-        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.BannerPictureBox.TabIndex = 4
-        Me.BannerPictureBox.TabStop = False
-        '
-        'TapPage_Notification
-        '
-        Me.TapPage_Notification.Controls.Add(Me.TodaysCourseNotifyChk)
-        Me.TapPage_Notification.Controls.Add(Me.CourseNotifyPanel)
-        Me.TapPage_Notification.Controls.Add(Me.Label21)
-        Me.TapPage_Notification.Controls.Add(Me.CourseNotifyChk)
-        Me.TapPage_Notification.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TapPage_Notification.Location = New System.Drawing.Point(185, 12)
-        Me.TapPage_Notification.Margin = New System.Windows.Forms.Padding(4)
-        Me.TapPage_Notification.Name = "TapPage_Notification"
-        Me.TapPage_Notification.Size = New System.Drawing.Size(552, 347)
-        Me.TapPage_Notification.TabIndex = 12
-        '
-        'TodaysCourseNotifyChk
-        '
-        Me.TodaysCourseNotifyChk.AutoSize = True
-        Me.TodaysCourseNotifyChk.Location = New System.Drawing.Point(26, 257)
-        Me.TodaysCourseNotifyChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.TodaysCourseNotifyChk.Name = "TodaysCourseNotifyChk"
-        Me.TodaysCourseNotifyChk.Size = New System.Drawing.Size(290, 25)
-        Me.TodaysCourseNotifyChk.TabIndex = 7
-        Me.TodaysCourseNotifyChk.Text = "프로그램 시작시 오늘의 수업 알림 활성화" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        Me.TodaysCourseNotifyChk.UseVisualStyleBackColor = True
-        '
-        'CourseNotifyPanel
-        '
-        Me.CourseNotifyPanel.Controls.Add(Me.NotificationSoundPlayBT)
-        Me.CourseNotifyPanel.Controls.Add(Me.NotificationSoundFileOpenBT)
-        Me.CourseNotifyPanel.Controls.Add(Me.NotificationSoundLocationTB)
-        Me.CourseNotifyPanel.Controls.Add(Me.NotifySoundChk)
-        Me.CourseNotifyPanel.Controls.Add(Me.Label22)
-        Me.CourseNotifyPanel.Controls.Add(Me.Label19)
-        Me.CourseNotifyPanel.Controls.Add(Me.Label18)
-        Me.CourseNotifyPanel.Controls.Add(Me.Label20)
-        Me.CourseNotifyPanel.Controls.Add(Me.Notify_5min_Chk)
-        Me.CourseNotifyPanel.Controls.Add(Me.Notify_15min_Chk)
-        Me.CourseNotifyPanel.Controls.Add(Me.Notify_30min_Chk)
-        Me.CourseNotifyPanel.Location = New System.Drawing.Point(16, 82)
-        Me.CourseNotifyPanel.Margin = New System.Windows.Forms.Padding(4)
-        Me.CourseNotifyPanel.Name = "CourseNotifyPanel"
-        Me.CourseNotifyPanel.Size = New System.Drawing.Size(519, 165)
-        Me.CourseNotifyPanel.TabIndex = 6
-        '
-        'NotificationSoundPlayBT
-        '
-        Me.NotificationSoundPlayBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.NotificationSoundPlayBT.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.NotificationSoundPlayBT.Location = New System.Drawing.Point(470, 86)
-        Me.NotificationSoundPlayBT.Margin = New System.Windows.Forms.Padding(4)
-        Me.NotificationSoundPlayBT.Name = "NotificationSoundPlayBT"
-        Me.NotificationSoundPlayBT.Size = New System.Drawing.Size(36, 29)
-        Me.NotificationSoundPlayBT.TabIndex = 20
-        Me.NotificationSoundPlayBT.Text = "▶"
-        Me.NotificationSoundPlayBT.UseVisualStyleBackColor = True
-        '
-        'NotificationSoundFileOpenBT
-        '
-        Me.NotificationSoundFileOpenBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.NotificationSoundFileOpenBT.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.NotificationSoundFileOpenBT.Location = New System.Drawing.Point(429, 86)
-        Me.NotificationSoundFileOpenBT.Margin = New System.Windows.Forms.Padding(4)
-        Me.NotificationSoundFileOpenBT.Name = "NotificationSoundFileOpenBT"
-        Me.NotificationSoundFileOpenBT.Size = New System.Drawing.Size(36, 29)
-        Me.NotificationSoundFileOpenBT.TabIndex = 19
-        Me.NotificationSoundFileOpenBT.Text = "..."
-        Me.NotificationSoundFileOpenBT.UseVisualStyleBackColor = True
-        '
-        'NotificationSoundLocationTB
-        '
-        Me.NotificationSoundLocationTB.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.NotificationSoundLocationTB.Location = New System.Drawing.Point(171, 86)
-        Me.NotificationSoundLocationTB.Margin = New System.Windows.Forms.Padding(4)
-        Me.NotificationSoundLocationTB.Name = "NotificationSoundLocationTB"
-        Me.NotificationSoundLocationTB.Size = New System.Drawing.Size(250, 27)
-        Me.NotificationSoundLocationTB.TabIndex = 9
-        '
-        'NotifySoundChk
-        '
-        Me.NotifySoundChk.AutoSize = True
-        Me.NotifySoundChk.Location = New System.Drawing.Point(101, 89)
-        Me.NotifySoundChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.NotifySoundChk.Name = "NotifySoundChk"
-        Me.NotifySoundChk.Size = New System.Drawing.Size(60, 25)
-        Me.NotifySoundChk.TabIndex = 8
-        Me.NotifySoundChk.Text = "사용"
-        Me.NotifySoundChk.UseVisualStyleBackColor = True
-        '
-        'Label22
-        '
-        Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(12, 90)
-        Me.Label22.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(70, 21)
-        Me.Label22.TabIndex = 7
-        Me.Label22.Text = "알림 소리"
-        '
-        'Label19
-        '
-        Me.Label19.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label19.ForeColor = System.Drawing.Color.Gray
-        Me.Label19.Location = New System.Drawing.Point(10, 122)
-        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(486, 39)
-        Me.Label19.TabIndex = 6
-        Me.Label19.Text = "Tip: 강의 메모에 ""(알림 무시)"" 또는 ""(알림X)"" 라고 입력하면" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "해당 과목의 알림이 무시됩니다."
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(12, 14)
-        Me.Label18.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(70, 21)
-        Me.Label18.TabIndex = 3
-        Me.Label18.Text = "알림 시간"
-        '
-        'Label20
-        '
-        Me.Label20.Font = New System.Drawing.Font("Noto Sans KR", 8.0!)
-        Me.Label20.ForeColor = System.Drawing.Color.Gray
-        Me.Label20.Location = New System.Drawing.Point(12, 40)
-        Me.Label20.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(485, 38)
-        Me.Label20.TabIndex = 5
-        Me.Label20.Text = "아무것도 체크하지 않을 시 수업 시작 시간에만," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "중복 체크시 해당 시간 모두 알림이 옵니다."
-        '
-        'Notify_5min_Chk
-        '
-        Me.Notify_5min_Chk.AutoSize = True
-        Me.Notify_5min_Chk.Location = New System.Drawing.Point(279, 12)
-        Me.Notify_5min_Chk.Margin = New System.Windows.Forms.Padding(4)
-        Me.Notify_5min_Chk.Name = "Notify_5min_Chk"
-        Me.Notify_5min_Chk.Size = New System.Drawing.Size(72, 25)
-        Me.Notify_5min_Chk.TabIndex = 2
-        Me.Notify_5min_Chk.Text = "5분 전"
-        Me.Notify_5min_Chk.UseVisualStyleBackColor = True
-        '
-        'Notify_15min_Chk
-        '
-        Me.Notify_15min_Chk.AutoSize = True
-        Me.Notify_15min_Chk.Location = New System.Drawing.Point(190, 12)
-        Me.Notify_15min_Chk.Margin = New System.Windows.Forms.Padding(4)
-        Me.Notify_15min_Chk.Name = "Notify_15min_Chk"
-        Me.Notify_15min_Chk.Size = New System.Drawing.Size(80, 25)
-        Me.Notify_15min_Chk.TabIndex = 1
-        Me.Notify_15min_Chk.Text = "15분 전"
-        Me.Notify_15min_Chk.UseVisualStyleBackColor = True
-        '
-        'Notify_30min_Chk
-        '
-        Me.Notify_30min_Chk.AutoSize = True
-        Me.Notify_30min_Chk.Location = New System.Drawing.Point(101, 12)
-        Me.Notify_30min_Chk.Margin = New System.Windows.Forms.Padding(4)
-        Me.Notify_30min_Chk.Name = "Notify_30min_Chk"
-        Me.Notify_30min_Chk.Size = New System.Drawing.Size(80, 25)
-        Me.Notify_30min_Chk.TabIndex = 0
-        Me.Notify_30min_Chk.Text = "30분 전"
-        Me.Notify_30min_Chk.UseVisualStyleBackColor = True
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Label21.Location = New System.Drawing.Point(21, 15)
-        Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(85, 27)
-        Me.Label21.TabIndex = 4
-        Me.Label21.Text = "알림 설정"
-        '
-        'CourseNotifyChk
-        '
-        Me.CourseNotifyChk.AutoSize = True
-        Me.CourseNotifyChk.Location = New System.Drawing.Point(28, 58)
-        Me.CourseNotifyChk.Margin = New System.Windows.Forms.Padding(4)
-        Me.CourseNotifyChk.Name = "CourseNotifyChk"
-        Me.CourseNotifyChk.Size = New System.Drawing.Size(138, 25)
-        Me.CourseNotifyChk.TabIndex = 3
-        Me.CourseNotifyChk.Text = "강의 알림 활성화"
-        Me.CourseNotifyChk.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.CourseNotifyChk.UseVisualStyleBackColor = True
         '
         'TabPage_Basic
         '
@@ -1131,6 +878,191 @@ Partial Class OptionForm
         Me.Label13.TabIndex = 12
         Me.Label13.Text = "시간표 저장 위치 설정"
         '
+        'TapPage_Notification
+        '
+        Me.TapPage_Notification.Controls.Add(Me.TodaysCourseNotifyChk)
+        Me.TapPage_Notification.Controls.Add(Me.CourseNotifyPanel)
+        Me.TapPage_Notification.Controls.Add(Me.Label21)
+        Me.TapPage_Notification.Controls.Add(Me.CourseNotifyChk)
+        Me.TapPage_Notification.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TapPage_Notification.Location = New System.Drawing.Point(185, 12)
+        Me.TapPage_Notification.Margin = New System.Windows.Forms.Padding(4)
+        Me.TapPage_Notification.Name = "TapPage_Notification"
+        Me.TapPage_Notification.Size = New System.Drawing.Size(552, 347)
+        Me.TapPage_Notification.TabIndex = 12
+        '
+        'TodaysCourseNotifyChk
+        '
+        Me.TodaysCourseNotifyChk.AutoSize = True
+        Me.TodaysCourseNotifyChk.Location = New System.Drawing.Point(26, 257)
+        Me.TodaysCourseNotifyChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.TodaysCourseNotifyChk.Name = "TodaysCourseNotifyChk"
+        Me.TodaysCourseNotifyChk.Size = New System.Drawing.Size(290, 25)
+        Me.TodaysCourseNotifyChk.TabIndex = 7
+        Me.TodaysCourseNotifyChk.Text = "프로그램 시작시 오늘의 수업 알림 활성화" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.TodaysCourseNotifyChk.UseVisualStyleBackColor = True
+        '
+        'CourseNotifyPanel
+        '
+        Me.CourseNotifyPanel.Controls.Add(Me.NotificationSoundPlayBT)
+        Me.CourseNotifyPanel.Controls.Add(Me.NotificationSoundFileOpenBT)
+        Me.CourseNotifyPanel.Controls.Add(Me.NotificationSoundLocationTB)
+        Me.CourseNotifyPanel.Controls.Add(Me.NotifySoundChk)
+        Me.CourseNotifyPanel.Controls.Add(Me.Label22)
+        Me.CourseNotifyPanel.Controls.Add(Me.Label19)
+        Me.CourseNotifyPanel.Controls.Add(Me.Label18)
+        Me.CourseNotifyPanel.Controls.Add(Me.Label20)
+        Me.CourseNotifyPanel.Controls.Add(Me.Notify_5min_Chk)
+        Me.CourseNotifyPanel.Controls.Add(Me.Notify_15min_Chk)
+        Me.CourseNotifyPanel.Controls.Add(Me.Notify_30min_Chk)
+        Me.CourseNotifyPanel.Location = New System.Drawing.Point(16, 82)
+        Me.CourseNotifyPanel.Margin = New System.Windows.Forms.Padding(4)
+        Me.CourseNotifyPanel.Name = "CourseNotifyPanel"
+        Me.CourseNotifyPanel.Size = New System.Drawing.Size(519, 165)
+        Me.CourseNotifyPanel.TabIndex = 6
+        '
+        'NotificationSoundPlayBT
+        '
+        Me.NotificationSoundPlayBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.NotificationSoundPlayBT.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.NotificationSoundPlayBT.Location = New System.Drawing.Point(470, 86)
+        Me.NotificationSoundPlayBT.Margin = New System.Windows.Forms.Padding(4)
+        Me.NotificationSoundPlayBT.Name = "NotificationSoundPlayBT"
+        Me.NotificationSoundPlayBT.Size = New System.Drawing.Size(36, 29)
+        Me.NotificationSoundPlayBT.TabIndex = 20
+        Me.NotificationSoundPlayBT.Text = "▶"
+        Me.NotificationSoundPlayBT.UseVisualStyleBackColor = True
+        '
+        'NotificationSoundFileOpenBT
+        '
+        Me.NotificationSoundFileOpenBT.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.NotificationSoundFileOpenBT.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.NotificationSoundFileOpenBT.Location = New System.Drawing.Point(429, 86)
+        Me.NotificationSoundFileOpenBT.Margin = New System.Windows.Forms.Padding(4)
+        Me.NotificationSoundFileOpenBT.Name = "NotificationSoundFileOpenBT"
+        Me.NotificationSoundFileOpenBT.Size = New System.Drawing.Size(36, 29)
+        Me.NotificationSoundFileOpenBT.TabIndex = 19
+        Me.NotificationSoundFileOpenBT.Text = "..."
+        Me.NotificationSoundFileOpenBT.UseVisualStyleBackColor = True
+        '
+        'NotificationSoundLocationTB
+        '
+        Me.NotificationSoundLocationTB.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.NotificationSoundLocationTB.Location = New System.Drawing.Point(171, 86)
+        Me.NotificationSoundLocationTB.Margin = New System.Windows.Forms.Padding(4)
+        Me.NotificationSoundLocationTB.Name = "NotificationSoundLocationTB"
+        Me.NotificationSoundLocationTB.Size = New System.Drawing.Size(250, 27)
+        Me.NotificationSoundLocationTB.TabIndex = 9
+        '
+        'NotifySoundChk
+        '
+        Me.NotifySoundChk.AutoSize = True
+        Me.NotifySoundChk.Location = New System.Drawing.Point(101, 89)
+        Me.NotifySoundChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.NotifySoundChk.Name = "NotifySoundChk"
+        Me.NotifySoundChk.Size = New System.Drawing.Size(60, 25)
+        Me.NotifySoundChk.TabIndex = 8
+        Me.NotifySoundChk.Text = "사용"
+        Me.NotifySoundChk.UseVisualStyleBackColor = True
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(12, 90)
+        Me.Label22.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(70, 21)
+        Me.Label22.TabIndex = 7
+        Me.Label22.Text = "알림 소리"
+        '
+        'Label19
+        '
+        Me.Label19.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label19.ForeColor = System.Drawing.Color.Gray
+        Me.Label19.Location = New System.Drawing.Point(10, 122)
+        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(486, 39)
+        Me.Label19.TabIndex = 6
+        Me.Label19.Text = "Tip: 강의 메모에 ""(알림 무시)"" 또는 ""(알림X)"" 라고 입력하면" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "해당 과목의 알림이 무시됩니다."
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(12, 14)
+        Me.Label18.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(70, 21)
+        Me.Label18.TabIndex = 3
+        Me.Label18.Text = "알림 시간"
+        '
+        'Label20
+        '
+        Me.Label20.Font = New System.Drawing.Font("Noto Sans KR", 8.0!)
+        Me.Label20.ForeColor = System.Drawing.Color.Gray
+        Me.Label20.Location = New System.Drawing.Point(12, 40)
+        Me.Label20.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(485, 38)
+        Me.Label20.TabIndex = 5
+        Me.Label20.Text = "아무것도 체크하지 않을 시 수업 시작 시간에만," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "중복 체크시 해당 시간 모두 알림이 옵니다."
+        '
+        'Notify_5min_Chk
+        '
+        Me.Notify_5min_Chk.AutoSize = True
+        Me.Notify_5min_Chk.Location = New System.Drawing.Point(279, 12)
+        Me.Notify_5min_Chk.Margin = New System.Windows.Forms.Padding(4)
+        Me.Notify_5min_Chk.Name = "Notify_5min_Chk"
+        Me.Notify_5min_Chk.Size = New System.Drawing.Size(72, 25)
+        Me.Notify_5min_Chk.TabIndex = 2
+        Me.Notify_5min_Chk.Text = "5분 전"
+        Me.Notify_5min_Chk.UseVisualStyleBackColor = True
+        '
+        'Notify_15min_Chk
+        '
+        Me.Notify_15min_Chk.AutoSize = True
+        Me.Notify_15min_Chk.Location = New System.Drawing.Point(190, 12)
+        Me.Notify_15min_Chk.Margin = New System.Windows.Forms.Padding(4)
+        Me.Notify_15min_Chk.Name = "Notify_15min_Chk"
+        Me.Notify_15min_Chk.Size = New System.Drawing.Size(80, 25)
+        Me.Notify_15min_Chk.TabIndex = 1
+        Me.Notify_15min_Chk.Text = "15분 전"
+        Me.Notify_15min_Chk.UseVisualStyleBackColor = True
+        '
+        'Notify_30min_Chk
+        '
+        Me.Notify_30min_Chk.AutoSize = True
+        Me.Notify_30min_Chk.Location = New System.Drawing.Point(101, 12)
+        Me.Notify_30min_Chk.Margin = New System.Windows.Forms.Padding(4)
+        Me.Notify_30min_Chk.Name = "Notify_30min_Chk"
+        Me.Notify_30min_Chk.Size = New System.Drawing.Size(80, 25)
+        Me.Notify_30min_Chk.TabIndex = 0
+        Me.Notify_30min_Chk.Text = "30분 전"
+        Me.Notify_30min_Chk.UseVisualStyleBackColor = True
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Noto Sans KR", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label21.Location = New System.Drawing.Point(21, 15)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(85, 27)
+        Me.Label21.TabIndex = 4
+        Me.Label21.Text = "알림 설정"
+        '
+        'CourseNotifyChk
+        '
+        Me.CourseNotifyChk.AutoSize = True
+        Me.CourseNotifyChk.Location = New System.Drawing.Point(28, 58)
+        Me.CourseNotifyChk.Margin = New System.Windows.Forms.Padding(4)
+        Me.CourseNotifyChk.Name = "CourseNotifyChk"
+        Me.CourseNotifyChk.Size = New System.Drawing.Size(138, 25)
+        Me.CourseNotifyChk.TabIndex = 3
+        Me.CourseNotifyChk.Text = "강의 알림 활성화"
+        Me.CourseNotifyChk.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.CourseNotifyChk.UseVisualStyleBackColor = True
+        '
         'TabPage_Update
         '
         Me.TabPage_Update.Controls.Add(Me.Panel4)
@@ -1194,12 +1126,12 @@ Partial Class OptionForm
         '
         Me.UpdateChkButtonMSStore.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.UpdateChkButtonMSStore.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.UpdateChkButtonMSStore.Location = New System.Drawing.Point(431, 11)
+        Me.UpdateChkButtonMSStore.Location = New System.Drawing.Point(428, 11)
         Me.UpdateChkButtonMSStore.Margin = New System.Windows.Forms.Padding(4)
         Me.UpdateChkButtonMSStore.Name = "UpdateChkButtonMSStore"
-        Me.UpdateChkButtonMSStore.Size = New System.Drawing.Size(95, 56)
+        Me.UpdateChkButtonMSStore.Size = New System.Drawing.Size(98, 56)
         Me.UpdateChkButtonMSStore.TabIndex = 22
-        Me.UpdateChkButtonMSStore.Text = "업데이트 확인"
+        Me.UpdateChkButtonMSStore.Text = "업데이트" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "확인"
         Me.UpdateChkButtonMSStore.UseVisualStyleBackColor = True
         '
         'Label6
@@ -1372,6 +1304,74 @@ Partial Class OptionForm
         Me.MSStoreLinkLabel.Text = "스토어 페이지로 가기"
         Me.MSStoreLinkLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
+        'TabPage_Info
+        '
+        Me.TabPage_Info.Controls.Add(Me.RichTextBox1)
+        Me.TabPage_Info.Controls.Add(Me.VersionLabel)
+        Me.TabPage_Info.Controls.Add(Me.FeedbackLabel)
+        Me.TabPage_Info.Controls.Add(Me.BannerPictureBox)
+        Me.TabPage_Info.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabPage_Info.Location = New System.Drawing.Point(185, 12)
+        Me.TabPage_Info.Margin = New System.Windows.Forms.Padding(4)
+        Me.TabPage_Info.Name = "TabPage_Info"
+        Me.TabPage_Info.Padding = New System.Windows.Forms.Padding(12)
+        Me.TabPage_Info.Size = New System.Drawing.Size(552, 347)
+        Me.TabPage_Info.TabIndex = 14
+        '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.BackColor = System.Drawing.Color.White
+        Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RichTextBox1.ForeColor = System.Drawing.Color.Black
+        Me.RichTextBox1.Location = New System.Drawing.Point(12, 115)
+        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(4)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.ReadOnly = True
+        Me.RichTextBox1.Size = New System.Drawing.Size(528, 200)
+        Me.RichTextBox1.TabIndex = 3
+        Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
+        '
+        'VersionLabel
+        '
+        Me.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top
+        Me.VersionLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.VersionLabel.Location = New System.Drawing.Point(12, 84)
+        Me.VersionLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.VersionLabel.Name = "VersionLabel"
+        Me.VersionLabel.Size = New System.Drawing.Size(528, 31)
+        Me.VersionLabel.TabIndex = 7
+        Me.VersionLabel.Text = "VersionLabel"
+        Me.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'FeedbackLabel
+        '
+        Me.FeedbackLabel.AutoSize = True
+        Me.FeedbackLabel.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.FeedbackLabel.Font = New System.Drawing.Font("Noto Sans KR", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FeedbackLabel.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.FeedbackLabel.Location = New System.Drawing.Point(12, 315)
+        Me.FeedbackLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.FeedbackLabel.MinimumSize = New System.Drawing.Size(525, 0)
+        Me.FeedbackLabel.Name = "FeedbackLabel"
+        Me.FeedbackLabel.Size = New System.Drawing.Size(525, 20)
+        Me.FeedbackLabel.TabIndex = 6
+        Me.FeedbackLabel.TabStop = True
+        Me.FeedbackLabel.Text = "오류 보고/피드백 남기기"
+        Me.FeedbackLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'BannerPictureBox
+        '
+        Me.BannerPictureBox.Dock = System.Windows.Forms.DockStyle.Top
+        Me.BannerPictureBox.Image = Global.uTable.My.Resources.Resources.uTable_banner
+        Me.BannerPictureBox.Location = New System.Drawing.Point(12, 12)
+        Me.BannerPictureBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.BannerPictureBox.Name = "BannerPictureBox"
+        Me.BannerPictureBox.Size = New System.Drawing.Size(528, 72)
+        Me.BannerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.BannerPictureBox.TabIndex = 4
+        Me.BannerPictureBox.TabStop = False
+        '
         'ShadowPanel
         '
         Me.ShadowPanel.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
@@ -1400,35 +1400,6 @@ Partial Class OptionForm
         Me.SidePanel.Padding = New System.Windows.Forms.Padding(0, 0, 0, 12)
         Me.SidePanel.Size = New System.Drawing.Size(185, 359)
         Me.SidePanel.TabIndex = 1
-        '
-        'ShadowPanel1
-        '
-        Me.ShadowPanel1.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
-        Me.ShadowPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.ShadowPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.ShadowPanel1.Margin = New System.Windows.Forms.Padding(4)
-        Me.ShadowPanel1.Name = "ShadowPanel1"
-        Me.ShadowPanel1.Size = New System.Drawing.Size(185, 12)
-        Me.ShadowPanel1.TabIndex = 0
-        '
-        'FontDialog1
-        '
-        Me.FontDialog1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.FontDialog1.ShowEffects = False
-        '
-        'UpdateChecker
-        '
-        '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.DefaultExt = "utdata"
-        Me.SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
-        Me.SaveFileDialog1.Title = "저장 위치를 선택해 주세요"
-        '
-        'FolderBrowserDialog1
-        '
-        Me.FolderBrowserDialog1.Description = "시간표를 저장할 위치를 선택하세요"
         '
         'SettingMenu_Info
         '
@@ -1484,6 +1455,35 @@ Partial Class OptionForm
         Me.SettingMenu_Basic.Size = New System.Drawing.Size(185, 49)
         Me.SettingMenu_Basic.TabIndex = 1
         '
+        'ShadowPanel1
+        '
+        Me.ShadowPanel1.BackgroundImage = Global.uTable.My.Resources.Resources.shadow1
+        Me.ShadowPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ShadowPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.ShadowPanel1.Margin = New System.Windows.Forms.Padding(4)
+        Me.ShadowPanel1.Name = "ShadowPanel1"
+        Me.ShadowPanel1.Size = New System.Drawing.Size(185, 12)
+        Me.ShadowPanel1.TabIndex = 0
+        '
+        'FontDialog1
+        '
+        Me.FontDialog1.Font = New System.Drawing.Font("Noto Sans KR", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.FontDialog1.ShowEffects = False
+        '
+        'UpdateChecker
+        '
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "utdata"
+        Me.SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
+        Me.SaveFileDialog1.Title = "저장 위치를 선택해 주세요"
+        '
+        'FolderBrowserDialog1
+        '
+        Me.FolderBrowserDialog1.Description = "시간표를 저장할 위치를 선택하세요"
+        '
         'OptionForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
@@ -1506,13 +1506,6 @@ Partial Class OptionForm
         Me.TitlePanel.ResumeLayout(False)
         CType(Me.CloseBT, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainPanel.ResumeLayout(False)
-        Me.TabPage_Info.ResumeLayout(False)
-        Me.TabPage_Info.PerformLayout()
-        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TapPage_Notification.ResumeLayout(False)
-        Me.TapPage_Notification.PerformLayout()
-        Me.CourseNotifyPanel.ResumeLayout(False)
-        Me.CourseNotifyPanel.PerformLayout()
         Me.TabPage_Basic.ResumeLayout(False)
         Me.TabPage_Basic.PerformLayout()
         Me.Panel1.ResumeLayout(False)
@@ -1526,6 +1519,10 @@ Partial Class OptionForm
         Me.Panel6.PerformLayout()
         Me.CustomDirPanel.ResumeLayout(False)
         Me.CustomDirPanel.PerformLayout()
+        Me.TapPage_Notification.ResumeLayout(False)
+        Me.TapPage_Notification.PerformLayout()
+        Me.CourseNotifyPanel.ResumeLayout(False)
+        Me.CourseNotifyPanel.PerformLayout()
         Me.TabPage_Update.ResumeLayout(False)
         Me.Panel4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
@@ -1535,6 +1532,9 @@ Partial Class OptionForm
         Me.UpdateCtrlMSStorePanel.ResumeLayout(False)
         Me.UpdateCtrlMSStorePanel.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage_Info.ResumeLayout(False)
+        Me.TabPage_Info.PerformLayout()
+        CType(Me.BannerPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SidePanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 

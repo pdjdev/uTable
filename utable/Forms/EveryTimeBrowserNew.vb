@@ -85,7 +85,12 @@ Public Class EveryTimeBrowserNew
         WebView21.Source = New Uri(targetUrl)
         trialCount = 0
 
-        Refresh()
+        ' 호스트 OS의 컬러 테마가 다크 -> 브라우저 내부도 다크이므로 검은 TopPanel 배경 설정
+        If IsWindowsDarkMode() Then
+            TopPanel.BackColor = ColorTranslator.FromHtml("#111111")
+            CloseBT.Image = My.Resources.closeicon_w
+            Label1.ForeColor = ThemeColors.Dark.Text
+        End If
     End Sub
 
     Private Sub WebView2_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
