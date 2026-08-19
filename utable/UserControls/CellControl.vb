@@ -1,4 +1,5 @@
 Imports System.Drawing.Text
+Imports System.Drawing.Imaging
 Imports System.Diagnostics
 
 Public Class CellControl
@@ -71,6 +72,8 @@ Public Class CellControl
     Private deltaTextColor_R As Integer = 1
     Private deltaTextColor_G As Integer = 1
     Private deltaTextColor_B As Integer = 1
+    Private checkBoxFadeAlpha As Byte = 255
+    Private checkBoxFadeAlphaStep As Integer = 26
     Private titleBounds As Rectangle = Rectangle.Empty
     Private titleHoverBounds As Rectangle = Rectangle.Empty
 
@@ -466,7 +469,17 @@ Public Class CellControl
             image = If(blackText, If(TableForm.currentDPI = 96, My.Resources.check0_b_96, My.Resources.check0_b), If(TableForm.currentDPI = 96, My.Resources.check0_w_96, My.Resources.check0_w))
         End If
 
-        graphics.DrawImage(image, bounds)
+        If checkBoxFadeAlpha = 255 Then
+            graphics.DrawImage(image, bounds)
+            Return
+        End If
+
+        Using imageAttributes As New ImageAttributes()
+            Dim colorMatrix As New ColorMatrix()
+            colorMatrix.Matrix33 = checkBoxFadeAlpha / 255.0F
+            imageAttributes.SetColorMatrix(colorMatrix)
+            graphics.DrawImage(image, bounds, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttributes)
+        End Using
     End Sub
 
     Public Sub ModifyCheck(name As String, value As Boolean)
@@ -497,6 +510,8 @@ Public Class CellControl
         deltaTextColor_R = CInt(Math.Abs((CInt(goalTextColor.R) - CInt(ForeColor.R)) / 10))
         deltaTextColor_G = CInt(Math.Abs((CInt(goalTextColor.G) - CInt(ForeColor.G)) / 10))
         deltaTextColor_B = CInt(Math.Abs((CInt(goalTextColor.B) - CInt(ForeColor.B)) / 10))
+        checkBoxFadeAlpha = 0
+        checkBoxFadeAlphaStep = CInt(Math.Ceiling(255 / 10.0))
 
         fadeInProgress = True
         RaiseEvent FadeStarted(Me, EventArgs.Empty)
@@ -515,7 +530,9 @@ Public Class CellControl
         Dim textBlue As Byte = MoveToward(ForeColor.B, goalTextColor.B, deltaTextColor_B)
         ForeColor = Color.FromArgb(textRed, textGreen, textBlue)
 
-        If goalColor = BackColor AndAlso goalTextColor = ForeColor Then fadeInProgress = False
+        checkBoxFadeAlpha = CByte(Math.Min(255, CInt(checkBoxFadeAlpha) + checkBoxFadeAlphaStep))
+
+        If goalColor = BackColor AndAlso goalTextColor = ForeColor AndAlso checkBoxFadeAlpha = 255 Then fadeInProgress = False
         Invalidate()
         Return fadeInProgress
     End Function
