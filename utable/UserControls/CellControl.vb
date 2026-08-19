@@ -67,6 +67,10 @@ Public Class CellControl
     Private deltaColor_R As Integer = 1
     Private deltaColor_G As Integer = 1
     Private deltaColor_B As Integer = 1
+    Private goalTextColor As Color = Color.Empty
+    Private deltaTextColor_R As Integer = 1
+    Private deltaTextColor_G As Integer = 1
+    Private deltaTextColor_B As Integer = 1
     Private titleBounds As Rectangle = Rectangle.Empty
     Private titleHoverBounds As Rectangle = Rectangle.Empty
 
@@ -486,6 +490,14 @@ Public Class CellControl
         deltaColor_R = CInt(Math.Abs((CInt(goalColor.R) - CInt(BackColor.R)) / 10))
         deltaColor_G = CInt(Math.Abs((CInt(goalColor.G) - CInt(BackColor.G)) / 10))
         deltaColor_B = CInt(Math.Abs((CInt(goalColor.B) - CInt(BackColor.B)) / 10))
+
+        '텍스트는 초기 배경색에서 최종 글자색으로 함께 전환한다.
+        goalTextColor = If(blackText, Color.Black, Color.White)
+        ForeColor = BackColor
+        deltaTextColor_R = CInt(Math.Abs((CInt(goalTextColor.R) - CInt(ForeColor.R)) / 10))
+        deltaTextColor_G = CInt(Math.Abs((CInt(goalTextColor.G) - CInt(ForeColor.G)) / 10))
+        deltaTextColor_B = CInt(Math.Abs((CInt(goalTextColor.B) - CInt(ForeColor.B)) / 10))
+
         fadeInProgress = True
         RaiseEvent FadeStarted(Me, EventArgs.Empty)
     End Sub
@@ -498,7 +510,13 @@ Public Class CellControl
         Dim blue As Byte = MoveToward(BackColor.B, goalColor.B, deltaColor_B)
         BackColor = Color.FromArgb(red, green, blue)
 
-        If goalColor = BackColor Then fadeInProgress = False
+        Dim textRed As Byte = MoveToward(ForeColor.R, goalTextColor.R, deltaTextColor_R)
+        Dim textGreen As Byte = MoveToward(ForeColor.G, goalTextColor.G, deltaTextColor_G)
+        Dim textBlue As Byte = MoveToward(ForeColor.B, goalTextColor.B, deltaTextColor_B)
+        ForeColor = Color.FromArgb(textRed, textGreen, textBlue)
+
+        If goalColor = BackColor AndAlso goalTextColor = ForeColor Then fadeInProgress = False
+        Invalidate()
         Return fadeInProgress
     End Function
 
