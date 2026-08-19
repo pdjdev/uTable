@@ -239,6 +239,13 @@ Public Class ViewCourse
 
         MainPanel.BackColor = theme.Edge
         MemoTB.ForeColor = theme.Text
+
+        Select Case colormode
+            Case "Dark"
+                SetWindowTheme(MemoTB.Handle, "DarkMode_Explorer", Nothing)
+            Case Else
+                SetWindowTheme(MemoTB.Handle, "Explorer", Nothing)
+        End Select
     End Sub
 
     Private Sub ViewCourse_Load(sender As Object, e As EventArgs) Handles Me.Load
