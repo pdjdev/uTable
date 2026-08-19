@@ -42,7 +42,7 @@ Public Class CellControl
 
     Private ReadOnly Property NotchHeight As Integer
         Get
-            Return ScaleValue(2)
+            Return ScaleValue(3)
         End Get
     End Property
 
@@ -69,7 +69,7 @@ Public Class CellControl
     Private titleHoverBounds As Rectangle = Rectangle.Empty
 
     Private Const HoverAnimationDurationMilliseconds As Integer = 180
-    Private ReadOnly hoverAnimationTimer As New Timer With {.Interval = 15}
+    Private ReadOnly hoverAnimationTimer As New Timer With {.Interval = 10}
     Private ReadOnly hoverAnimationClock As New Stopwatch()
     Private hoverAnimationStartBounds As Rectangle
     Private hoverAnimationTargetBounds As Rectangle
@@ -116,7 +116,8 @@ Public Class CellControl
         If ClientSize.Width <= 0 OrElse ClientSize.Height <= 0 Then Return
 
         EnsureRenderFonts()
-        e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+        'ClearType sub-pixels become distorted when this control is composed off-screen.
+        e.Graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
 
         Using notchBrush As New SolidBrush(ControlPaint.Light(BackColor, 0.3))
             e.Graphics.FillRectangle(notchBrush, New Rectangle(0, 0, ClientSize.Width, NotchHeight))
@@ -195,6 +196,11 @@ Public Class CellControl
 
     Protected Overrides Sub OnMouseLeave(e As EventArgs)
         MyBase.OnMouseLeave(e)
+
+        'Moving an upward-expanding cell can cause WinForms to raise MouseLeave even
+        'though the pointer is still inside its newly calculated bounds.
+        If ClientRectangle.Contains(PointToClient(Cursor.Position)) Then Return
+
         checkHovered = False
         checkPressed = False
         titleHovered = False
@@ -302,7 +308,7 @@ Public Class CellControl
         'Resizing otherwise repaints only the newly exposed area, leaving text from prior frames behind.
         Invalidate()
         If Parent IsNot Nothing Then
-            Parent.Invalidate(Rectangle.Union(previousBounds, Bounds))
+            Parent.Invalidate(Rectangle.Union(previousBounds, Bounds), True)
         End If
 
         If progress >= 1.0 Then
@@ -473,8 +479,8 @@ Public Class CellControl
         DisposeRenderFonts()
         Dim familyName As String = If(CustomFont = "1" AndAlso Not String.IsNullOrWhiteSpace(CustomFontName), CustomFontName, Font.FontFamily.Name)
         timeFont = New Font(familyName, 9.75F, FontStyle.Bold)
-        titleFont = New Font(familyName, 11.25F, FontStyle.Bold)
-        titleStrikeoutFont = New Font(familyName, 11.25F, FontStyle.Bold Or FontStyle.Strikeout)
+        titleFont = New Font(familyName, 11.0F, FontStyle.Bold)
+        titleStrikeoutFont = New Font(familyName, 11.0F, FontStyle.Bold Or FontStyle.Strikeout)
         bodyFont = New Font(familyName, 9.75F, FontStyle.Regular)
         memoFont = New Font(familyName, 9.0F, FontStyle.Regular)
     End Sub

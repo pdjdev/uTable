@@ -327,6 +327,9 @@
     <Compile Include="UserControls\CellControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UserControls\CompositedTablePanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Modules\WinModule.vb" />
     <Compile Include="UserControls\SettingMenu.Designer.vb">
       <DependentUpon>SettingMenu.vb</DependentUpon>
