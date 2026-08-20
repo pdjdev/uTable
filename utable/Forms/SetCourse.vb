@@ -178,10 +178,10 @@ Public Class SetCourse
             Exit Sub
         End If
 
-        If ProfTB.Text = Nothing Then
-            MsgBox("교수명을 입력하세요.", vbExclamation)
-            Exit Sub
-        End If
+        'If ProfTB.Text = Nothing Then
+        '    MsgBox("교수명을 입력하세요.", vbExclamation)
+        '    Exit Sub
+        'End If
 
         If DayCombo.Text = Nothing Then
             MsgBox("요일을 선택하세요.", vbExclamation)

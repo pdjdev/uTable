@@ -1537,7 +1537,12 @@ Public Class TableForm
                     Dim time As New List(Of Integer)
 
                     For Each course As TableCourse In dayData
-                        courses.Add(course.Name + " (" + course.Professor + ")")
+                        If course.Professor = "" Then
+                            courses.Add(course.Name)
+                        Else
+                            courses.Add(course.Name + " (" + course.Professor + ")")
+                        End If
+
                         time.Add(course.Start)
                     Next
 

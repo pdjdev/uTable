@@ -268,7 +268,8 @@ Public Class ViewCourse
             courseTitle = NormalizeCourseTitle(course.Name)
             Text = courseTitle
             UpperTitleLabel.Text = courseTitle
-            SubTitleLabel.Text = course.Professor + ", "
+            SubTitleLabel.Text = course.Professor
+            If Not course.Professor = "" Then SubTitleLabel.Text += ", "
 
             Dim startt As Integer = course.Start
             Dim endt As Integer = course.End
