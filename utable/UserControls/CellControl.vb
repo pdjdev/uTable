@@ -380,8 +380,8 @@ Public Class CellControl
         If appearPoint.X + ViewCourse.Width > TableForm.Location.X + TableForm.Width Then appearPoint.X = TableForm.Location.X + TableForm.Width - ViewCourse.Width
         If appearPoint.Y + ViewCourse.Height > TableForm.Location.Y + TableForm.Height Then appearPoint.Y = TableForm.Location.Y + TableForm.Height - ViewCourse.Height
 
-        ViewCourse.olddata = TryCast(Tag, String)
-        If String.IsNullOrEmpty(ViewCourse.olddata) Then Return
+        ViewCourse.currentCourse = TryCast(Tag, TableCourse)
+        If ViewCourse.currentCourse Is Nothing Then Return
 
         ViewCourse.blacktext = blackText
         ViewCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
@@ -476,20 +476,20 @@ Public Class CellControl
     End Sub
 
     Public Sub ModifyCheck(value As Boolean)
-        Dim data As String = readTable()
-        Dim olddata As String = TryCast(Tag, String)
-        If String.IsNullOrEmpty(olddata) Then Return
+        Dim reference As TableCourse = TryCast(Tag, TableCourse)
+        If reference Is Nothing Then Return
 
-        Dim newdata As String = olddata
-        If newdata.Contains("<checked>") Then
-            Dim tmp As String = "<checked>" + getTableData(newdata, "checked") + "</checked>"
-            newdata = newdata.Replace(tmp, "<checked>" + value.ToString + "</checked>")
-        Else
-            newdata += vbTab + "<checked>" + value.ToString + "</checked>" + vbCrLf
-        End If
+        Dim schedule As TableSchedule = LoadSchedule()
+        Dim course As TableCourse = FindCourse(schedule, reference)
+        If course Is Nothing Then Return
 
-        writeTable(data.Replace(olddata, newdata))
-        Tag = newdata
+        course.IsChecked = value
+        course.CheckedSpecified = True
+        SaveSchedule(schedule)
+
+        '화면이 보유한 참조도 디스크에 저장한 상태와 맞춘다.
+        reference.IsChecked = value
+        reference.CheckedSpecified = True
     End Sub
 
     Private Sub BeginFade()
