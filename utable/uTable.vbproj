@@ -297,6 +297,7 @@
     </Compile>
     <Compile Include="Modules\GUIModule.vb" />
     <Compile Include="Modules\ThemeColors.vb" />
+    <Compile Include="Models\CellControlSettings.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -41,18 +41,7 @@ Public Class TableForm
     Dim prevNotificationName As String = Nothing
     Dim prevTime As Date = Nothing
 
-    'CellControl용 설정 변수
-    Public FadeEffect As String = ""
-    Public CustomFont As String = ""
-    Public CustomFontName As String = ""
-    Public AutoTextColor As String = ""
-    Public _BlackText As String = ""
-    Public _AlwaysExpand As String = ""
-    Public ExpandCell As String = ""
-    Public ExpandAnimation As String = ""
-    Public ShowMemo As String = ""
-    Public ShowProf As String = ""
-    Public _ShowChkBox As String = ""
+    Private cellSettings As New CellControlSettings()
 
     'Dim disablePatternDrawOnce As Boolean = False
     Public tablePatternSetting As String = Nothing
@@ -931,22 +920,7 @@ Public Class TableForm
         SuspendCourseLayouts()
         Try
 
-            'CellControl 설정 변수 업데이트
-            FadeEffect = GetINI("SETTING", "FadeEffect", "", ININamePath)
-            CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
-            CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
-            AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
-            _BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
-            _AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
-            ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
-            ExpandAnimation = GetINI("SETTING", "ExpandAnimation", "", ININamePath)
-            If String.IsNullOrEmpty(ExpandAnimation) Then
-                ExpandAnimation = "1"
-                SetINI("SETTING", "ExpandAnimation", ExpandAnimation, ININamePath)
-            End If
-            ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
-            ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
-            _ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
+            cellSettings = CellControlSettings.FromIni()
 
             TimeTable.Visible = False
             showSaturday = False
@@ -1106,17 +1080,7 @@ Public Class TableForm
         AddHandler cell.FadeStarted, AddressOf CellFadeStarted
 
         With cell
-            .FadeEffect = FadeEffect
-            .CustomFont = CustomFont
-            .CustomFontName = CustomFontName
-            .AutoTextColor = AutoTextColor
-            ._BlackText = _BlackText
-            ._AlwaysExpand = _AlwaysExpand
-            .ExpandCell = ExpandCell
-            .ExpandAnimation = ExpandAnimation
-            .ShowMemo = ShowMemo
-            .ShowProf = ShowProf
-            ._ShowChkBox = _ShowChkBox
+            .Settings = cellSettings
             .UsesSharedFadeClock = True
         End With
 
@@ -1191,7 +1155,7 @@ Public Class TableForm
         cell.Height = CInt(part * parentPanel.ClientSize.Height)
         cell.defHeight = CInt(part * parentPanel.ClientSize.Height)
 
-        If cell.alwaysExpand Then cell.ForceExpand()
+        If cell.Settings.AlwaysExpand Then cell.ForceExpand()
     End Sub
 
     Private Sub UpdateCourseBounds()

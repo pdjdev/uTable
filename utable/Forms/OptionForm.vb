@@ -533,7 +533,7 @@ Public Class OptionForm
 
         Dim cell As New CellControl
         With cell
-            .Name = "DemoCellControl"
+            .IsDemo = True
             .Dock = DockStyle.Top
             .Height = PrevTableArea.Height * 0.6
             .defHeight = PrevTableArea.Height * 0.6
@@ -545,17 +545,7 @@ Public Class OptionForm
             .ProfessorText = names(rnd.Next(0, names.Count)) + " 교수님"
             .MemoText = "메모 내용"
 
-            .FadeEffect = GetINI("SETTING", "FadeEffect", "", ININamePath)
-            .CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
-            .CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
-            .AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
-            ._BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
-            ._AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
-            .ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
-            .ExpandAnimation = GetINI("SETTING", "ExpandAnimation", "", ININamePath)
-            .ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
-            .ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
-            ._ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
+            .Settings = CellControlSettings.FromIni()
 
             .goalColor = Color.DarkSlateGray
         End With

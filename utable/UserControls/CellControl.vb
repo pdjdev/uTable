@@ -5,7 +5,6 @@ Imports System.Diagnostics
 Public Class CellControl
     Public defHeight As Integer = 0
     Public defLoc As Integer = 0
-    Public alwaysExpand As Boolean = False
     Public checked As Boolean = False
     Public dayNum As Integer = 0
 
@@ -15,17 +14,8 @@ Public Class CellControl
     Public ProfessorText As String = ""
     Public MemoText As String = ""
 
-    Public FadeEffect As String = ""
-    Public CustomFont As String = ""
-    Public CustomFontName As String = ""
-    Public AutoTextColor As String = ""
-    Public _BlackText As String = ""
-    Public _AlwaysExpand As String = ""
-    Public ExpandCell As String = ""
-    Public ExpandAnimation As String = ""
-    Public ShowMemo As String = ""
-    Public ShowProf As String = ""
-    Public _ShowChkBox As String = ""
+    Public Property Settings As New CellControlSettings()
+    Public Property IsDemo As Boolean = False
     Public UsesSharedFadeClock As Boolean = False
     Public goalColor As Color = Nothing
     Public Event FadeStarted As EventHandler
@@ -54,11 +44,6 @@ Public Class CellControl
         End Get
     End Property
 
-    Private doExpand As Boolean = True
-    Private doExpandAnimation As Boolean = True
-    Private showChkBox As Boolean = True
-    Private showMemoText As Boolean = True
-    Private showProfessor As Boolean = True
     Private blackText As Boolean = False
     Private hovered As Boolean = False
     Private checkHovered As Boolean = False
@@ -96,24 +81,18 @@ Public Class CellControl
     End Sub
 
     Private Sub CellControl_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If Not AutoTextColor = "0" Then
+        If Settings.AutoTextColor Then
             blackText = CheckProperColor(goalColor)
         Else
-            blackText = (_BlackText = "1")
+            blackText = Settings.BlackText
         End If
 
         ForeColor = If(blackText, Color.Black, Color.White)
-        alwaysExpand = (_AlwaysExpand = "1")
-        doExpand = Not (ExpandCell = "0")
-        doExpandAnimation = Not (ExpandAnimation = "0")
-        showMemoText = Not (ShowMemo = "0")
-        showProfessor = Not (ShowProf = "0")
-        showChkBox = Not (_ShowChkBox = "0")
         CreateRenderFonts()
 
-        If alwaysExpand Then ForceExpand()
+        If Settings.AlwaysExpand Then ForceExpand()
 
-        If Not FadeEffect = "0" AndAlso UsesSharedFadeClock Then
+        If Settings.FadeEffect AndAlso UsesSharedFadeClock Then
             BackColor = If(dayNum Mod 2 = 0, TableForm.MonPanel.BackColor, TableForm.TuePanel.BackColor)
             BeginFade()
         Else
@@ -138,7 +117,7 @@ Public Class CellControl
         Dim checkBounds As New Rectangle(HorizontalPadding, y, CheckSize, CheckSize)
         Dim timeX As Integer = HorizontalPadding
 
-        If showChkBox Then
+        If Settings.ShowCheckBox Then
             DrawCheckBox(e.Graphics, checkBounds)
             timeX += CheckSize + 3
         End If
@@ -161,13 +140,13 @@ Public Class CellControl
         DrawWrappedText(e.Graphics, CourseTitle, If(checked, titleStrikeoutFont, titleFont), titleBounds)
         y += titleBounds.Height
 
-        If showProfessor AndAlso Not String.IsNullOrEmpty(ProfessorText) Then
+        If Settings.ShowProfessor AndAlso Not String.IsNullOrEmpty(ProfessorText) Then
             Dim professorBounds As New Rectangle(HorizontalPadding, y, contentWidth, MeasureTextHeight(e.Graphics, ProfessorText, bodyFont, contentWidth))
             DrawWrappedText(e.Graphics, ProfessorText, bodyFont, professorBounds)
             y += professorBounds.Height
         End If
 
-        If showMemoText AndAlso Not String.IsNullOrEmpty(MemoText) Then
+        If Settings.ShowMemo AndAlso Not String.IsNullOrEmpty(MemoText) Then
             Dim memoBounds As New Rectangle(HorizontalPadding, y, contentWidth, MeasureTextHeight(e.Graphics, MemoText, memoFont, contentWidth))
             DrawWrappedText(e.Graphics, MemoText, memoFont, memoBounds)
         End If
@@ -198,7 +177,7 @@ Public Class CellControl
     Protected Overrides Sub OnMouseEnter(e As EventArgs)
         MyBase.OnMouseEnter(e)
         Dim mouseLocation As Point = PointToClient(Cursor.Position)
-        checkHovered = showChkBox AndAlso New Rectangle(HorizontalPadding, NotchHeight + VerticalPadding, CheckSize, CheckSize).Contains(mouseLocation)
+        checkHovered = Settings.ShowCheckBox AndAlso New Rectangle(HorizontalPadding, NotchHeight + VerticalPadding, CheckSize, CheckSize).Contains(mouseLocation)
         titleHovered = titleHoverBounds.Contains(mouseLocation)
         SetHovered(True)
         Invalidate()
@@ -220,7 +199,7 @@ Public Class CellControl
 
     Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
         MyBase.OnMouseMove(e)
-        Dim newCheckHovered As Boolean = showChkBox AndAlso New Rectangle(HorizontalPadding, NotchHeight + VerticalPadding, CheckSize, CheckSize).Contains(e.Location)
+        Dim newCheckHovered As Boolean = Settings.ShowCheckBox AndAlso New Rectangle(HorizontalPadding, NotchHeight + VerticalPadding, CheckSize, CheckSize).Contains(e.Location)
         Dim newTitleHovered As Boolean = titleHoverBounds.Contains(e.Location)
         If checkHovered <> newCheckHovered OrElse titleHovered <> newTitleHovered Then
             checkHovered = newCheckHovered
@@ -234,7 +213,7 @@ Public Class CellControl
         If e.Button <> MouseButtons.Left Then Return
 
         Dim checkBounds As New Rectangle(HorizontalPadding, NotchHeight + VerticalPadding, CheckSize, CheckSize)
-        If showChkBox AndAlso checkBounds.Contains(e.Location) Then
+        If Settings.ShowCheckBox AndAlso checkBounds.Contains(e.Location) Then
             checkPressed = True
             Invalidate()
         End If
@@ -253,11 +232,11 @@ Public Class CellControl
         If e.Button <> MouseButtons.Left Then Return
 
         Dim checkBounds As New Rectangle(HorizontalPadding, NotchHeight + VerticalPadding, CheckSize, CheckSize)
-        If showChkBox AndAlso (checkBounds.Contains(e.Location) OrElse e.Location.Y < titleBounds.Top) Then
+        If Settings.ShowCheckBox AndAlso (checkBounds.Contains(e.Location) OrElse e.Location.Y < titleBounds.Top) Then
             ToggleCheck()
         ElseIf titleBounds.Contains(e.Location) Then
             OpenCourseDetails()
-        ElseIf showChkBox Then
+        ElseIf Settings.ShowCheckBox Then
             ToggleCheck()
         End If
     End Sub
@@ -270,13 +249,13 @@ Public Class CellControl
             BringToFront()
         End If
 
-        If doExpand OrElse alwaysExpand Then
+        If Settings.ExpandOnHover OrElse Settings.AlwaysExpand Then
             '항상 확장 상태도 평소에는 실제 시작 시간(defLoc)을 유지하고,
             '호버 중에만 시간표 하단을 넘는 경우 위쪽으로 이동한다.
             Dim targetBounds As Rectangle = If(hovered,
                                                GetExpandedBounds(),
-                                               If(alwaysExpand, GetAlwaysExpandedBounds(), GetDefaultBounds()))
-            If doExpandAnimation Then
+                                               If(Settings.AlwaysExpand, GetAlwaysExpandedBounds(), GetDefaultBounds()))
+            If Settings.ExpandAnimation Then
                 StartHoverAnimation(targetBounds)
             Else
                 hoverAnimationTimer.Stop()
@@ -377,12 +356,12 @@ Public Class CellControl
 
     Private Sub ToggleCheck()
         checked = Not checked
-        If Name <> "DemoCellControl" Then ModifyCheck(Name, checked)
+        If Not IsDemo Then ModifyCheck(checked)
         Invalidate()
     End Sub
 
     Private Sub OpenCourseDetails()
-        If Name = "DemoCellControl" Then Return
+        If IsDemo Then Return
 
         Dim appearPoint As New Point(Cursor.Position)
         ViewCourse.Close()
@@ -404,8 +383,8 @@ Public Class CellControl
 
         Using graphics As Graphics = CreateGraphics()
             result += MeasureTextHeight(graphics, CourseTitle, titleFont, contentWidth)
-            If showProfessor Then result += MeasureTextHeight(graphics, ProfessorText, bodyFont, contentWidth)
-            If showMemoText Then result += MeasureTextHeight(graphics, MemoText, memoFont, contentWidth)
+            If Settings.ShowProfessor Then result += MeasureTextHeight(graphics, ProfessorText, bodyFont, contentWidth)
+            If Settings.ShowMemo Then result += MeasureTextHeight(graphics, MemoText, memoFont, contentWidth)
         End Using
 
         result += timeFont.Height + VerticalPadding
@@ -484,7 +463,7 @@ Public Class CellControl
         End Using
     End Sub
 
-    Public Sub ModifyCheck(name As String, value As Boolean)
+    Public Sub ModifyCheck(value As Boolean)
         Dim data As String = readTable()
         Dim olddata As String = TryCast(Tag, String)
         If String.IsNullOrEmpty(olddata) Then Return
@@ -579,7 +558,7 @@ Public Class CellControl
 
     Private Sub CreateRenderFonts()
         DisposeRenderFonts()
-        Dim familyName As String = If(CustomFont = "1" AndAlso Not String.IsNullOrWhiteSpace(CustomFontName), CustomFontName, Font.FontFamily.Name)
+        Dim familyName As String = If(Settings.UseCustomFont AndAlso Not String.IsNullOrWhiteSpace(Settings.CustomFontName), Settings.CustomFontName, Font.FontFamily.Name)
         timeFont = New Font(familyName, 9.75F, FontStyle.Bold)
         titleFont = New Font(familyName, 11.0F, FontStyle.Bold)
         titleStrikeoutFont = New Font(familyName, 11.0F, FontStyle.Bold Or FontStyle.Strikeout)
