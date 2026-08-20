@@ -17,7 +17,7 @@ Public Class ViewCourse
     '창 크기가 바뀌면 원본 제목을 기준으로 다시 맞춘다.
     Private courseTitle As String = String.Empty
 
-    Public olddata As String = Nothing
+    Friend currentCourse As TableCourse = Nothing
     Public blacktext As Boolean = False
 
     Dim touched As Boolean = False
@@ -263,14 +263,15 @@ Public Class ViewCourse
         Dim colorMul As Single = 0.9
 
         Try
-            Dim course As TableCourse = getTableCourse(olddata)
-            courseTitle = NormalizeCourseTitle(xmlDecode(course.Name))
+            Dim course As TableCourse = currentCourse
+            If course Is Nothing Then Throw New InvalidOperationException("표시할 수업 정보가 없습니다.")
+            courseTitle = NormalizeCourseTitle(course.Name)
             Text = courseTitle
             UpperTitleLabel.Text = courseTitle
-            SubTitleLabel.Text = xmlDecode(course.Professor) + ", "
+            SubTitleLabel.Text = course.Professor + ", "
 
-            Dim startt As Integer = Convert.ToInt32(course.Start)
-            Dim endt As Integer = Convert.ToInt32(course.End)
+            Dim startt As Integer = course.Start
+            Dim endt As Integer = course.End
 
             SubTitleLabel.Text += (startt \ 60).ToString + ":"
             If startt Mod 60 = 0 Then
@@ -288,9 +289,9 @@ Public Class ViewCourse
                 SubTitleLabel.Text += (endt Mod 60).ToString("D2")
             End If
 
-            SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(course.Day)) + "요일"
+            SubTitleLabel.Text += ", " + daysname(course.Day) + "요일"
 
-            MemoTB.Text = xmlDecode(course.Memo)
+            MemoTB.Text = course.Memo
             TitlePanel.BackColor = ColorTranslator.FromHtml(course.Color)
 
             Dim c As Color = Color.FromArgb(TitlePanel.BackColor.R * colorMul,
@@ -409,7 +410,7 @@ Public Class ViewCourse
         End If
 
         SetCourse.modifyMode = True
-        SetCourse.olddata = olddata
+        SetCourse.currentCourse = currentCourse
         SetCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
 
         SetCourse.touched = touched
@@ -437,25 +438,22 @@ Public Class ViewCourse
 
     Sub Apply()
         Try
-            Dim data As String = readTable()
-            Dim count As Integer = 0
+            Dim schedule As TableSchedule = LoadSchedule()
+            Dim target As TableCourse = FindCourse(schedule, currentCourse)
+            If target Is Nothing Then Throw New InvalidOperationException("수정할 수업을 현재 시간표에서 찾지 못했습니다.")
 
-            For Each s As String In getTableDatas(data, "course")
-                '이전설정 이름이 여러개 이미 있을때
-                If getTableData(s, "name") = getTableData(olddata, "name") Then count += 1
-            Next
+            Dim updateAll As Boolean = schedule.Courses.Where(Function(course) course.Name = currentCourse.Name).Count() > 1 AndAlso
+                MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes
 
-            If count > 1 Then
-                If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-                    modifyAllCourse(readTable(), MemoTB.Text)
-                Else
-                    Dim newdata As String = olddata.Replace(getTableData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
-                    writeTable(readTable.Replace(olddata, newdata))
-                End If
+            If updateAll Then
+                For Each course As TableCourse In schedule.Courses.Where(Function(item) item.Name = currentCourse.Name)
+                    course.Memo = MemoTB.Text
+                Next
             Else
-                Dim newdata As String = olddata.Replace(getTableData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
-                writeTable(readTable.Replace(olddata, newdata))
+                target.Memo = MemoTB.Text
             End If
+
+            SaveSchedule(schedule)
 
             TableForm.updateCell()
 
@@ -464,33 +462,6 @@ Public Class ViewCourse
         End Try
 
         Close()
-    End Sub
-
-    Sub modifyAllCourse(data As String, memo As String)
-        'Dim data As String = readTable()
-        Dim olddatas As List(Of String) = getTableDatas(data, "course")
-        Dim tablename As String = Nothing
-
-        If Not data.Contains("<tablename>") Then
-            tablename = "이름 없는 시간표"
-        Else
-            If getTableData(data, "tablename") = "" Then
-                tablename = "이름 없는 시간표"
-            Else
-                tablename = getTableData(data, "tablename")
-            End If
-        End If
-
-        Dim newdata As String = ""
-        Dim oldname As String = getTableData(olddata, "name")
-
-        For Each i In olddatas
-            Dim tmp As String = i
-            If getTableData(i, "name") = oldname Then tmp = tmp.Replace("<memo>" + getTableData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
-            newdata += "<course>" + tmp + "</course>" + vbCrLf
-        Next
-
-        writeTable("<tablename>" + tablename + "</tablename>" + vbCrLf + newdata)
     End Sub
 
     Private Sub MemoTB_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles MemoTB.LinkClicked

@@ -301,6 +301,7 @@
     <Compile Include="Models\EverytimeCourse.vb" />
     <Compile Include="Models\ReleaseFeedEntry.vb" />
     <Compile Include="Models\TableCourse.vb" />
+    <Compile Include="Models\TableSchedule.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>

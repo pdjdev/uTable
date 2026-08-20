@@ -14,7 +14,6 @@ Public Class TableForm
     Dim starttime As Integer = 0
     Dim endtime As Integer = 0
     Dim updated As Boolean = False
-    Dim courseData As New List(Of String)
     Dim courseRecords As New List(Of TableCourse)
     Private ReadOnly cellsByCourse As New Dictionary(Of TableCourse, CellControl)
     Private ReadOnly fadingCells As New HashSet(Of CellControl)
@@ -658,6 +657,8 @@ Public Class TableForm
 #Region "버튼/도구상자/키 이벤트"
     Private Sub AddCourseBT_Click(sender As Object, e As EventArgs) Handles AddCourseBT.Click
         SetCourse.Close()
+        SetCourse.modifyMode = False
+        SetCourse.currentCourse = Nothing
         SetCourse.SetDesktopLocation(Location.X + AddCourseBT.Location.X + AddCourseBT.Width - SetCourse.Width + MainPanel.Location.X,
                                      Location.Y + DayTable.Location.Y + MainPanel.Location.Y)
         SetCourse.Show()
@@ -881,41 +882,41 @@ Public Class TableForm
 
     Private Sub AllColorSetItem_Click(sender As Object, e As EventArgs) Handles AllColorSetItem.Click
         If ColorDialog1.ShowDialog() = DialogResult.OK Then
-            Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
-            For Each s As String In courseData
-                s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ColorDialog1.Color))
-                tmp += "<course>" + s + "</course>" + vbCrLf
+            Dim schedule As TableSchedule = LoadSchedule()
+            For Each course As TableCourse In schedule.Courses
+                course.Color = ColorTranslator.ToHtml(ColorDialog1.Color)
             Next
-            writeTable(tmp)
+            SaveSchedule(schedule)
             updateCell()
         End If
     End Sub
 
     Private Sub AllDarkerItem_Click(sender As Object, e As EventArgs) Handles AllDarkerItem.Click
-        Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
-        For Each s As String In courseData
-            Dim oldColor As Color = ColorTranslator.FromHtml(getTableData(s, "color"))
-            s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01)))
-            tmp += "<course>" + s + "</course>" + vbCrLf
+        Dim schedule As TableSchedule = LoadSchedule()
+        For Each course As TableCourse In schedule.Courses
+            Dim oldColor As Color = ColorTranslator.FromHtml(course.Color)
+            course.Color = ColorTranslator.ToHtml(ControlPaint.Dark(oldColor, 0.01))
         Next
-        writeTable(tmp)
+        SaveSchedule(schedule)
         updateCell()
     End Sub
 
     Private Sub AllBrighterItem_Click(sender As Object, e As EventArgs) Handles AllBrighterItem.Click
-        Dim tmp As String = "<tablename>" + xmlEncode(TableTitleLabel.Text) + "</tablename>" + vbCrLf
-        For Each s As String In courseData
-            Dim oldColor As Color = ColorTranslator.FromHtml(getTableData(s, "color"))
-            s = s.Replace(getTableData(s, "color"), ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3)))
-            tmp += "<course>" + s + "</course>" + vbCrLf
+        Dim schedule As TableSchedule = LoadSchedule()
+        For Each course As TableCourse In schedule.Courses
+            Dim oldColor As Color = ColorTranslator.FromHtml(course.Color)
+            course.Color = ColorTranslator.ToHtml(ControlPaint.Light(oldColor, 0.3))
         Next
-        writeTable(tmp)
+        SaveSchedule(schedule)
         updateCell()
     End Sub
 
     Private Sub ClearCheckBoxItem_Click(sender As Object, e As EventArgs) Handles ClearCheckBoxItem.Click
-        Dim data As String = readTable()
-        writeTable(data.Replace("<checked>True</checked>", "<checked>False</checked>"))
+        Dim schedule As TableSchedule = LoadSchedule()
+        For Each course As TableCourse In schedule.Courses.Where(Function(item) item.CheckedSpecified)
+            course.IsChecked = False
+        Next
+        SaveSchedule(schedule)
         updateCell()
     End Sub
 
@@ -956,28 +957,22 @@ Public Class TableForm
             cellsByCourse.Clear()
             updated = False
 
-            Dim data = readTable()
+            Dim schedule As TableSchedule = LoadSchedule()
             Dim min As Integer = 9999999
             Dim max As Integer = 0
 
-            If data.Contains("<tablename>") Then
-                TableTitleLabel.Text = xmlDecode(getTableData(data, "tablename"))
-            Else
-                TableTitleLabel.Text = "이름 없는 시간표"
-            End If
+            TableTitleLabel.Text = If(String.IsNullOrEmpty(schedule.Name), "이름 없는 시간표", schedule.Name)
 
             Text = TableTitleLabel.Text
-            courseData.Clear()
             courseRecords.Clear()
 
-            If data.Contains("<course>") Then
-                courseRecords = getTableCourses(data)
-                courseData = courseRecords.Select(Function(course) course.RawData).ToList()
+            If schedule.Courses.Count > 0 Then
+                courseRecords = schedule.Courses
 
                 '최대, 최소계산
                 For Each course As TableCourse In courseRecords
-                    If Convert.ToInt16(course.Start) < min Then min = Convert.ToInt16(course.Start)
-                    If Convert.ToInt16(course.End) > max Then max = Convert.ToInt16(course.End)
+                    If course.Start < min Then min = course.Start
+                    If course.End > max Then max = course.End
                 Next
 
                 starttime = min
@@ -991,14 +986,12 @@ Public Class TableForm
                 '셀계산
                 '여기서 xmldecode 하니까 꼭 눈여겨두자
                 For Each course As TableCourse In courseRecords
-                    Dim cell = addCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), course.Identity(),
-                                       xmlDecode(course.Name), xmlDecode(course.Professor), xmlDecode(course.Memo),
-                                       ColorTranslator.FromHtml(course.Color), Convert.ToInt16(course.Day), course.Checked, course.RawData)
+                    Dim cell = addCell(course)
                     cellsByCourse.Add(course, cell)
 
-                    If Convert.ToInt16(course.Day) = 5 Then '토요일 추가시
+                    If course.Day = 5 Then '토요일 추가시
                         showSaturday = True
-                    ElseIf Convert.ToInt16(course.Day) = 6 Then '일요일 추가시
+                    ElseIf course.Day = 6 Then '일요일 추가시
                         showSunday = True
                     End If
                 Next
@@ -1087,7 +1080,14 @@ Public Class TableForm
         TimeTable.ResumeLayout(True)
     End Sub
 
-    Private Function addCell(startt As Integer, endt As Integer, name As String, title As String, prof As String, memo As String, color As Color, day As Integer, checked As String, rawData As String) As CellControl
+    Private Function addCell(course As TableCourse) As CellControl
+        Dim startt As Integer = course.Start
+        Dim endt As Integer = course.End
+        Dim title As String = course.Name
+        Dim prof As String = course.Professor
+        Dim memo As String = course.Memo
+        Dim color As Color = ColorTranslator.FromHtml(course.Color)
+        Dim day As Integer = course.Day
 
         Dim timelength As Integer = endtime - starttime
         Dim part As Double = (endt - startt) / timelength
@@ -1155,10 +1155,10 @@ Public Class TableForm
         cell.CourseTitle = title
         cell.ProfessorText = prof
         cell.MemoText = memo
-        cell.Name = name
-        cell.Tag = rawData
+        cell.Name = course.Identity()
+        cell.Tag = course
 
-        cell.checked = (checked = "True")
+        cell.checked = course.IsChecked
         parentPanel.Controls.Add(cell)
         Return cell
     End Function
@@ -1185,7 +1185,7 @@ Public Class TableForm
         For Each course As TableCourse In courseRecords
             Dim cell As CellControl = Nothing
             If cellsByCourse.TryGetValue(course, cell) Then
-                resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), cell)
+                resizeCell(course.Start, course.End, cell)
             End If
         Next
 
@@ -1275,14 +1275,9 @@ Public Class TableForm
 
         Else
             Try
-                Dim data As String = readTable()
-                If data.Contains("<tablename>") Then
-                    Dim oldtitle As String = getTableData(data, "tablename")
-                    data = data.Replace("<tablename>" + oldtitle + "</tablename>", "<tablename>" + xmlEncode(newtitle) + "</tablename>")
-                    writeTable(data)
-                Else
-                    writeTable("<tablename>" + xmlEncode(newtitle) + "</tablename>" + vbCrLf + data)
-                End If
+                Dim schedule As TableSchedule = LoadSchedule()
+                schedule.Name = newtitle
+                SaveSchedule(schedule)
             Catch ex As Exception
                 MsgBox("이름 변경 도중 문제가 발생했습니다." + vbCr + ex.Message, vbCritical)
                 Exit Sub
@@ -1439,34 +1434,11 @@ Public Class TableForm
 
     Sub CheckNotify()
         Try
-            Dim dayData As New List(Of String)
+            Dim dayData As New List(Of TableCourse)
 
-            If courseData.Count > 0 Then
-                For Each s As String In courseData
-                    Dim tmp As String = getTableData(s, "day")
-                    Dim day As String = ""
-
-                    Select Case Today.DayOfWeek
-                        Case DayOfWeek.Monday
-                            day = "0"
-                        Case DayOfWeek.Tuesday
-                            day = "1"
-                        Case DayOfWeek.Wednesday
-                            day = "2"
-                        Case DayOfWeek.Thursday
-                            day = "3"
-                        Case DayOfWeek.Friday
-                            day = "4"
-                        Case DayOfWeek.Saturday
-                            day = "5"
-                        Case DayOfWeek.Sunday
-                            day = "6"
-                    End Select
-
-                    If tmp = day Then
-                        dayData.Add(s)
-                    End If
-                Next
+            If courseRecords.Count > 0 Then
+                Dim day As Integer = (CInt(Today.DayOfWeek) + 6) Mod 7
+                dayData = courseRecords.Where(Function(course) course.Day = day).ToList()
 
                 Dim currentTime As Integer = Now.Hour * 60 + Now.Minute
                 Dim notifyTime As List(Of String) = GetINI("SETTING", "NotifyMin", "", ININamePath).Split(",").ToList
@@ -1474,26 +1446,26 @@ Public Class TableForm
                 Dim notificationName As String = ""
 
                 If dayData.Count > 0 Then
-                    For Each s In dayData
-                        Dim targetTime As Integer = Convert.ToInt16(getTableData(s, "start"))
+                    For Each course As TableCourse In dayData
+                        Dim targetTime As Integer = course.Start
 
                         If targetTime < currentTime Then Continue For
 
                         '수업 시간 됐을때
                         If targetTime = currentTime Then
-                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-0"
+                            notificationName = course.Identity() + "-0"
 
                             '수업 시작이 5분 이하 남았고 5분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("5") And (targetTime - currentTime) <= 5 Then
-                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-5"
+                            notificationName = course.Identity() + "-5"
 
                             '수업 시작이 15분 이하 남았고 15분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("15") And (targetTime - currentTime) <= 15 Then
-                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-15"
+                            notificationName = course.Identity() + "-15"
 
                             '수업 시작이 30분 이하 남았고 30분 옵션 체크됐을때
                         ElseIf notifyTime.Contains("30") And (targetTime - currentTime) <= 30 Then
-                            notificationName = getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name") + "-30"
+                            notificationName = course.Identity() + "-30"
 
                         Else
                             Continue For
@@ -1505,7 +1477,7 @@ Public Class TableForm
                         ' 1. 이미 보낸 똑같은 알람
                         ' 2. 무시 조건에 해당하는 수업 (ex. memo에 (알림 무시) 포함)
 
-                        Dim memo As String = getTableData(s, "memo")
+                        Dim memo As String = course.Memo
 
                         If prevNotificationName = notificationName Then
                             Continue For
@@ -1541,8 +1513,7 @@ Public Class TableForm
                             End Try
                         End If
 
-                        NotifyIcon1.ShowBalloonTip(9999, xmlDecode(getTableData(s, "name")) _
-                                                   + " (" + xmlDecode(getTableData(s, "prof")) + ")", message, ToolTipIcon.None)
+                        NotifyIcon1.ShowBalloonTip(9999, course.Name + " (" + course.Professor + ")", message, ToolTipIcon.None)
                     Next
 
                 End If
@@ -1555,42 +1526,19 @@ Public Class TableForm
 
     Sub TodayCourseNotify()
         Try
-            Dim dayData As New List(Of String)
+            Dim dayData As New List(Of TableCourse)
 
-            If courseData.Count > 0 Then
-                For Each s As String In courseData
-                    Dim tmp As String = getTableData(s, "day")
-                    Dim day As String = ""
-
-                    Select Case Today.DayOfWeek
-                        Case DayOfWeek.Monday
-                            day = "0"
-                        Case DayOfWeek.Tuesday
-                            day = "1"
-                        Case DayOfWeek.Wednesday
-                            day = "2"
-                        Case DayOfWeek.Thursday
-                            day = "3"
-                        Case DayOfWeek.Friday
-                            day = "4"
-                        Case DayOfWeek.Saturday
-                            day = "5"
-                        Case DayOfWeek.Sunday
-                            day = "6"
-                    End Select
-
-                    If tmp = day Then
-                        dayData.Add(s)
-                    End If
-                Next
+            If courseRecords.Count > 0 Then
+                Dim day As Integer = (CInt(Today.DayOfWeek) + 6) Mod 7
+                dayData = courseRecords.Where(Function(course) course.Day = day).ToList()
 
                 If dayData.Count > 0 Then
                     Dim courses As New List(Of String)
                     Dim time As New List(Of Integer)
 
-                    For Each s In dayData
-                        courses.Add(xmlDecode(getTableData(s, "name")) + " (" + xmlDecode(getTableData(s, "prof")) + ")")
-                        time.Add(Convert.ToInt16(getTableData(s, "start")))
+                    For Each course As TableCourse In dayData
+                        courses.Add(course.Name + " (" + course.Professor + ")")
+                        time.Add(course.Start)
                     Next
 
                     '표시 순서를 시작 시간 오름차순으로 정렬

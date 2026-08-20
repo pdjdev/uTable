@@ -1,7 +1,5 @@
 ﻿Imports System.IO
-Imports System.Security
 Imports System.Text
-Imports System.Web
 Imports System.Xml
 Imports System.Xml.Linq
 
@@ -59,7 +57,7 @@ Module DataModule
 
         Using writer As XmlWriter = XmlWriter.Create(output, settings)
             For Each element As XElement In document.Root.Elements()
-                '기존 편집 코드가 만든 공백 노드는 버리고 실제 요소 구조만 다시 들여쓴다.
+                '입력 파일에 남아 있는 서식용 공백은 버리고 실제 요소 구조만 다시 들여쓴다.
                 '값만 있는 요소의 공백은 데이터일 수 있으므로 그대로 보존한다.
                 Dim formattedElement As New XElement(element)
                 For Each container As XElement In formattedElement.DescendantsAndSelf().Where(Function(item) item.HasElements)
@@ -73,91 +71,93 @@ Module DataModule
         Return output.ToString().TrimEnd(ControlChars.Cr, ControlChars.Lf)
     End Function
 
-    Private Function GetElementInnerXml(element As XElement) As String
-        Return String.Concat(element.Nodes().Select(Function(node) node.ToString(SaveOptions.DisableFormatting)))
-    End Function
-
-    Private Function GetChildInnerXml(element As XElement, name As String) As String
+    Private Function GetRequiredChildValue(element As XElement, name As String) As String
         Dim child As XElement = element.Element(name)
-        If child Is Nothing Then Return Nothing
-        Return GetElementInnerXml(child)
-    End Function
-
-    'course 바로 아래의 서식용 공백은 비교에서 제외하되, 각 필드의 내용은 보존한다.
-    Private Function GetCourseComparisonData(element As XElement) As String
-        Return String.Concat(element.Elements().Select(Function(child) child.ToString(SaveOptions.DisableFormatting)))
+        If child Is Nothing Then Throw New InvalidDataException("과목에 <" + name + "> 값이 없습니다.")
+        Return child.Value
     End Function
 
     Private Function ToTableCourse(element As XElement) As TableCourse
+        Dim checkedElement As XElement = element.Element("checked")
         Return New TableCourse With {
-            .RawData = GetElementInnerXml(element).Trim(),
-            .Day = GetChildInnerXml(element, "day"),
-            .Name = GetChildInnerXml(element, "name"),
-            .Professor = GetChildInnerXml(element, "prof"),
-            .Memo = GetChildInnerXml(element, "memo"),
-            .Start = GetChildInnerXml(element, "start"),
-            .End = GetChildInnerXml(element, "end"),
-            .Color = GetChildInnerXml(element, "color"),
-            .Checked = GetChildInnerXml(element, "checked")
+            .Day = Integer.Parse(GetRequiredChildValue(element, "day")),
+            .Name = GetRequiredChildValue(element, "name"),
+            .Professor = GetRequiredChildValue(element, "prof"),
+            .Memo = GetRequiredChildValue(element, "memo"),
+            .Start = Integer.Parse(GetRequiredChildValue(element, "start")),
+            .End = Integer.Parse(GetRequiredChildValue(element, "end")),
+            .Color = GetRequiredChildValue(element, "color"),
+            .IsChecked = checkedElement IsNot Nothing AndAlso String.Equals(checkedElement.Value, "True", StringComparison.OrdinalIgnoreCase),
+            .CheckedSpecified = checkedElement IsNot Nothing
         }
     End Function
 
-    '전체 시간표 XML은 한 번만 파싱해 과목 목록으로 변환한다.
-    Public Function getTableCourses(datastr As String) As List(Of TableCourse)
-        Dim document As XDocument = ParseTableFragment(datastr)
-        Return document.Root.Elements("course").Select(Function(element) ToTableCourse(element)).ToList()
-    End Function
+    Private Function ToCourseElement(course As TableCourse) As XElement
+        Dim element As New XElement("course",
+            New XElement("day", course.Day),
+            New XElement("name", course.Name),
+            New XElement("prof", course.Professor),
+            New XElement("memo", course.Memo),
+            New XElement("start", course.Start),
+            New XElement("end", course.End),
+            New XElement("color", course.Color))
 
-    '표시 중인 과목의 원본 fragment와 일치하는 course 요소를 XML 구조에서 제거한다.
-    '문자열 치환과 달리 줄바꿈이나 들여쓰기 형식에 영향을 받지 않는다.
-    Public Function TryRemoveTableCourse(datastr As String, rawCourseData As String, ByRef result As String) As Boolean
-        Dim document As XDocument = ParseTableFragment(datastr)
-        Dim rawCourse As XElement = ParseTableFragment("<course>" + rawCourseData + "</course>").Root.Element("course")
-        Dim targetData As String = GetCourseComparisonData(rawCourse)
-        Dim target As XElement = document.Root.Elements("course").FirstOrDefault(
-            Function(element) GetCourseComparisonData(element) = targetData)
-
-        If target Is Nothing Then
-            result = datastr
-            Return False
+        If course.CheckedSpecified Then
+            element.Add(New XElement("checked", course.IsChecked.ToString()))
         End If
 
-        target.Remove()
-        result = SerializeTableFragment(document)
-        Return True
+        Return element
     End Function
 
-    'olddata처럼 course 내부 fragment만 가진 기존 화면을 위한 단일 과목 파서
-    Public Function getTableCourse(datastr As String) As TableCourse
-        Dim document As XDocument = ParseTableFragment("<course>" + datastr + "</course>")
-        Return ToTableCourse(document.Root.Element("course"))
+    Public Function ParseSchedule(data As String) As TableSchedule
+        Dim document As XDocument = ParseTableFragment(data)
+        Dim schedule As New TableSchedule()
+        Dim nameElement As XElement = document.Root.Element("tablename")
+        If nameElement IsNot Nothing Then schedule.Name = nameElement.Value
+
+        Dim index As Integer = 0
+        For Each element As XElement In document.Root.Elements("course")
+            Dim course As TableCourse = ToTableCourse(element)
+            course.SourceIndex = index
+            schedule.Courses.Add(course)
+            index += 1
+        Next
+
+        Return schedule
     End Function
 
-    '시간표 XML fragment에서 최상위 태그의 내용을 추출한다.
-    Public Function getTableData(datastr As String, name As String) As String
-        Dim element As XElement = ParseTableFragment(datastr).Root.Element(name)
+    Public Function SerializeSchedule(schedule As TableSchedule) As String
+        If schedule Is Nothing Then Throw New ArgumentNullException(NameOf(schedule))
 
-        If element Is Nothing Then Return Nothing
+        Dim root As New XElement(TableFragmentRootName)
+        If schedule.Name IsNot Nothing Then root.Add(New XElement("tablename", schedule.Name))
+        For Each course As TableCourse In schedule.Courses
+            root.Add(ToCourseElement(course))
+        Next
 
-        Return GetElementInnerXml(element)
+        Return SerializeTableFragment(New XDocument(root))
     End Function
 
-    '시간표 XML fragment에서 최상위 태그 전체를 추출한다.
-    Public Function getTableData_withkeys(datastr As String, name As String) As String
-        Dim element As XElement = ParseTableFragment(datastr).Root.Element(name)
-
-        If element Is Nothing Then Return Nothing
-
-        Return element.ToString(SaveOptions.DisableFormatting)
+    Public Function LoadSchedule() As TableSchedule
+        Dim filePath As String = TableSaveLocation(False)
+        If Not File.Exists(filePath) Then Return New TableSchedule()
+        Return ParseSchedule(ReadTableFile(filePath))
     End Function
 
-    '시간표 XML fragment에서 같은 최상위 태그의 내용을 모두 추출한다.
-    Public Function getTableDatas(datastr As String, name As String) As List(Of String)
-        Dim elements = ParseTableFragment(datastr).Root.Elements(name).ToList()
+    Public Sub SaveSchedule(schedule As TableSchedule)
+        Dim filePath As String = TableSaveLocation(False)
+        File.WriteAllText(filePath, SerializeSchedule(schedule), Utf8WithoutBom)
+    End Sub
 
-        If elements.Count = 0 Then Return Nothing
+    Public Function FindCourse(schedule As TableSchedule, reference As TableCourse) As TableCourse
+        If schedule Is Nothing OrElse reference Is Nothing Then Return Nothing
 
-        Return elements.Select(Function(element) GetElementInnerXml(element).Trim()).ToList()
+        If reference.SourceIndex >= 0 AndAlso reference.SourceIndex < schedule.Courses.Count Then
+            Dim indexedCourse As TableCourse = schedule.Courses(reference.SourceIndex)
+            If indexedCourse.HasSameData(reference) Then Return indexedCourse
+        End If
+
+        Return schedule.Courses.FirstOrDefault(Function(course) course.HasSameData(reference))
     End Function
 
     'web에서 문자열 가져오는 함수
@@ -218,15 +218,10 @@ Module DataModule
         Return Color.FromArgb(Red, Green, Blue)
     End Function
 
-    Public Sub writeTable(data As String)
-        Dim normalizedData As String = SerializeTableFragment(ParseTableFragment(data))
-        File.WriteAllText(TableSaveLocation(False), normalizedData, Utf8WithoutBom)
-    End Sub
-
-    Public Function readTable() As String
-        If My.Computer.FileSystem.FileExists(TableSaveLocation(False)) Then
-            'My.Settings.defalutTable = OptionSave()
-            Dim data As String = ReadTableFile(TableSaveLocation(False))
+    Public Function ReadScheduleData() As String
+        Dim filePath As String = TableSaveLocation(False)
+        If File.Exists(filePath) Then
+            Dim data As String = ReadTableFile(filePath)
             Return SerializeTableFragment(ParseTableFragment(data))
         Else
             Return ""
@@ -284,11 +279,4 @@ Module DataModule
         Return True
     End Function
 
-    Public Function xmlEncode(value As String) As String
-        Return SecurityElement.Escape(value)
-    End Function
-
-    Public Function xmlDecode(value As String) As String
-        Return HttpUtility.HtmlDecode(value)
-    End Function
 End Module

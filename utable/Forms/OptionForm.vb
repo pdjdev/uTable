@@ -927,13 +927,14 @@ Public Class OptionForm
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles SaveToFileBT.Click
         If TableSaveRbt.Checked Then
-            tableData = readTable()
+            tableData = ReadScheduleData()
 
             If Not (tableData.Contains("<tablename>") Or tableData.Contains("<course>")) Then
                 MsgBox("시간표를 만들어 주세요.", vbInformation)
             Else
                 Dim title As String = "이름 없는 시간표"
-                If tableData.Contains("<tablename>") Then title = getTableData(tableData, "tablename")
+                Dim scheduleName As String = ParseSchedule(tableData).Name
+                If Not String.IsNullOrEmpty(scheduleName) Then title = scheduleName
 
                 SaveFileDialog1.FileName = title
                 SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
@@ -976,7 +977,7 @@ Public Class OptionForm
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles CopyToClipboardBT.Click
         If TableSaveRbt.Checked Then
-            tableData = readTable()
+            tableData = ReadScheduleData()
 
             If tableData = "" Then
                 MsgBox("시간표를 만들어 주세요.", vbInformation)
@@ -1007,7 +1008,7 @@ Public Class OptionForm
             If clipboardTxt.Contains("<tablename>") Or clipboardTxt.Contains("<course>") Then
                 If MsgBox("클립보드에서 시간표 서식을 찾았습니다. 불러오시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
                     Try
-                        writeTable(clipboardTxt)
+                        SaveSchedule(ParseSchedule(clipboardTxt))
                         TableForm.updateCell()
                         Exit Sub
                     Catch ex As Exception
@@ -1053,7 +1054,7 @@ Public Class OptionForm
             If TableSaveRbt.Checked Then
                 Dim data As String = ReadTableFile(OpenFileDialog1.FileName)
                 If data.Contains("<tablename>") Or data.Contains("<course>") Then
-                    writeTable(data)
+                    SaveSchedule(ParseSchedule(data))
                 Else
                     MsgBox("올바른 시간표 파일이 아닙니다.", vbCritical)
                 End If
@@ -1088,7 +1089,7 @@ Public Class OptionForm
         End If
 
         Try
-            tableData = readTable()
+            tableData = ReadScheduleData()
 
             If tableData.Contains("<tablename>") Or tableData.Contains("<course>") Then
                 If MsgBox("현재 시간표를 설정한 위치로 복사하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
