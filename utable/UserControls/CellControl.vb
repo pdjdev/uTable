@@ -74,6 +74,7 @@ Public Class CellControl
     Private ReadOnly hoverAnimationClock As New Stopwatch()
     Private hoverAnimationStartBounds As Rectangle
     Private hoverAnimationTargetBounds As Rectangle
+    Private courseDetailsForm As ViewCourse
 
     Private timeFont As Font
     Private titleFont As Font
@@ -192,6 +193,12 @@ Public Class CellControl
 
     Protected Overrides Sub OnMouseLeave(e As EventArgs)
         MyBase.OnMouseLeave(e)
+
+        ReconcileHoverWithCursor()
+    End Sub
+
+    Private Sub ReconcileHoverWithCursor()
+        If IsDisposed OrElse Disposing OrElse Not IsHandleCreated Then Return
 
         '위쪽으로 확장되는 셀을 이동하면 새로 계산된 영역 안에 포인터가 있어도
         'WinForms가 MouseLeave를 발생시킬 수 있음
@@ -362,6 +369,10 @@ Public Class CellControl
     End Sub
 
     Protected Overrides Sub OnHandleDestroyed(e As EventArgs)
+        If courseDetailsForm IsNot Nothing Then
+            RemoveHandler courseDetailsForm.FormClosed, AddressOf CourseDetailsFormClosed
+            courseDetailsForm = Nothing
+        End If
         hoverAnimationTimer.Stop()
         MyBase.OnHandleDestroyed(e)
     End Sub
@@ -383,9 +394,23 @@ Public Class CellControl
         ViewCourse.currentCourse = TryCast(Tag, TableCourse)
         If ViewCourse.currentCourse Is Nothing Then Return
 
+        courseDetailsForm = ViewCourse
+        AddHandler courseDetailsForm.FormClosed, AddressOf CourseDetailsFormClosed
         ViewCourse.blacktext = blackText
         ViewCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
         ViewCourse.Show()
+    End Sub
+
+    Private Sub CourseDetailsFormClosed(sender As Object, e As FormClosedEventArgs)
+        Dim closedForm As ViewCourse = TryCast(sender, ViewCourse)
+        If closedForm IsNot Nothing Then
+            RemoveHandler closedForm.FormClosed, AddressOf CourseDetailsFormClosed
+        End If
+        If ReferenceEquals(courseDetailsForm, closedForm) Then courseDetailsForm = Nothing
+
+        '별도 폼이 마우스 입력을 가져간 동안 CellControl의 MouseLeave가 누락될 수
+        '있으므로, 폼이 닫히는 시점의 실제 포인터 위치로 호버 상태를 보정한다.
+        ReconcileHoverWithCursor()
     End Sub
 
     Private Function GetRequiredHeight() As Integer
