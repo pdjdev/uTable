@@ -68,6 +68,7 @@ Public Class SetCourse
         Panel1.ForeColor = theme.Text
 
         ApplyButtonTheme(theme, ApplyBT, DeleteBT, ColorCopyBT, ColorPasteBT)
+        ApplyDeleteButtonTheme(theme)
 
         Select Case colormode
             Case "Dark"
@@ -76,6 +77,14 @@ Public Class SetCourse
                 CloseBT.Image = My.Resources.closeicon_b
         End Select
 
+    End Sub
+
+    Private Sub ApplyDeleteButtonTheme(theme As ThemeColors)
+        DeleteBT.BackColor = theme.DangerButton
+        DeleteBT.FlatAppearance.BorderColor = theme.DangerBorder
+        DeleteBT.FlatAppearance.MouseOverBackColor = theme.DangerButtonHover
+        DeleteBT.FlatAppearance.MouseDownBackColor = theme.DangerButtonPressed
+        DeleteBT.ForeColor = theme.DangerText
     End Sub
 
     Private Sub ApplyButtonTheme(theme As ThemeColors, ParamArray buttons() As Button)

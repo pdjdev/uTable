@@ -9,13 +9,17 @@ Public NotInheritable Class ThemeColors
         Color.FromArgb(250, 250, 250), Color.FromArgb(240, 240, 240), Color.FromArgb(220, 220, 220),
         Color.LightGray, Color.FromArgb(230, 230, 230), Color.FromArgb(250, 250, 250),
         Color.FromArgb(240, 240, 240), Color.FromArgb(64, 64, 64), Color.White, Color.Gray,
-        Color.FromArgb(64, 64, 64), Color.White, Color.FromArgb(64, 64, 64))
+        Color.FromArgb(64, 64, 64), Color.White, Color.FromArgb(64, 64, 64),
+        Color.FromArgb(255, 242, 242), Color.FromArgb(255, 232, 232),
+        Color.FromArgb(250, 218, 218), Color.FromArgb(244, 210, 210), Color.FromArgb(150, 55, 55))
 
     Public Shared ReadOnly Dark As New ThemeColors(
         Color.FromArgb(60, 60, 60), Color.FromArgb(70, 70, 70), Color.FromArgb(80, 80, 80),
         Color.FromArgb(45, 45, 45), Color.FromArgb(38, 38, 38), Color.FromArgb(55, 55, 55),
         Color.FromArgb(50, 50, 50), Color.FromArgb(50, 121, 192), Color.White, Color.LightGray,
-        Color.FromArgb(250, 250, 250), Color.FromArgb(50, 50, 50), Color.FromArgb(250, 250, 250))
+        Color.FromArgb(250, 250, 250), Color.FromArgb(50, 50, 50), Color.FromArgb(250, 250, 250),
+        Color.FromArgb(78, 60, 60), Color.FromArgb(92, 64, 64),
+        Color.FromArgb(110, 68, 68), Color.FromArgb(105, 72, 72), Color.FromArgb(255, 210, 210))
 
     Public ReadOnly Property Background As Color
     Public ReadOnly Property Button As Color
@@ -30,11 +34,17 @@ Public NotInheritable Class ThemeColors
     Public ReadOnly Property TextMuted As Color
     Public ReadOnly Property Border As Color
     Public ReadOnly Property TabActive As Color
+    Public ReadOnly Property DangerButton As Color
+    Public ReadOnly Property DangerButtonHover As Color
+    Public ReadOnly Property DangerButtonPressed As Color
+    Public ReadOnly Property DangerBorder As Color
+    Public ReadOnly Property DangerText As Color
 
     Private Sub New(background As Color, button As Color, buttonHover As Color, edge As Color,
                     dragHandle As Color, tablePrimary As Color, tableAlternate As Color,
                     accent As Color, accentText As Color, textMuted As Color, text As Color, border As Color,
-                    tabActive As Color)
+                    tabActive As Color, dangerButton As Color, dangerButtonHover As Color,
+                    dangerButtonPressed As Color, dangerBorder As Color, dangerText As Color)
         Me.Background = background
         Me.Button = button
         Me.ButtonHover = buttonHover
@@ -48,6 +58,11 @@ Public NotInheritable Class ThemeColors
         Me.Text = text
         Me.Border = border
         Me.TabActive = tabActive
+        Me.DangerButton = dangerButton
+        Me.DangerButtonHover = dangerButtonHover
+        Me.DangerButtonPressed = dangerButtonPressed
+        Me.DangerBorder = dangerBorder
+        Me.DangerText = dangerText
     End Sub
 
     Public Shared Function FromMode(mode As String) As ThemeColors
