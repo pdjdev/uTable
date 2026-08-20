@@ -227,12 +227,3 @@ Public Class EveryTimeBrowserNew
         Process.Start("https://utable.sw.pbj.kr/everytime-troubleshooting")
     End Sub
 End Class
-Public Class EverytimeCourse
-    Public Property Day As Integer
-    Public Property Name As String
-    Public Property Professor As String
-    Public Property Memo As String
-    Public Property Start As Integer
-    Public Property Duration As Integer
-    Public Property ColorNumber As Integer
-End Class

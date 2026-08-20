@@ -298,6 +298,9 @@
     <Compile Include="Modules\GUIModule.vb" />
     <Compile Include="Modules\ThemeColors.vb" />
     <Compile Include="Models\CellControlSettings.vb" />
+    <Compile Include="Models\EverytimeCourse.vb" />
+    <Compile Include="Models\ReleaseFeedEntry.vb" />
+    <Compile Include="Models\TableCourse.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
