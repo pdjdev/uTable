@@ -1491,12 +1491,12 @@ Public Class TableForm
                         'NotifyIcon1.Visible = True
                         '이제 진짜 푸시 보내기
                         prevNotificationName = notificationName
-                        Dim message As String = ""
+                        Dim notifyMessage As String = ""
 
                         If targetTime = currentTime Then
-                            message = "수업이 시작되었습니다." + vbCr + "아이콘을 눌러 시간표를 확인하세요."
+                            notifyMessage = "수업이 시작되었습니다." + vbCr + "아이콘을 눌러 시간표를 확인하세요."
                         Else
-                            message = (targetTime - currentTime).ToString + "분 뒤 수업이 있습니다." + vbCr _
+                            notifyMessage = (targetTime - currentTime).ToString + "분 뒤 수업이 있습니다." + vbCr _
                                 + "아이콘을 눌러 시간표를 확인하세요."
                         End If
 
@@ -1513,7 +1513,10 @@ Public Class TableForm
                             End Try
                         End If
 
-                        NotifyIcon1.ShowBalloonTip(9999, course.Name + " (" + course.Professor + ")", message, ToolTipIcon.None)
+                        Dim notifyName As String = course.Name
+                        If course.Professor <> "" Then notifyName += " (" + course.Professor + ")"
+
+                        NotifyIcon1.ShowBalloonTip(9999, notifyName, notifyMessage, ToolTipIcon.None)
                     Next
 
                 End If
