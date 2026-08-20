@@ -1,13 +1,13 @@
 ﻿Imports System.Runtime.InteropServices
 
 Public Class SetCourse
-    Dim prevData As New List(Of String)
+    Dim prevCourses As New List(Of TableCourse)
     Dim daysname As String() = {"월", "화", "수", "목", "금", "토", "일"}
     Dim listcount As Integer = 0
     Dim colormode As String = Nothing
 
     Public modifyMode As Boolean = False
-    Public olddata As String = Nothing
+    Friend currentCourse As TableCourse = Nothing
 
     Public touched As Boolean = False
     Dim loaded As Boolean = False
@@ -100,102 +100,32 @@ Public Class SetCourse
 
     Sub GetCourses()
         PrevSetCombo.Items.Clear()
+        prevCourses = LoadSchedule().Courses
 
-        Dim data As String = readTable()
-        If data.Contains("<course>") Then
-            prevData = getTableDatas(data, "course")
-
-            For Each s As String In prevData
-                Dim itemname As String = getTableData(s, "name") + " (" + daysname(Convert.ToInt16(getTableData(s, "day"))) + "요일)"
-                PrevSetCombo.Items.Add(itemname)
-            Next
-        End If
-    End Sub
-
-    Sub SaveCourse(day As Integer, name As String, prof As String, memo As String, start As Integer, endt As Integer, color As Color)
-        Dim prevData As String = readTable()
-        Dim tablename As String = Nothing
-
-        If Not prevData.Contains("<tablename>") Then
-            tablename = "이름 없는 시간표"
-        Else
-            Dim prevName As String = getTableData(prevData, "tablename")
-            If prevName = "" Then
-                prevData = prevData.Replace("<tablename></tablename>", "")
-                tablename = "이름 없는 시간표"
-            Else
-                prevData = prevData.Replace("<tablename>" + prevName + "</tablename>", "")
-                tablename = prevName
-            End If
-        End If
-
-        Dim data As String = vbCrLf + "<course>" + vbCrLf
-        data += vbTab + "<day>" + day.ToString + "</day>" + vbCrLf
-        data += vbTab + "<name>" + xmlEncode(name) + "</name>" + vbCrLf
-        data += vbTab + "<prof>" + xmlEncode(prof) + "</prof>" + vbCrLf
-        data += vbTab + "<memo>" + xmlEncode(memo) + "</memo>" + vbCrLf
-        data += vbTab + "<start>" + start.ToString + "</start>" + vbCrLf
-        data += vbTab + "<end>" + endt.ToString + "</end>" + vbCrLf
-        data += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
-        data += "</course>"
-
-        data = "<tablename>" + tablename + "</tablename>" + prevData + data
-
-        writeTable(data)
-    End Sub
-
-    Sub modifyCourse(day As Integer, name As String, prof As String, memo As String, start As Integer, endt As Integer, color As Color)
-        Dim data As String = readTable()
-
-        Dim newdata As String = vbCrLf
-        newdata += vbTab + "<day>" + day.ToString + "</day>" + vbCrLf
-        newdata += vbTab + "<name>" + xmlEncode(name) + "</name>" + vbCrLf
-        newdata += vbTab + "<prof>" + xmlEncode(prof) + "</prof>" + vbCrLf
-        newdata += vbTab + "<memo>" + xmlEncode(memo) + "</memo>" + vbCrLf
-        newdata += vbTab + "<start>" + start.ToString + "</start>" + vbCrLf
-        newdata += vbTab + "<end>" + endt.ToString + "</end>" + vbCrLf
-        newdata += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
-
-        If olddata.Contains("<checked>") Then
-            newdata += vbTab + getTableData_withkeys(olddata, "checked") + vbCrLf
-        End If
-
-        writeTable(data.Replace(olddata, newdata))
-    End Sub
-
-    Sub modifyAllCourse(name As String, prof As String, memo As String, color As Color)
-        Dim data As String = readTable()
-        Dim olddatas As List(Of String) = getTableDatas(data, "course")
-
-        Dim tablename As String = Nothing
-
-        If Not data.Contains("<tablename>") Then
-            tablename = "이름 없는 시간표"
-        Else
-            If getTableData(data, "tablename") = "" Then
-                tablename = "이름 없는 시간표"
-            Else
-                tablename = getTableData(data, "tablename")
-            End If
-        End If
-
-        Dim newdata As String = ""
-        Dim oldname As String = getTableData(olddata, "name")
-
-        For Each i In olddatas
-            Dim tmp = i
-
-            If getTableData(i, "name") = oldname Then
-                tmp = tmp.Replace("<name>" + oldname + "</name>", "<name>" + xmlEncode(name) + "</name>")
-                tmp = tmp.Replace("<prof>" + getTableData(i, "prof") + "</prof>", "<prof>" + xmlEncode(prof) + "</prof>")
-                tmp = tmp.Replace("<memo>" + getTableData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
-                tmp = tmp.Replace("<color>" + getTableData(i, "color") + "</color>", "<color>" + ColorTranslator.ToHtml(color) + "</color>")
-            End If
-
-            newdata += "<course>" + tmp + "</course>" + vbCrLf
+        For Each course As TableCourse In prevCourses
+            PrevSetCombo.Items.Add(course.Name + " (" + daysname(course.Day) + "요일)")
         Next
+    End Sub
 
-        writeTable("<tablename>" + tablename + "</tablename>" + vbCrLf + newdata)
+    Private Sub FillInputs(course As TableCourse)
+        CourseNameTB.Text = course.Name
+        ProfTB.Text = course.Professor
+        DayCombo.SelectedIndex = course.Day
+        StartTimePicker.Value = New DateTime(2001, 1, 1, course.Start \ 60, course.Start Mod 60, 0)
+        EndTimePicker.Value = New DateTime(2001, 1, 1, course.End \ 60, course.End Mod 60, 0)
+        MemoTB.Text = course.Memo
+        ColorButton.BackColor = ColorTranslator.FromHtml(course.Color)
+    End Sub
+
+    Private Sub UpdateCourse(course As TableCourse, day As Integer, name As String, professor As String,
+                             memo As String, startMinutes As Integer, endMinutes As Integer, color As Color)
+        course.Day = day
+        course.Name = name
+        course.Professor = professor
+        course.Memo = memo
+        course.Start = startMinutes
+        course.End = endMinutes
+        course.Color = ColorTranslator.ToHtml(color)
     End Sub
 
     Private Sub SetCourse_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -218,16 +148,9 @@ Public Class SetCourse
             ApplyBT.Text = "수정"
             DeleteBT.Visible = True
 
-            Dim data = olddata
-
             Try
-                CourseNameTB.Text = xmlDecode(getTableData(data, "name"))
-                ProfTB.Text = xmlDecode(getTableData(data, "prof"))
-                DayCombo.SelectedIndex = Convert.ToInt16(getTableData(data, "day"))
-                StartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getTableData(data, "start")) \ 60, Convert.ToInt16(getTableData(data, "start")) Mod 60, 0)
-                EndTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getTableData(data, "end")) \ 60, Convert.ToInt16(getTableData(data, "end")) Mod 60, 0)
-                MemoTB.Text = xmlDecode(getTableData(data, "memo"))
-                ColorButton.BackColor = ColorTranslator.FromHtml(getTableData(data, "color"))
+                If currentCourse Is Nothing Then Throw New InvalidOperationException("수정할 수업 정보가 없습니다.")
+                FillInputs(currentCourse)
 
             Catch ex As Exception
                 MsgBox("수업을 불러오는 도중 문제가 발생하였습니다." + vbCr + "해당 수업의 값이 올바른지 확인하고 삭제 후 다시 추가해 주세요.", vbCritical)
@@ -255,10 +178,10 @@ Public Class SetCourse
             Exit Sub
         End If
 
-        If ProfTB.Text = Nothing Then
-            MsgBox("교수명을 입력하세요.", vbExclamation)
-            Exit Sub
-        End If
+        'If ProfTB.Text = Nothing Then
+        '    MsgBox("교수명을 입력하세요.", vbExclamation)
+        '    Exit Sub
+        'End If
 
         If DayCombo.Text = Nothing Then
             MsgBox("요일을 선택하세요.", vbExclamation)
@@ -278,69 +201,51 @@ Public Class SetCourse
             Exit Sub
         End If
 
-        For Each s As String In prevData
+        For Each course As TableCourse In prevCourses
+            If course.Day <> DayCombo.SelectedIndex Then Continue For
+            If modifyMode AndAlso currentCourse IsNot Nothing AndAlso
+                course.SourceIndex = currentCourse.SourceIndex AndAlso course.HasSameData(currentCourse) Then Continue For
 
-            If getTableData(s, "day") = DayCombo.SelectedIndex Then
-                'MsgBox("인덱스 같음")
-                Dim itemname As String = xmlDecode(getTableData(s, "name")) + " (" + daysname(Convert.ToInt16(getTableData(s, "day"))) + "요일)"
-
-                If Not ((startt <= Convert.ToInt16(getTableData(s, "start")) And endt <= Convert.ToInt16(getTableData(s, "start"))) _
-                    Or (startt >= Convert.ToInt16(getTableData(s, "end")) And endt >= Convert.ToInt16(getTableData(s, "end")))) Then
-
-                    '수정 모드 아닐때
-                    If Not modifyMode Then
-                        MsgBox("다른 수업 (" + itemname + ")과 현재 설정한 수업의 시간이 겹칩니다.", vbExclamation)
-                        Exit Sub
-
-                        '수정일때 겹치는경우
-                    Else
-                        '근데 겹치는게 원래 고치려했던놈이 아닐때
-                        'If Not getTableData(s, "name") = getTableData(olddata, "name") Then
-                        If Not (getTableData(s, "day") + "-" + getTableData(s, "start") + "-" + getTableData(s, "name")) _
-                            = (getTableData(olddata, "day") + "-" + getTableData(olddata, "start") + "-" + getTableData(olddata, "name")) Then
-                            MsgBox("다른 수업 (" + itemname + ")과 현재 설정한 수업의 시간이 겹칩니다.", vbExclamation)
-                            Exit Sub
-                        End If
-                    End If
-                End If
+            If startt < course.End AndAlso endt > course.Start Then
+                Dim itemname As String = course.Name + " (" + daysname(course.Day) + "요일)"
+                MsgBox("다른 수업 (" + itemname + ")과 현재 설정한 수업의 시간이 겹칩니다.", vbExclamation)
+                Exit Sub
             End If
         Next
 
         TopMost = False
+        Dim schedule As TableSchedule = LoadSchedule()
+        If String.IsNullOrEmpty(schedule.Name) Then schedule.Name = "이름 없는 시간표"
 
-        If Not modifyMode Then
-            SaveCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
-            TableForm.updateCell()
-            'MsgBox("추가되었습니다.", vbInformation)
-        Else
-            '수정 모드일때
-            Dim count As Integer = 0
-            For Each s As String In prevData
-                '이전설정 이름이 여러개 이미 있을때
-                If getTableData(s, "name") = getTableData(olddata, "name") Then count += 1
-            Next
-
-            If count > 1 Then
-                If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업 또한 모두 바꾸시겠습니까? (시간, 요일 제외)", vbQuestion + vbYesNo) = vbYes Then
-                    modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
-                    modifyAllCourse(CourseNameTB.Text, ProfTB.Text, MemoTB.Text, ColorButton.BackColor)
-                    TableForm.updateCell()
-                    'MsgBox("수정되었습니다.", vbInformation)
-                    Close()
-                Else
-                    modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
-                    TableForm.updateCell()
-                    'MsgBox("수정되었습니다.", vbInformation)
-                    Close()
-                End If
-            Else
-                modifyCourse(DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
-                TableForm.updateCell()
-                'MsgBox("수정되었습니다.", vbInformation)
-                Close()
+        If modifyMode Then
+            Dim target As TableCourse = FindCourse(schedule, currentCourse)
+            If target Is Nothing Then
+                MsgBox("수정할 수업을 현재 시간표에서 찾지 못했습니다. 시간표를 새로고침한 후 다시 시도해 주세요.", vbExclamation)
+                Exit Sub
             End If
 
+            Dim oldName As String = currentCourse.Name
+            Dim updateAll As Boolean = schedule.Courses.Where(Function(course) course.Name = oldName).Count() > 1 AndAlso
+                MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업 또한 모두 바꾸시겠습니까? (시간, 요일 제외)", vbQuestion + vbYesNo) = vbYes
+
+            UpdateCourse(target, DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
+            If updateAll Then
+                For Each course As TableCourse In schedule.Courses.Where(Function(item) item.Name = oldName AndAlso item IsNot target)
+                    course.Name = CourseNameTB.Text
+                    course.Professor = ProfTB.Text
+                    course.Memo = MemoTB.Text
+                    course.Color = ColorTranslator.ToHtml(ColorButton.BackColor)
+                Next
+            End If
+        Else
+            Dim course As New TableCourse()
+            UpdateCourse(course, DayCombo.SelectedIndex, CourseNameTB.Text, ProfTB.Text, MemoTB.Text, startt, endt, ColorButton.BackColor)
+            schedule.Courses.Add(course)
         End If
+
+        SaveSchedule(schedule)
+        TableForm.updateCell()
+        If modifyMode Then Close()
 
         TopMost = True
         GetCourses()
@@ -355,15 +260,7 @@ Public Class SetCourse
             End If
 
             loaded = False
-            Dim data = prevData(PrevSetCombo.SelectedIndex)
-
-            CourseNameTB.Text = xmlDecode(getTableData(data, "name"))
-            ProfTB.Text = xmlDecode(getTableData(data, "prof"))
-            DayCombo.SelectedIndex = Convert.ToInt16(getTableData(data, "day"))
-            StartTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getTableData(data, "start")) \ 60, Convert.ToInt16(getTableData(data, "start")) Mod 60, 0)
-            EndTimePicker.Value = New DateTime(2001, 1, 1, Convert.ToInt16(getTableData(data, "end")) \ 60, Convert.ToInt16(getTableData(data, "end")) Mod 60, 0)
-            MemoTB.Text = xmlDecode(getTableData(data, "memo"))
-            ColorButton.BackColor = ColorTranslator.FromHtml(getTableData(data, "color"))
+            FillInputs(prevCourses(PrevSetCombo.SelectedIndex))
 
             loaded = True
             touched = False
@@ -377,14 +274,15 @@ Public Class SetCourse
 
     Private Sub DeleteBT_Click(sender As Object, e As EventArgs) Handles DeleteBT.Click
         If MsgBox("정말로 지우시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-            Dim updatedData As String = Nothing
-
-            If Not TryRemoveTableCourse(readTable(), olddata, updatedData) Then
+            Dim schedule As TableSchedule = LoadSchedule()
+            Dim target As TableCourse = FindCourse(schedule, currentCourse)
+            If target Is Nothing Then
                 MsgBox("삭제할 수업을 현재 시간표에서 찾지 못했습니다. 시간표를 새로고침한 후 다시 시도해 주세요.", vbExclamation)
                 Exit Sub
             End If
 
-            writeTable(updatedData)
+            schedule.Courses.Remove(target)
+            SaveSchedule(schedule)
             TableForm.updateCell()
             Close()
         End If

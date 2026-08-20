@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports Microsoft.Win32
 
 Module GUIModule
 
@@ -71,24 +72,24 @@ Module GUIModule
     Public Sub SnapToDesktopBorder(ByVal clientForm As Form, ByVal LParam As IntPtr, ByVal widthAdjustment As Integer)
 
         If clientForm Is Nothing Then
-            ' Satisfies rule: Validate parameters
+            ' 규칙 준수: 매개 변수 검증
             Throw New ArgumentNullException("clientForm")
         End If
 
-        ' Snap client to the top, left, bottom or right desktop border
-        ' as the form is moved near that border.
+        ' 폼이 데스크톱 경계에 가까워지면 클라이언트 영역을
+        ' 위쪽, 왼쪽, 아래쪽 또는 오른쪽 경계에 맞춘다
 
         Try
-            ' Marshal the LPARAM value which is a WINDOWPOS struct
+            ' WINDOWPOS 구조체인 LPARAM 값을 마샬링
             Dim NewPosition As New WINDOWPOS
             NewPosition = CType(Runtime.InteropServices.Marshal.PtrToStructure(
                 LParam, GetType(WINDOWPOS)), WINDOWPOS)
 
             If NewPosition.y = 0 OrElse NewPosition.x = 0 Then
-                Return ' Nothing to do!
+                Return ' 수행할 작업이 없다
             End If
 
-            ' Adjust the client size for borders and caption bar
+            ' 테두리와 제목 표시줄을 고려하여 클라이언트 크기를 조정한다
             Dim ClientRect As Rectangle =
                 clientForm.RectangleToScreen(clientForm.ClientRectangle)
             ClientRect.Width +=
@@ -97,38 +98,37 @@ Module GUIModule
                                   SystemInformation.CaptionHeight - dpicalc(clientForm, 31))
             ' 임의로 포인트 변경
 
-            ' Now get the screen working area (without taskbar)
+            ' 이제 작업 표시줄을 제외한 화면 작업 영역을 가져온다
             Dim WorkingRect As Rectangle =
                 Screen.GetWorkingArea(clientForm.ClientRectangle)
 
-            ' Left border
+            ' 왼쪽 경계
             If NewPosition.x >= WorkingRect.X - mSnapOffset AndAlso
                 NewPosition.x <= WorkingRect.X + mSnapOffset Then
                 NewPosition.x = WorkingRect.X
             End If
 
-            ' Get screen bounds and taskbar height
-            ' (when taskbar is horizontal)
+            ' 화면 경계와 작업 표시줄 높이를 가져온다
+            ' (작업 표시줄이 가로 방향인 경우)
             Dim ScreenRect As Rectangle =
                 Screen.GetBounds(Screen.PrimaryScreen.Bounds)
             Dim TaskbarHeight As Integer =
                 ScreenRect.Height - WorkingRect.Height
 
-            ' Top border (check if taskbar is on top
-            ' or bottom via WorkingRect.Y)
+            ' 위쪽 경계 (WorkingRect.Y를 통해 작업 표시줄이 위쪽인지 아래쪽인지 확인)
             If NewPosition.y >= -mSnapOffset AndAlso
                  (WorkingRect.Y > 0 AndAlso NewPosition.y <=
                  (TaskbarHeight + mSnapOffset)) OrElse
                  (WorkingRect.Y <= 0 AndAlso NewPosition.y <=
                  (mSnapOffset)) Then
                 If TaskbarHeight > 0 Then
-                    NewPosition.y = WorkingRect.Y ' Horizontal Taskbar
+                    NewPosition.y = WorkingRect.Y ' 가로 작업 표시줄
                 Else
-                    NewPosition.y = 0 ' Vertical Taskbar
+                    NewPosition.y = 0 ' 세로 작업 표시줄
                 End If
             End If
 
-            ' Right border
+            ' 오른쪽 경계
             If NewPosition.x + ClientRect.Width <=
                  WorkingRect.Right + mSnapOffset AndAlso
                  NewPosition.x + ClientRect.Width >=
@@ -137,7 +137,7 @@ Module GUIModule
                                 SystemInformation.FrameBorderSize.Width)
             End If
 
-            ' Bottom border
+            ' 아래쪽 경계
             If NewPosition.y + ClientRect.Height <=
                    WorkingRect.Bottom + mSnapOffset AndAlso
                    NewPosition.y + ClientRect.Height >=
@@ -146,7 +146,7 @@ Module GUIModule
                                 SystemInformation.FrameBorderSize.Height)
             End If
 
-            ' Marshal it back
+            ' 다시 마샬링
             Runtime.InteropServices.Marshal.StructureToPtr(NewPosition,
                                                            LParam, True)
         Catch ex As ArgumentException
@@ -255,6 +255,30 @@ Module GUIModule
 
         Return aControl.CreateGraphics.MeasureString(aControl.Text, aControl.Font)
 
+    End Function
+#End Region
+
+
+#Region "라이트/다크 Win32 호출모듈"
+    <DllImport("uxtheme.dll", CharSet:=CharSet.Unicode)>
+    Public Function SetWindowTheme(
+        hWnd As IntPtr,
+        pszSubAppName As String,
+        pszSubIdList As String
+    ) As Integer
+    End Function
+    Public Function IsWindowsDarkMode() As Boolean
+        Using key = Registry.CurrentUser.OpenSubKey(
+            "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize")
+
+            If key Is Nothing Then Return False
+
+            Dim value = key.GetValue("AppsUseLightTheme")
+
+            If value Is Nothing Then Return False
+
+            Return Convert.ToInt32(value) = 0
+        End Using
     End Function
 #End Region
 

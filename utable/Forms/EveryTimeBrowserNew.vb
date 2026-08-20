@@ -85,7 +85,12 @@ Public Class EveryTimeBrowserNew
         WebView21.Source = New Uri(targetUrl)
         trialCount = 0
 
-        Refresh()
+        ' 호스트 OS의 컬러 테마가 다크 -> 브라우저 내부도 다크이므로 검은 TopPanel 배경 설정
+        If IsWindowsDarkMode() Then
+            TopPanel.BackColor = ColorTranslator.FromHtml("#111111")
+            CloseBT.Image = My.Resources.closeicon_w
+            Label1.ForeColor = ThemeColors.Dark.Text
+        End If
     End Sub
 
     Private Sub WebView2_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
@@ -116,7 +121,7 @@ Public Class EveryTimeBrowserNew
     Private Async Sub TableChecker_Tick(sender As Object, e As EventArgs) Handles TableChecker.Tick
 
         Dim courses As List(Of EverytimeCourse) = Await GetCoursesFromPage()
-        Dim tabledata As String = ""
+        Dim schedule As New TableSchedule With {.Name = "에타에서 불러온 시간표"}
 
         If courses.Count > 0 Then
 
@@ -130,15 +135,15 @@ Public Class EveryTimeBrowserNew
                     color = ControlPaint.Dark(color, 0.2)
                 End If
 
-                tabledata += "<course>" + vbCrLf
-                tabledata += vbTab + "<day>" + course.Day.ToString + "</day>" + vbCrLf
-                tabledata += vbTab + "<name>" + xmlEncode(course.Name) + "</name>" + vbCrLf
-                tabledata += vbTab + "<prof>" + xmlEncode(course.Professor) + "</prof>" + vbCrLf
-                tabledata += vbTab + "<memo>" + xmlEncode(course.Memo) + "</memo>" + vbCrLf
-                tabledata += vbTab + "<start>" + course.Start.ToString + "</start>" + vbCrLf
-                tabledata += vbTab + "<end>" + (course.Start + course.Duration).ToString + "</end>" + vbCrLf
-                tabledata += vbTab + "<color>" + ColorTranslator.ToHtml(color) + "</color>" + vbCrLf
-                tabledata += "</course>" + vbCrLf
+                schedule.Courses.Add(New TableCourse With {
+                    .Day = course.Day,
+                    .Name = course.Name,
+                    .Professor = course.Professor,
+                    .Memo = course.Memo,
+                    .Start = course.Start,
+                    .End = course.Start + course.Duration,
+                    .Color = ColorTranslator.ToHtml(color)
+                })
             Next
 
             Await Task.Delay(3000)
@@ -146,7 +151,7 @@ Public Class EveryTimeBrowserNew
 
             If MsgBox("불러오기가 완료되었습니다. 바로 적용하시겠습니까?" + vbCr + "기존 시간표는 지워집니다!",
                       vbQuestion + vbYesNo) = vbYes Then
-                writeTable("<tablename>에타에서 불러온 시간표</tablename>" + vbCrLf + tabledata)
+                SaveSchedule(schedule)
                 TableForm.updateCell()
                 Close()
             End If
@@ -221,13 +226,4 @@ Public Class EveryTimeBrowserNew
         TopMost = False
         Process.Start("https://utable.sw.pbj.kr/everytime-troubleshooting")
     End Sub
-End Class
-Public Class EverytimeCourse
-    Public Property Day As Integer
-    Public Property Name As String
-    Public Property Professor As String
-    Public Property Memo As String
-    Public Property Start As Integer
-    Public Property Duration As Integer
-    Public Property ColorNumber As Integer
 End Class

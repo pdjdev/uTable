@@ -17,6 +17,7 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>게시\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,8 +29,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationVersion>1.10.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -297,6 +297,11 @@
     </Compile>
     <Compile Include="Modules\GUIModule.vb" />
     <Compile Include="Modules\ThemeColors.vb" />
+    <Compile Include="Models\CellControlSettings.vb" />
+    <Compile Include="Models\EverytimeCourse.vb" />
+    <Compile Include="Models\ReleaseFeedEntry.vb" />
+    <Compile Include="Models\TableCourse.vb" />
+    <Compile Include="Models\TableSchedule.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -326,6 +331,9 @@
     </Compile>
     <Compile Include="UserControls\CellControl.vb">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\CompositedTablePanel.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Modules\WinModule.vb" />
     <Compile Include="UserControls\SettingMenu.Designer.vb">
@@ -403,10 +411,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ptable_icon.ico" />
+    <Content Include="Resources\utable_banner.png" />
+    <Content Include="Resources\utable_banner_dark.png" />
     <None Include="Resources\msstore_logo.png" />
     <None Include="Resources\menuicon_w.png" />
     <None Include="Resources\menuicon_b.png" />
-    <None Include="Resources\memo_font_b.png" />
     <None Include="Resources\closeicon_b2.png" />
     <None Include="Resources\bt_edit_w.png" />
     <None Include="Resources\bt_edit_b.png" />
@@ -422,8 +431,6 @@
     <None Include="Resources\minicon_w.png" />
     <None Include="Resources\minicon_b.png" />
     <None Include="Resources\shadow1.png" />
-    <None Include="Resources\ptable_banner_dark.png" />
-    <None Include="Resources\ptable_banner.png" />
     <None Include="Resources\closeicon_w.png" />
   </ItemGroup>
   <ItemGroup>

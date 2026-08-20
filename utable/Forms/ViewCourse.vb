@@ -9,10 +9,15 @@ Public Class ViewCourse
     Dim listcount As Integer = 0
     Dim colormode As String = Nothing
 
-    Dim maxTitleSize As Single = 15.0!
+    Dim maxTitleSize As Single = 14.0!
     Dim maxSubSize As Single = 9.0!
+    Private Const MinimumTitleSize As Single = 11.0!
+    Private Const TitleEllipsis As String = "..."
 
-    Public olddata As String = Nothing
+    '창 크기가 바뀌면 원본 제목을 기준으로 다시 맞춘다.
+    Private courseTitle As String = String.Empty
+
+    Friend currentCourse As TableCourse = Nothing
     Public blacktext As Boolean = False
 
     Dim touched As Boolean = False
@@ -68,7 +73,7 @@ Public Class ViewCourse
         Set(ByVal value As ResizeDirection)
             _resizeDir = value
 
-            'Change cursor
+            '커서를 변경한다
             Select Case value
                 Case ResizeDirection.Left
                     Me.Cursor = Cursors.SizeWE
@@ -234,6 +239,13 @@ Public Class ViewCourse
 
         MainPanel.BackColor = theme.Edge
         MemoTB.ForeColor = theme.Text
+
+        Select Case colormode
+            Case "Dark"
+                SetWindowTheme(MemoTB.Handle, "DarkMode_Explorer", Nothing)
+            Case Else
+                SetWindowTheme(MemoTB.Handle, "Explorer", Nothing)
+        End Select
     End Sub
 
     Private Sub ViewCourse_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -251,13 +263,16 @@ Public Class ViewCourse
         Dim colorMul As Single = 0.9
 
         Try
-            Dim course As TableCourse = getTableCourse(olddata)
-            UpperTitleLabel.Text = xmlDecode(course.Name)
-            Text = UpperTitleLabel.Text
-            SubTitleLabel.Text = xmlDecode(course.Professor) + ", "
+            Dim course As TableCourse = currentCourse
+            If course Is Nothing Then Throw New InvalidOperationException("표시할 수업 정보가 없습니다.")
+            courseTitle = NormalizeCourseTitle(course.Name)
+            Text = courseTitle
+            UpperTitleLabel.Text = courseTitle
+            SubTitleLabel.Text = course.Professor
+            If Not course.Professor = "" Then SubTitleLabel.Text += ", "
 
-            Dim startt As Integer = Convert.ToInt32(course.Start)
-            Dim endt As Integer = Convert.ToInt32(course.End)
+            Dim startt As Integer = course.Start
+            Dim endt As Integer = course.End
 
             SubTitleLabel.Text += (startt \ 60).ToString + ":"
             If startt Mod 60 = 0 Then
@@ -275,9 +290,9 @@ Public Class ViewCourse
                 SubTitleLabel.Text += (endt Mod 60).ToString("D2")
             End If
 
-            SubTitleLabel.Text += ", " + daysname(Convert.ToInt16(course.Day)) + "요일"
+            SubTitleLabel.Text += ", " + daysname(course.Day) + "요일"
 
-            MemoTB.Text = xmlDecode(course.Memo)
+            MemoTB.Text = course.Memo
             TitlePanel.BackColor = ColorTranslator.FromHtml(course.Color)
 
             Dim c As Color = Color.FromArgb(TitlePanel.BackColor.R * colorMul,
@@ -313,7 +328,7 @@ Public Class ViewCourse
 
         End Try
 
-        AdjustText(UpperTitleLabel, maxTitleSize)
+        LayoutCourseTitle()
         AdjustText(SubTitleLabel, maxSubSize)
 
         '글꼴이 자꾸 시스템 기본값으로 바뀌는것을 방지
@@ -324,11 +339,31 @@ Public Class ViewCourse
 
     End Sub
 
-    Private Sub AdjustText(lblQueue As Label, maxSize As Single)
+    Private Function NormalizeCourseTitle(value As String) As String
+        If String.IsNullOrWhiteSpace(value) Then Return String.Empty
+
+        Return value.Replace(vbCrLf, " ").Replace(vbCr, " ").Replace(vbLf, " ").Trim()
+    End Function
+
+    Private Sub LayoutCourseTitle()
+        If UpperTitleLabel.Width <= 0 OrElse UpperTitleLabel.Height <= 0 Then Exit Sub
+
+        UpperTitleLabel.Text = courseTitle
+        If String.IsNullOrEmpty(courseTitle) Then Exit Sub
+
+        AdjustText(UpperTitleLabel, maxTitleSize, MinimumTitleSize)
+        Dim shortened As String = courseTitle
+        While shortened.Length > 0 AndAlso Not TextFits(UpperTitleLabel, UpperTitleLabel.Text, UpperTitleLabel.Font)
+            shortened = shortened.Substring(0, Math.Max(0, shortened.Length - 1)).TrimEnd()
+            UpperTitleLabel.Text = shortened + TitleEllipsis
+        End While
+    End Sub
+
+    Private Sub AdjustText(lblQueue As Label, maxSize As Single, Optional minimumSize As Single = 6.0!)
         If String.IsNullOrEmpty(lblQueue.Text) OrElse lblQueue.Width <= 0 OrElse lblQueue.Height <= 0 Then Exit Sub
 
         '0.1pt씩 Font/MeasureText를 반복 생성하던 선형 탐색 대신 이분 탐색을 사용한다.
-        Dim lower As Single = 6.0!
+        Dim lower As Single = minimumSize
         Dim upper As Single = maxSize
         Dim best As Single = lower
 
@@ -336,8 +371,7 @@ Public Class ViewCourse
             Dim candidate As Single = (lower + upper) / 2
             Dim fits As Boolean
             Using testFont As New Font(lblQueue.Font.Name, candidate, lblQueue.Font.Style)
-                Dim textSize As Size = TextRenderer.MeasureText(lblQueue.Text, testFont)
-                fits = textSize.Width + 3 <= lblQueue.Width AndAlso textSize.Height + 3 <= lblQueue.Height
+                fits = TextFits(lblQueue, lblQueue.Text, testFont)
             End Using
 
             If fits Then
@@ -348,12 +382,17 @@ Public Class ViewCourse
             End If
         Next
 
-        If lblQueue Is UpperTitleLabel AndAlso best < 9.0! Then best = 9.0!
         lblQueue.Font = New Font(lblQueue.Font.Name, best, lblQueue.Font.Style)
     End Sub
 
+    Private Function TextFits(label As Label, value As String, fontToMeasure As Font) As Boolean
+        Dim textSize As Size = TextRenderer.MeasureText(value, fontToMeasure)
+        Return textSize.Width + 3 <= label.ClientSize.Width - label.Padding.Horizontal AndAlso
+               textSize.Height + 3 <= label.ClientSize.Height - label.Padding.Vertical
+    End Function
+
     Private Sub ViewCourse_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
-        AdjustText(UpperTitleLabel, maxTitleSize)
+        LayoutCourseTitle()
         AdjustText(SubTitleLabel, maxSubSize)
 
     End Sub
@@ -372,7 +411,7 @@ Public Class ViewCourse
         End If
 
         SetCourse.modifyMode = True
-        SetCourse.olddata = olddata
+        SetCourse.currentCourse = currentCourse
         SetCourse.SetDesktopLocation(appearPoint.X, appearPoint.Y)
 
         SetCourse.touched = touched
@@ -400,25 +439,22 @@ Public Class ViewCourse
 
     Sub Apply()
         Try
-            Dim data As String = readTable()
-            Dim count As Integer = 0
+            Dim schedule As TableSchedule = LoadSchedule()
+            Dim target As TableCourse = FindCourse(schedule, currentCourse)
+            If target Is Nothing Then Throw New InvalidOperationException("수정할 수업을 현재 시간표에서 찾지 못했습니다.")
 
-            For Each s As String In getTableDatas(data, "course")
-                '이전설정 이름이 여러개 이미 있을때
-                If getTableData(s, "name") = getTableData(olddata, "name") Then count += 1
-            Next
+            Dim updateAll As Boolean = schedule.Courses.Where(Function(course) course.Name = currentCourse.Name).Count() > 1 AndAlso
+                MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes
 
-            If count > 1 Then
-                If MsgBox("같은 이름의 수업이 둘 이상 있습니다." + vbCr + "해당 수업의 메모 또한 모두 바꾸시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
-                    modifyAllCourse(readTable(), MemoTB.Text)
-                Else
-                    Dim newdata As String = olddata.Replace(getTableData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
-                    writeTable(readTable.Replace(olddata, newdata))
-                End If
+            If updateAll Then
+                For Each course As TableCourse In schedule.Courses.Where(Function(item) item.Name = currentCourse.Name)
+                    course.Memo = MemoTB.Text
+                Next
             Else
-                Dim newdata As String = olddata.Replace(getTableData_withkeys(olddata, "memo"), "<memo>" + xmlEncode(MemoTB.Text) + "</memo>")
-                writeTable(readTable.Replace(olddata, newdata))
+                target.Memo = MemoTB.Text
             End If
+
+            SaveSchedule(schedule)
 
             TableForm.updateCell()
 
@@ -427,33 +463,6 @@ Public Class ViewCourse
         End Try
 
         Close()
-    End Sub
-
-    Sub modifyAllCourse(data As String, memo As String)
-        'Dim data As String = readTable()
-        Dim olddatas As List(Of String) = getTableDatas(data, "course")
-        Dim tablename As String = Nothing
-
-        If Not data.Contains("<tablename>") Then
-            tablename = "이름 없는 시간표"
-        Else
-            If getTableData(data, "tablename") = "" Then
-                tablename = "이름 없는 시간표"
-            Else
-                tablename = getTableData(data, "tablename")
-            End If
-        End If
-
-        Dim newdata As String = ""
-        Dim oldname As String = getTableData(olddata, "name")
-
-        For Each i In olddatas
-            Dim tmp As String = i
-            If getTableData(i, "name") = oldname Then tmp = tmp.Replace("<memo>" + getTableData(i, "memo") + "</memo>", "<memo>" + xmlEncode(memo) + "</memo>")
-            newdata += "<course>" + tmp + "</course>" + vbCrLf
-        Next
-
-        writeTable("<tablename>" + tablename + "</tablename>" + vbCrLf + newdata)
     End Sub
 
     Private Sub MemoTB_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles MemoTB.LinkClicked

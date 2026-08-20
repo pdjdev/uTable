@@ -158,6 +158,9 @@ Public Class OptionForm
         '표확장 기본값 = 1
         ExpandCellChk.Checked = Not (GetINI("SETTING", "ExpandCell", "", ININamePath) = "0")
 
+        '확장/축소 애니메이션 기본값 = 1
+        ExpandAnimationChk.Checked = Not (GetINI("SETTING", "ExpandAnimation", "", ININamePath) = "0")
+
         '고정시작시간 기본값 = 0
         FixStartTimeChk.Checked = (GetINI("SETTING", "FixStartTime", "", ININamePath) = "1")
 
@@ -275,9 +278,32 @@ Public Class OptionForm
             Case "Dark"
                 BannerPictureBox.Image = My.Resources.uTable_banner_dark
                 CloseBT.Image = My.Resources.closeicon_w
+
+                ' 옵션 컨트롤 내에 있는 모든 체크박스, 라디오버튼에 다크 모드 테마 적용
+                For Each chk As CheckBox In GetAll(Me, GetType(CheckBox))
+                    SetWindowTheme(chk.Handle, "DarkMode_Explorer", Nothing)
+                Next
+
+                For Each rdo As RadioButton In GetAll(Me, GetType(RadioButton))
+                    SetWindowTheme(rdo.Handle, "DarkMode_Explorer", Nothing)
+                Next
+
+                SetWindowTheme(RichTextBox1.Handle, "DarkMode_Explorer", Nothing)
+
             Case Else
                 BannerPictureBox.Image = My.Resources.uTable_banner
                 CloseBT.Image = My.Resources.closeicon_b
+
+                For Each chk As CheckBox In GetAll(Me, GetType(CheckBox))
+                    SetWindowTheme(chk.Handle, "Explorer", Nothing)
+                Next
+
+                For Each rdo As RadioButton In GetAll(Me, GetType(RadioButton))
+                    SetWindowTheme(rdo.Handle, "Explorer", Nothing)
+                Next
+
+                SetWindowTheme(RichTextBox1.Handle, "Explorer", Nothing)
+
         End Select
     End Sub
 
@@ -385,6 +411,10 @@ Public Class OptionForm
         ApplySetting("ExpandCell", ExpandCellChk.Checked)
     End Sub
 
+    Private Sub ExpandAnimationChk_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandAnimationChk.CheckedChanged
+        ApplySetting("ExpandAnimation", ExpandAnimationChk.Checked)
+    End Sub
+
     Private Sub FixStartTimeChk_CheckedChanged(sender As Object, e As EventArgs) Handles FixStartTimeChk.CheckedChanged
         ApplySetting("FixStartTime", FixStartTimeChk.Checked)
         FixStartTimePicker.Enabled = FixStartTimeChk.Checked
@@ -397,6 +427,7 @@ Public Class OptionForm
 
 
     Private Sub FixStartTimePicker_ValueChanged(sender As Object, e As EventArgs) Handles FixStartTimePicker.ValueChanged
+        If Not loaded Then Return
         SetINI("SETTING", "FixStartTimeValue", (FixStartTimePicker.Value.Hour * 60 + FixStartTimePicker.Value.Minute).ToString, ININamePath)
     End Sub
 
@@ -435,6 +466,8 @@ Public Class OptionForm
     End Sub
 
     Private Sub ShowLinePatternChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowLinePatternChk.CheckedChanged
+        If Not loaded Then Return
+
         '줄긋는거는 그냥 Panel의 Drawing만 Refresh하면 되는거라서 테이블을 다시 그리지는 않을거임
         If ShowLinePatternChk.Checked Then
             SetINI("SETTING", "TablePattern", "DottedLine", ININamePath)
@@ -450,7 +483,7 @@ Public Class OptionForm
 
     End Sub
 
-    Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
+    Private Sub PrevUpdateEvent(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, ExpandAnimationChk.CheckedChanged, AlwaysExpandChk.CheckedChanged,
         ShowDayChk.CheckedChanged, ShowProfChk.CheckedChanged, ShowMemoChk.CheckedChanged, BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged,
         ShowLinePatternChk.CheckedChanged, AutoTextColorChk.CheckedChanged
         PrevUpdate()
@@ -503,28 +536,19 @@ Public Class OptionForm
 
         Dim cell As New CellControl
         With cell
-            .Name = "DemoCellControl"
+            .IsDemo = True
             .Dock = DockStyle.Top
             .Height = PrevTableArea.Height * 0.6
             .defHeight = PrevTableArea.Height * 0.6
 
-            .TopTimeLabel.Text = "12:27"
-            .BottomTimeLabel.Text = "13:27"
+            .StartText = "12:27"
+            .EndText = "13:27"
 
-            .TitleLabel.Text = "수업명"
-            .ProfLabel.Text = names(rnd.Next(0, names.Count)) + " 교수님"
-            .MemoLabel.Text = "메모 내용"
+            .CourseTitle = "수업명"
+            .ProfessorText = names(rnd.Next(0, names.Count)) + " 교수님"
+            .MemoText = "메모 내용"
 
-            .FadeEffect = GetINI("SETTING", "FadeEffect", "", ININamePath)
-            .CustomFont = GetINI("SETTING", "CustomFont", "", ININamePath)
-            .CustomFontName = GetINI("SETTING", "CustomFontName", "", ININamePath)
-            .AutoTextColor = GetINI("SETTING", "AutoTextColor", "", ININamePath)
-            ._BlackText = GetINI("SETTING", "BlackText", "", ININamePath)
-            ._AlwaysExpand = GetINI("SETTING", "AlwaysExpand", "", ININamePath)
-            .ExpandCell = GetINI("SETTING", "ExpandCell", "", ININamePath)
-            .ShowMemo = GetINI("SETTING", "ShowMemo", "", ININamePath)
-            .ShowProf = GetINI("SETTING", "ShowProf", "", ININamePath)
-            ._ShowChkBox = GetINI("SETTING", "ShowChkBox", "", ININamePath)
+            .Settings = CellControlSettings.FromIni()
 
             .goalColor = Color.DarkSlateGray
         End With
@@ -603,13 +627,15 @@ Public Class OptionForm
     End Sub
 
     '바로 적용 보여주기 위해 시간표 새로고침
-    Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged,
+    Private Sub TableRelatedOptionCheckboxes_CheckedChanged(sender As Object, e As EventArgs) Handles ExpandCellChk.CheckedChanged, ExpandAnimationChk.CheckedChanged,
         AlwaysExpandChk.CheckedChanged, ShowDayChk.CheckedChanged, ShowMemoChk.CheckedChanged, ShowProfChk.CheckedChanged,
         BlackTextChk.CheckedChanged, ShowChkBoxChk.CheckedChanged, AutoTextColorChk.CheckedChanged
         If loaded Then TableForm.updateCell()
     End Sub
 
     Private Sub D_ThemeRbt_CheckedChanged(sender As Object, e As EventArgs) Handles D_ThemeRbt.CheckedChanged
+        If Not loaded Then Return
+
         If D_ThemeRbt.Checked Then
             SetINI("SETTING", "ColorMode", "Dark", ININamePath)
         Else
@@ -901,13 +927,14 @@ Public Class OptionForm
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles SaveToFileBT.Click
         If TableSaveRbt.Checked Then
-            tableData = readTable()
+            tableData = ReadScheduleData()
 
             If Not (tableData.Contains("<tablename>") Or tableData.Contains("<course>")) Then
                 MsgBox("시간표를 만들어 주세요.", vbInformation)
             Else
                 Dim title As String = "이름 없는 시간표"
-                If tableData.Contains("<tablename>") Then title = getTableData(tableData, "tablename")
+                Dim scheduleName As String = ParseSchedule(tableData).Name
+                If Not String.IsNullOrEmpty(scheduleName) Then title = scheduleName
 
                 SaveFileDialog1.FileName = title
                 SaveFileDialog1.Filter = "uTable 시간표 파일|*.utdata|모든 파일|*.*"
@@ -950,7 +977,7 @@ Public Class OptionForm
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles CopyToClipboardBT.Click
         If TableSaveRbt.Checked Then
-            tableData = readTable()
+            tableData = ReadScheduleData()
 
             If tableData = "" Then
                 MsgBox("시간표를 만들어 주세요.", vbInformation)
@@ -981,7 +1008,7 @@ Public Class OptionForm
             If clipboardTxt.Contains("<tablename>") Or clipboardTxt.Contains("<course>") Then
                 If MsgBox("클립보드에서 시간표 서식을 찾았습니다. 불러오시겠습니까?", vbQuestion + vbYesNo) = vbYes Then
                     Try
-                        writeTable(clipboardTxt)
+                        SaveSchedule(ParseSchedule(clipboardTxt))
                         TableForm.updateCell()
                         Exit Sub
                     Catch ex As Exception
@@ -1027,7 +1054,7 @@ Public Class OptionForm
             If TableSaveRbt.Checked Then
                 Dim data As String = ReadTableFile(OpenFileDialog1.FileName)
                 If data.Contains("<tablename>") Or data.Contains("<course>") Then
-                    writeTable(data)
+                    SaveSchedule(ParseSchedule(data))
                 Else
                     MsgBox("올바른 시간표 파일이 아닙니다.", vbCritical)
                 End If
@@ -1062,7 +1089,7 @@ Public Class OptionForm
         End If
 
         Try
-            tableData = readTable()
+            tableData = ReadScheduleData()
 
             If tableData.Contains("<tablename>") Or tableData.Contains("<course>") Then
                 If MsgBox("현재 시간표를 설정한 위치로 복사하시겠습니까?", vbQuestion + vbYesNo) = vbYes Then

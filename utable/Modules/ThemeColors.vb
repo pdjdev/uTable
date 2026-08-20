@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Windows.Forms
 
 ''' <summary>
-''' Immutable color palette used by the application's light and dark themes.
+''' 애플리케이션의 라이트 테마와 다크 테마에서 사용하는 색상 팔레트
 ''' </summary>
 Public NotInheritable Class ThemeColors
     Public Shared ReadOnly Light As New ThemeColors(
@@ -56,8 +56,8 @@ Public NotInheritable Class ThemeColors
 End Class
 
 ''' <summary>
-''' Draws every level of a ToolStrip menu with the active application palette.
-''' Windows' system renderer ignores BackColor/ForeColor on drop-down menus.
+''' 활성 애플리케이션 팔레트를 사용하여 ToolStrip 메뉴의 모든 계층을 그립니다
+''' Windows 시스템 렌더러는 드롭다운 메뉴의 BackColor/ForeColor를 무시합니다
 ''' </summary>
 Public NotInheritable Class MenuThemeRenderer
     Inherits ToolStripProfessionalRenderer
@@ -78,6 +78,17 @@ Public NotInheritable Class MenuThemeRenderer
 
         For Each item As ToolStripItem In menu.Items
             item.ForeColor = theme.Text
+
+            'ToolStripComboBox는 호스트 항목과 실제 ComboBox의 색상이 별도로 관리된다.
+            '호스트의 ForeColor만 변경하면 다크 모드에서 드롭다운은 흰 배경을 유지해
+            '목록 글자가 보이지 않게 된다.
+            Dim comboBoxItem As ToolStripComboBox = TryCast(item, ToolStripComboBox)
+            If comboBoxItem IsNot Nothing Then
+                comboBoxItem.BackColor = theme.Background
+                comboBoxItem.ForeColor = theme.Text
+                comboBoxItem.ComboBox.BackColor = theme.Background
+                comboBoxItem.ComboBox.ForeColor = theme.Text
+            End If
 
             Dim menuItem As ToolStripMenuItem = TryCast(item, ToolStripMenuItem)
             If menuItem IsNot Nothing AndAlso menuItem.HasDropDownItems Then

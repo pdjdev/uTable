@@ -203,7 +203,7 @@ Module WinModule
                       + "'아니오'를 누르시면 해당 정보는 제외된 채 정보가 복사됩니다)",
                       vbQuestion + vbYesNo) = vbYes Then
                 cominfo += vbCr + vbCr + "[uTable Default Data]" + vbCr
-                cominfo += readTable()
+                cominfo += ReadScheduleData()
                 cominfo += vbCr + "[End of Data]"
             End If
 
