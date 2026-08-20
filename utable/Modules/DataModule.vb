@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Security
+Imports System.Text
 Imports System.Web
 Imports System.Xml
 Imports System.Xml.Linq
@@ -46,7 +47,30 @@ Module DataModule
     End Function
 
     Private Function SerializeTableFragment(document As XDocument) As String
-        Return String.Concat(document.Root.Nodes().Select(Function(node) node.ToString(SaveOptions.DisableFormatting))).Trim()
+        Dim settings As New XmlWriterSettings With {
+            .ConformanceLevel = ConformanceLevel.Fragment,
+            .Indent = True,
+            .IndentChars = vbTab,
+            .NewLineChars = vbCrLf,
+            .NewLineHandling = NewLineHandling.None,
+            .OmitXmlDeclaration = True
+        }
+        Dim output As New StringBuilder()
+
+        Using writer As XmlWriter = XmlWriter.Create(output, settings)
+            For Each element As XElement In document.Root.Elements()
+                '기존 편집 코드가 만든 공백 노드는 버리고 실제 요소 구조만 다시 들여쓴다.
+                '값만 있는 요소의 공백은 데이터일 수 있으므로 그대로 보존한다.
+                Dim formattedElement As New XElement(element)
+                For Each container As XElement In formattedElement.DescendantsAndSelf().Where(Function(item) item.HasElements)
+                    container.Nodes().OfType(Of XText)().Where(Function(node) String.IsNullOrWhiteSpace(node.Value)).Remove()
+                Next
+
+                formattedElement.WriteTo(writer)
+            Next
+        End Using
+
+        Return output.ToString().TrimEnd(ControlChars.Cr, ControlChars.Lf)
     End Function
 
     Private Function GetElementInnerXml(element As XElement) As String
