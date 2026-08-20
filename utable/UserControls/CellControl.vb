@@ -5,6 +5,7 @@ Imports System.Diagnostics
 Public Class CellControl
     Public defHeight As Integer = 0
     Public defLoc As Integer = 0
+    Public StartMinutes As Integer = 0
     Public checked As Boolean = False
     Public dayNum As Integer = 0
 
@@ -19,6 +20,7 @@ Public Class CellControl
     Public UsesSharedFadeClock As Boolean = False
     Public goalColor As Color = Nothing
     Public Event FadeStarted As EventHandler
+    Public Event HoverEnded As EventHandler
 
     Private ReadOnly Property HorizontalPadding As Integer
         Get
@@ -46,6 +48,11 @@ Public Class CellControl
 
     Private blackText As Boolean = False
     Private hovered As Boolean = False
+    Public ReadOnly Property IsHovered As Boolean
+        Get
+            Return hovered
+        End Get
+    End Property
     Private checkHovered As Boolean = False
     Private checkPressed As Boolean = False
     Private titleHovered As Boolean = False
@@ -264,7 +271,10 @@ Public Class CellControl
                 If Parent IsNot Nothing Then
                     Parent.Invalidate(Rectangle.Union(previousBounds, Bounds), True)
                 End If
+                If Not hovered Then RaiseEvent HoverEnded(Me, EventArgs.Empty)
             End If
+        ElseIf Not hovered Then
+            RaiseEvent HoverEnded(Me, EventArgs.Empty)
         End If
 
         Invalidate()
@@ -297,6 +307,7 @@ Public Class CellControl
     Private Sub StartHoverAnimation(targetBounds As Rectangle)
         If Bounds = targetBounds Then
             hoverAnimationTimer.Stop()
+            If Not hovered Then RaiseEvent HoverEnded(Me, EventArgs.Empty)
             Return
         End If
 
@@ -323,6 +334,7 @@ Public Class CellControl
 
         If progress >= 1.0 Then
             hoverAnimationTimer.Stop()
+            If Not hovered Then RaiseEvent HoverEnded(Me, EventArgs.Empty)
         End If
     End Sub
 

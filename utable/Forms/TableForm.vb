@@ -1097,6 +1097,7 @@ Public Class TableForm
         'cell.BackColor = color
         cell.goalColor = color
         AddHandler cell.FadeStarted, AddressOf CellFadeStarted
+        AddHandler cell.HoverEnded, AddressOf CellHoverEnded
 
         With cell
             .Settings = cellSettings
@@ -1127,6 +1128,7 @@ Public Class TableForm
         cell.Height = part * parentPanel.Height
         cell.defHeight = part * parentPanel.Height
         cell.defLoc = cell.Location.Y
+        cell.StartMinutes = startt
         cell.dayNum = day
 
         'MsgBox(part * Panel1.Height)
@@ -1186,6 +1188,39 @@ Public Class TableForm
                 resizeCell(Convert.ToInt16(course.Start), Convert.ToInt16(course.End), cell)
             End If
         Next
+
+        For Each panel As Panel In {MonPanel, TuePanel, WedPanel, ThuPanel, FriPanel, SatPanel, SunPanel}
+            RestoreCourseZOrder(panel)
+        Next
+    End Sub
+
+    Private Sub CellHoverEnded(sender As Object, e As EventArgs)
+        Dim cell As CellControl = TryCast(sender, CellControl)
+        If cell Is Nothing OrElse cell.IsDisposed Then Exit Sub
+
+        RestoreCourseZOrder(TryCast(cell.Parent, Panel))
+    End Sub
+
+    Private Sub RestoreCourseZOrder(panel As Panel)
+        If panel Is Nothing Then Exit Sub
+
+        'Controls 컬렉션의 인덱스 0이 가장 앞이다. 늦게 시작하는 셀부터
+        '앞에 두어, 항상 확장 셀이 겹쳐도 이른 수업이 뒤에 깔리게 한다.
+        Dim orderedCells = panel.Controls.OfType(Of CellControl)().
+            OrderByDescending(Function(cell) cell.StartMinutes).
+            ThenByDescending(Function(cell) cell.defLoc).
+            ToList()
+
+        For index As Integer = 0 To orderedCells.Count - 1
+            panel.Controls.SetChildIndex(orderedCells(index), index)
+        Next
+
+        '다른 셀의 축소 애니메이션이 늦게 끝나더라도 현재 포인터 아래에서
+        '확장 중인 셀의 임시 최상단 상태를 시간순 복원이 덮어쓰지 않게 한다.
+        For Each hoveredCell As CellControl In orderedCells.Where(Function(cell) cell.IsHovered)
+            hoveredCell.BringToFront()
+        Next
+        panel.Invalidate(True)
     End Sub
 
     Private Sub QueueCourseBoundsUpdate()
