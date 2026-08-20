@@ -427,6 +427,7 @@ Public Class OptionForm
 
 
     Private Sub FixStartTimePicker_ValueChanged(sender As Object, e As EventArgs) Handles FixStartTimePicker.ValueChanged
+        If Not loaded Then Return
         SetINI("SETTING", "FixStartTimeValue", (FixStartTimePicker.Value.Hour * 60 + FixStartTimePicker.Value.Minute).ToString, ININamePath)
     End Sub
 
@@ -465,6 +466,8 @@ Public Class OptionForm
     End Sub
 
     Private Sub ShowLinePatternChk_CheckedChanged(sender As Object, e As EventArgs) Handles ShowLinePatternChk.CheckedChanged
+        If Not loaded Then Return
+
         '줄긋는거는 그냥 Panel의 Drawing만 Refresh하면 되는거라서 테이블을 다시 그리지는 않을거임
         If ShowLinePatternChk.Checked Then
             SetINI("SETTING", "TablePattern", "DottedLine", ININamePath)
@@ -631,6 +634,8 @@ Public Class OptionForm
     End Sub
 
     Private Sub D_ThemeRbt_CheckedChanged(sender As Object, e As EventArgs) Handles D_ThemeRbt.CheckedChanged
+        If Not loaded Then Return
+
         If D_ThemeRbt.Checked Then
             SetINI("SETTING", "ColorMode", "Dark", ININamePath)
         Else

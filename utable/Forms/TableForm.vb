@@ -20,6 +20,7 @@ Public Class TableForm
     Private ReadOnly fadingCells As New HashSet(Of CellControl)
     Private courseLayoutQueued As Boolean = False
     Private WithEvents courseFadeTimer As New Timer With {.Interval = 30}
+    Private WithEvents windowStateSaveTimer As New Timer With {.Interval = 400}
 
     '슬라이딩 애니메이션용 변수
     Dim poscount As Integer = 0
@@ -30,6 +31,7 @@ Public Class TableForm
     Dim PrevDisp As String = Nothing
     Dim PrevDay As Date = Nothing
     Dim formshown As Boolean = False
+    Dim windowStateSavePending As Boolean = False
     Dim snaptoedge As Boolean = False
     Dim titleEditMode As Boolean = False
     Dim colorMode As String = Nothing
@@ -262,20 +264,35 @@ Public Class TableForm
     End Sub
 
     Private Sub TableForm_LocationChanged(sender As Object, e As EventArgs) Handles MyBase.LocationChanged, MyBase.SizeChanged
+        If Not formshown OrElse hiding Then Return
 
-        If formshown And Not hiding Then
-            SetINI("SETTING", "WindowPosition", Location.X.ToString + "," + Location.Y.ToString, ININamePath)
-            SetINI("SETTING", "WindowSize", Width.ToString + "," + Height.ToString, ININamePath)
+        windowStateSavePending = True
+        windowStateSaveTimer.Stop()
+        windowStateSaveTimer.Start()
+    End Sub
 
-            If Not PrevDisp = Screen.FromControl(Me).DeviceName.ToString Then
-                SetINI("SETTING", "WindowScreen", Screen.FromControl(Me).DeviceName.ToString, ININamePath)
-                PrevDisp = Screen.FromControl(Me).DeviceName.ToString
-            End If
+    Private Sub WindowStateSaveTimer_Tick(sender As Object, e As EventArgs) Handles windowStateSaveTimer.Tick
+        windowStateSaveTimer.Stop()
+        SaveWindowState()
+    End Sub
 
-            'If Application.OpenForms().OfType(Of SetCourse).Any Then _
-            ' If Not SetCourse.modifyMode Then SetCourse.SetDesktopLocation(Location.X + Button1.Location.X, Location.Y + DayTable.Location.Y)
+    Private Sub TableForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        SaveWindowState()
+    End Sub
 
+    Private Sub SaveWindowState()
+        If Not windowStateSavePending Then Return
+
+        SetINI("SETTING", "WindowPosition", Location.X.ToString + "," + Location.Y.ToString, ININamePath)
+        SetINI("SETTING", "WindowSize", Width.ToString + "," + Height.ToString, ININamePath)
+
+        Dim currentDisplay As String = Screen.FromControl(Me).DeviceName
+        If PrevDisp <> currentDisplay Then
+            SetINI("SETTING", "WindowScreen", currentDisplay, ININamePath)
+            PrevDisp = currentDisplay
         End If
+
+        windowStateSavePending = False
     End Sub
 
     Private Sub TableForm_MouseLeave(sender As Object, e As EventArgs) Handles Me.MouseLeave
@@ -452,8 +469,10 @@ Public Class TableForm
 
     Private Sub TableForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Dim savedDisplay As String = GetINI("SETTING", "WindowScreen", "", ININamePath)
+        If String.IsNullOrEmpty(savedDisplay) Then savedDisplay = GetINI("SETTING", "WindowDisplay", "", ININamePath)
         For Each scrn In Screen.AllScreens
-            If scrn.DeviceName = GetINI("SETTING", "WindowDisplay", "", ININamePath) Then
+            If scrn.DeviceName = savedDisplay Then
                 Me.Location = scrn.Bounds.Location
                 Exit For
             End If
@@ -1692,7 +1711,7 @@ Public Class TableForm
 
             If hasSavedZoom Then
                 MemoRTB.ZoomFactor = savedZoom
-                UpdateMemoZoomFactor()
+                UpdateMemoZoomDisplay()
             End If
 
         Catch ex As Exception
@@ -1806,14 +1825,18 @@ Public Class TableForm
 
     End Sub
 
-    Private Sub UpdateMemoZoomFactor()
-        SetINI("SETTING", "MemoZoom", MemoRTB.ZoomFactor.ToString, ININamePath)
+    Private Sub UpdateMemoZoomDisplay()
         MemoZoomNumBT.Text = Convert.ToInt32((MemoRTB.ZoomFactor * 100)).ToString + "%"
         If MemoRTB.ZoomFactor = 1 Then
             MemoZoomNumBT.ForeColor = Color.Gray
         Else
             MemoZoomNumBT.ForeColor = Color.DodgerBlue
         End If
+    End Sub
+
+    Private Sub SaveMemoZoom()
+        SetINI("SETTING", "MemoZoom", MemoRTB.ZoomFactor.ToString, ININamePath)
+        UpdateMemoZoomDisplay()
     End Sub
 
     Private Sub MemoMenuBT_Click(sender As Object, e As EventArgs) Handles MemoMenuBT.Click
@@ -1824,29 +1847,21 @@ Public Class TableForm
         MemoAutoSave()
     End Sub
 
-    Private Sub MemoRTB_KeyDown(sender As Object, e As KeyEventArgs) Handles MemoRTB.KeyDown, Me.KeyDown
-        UpdateMemoZoomFactor()
-    End Sub
-
-    Private Sub MemoRTB_KeyUp(sender As Object, e As KeyEventArgs) Handles MemoRTB.KeyUp, Me.KeyUp
-        UpdateMemoZoomFactor()
-    End Sub
-
     Private Sub MemoZoomNumBT_Click(sender As Object, e As EventArgs) Handles MemoZoomNumBT.Click
         MemoRTB.ZoomFactor = 1
-        UpdateMemoZoomFactor()
+        SaveMemoZoom()
     End Sub
 
     Private Sub MemoZoomBT1_Click(sender As Object, e As EventArgs) Handles MemoZoomBT1.Click
         If MemoRTB.ZoomFactor > 0.015625 + 0.2 Then
             MemoRTB.ZoomFactor -= 0.2
-            UpdateMemoZoomFactor()
+            SaveMemoZoom()
         End If
     End Sub
 
     Private Sub MemoZoomBT2_Click(sender As Object, e As EventArgs) Handles MemoZoomBT2.Click
         MemoRTB.ZoomFactor += 0.2
-        UpdateMemoZoomFactor()
+        SaveMemoZoom()
     End Sub
 
     Private Sub MemoAutoSave()
